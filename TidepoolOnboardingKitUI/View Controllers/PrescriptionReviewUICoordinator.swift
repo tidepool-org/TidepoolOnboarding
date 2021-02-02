@@ -272,7 +272,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
             let nextButtonString = LocalizedString("Save Settings", comment: "Therapy settings save button title")
             let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
                 if let self = self {
-                    self.onboardingDelegate?.onboardingNotifying(self, hasNewTherapySettings: self.therapySettingsViewModel!.therapySettings)
+                    self.onboardingDelegate?.onboardingNotifying(hasNewTherapySettings: self.therapySettingsViewModel!.therapySettings)
                     self.stepFinished()
                 }
             }

@@ -52,8 +52,7 @@
 		A98AD3CB2583227B001AAD6F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3CA2583227B001AAD6F /* TidepoolServiceKit.framework */; };
 		A98AD3CD2583227B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3CC2583227B001AAD6F /* TidepoolServiceKitUI.framework */; };
 		A98AD3CE25832287001AAD6F /* TidepoolOnboardingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */; };
-		A99EB2C5258811B700D8DCB0 /* TidepoolOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EB2C4258811B700D8DCB0 /* TidepoolOnboarding.swift */; };
-		A9BEF02C25882F4E00860217 /* TidepoolOnboarding+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF02B25882F4E00860217 /* TidepoolOnboarding+UI.swift */; };
+		A9BEF02C25882F4E00860217 /* TidepoolOnboardingUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */; };
 		A9BEF038258835DF00860217 /* PrescriptionReviewUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */; };
 		A9BEF0462588367100860217 /* PrescriptionReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */; };
 		A9BEF056258836D200860217 /* MockPrescriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF054258836D200860217 /* MockPrescriptionManager.swift */; };
@@ -138,8 +137,7 @@
 		A98AD3C82583227B001AAD6F /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD3CA2583227B001AAD6F /* TidepoolServiceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolServiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD3CC2583227B001AAD6F /* TidepoolServiceKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolServiceKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A99EB2C4258811B700D8DCB0 /* TidepoolOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboarding.swift; sourceTree = "<group>"; };
-		A9BEF02B25882F4E00860217 /* TidepoolOnboarding+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TidepoolOnboarding+UI.swift"; sourceTree = "<group>"; };
+		A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboardingUI.swift; sourceTree = "<group>"; };
 		A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewUICoordinator.swift; sourceTree = "<group>"; };
 		A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewViewModel.swift; sourceTree = "<group>"; };
 		A9BEF054258836D200860217 /* MockPrescriptionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPrescriptionManager.swift; sourceTree = "<group>"; };
@@ -253,7 +251,6 @@
 			children = (
 				A98AD2CC25830842001AAD6F /* TidepoolOnboardingKit.h */,
 				A98AD2CD25830842001AAD6F /* Info.plist */,
-				A99EB2C4258811B700D8DCB0 /* TidepoolOnboarding.swift */,
 				A9BEF07A2588396200860217 /* Extensions */,
 				A9BEF053258836AA00860217 /* Mocks */,
 			);
@@ -273,7 +270,7 @@
 			children = (
 				A98AD2EB25830851001AAD6F /* TidepoolOnboardingKitUI.h */,
 				A98AD2EC25830851001AAD6F /* Info.plist */,
-				A9BEF02B25882F4E00860217 /* TidepoolOnboarding+UI.swift */,
+				A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */,
 				A9E2906725A7C8B7004E361D /* Assets.xcassets */,
 				A9BEF0342588358C00860217 /* View Controllers */,
 				A9BEF0362588359C00860217 /* View Models */,
@@ -531,7 +528,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A98AD2B325830807001AAD6F /* Build configuration list for PBXProject "TidepoolOnboardingPlugin" */;
+			buildConfigurationList = A98AD2B325830807001AAD6F /* Build configuration list for PBXProject "TidepoolOnboarding" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -707,7 +704,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A99EB2C5258811B700D8DCB0 /* TidepoolOnboarding.swift in Sources */,
 				A98AD31A25830887001AAD6F /* OSLog.swift in Sources */,
 				A9BEF07C2588396F00860217 /* HKUnit.swift in Sources */,
 				A98AD30D25830879001AAD6F /* LocalizedString.swift in Sources */,
@@ -732,7 +728,7 @@
 				A98AD30E25830879001AAD6F /* LocalizedString.swift in Sources */,
 				A9BEF06D2588380F00860217 /* PrescriptionDeviceView.swift in Sources */,
 				A9BEF038258835DF00860217 /* PrescriptionReviewUICoordinator.swift in Sources */,
-				A9BEF02C25882F4E00860217 /* TidepoolOnboarding+UI.swift in Sources */,
+				A9BEF02C25882F4E00860217 /* TidepoolOnboardingUI.swift in Sources */,
 				A9BEF0462588367100860217 /* PrescriptionReviewViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1244,7 +1240,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A98AD2B325830807001AAD6F /* Build configuration list for PBXProject "TidepoolOnboardingPlugin" */ = {
+		A98AD2B325830807001AAD6F /* Build configuration list for PBXProject "TidepoolOnboarding" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A98AD2BF25830807001AAD6F /* Debug */,

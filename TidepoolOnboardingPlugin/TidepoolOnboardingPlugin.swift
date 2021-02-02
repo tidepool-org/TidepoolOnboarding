@@ -15,7 +15,7 @@ class TidepoolOnboardingPlugin: NSObject, OnboardingUIPlugin {
     private let log = OSLog(category: "TidepoolOnboardingPlugin")
 
     public var onboardingType: OnboardingUI.Type? {
-        return TidepoolOnboarding.self
+        return TidepoolOnboardingUI.self
     }
 
     override init() {

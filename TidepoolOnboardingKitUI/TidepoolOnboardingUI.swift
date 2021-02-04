@@ -19,7 +19,7 @@ public final class TidepoolOnboardingUI: OnboardingUI {
         return TidepoolOnboardingUI()
     }
 
-    public func onboardingViewController(preferredGlucoseUnit: HKUnit, cgmManagerProvider: CGMManagerProvider, pumpManagerProvider: PumpManagerProvider, serviceProvider: ServiceProvider, colorPalette: LoopUIColorPalette) -> OnboardingViewController {
+    public func onboardingViewController(preferredGlucoseUnit: HKUnit, cgmManagerProvider: CGMManagerProvider, pumpManagerProvider: PumpManagerProvider, serviceProvider: ServiceProvider, colorPalette: LoopUIColorPalette) -> (UIViewController & OnboardingViewController) {
         return PrescriptionReviewUICoordinator(preferredGlucoseUnit: preferredGlucoseUnit, cgmManagerProvider: cgmManagerProvider, pumpManagerProvider: pumpManagerProvider, serviceProvider: serviceProvider, colorPalette: colorPalette)
     }
 }

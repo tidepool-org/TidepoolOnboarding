@@ -43,7 +43,7 @@ struct OnboardingTabView: View {
     }
 
     private func pager(for index: Int) -> some View {
-        HStack() {
+        HStack(spacing: 10) {
             ForEach(tabs.indices) { tabIndex in
                 Circle()
                     .frame(width: 8, height: 8)
@@ -55,7 +55,7 @@ struct OnboardingTabView: View {
     @ViewBuilder
     private func button(for index: Int) -> some View {
         if index < tabs.count - 1 {
-            ActionButton(title: "Continue", action: { selectedTabIndex += 1 })
+            ActionButton(title: "Continue", action: { withAnimation { selectedTabIndex += 1 } })
         } else {
             ActionButton(title: "Finish", action: complete)
         }

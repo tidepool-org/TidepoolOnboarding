@@ -46,20 +46,11 @@ enum PrescriptionReviewScreen: CaseIterable {
     }
 }
 
-class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifying, CGMManagerCreateNotifying, CGMManagerOnboardNotifying, PumpManagerCreateNotifying, PumpManagerOnboardNotifying, ServiceCreateNotifying, ServiceOnboardNotifying, CompletionNotifying {
+class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifying, CompletionNotifying {
     public weak var onboardingDelegate: OnboardingDelegate?
-    public weak var cgmManagerCreateDelegate: CGMManagerCreateDelegate?
-    public weak var cgmManagerOnboardDelegate: CGMManagerOnboardDelegate?
-    public weak var pumpManagerCreateDelegate: PumpManagerCreateDelegate?
-    public weak var pumpManagerOnboardDelegate: PumpManagerOnboardDelegate?
-    public weak var serviceCreateDelegate: ServiceCreateDelegate?
-    public weak var serviceOnboardDelegate: ServiceOnboardDelegate?
     public weak var completionDelegate: CompletionDelegate?
 
-    private let preferredGlucoseUnit: HKUnit
-    private let cgmManagerProvider: CGMManagerProvider
-    private let pumpManagerProvider: PumpManagerProvider
-    private let serviceProvider: ServiceProvider
+    private let preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel
     private let colorPalette: LoopUIColorPalette
 
     private var screenStack = [PrescriptionReviewScreen]()
@@ -70,11 +61,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
 
     private let log = OSLog(category: "PrescriptionReviewUICoordinator")
 
-    init(preferredGlucoseUnit: HKUnit, cgmManagerProvider: CGMManagerProvider, pumpManagerProvider: PumpManagerProvider, serviceProvider: ServiceProvider, colorPalette: LoopUIColorPalette) {
-        self.preferredGlucoseUnit = preferredGlucoseUnit
-        self.cgmManagerProvider = cgmManagerProvider
-        self.pumpManagerProvider = pumpManagerProvider
-        self.serviceProvider = serviceProvider
+    init(preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel, colorPalette: LoopUIColorPalette) {
+        self.preferredGlucoseUnitViewModel = preferredGlucoseUnitViewModel
         self.colorPalette = colorPalette
 
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
@@ -343,7 +331,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
         return TherapySettingsViewModel(
             mode: .acceptanceFlow,
             therapySettings: prescription.therapySettings,
-            preferredGlucoseUnit: preferredGlucoseUnit,
+            preferredGlucoseUnit: preferredGlucoseUnitViewModel.preferredGlucoseUnit,   // TODO: From this point on, glucose unit is hard-coded, needs to pass preferredGlucoseUnitViewModel
             supportedInsulinModelSettings: supportedInsulinModelSettings,
             pumpSupportedIncrements: { pumpSupportedIncrements },
             syncPumpSchedule: {

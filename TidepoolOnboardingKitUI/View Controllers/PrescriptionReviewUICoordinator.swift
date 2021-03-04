@@ -13,6 +13,14 @@ import SwiftUI
 import LoopKit
 import LoopKitUI
 
+protocol PrescriptionReviewDelegate: AnyObject {
+    /// Informs the delegate that prescription review has new therapy settings.
+    ///
+    /// - Parameters:
+    ///     - therapySettings: The new therapy settings.
+    func prescriptionReview(hasNewTherapySettings therapySettings: TherapySettings)
+}
+
 enum PrescriptionReviewScreen: CaseIterable {
     case enterCode
     case reviewDevices
@@ -46,11 +54,11 @@ enum PrescriptionReviewScreen: CaseIterable {
     }
 }
 
-class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifying, CompletionNotifying {
-    public weak var onboardingDelegate: OnboardingDelegate?
+class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying {
+    public weak var prescriptionReviewDelegate: PrescriptionReviewDelegate?
     public weak var completionDelegate: CompletionDelegate?
 
-    private let preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel
+    private let preferredGlucoseUnit: PreferredGlucoseUnit
     private let colorPalette: LoopUIColorPalette
 
     private var screenStack = [PrescriptionReviewScreen]()
@@ -61,8 +69,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
 
     private let log = OSLog(category: "PrescriptionReviewUICoordinator")
 
-    init(preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel, colorPalette: LoopUIColorPalette) {
-        self.preferredGlucoseUnitViewModel = preferredGlucoseUnitViewModel
+    init(preferredGlucoseUnit: PreferredGlucoseUnit, colorPalette: LoopUIColorPalette) {
+        self.preferredGlucoseUnit = preferredGlucoseUnit
         self.colorPalette = colorPalette
 
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
@@ -82,6 +90,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        navigationController?.setNavigationBarHidden(true, animated: animated)
 
         screenStack = [.enterCode]
         let viewController = viewControllerForScreen(currentScreen)
@@ -260,7 +270,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
             let nextButtonString = LocalizedString("Save Settings", comment: "Therapy settings save button title")
             let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
                 if let self = self {
-                    self.onboardingDelegate?.onboardingNotifying(hasNewTherapySettings: self.therapySettingsViewModel!.therapySettings)
+                    self.prescriptionReviewDelegate?.prescriptionReview(hasNewTherapySettings: self.therapySettingsViewModel!.therapySettings)
                     self.stepFinished()
                 }
             }
@@ -273,7 +283,11 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
     }
     
     private func hostingController<Content: View>(rootView: Content) -> DismissibleHostingController {
-        return DismissibleHostingController(rootView: rootView.environment(\.appName, Bundle.main.bundleDisplayName), colorPalette: colorPalette)
+        return DismissibleHostingController(rootView: rootView
+                                                .environmentObject(preferredGlucoseUnit)
+                                                .environment(\.colorPalette, colorPalette)
+                                                .environment(\.appName, Bundle.main.bundleDisplayName),
+                                            colorPalette: colorPalette)
     }
 
     private func stepFinished() {
@@ -331,7 +345,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
         return TherapySettingsViewModel(
             mode: .acceptanceFlow,
             therapySettings: prescription.therapySettings,
-            preferredGlucoseUnit: preferredGlucoseUnitViewModel.preferredGlucoseUnit,   // TODO: From this point on, glucose unit is hard-coded, needs to pass preferredGlucoseUnitViewModel
+            preferredGlucoseUnit: preferredGlucoseUnit.unit,   // TODO: From this point on, glucose unit is hard-coded, needs to pass preferredGlucoseUnit
             supportedInsulinModelSettings: supportedInsulinModelSettings,
             pumpSupportedIncrements: { pumpSupportedIncrements },
             syncPumpSchedule: {

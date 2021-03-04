@@ -62,9 +62,8 @@
 		A98AD3CD2583227B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3CC2583227B001AAD6F /* TidepoolServiceKitUI.framework */; };
 		A98AD3CE25832287001AAD6F /* TidepoolOnboardingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */; };
 		A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */; };
-		A9A0E44825C4F5DC00C2D63F /* PreferredGlucoseUnitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E44725C4F5DC00C2D63F /* PreferredGlucoseUnitViewModel.swift */; };
 		A9A0E46125C4FC3300C2D63F /* OnboardingRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46025C4FC3300C2D63F /* OnboardingRootViewController.swift */; };
-		A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewViewController.swift */; };
+		A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */; };
 		A9BEF02C25882F4E00860217 /* TidepoolOnboardingUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */; };
 		A9BEF038258835DF00860217 /* PrescriptionReviewUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */; };
 		A9BEF0462588367100860217 /* PrescriptionReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */; };
@@ -73,6 +72,7 @@
 		A9BEF06C2588380F00860217 /* PrescriptionCodeEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */; };
 		A9BEF06D2588380F00860217 /* PrescriptionDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */; };
 		A9BEF07C2588396F00860217 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF07B2588396F00860217 /* HKUnit.swift */; };
+		A9D0402925E43EE600200E4E /* PreferredGlucoseUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D0402825E43EE600200E4E /* PreferredGlucoseUnit.swift */; };
 		A9D98C7025A3ED58001E25FE /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD30C25830879001AAD6F /* LocalizedString.swift */; };
 		A9E2906825A7C8B7004E361D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9E2906725A7C8B7004E361D /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -160,9 +160,8 @@
 		A98AD3CA2583227B001AAD6F /* TidepoolServiceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolServiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD3CC2583227B001AAD6F /* TidepoolServiceKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolServiceKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
-		A9A0E44725C4F5DC00C2D63F /* PreferredGlucoseUnitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredGlucoseUnitViewModel.swift; sourceTree = "<group>"; };
 		A9A0E46025C4FC3300C2D63F /* OnboardingRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRootViewController.swift; sourceTree = "<group>"; };
-		A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewViewController.swift; sourceTree = "<group>"; };
+		A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewView.swift; sourceTree = "<group>"; };
 		A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboardingUI.swift; sourceTree = "<group>"; };
 		A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewUICoordinator.swift; sourceTree = "<group>"; };
 		A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewViewModel.swift; sourceTree = "<group>"; };
@@ -171,6 +170,7 @@
 		A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryView.swift; sourceTree = "<group>"; };
 		A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionDeviceView.swift; sourceTree = "<group>"; };
 		A9BEF07B2588396F00860217 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
+		A9D0402825E43EE600200E4E /* PreferredGlucoseUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredGlucoseUnit.swift; sourceTree = "<group>"; };
 		A9E2906725A7C8B7004E361D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -334,6 +334,7 @@
 				A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */,
 				A9E2906725A7C8B7004E361D /* Assets.xcassets */,
 				A923333E25C3786100D8CF69 /* Extensions */,
+				A9D0401B25E43BDD00200E4E /* Support */,
 				A9BEF0342588358C00860217 /* View Controllers */,
 				A9BEF0362588359C00860217 /* View Models */,
 				A9BEF0352588359600860217 /* Views */,
@@ -395,7 +396,6 @@
 			children = (
 				A9A0E46025C4FC3300C2D63F /* OnboardingRootViewController.swift */,
 				A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */,
-				A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -407,6 +407,7 @@
 				A923335925C3789800D8CF69 /* OnboardingTabView.swift */,
 				A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */,
 				A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */,
+				A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */,
 				A923335325C3789700D8CF69 /* Accessory */,
 				A923335725C3789800D8CF69 /* Previews */,
 				A923334A25C3789700D8CF69 /* Welcome */,
@@ -418,7 +419,6 @@
 			isa = PBXGroup;
 			children = (
 				A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */,
-				A9A0E44725C4F5DC00C2D63F /* PreferredGlucoseUnitViewModel.swift */,
 				A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */,
 			);
 			path = "View Models";
@@ -439,6 +439,14 @@
 				A9BEF07B2588396F00860217 /* HKUnit.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A9D0401B25E43BDD00200E4E /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				A9D0402825E43EE600200E4E /* PreferredGlucoseUnit.swift */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -796,14 +804,14 @@
 			files = (
 				A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */,
 				A95422D325CC9A74003F3080 /* Image.swift in Sources */,
-				A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewViewController.swift in Sources */,
+				A9D0402925E43EE600200E4E /* PreferredGlucoseUnit.swift in Sources */,
+				A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */,
 				A9BEF06C2588380F00860217 /* PrescriptionCodeEntryView.swift in Sources */,
 				A923334225C3786100D8CF69 /* Environment+Complete.swift in Sources */,
 				A923334125C3786100D8CF69 /* TimeInterval.swift in Sources */,
 				A923336825C3789800D8CF69 /* OnboardingTabView.swift in Sources */,
 				A98AD31B25830887001AAD6F /* OSLog.swift in Sources */,
 				A98AD30E25830879001AAD6F /* LocalizedString.swift in Sources */,
-				A9A0E44825C4F5DC00C2D63F /* PreferredGlucoseUnitViewModel.swift in Sources */,
 				A923336725C3789800D8CF69 /* ContentPreview.swift in Sources */,
 				A9BEF06D2588380F00860217 /* PrescriptionDeviceView.swift in Sources */,
 				A9BEF038258835DF00860217 /* PrescriptionReviewUICoordinator.swift in Sources */,

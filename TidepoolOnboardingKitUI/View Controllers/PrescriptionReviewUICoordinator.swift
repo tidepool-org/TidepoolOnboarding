@@ -274,8 +274,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
     
     private func hostingController<Content: View>(rootView: Content) -> DismissibleHostingController {
         return DismissibleHostingController(rootView: rootView
-                                                .environment(\.appName, Bundle.main.bundleDisplayName)
-                                                .environmentObject(displayGlucoseUnitObservable),
+                                                .environmentObject(displayGlucoseUnitObservable)
+                                                .environment(\.appName, Bundle.main.bundleDisplayName),
                                             colorPalette: colorPalette)
     }
 

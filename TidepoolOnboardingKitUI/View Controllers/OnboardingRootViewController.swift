@@ -44,9 +44,9 @@ class OnboardingRootViewController: UIHostingController<OnboardingRootView>, Onb
     private let onboardingViewModel: OnboardingViewModel
     private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
 
-    init(cgmManagerProvider: CGMManagerProvider, pumpManagerProvider: PumpManagerProvider, serviceProvider: ServiceProvider, displayGlucoseUnit: HKUnit, colorPalette: LoopUIColorPalette) {
+    init(cgmManagerProvider: CGMManagerProvider, pumpManagerProvider: PumpManagerProvider, serviceProvider: ServiceProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
         self.onboardingViewModel = OnboardingViewModel(cgmManagerProvider: cgmManagerProvider, pumpManagerProvider: pumpManagerProvider, serviceProvider: serviceProvider)
-        self.displayGlucoseUnitObservable = DisplayGlucoseUnitObservable(displayGlucoseUnit: displayGlucoseUnit)
+        self.displayGlucoseUnitObservable = displayGlucoseUnitObservable
 
         super.init(rootView: OnboardingRootView(onboardingViewModel: onboardingViewModel, displayGlucoseUnitObservable: displayGlucoseUnitObservable, colorPalette: colorPalette))
     }
@@ -59,11 +59,6 @@ class OnboardingRootViewController: UIHostingController<OnboardingRootView>, Onb
         super.viewWillAppear(animated)
 
         self.onboardingViewModel.completionDelegate = self
-    }
-
-    // MARK: - DisplayGlucoseUnitObserver
-    func displayGlucoseUnitDidChange(to displayGlucoseUnit: HKUnit) {
-        displayGlucoseUnitObservable.displayGlucoseUnitDidChange(to: displayGlucoseUnit)
     }
 }
 

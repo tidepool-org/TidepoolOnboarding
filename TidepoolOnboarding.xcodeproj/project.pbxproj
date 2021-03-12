@@ -72,7 +72,6 @@
 		A9BEF06C2588380F00860217 /* PrescriptionCodeEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */; };
 		A9BEF06D2588380F00860217 /* PrescriptionDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */; };
 		A9BEF07C2588396F00860217 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF07B2588396F00860217 /* HKUnit.swift */; };
-		A9D0402925E43EE600200E4E /* PreferredGlucoseUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D0402825E43EE600200E4E /* PreferredGlucoseUnit.swift */; };
 		A9D98C7025A3ED58001E25FE /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD30C25830879001AAD6F /* LocalizedString.swift */; };
 		A9E2906825A7C8B7004E361D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9E2906725A7C8B7004E361D /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -170,7 +169,6 @@
 		A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryView.swift; sourceTree = "<group>"; };
 		A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionDeviceView.swift; sourceTree = "<group>"; };
 		A9BEF07B2588396F00860217 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
-		A9D0402825E43EE600200E4E /* PreferredGlucoseUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredGlucoseUnit.swift; sourceTree = "<group>"; };
 		A9E2906725A7C8B7004E361D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -444,7 +442,6 @@
 		A9D0401B25E43BDD00200E4E /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				A9D0402825E43EE600200E4E /* PreferredGlucoseUnit.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -804,7 +801,6 @@
 			files = (
 				A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */,
 				A95422D325CC9A74003F3080 /* Image.swift in Sources */,
-				A9D0402925E43EE600200E4E /* PreferredGlucoseUnit.swift in Sources */,
 				A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */,
 				A9BEF06C2588380F00860217 /* PrescriptionCodeEntryView.swift in Sources */,
 				A923334225C3786100D8CF69 /* Environment+Complete.swift in Sources */,

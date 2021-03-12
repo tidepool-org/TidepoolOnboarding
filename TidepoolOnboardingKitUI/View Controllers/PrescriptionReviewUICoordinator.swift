@@ -58,7 +58,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     public weak var prescriptionReviewDelegate: PrescriptionReviewDelegate?
     public weak var completionDelegate: CompletionDelegate?
 
-    private let preferredGlucoseUnit: PreferredGlucoseUnit
+    private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
     private let colorPalette: LoopUIColorPalette
 
     private var screenStack = [PrescriptionReviewScreen]()
@@ -69,8 +69,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
 
     private let log = OSLog(category: "PrescriptionReviewUICoordinator")
 
-    init(preferredGlucoseUnit: PreferredGlucoseUnit, colorPalette: LoopUIColorPalette) {
-        self.preferredGlucoseUnit = preferredGlucoseUnit
+    init(displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
+        self.displayGlucoseUnitObservable = displayGlucoseUnitObservable
         self.colorPalette = colorPalette
 
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
@@ -142,7 +142,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.suspendThreshold.title
             return hostedView
         case .suspendThresholdEditor:
-            let view = SuspendThresholdEditor(viewModel: therapySettingsViewModel!)
+            let view = SuspendThresholdEditor(therapySettingsViewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -284,7 +284,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
     
     private func hostingController<Content: View>(rootView: Content) -> DismissibleHostingController {
         return DismissibleHostingController(rootView: rootView
-                                                .environmentObject(preferredGlucoseUnit)
+                                                .environmentObject(displayGlucoseUnitObservable)
                                                 .environment(\.colorPalette, colorPalette)
                                                 .environment(\.appName, Bundle.main.bundleDisplayName),
                                             colorPalette: colorPalette)
@@ -345,7 +345,6 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
         return TherapySettingsViewModel(
             mode: .acceptanceFlow,
             therapySettings: prescription.therapySettings,
-            preferredGlucoseUnit: preferredGlucoseUnit.unit,   // TODO: From this point on, glucose unit is hard-coded, needs to pass preferredGlucoseUnit
             supportedInsulinModelSettings: supportedInsulinModelSettings,
             pumpSupportedIncrements: { pumpSupportedIncrements },
             syncPumpSchedule: {

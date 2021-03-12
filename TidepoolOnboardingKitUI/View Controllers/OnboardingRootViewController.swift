@@ -41,17 +41,15 @@ class OnboardingRootViewController: UIHostingController<AnyView>, OnboardingView
     }
 
     private let onboardingViewModel: OnboardingViewModel
-    private let preferredGlucoseUnit: PreferredGlucoseUnit
 
     private lazy var cancellables = Set<AnyCancellable>()
 
-    init(onboarding: TidepoolOnboardingUI, onboardingProvider: OnboardingProvider, preferredGlucoseUnit: HKUnit, colorPalette: LoopUIColorPalette) {
+    init(onboarding: TidepoolOnboardingUI, onboardingProvider: OnboardingProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
         self.onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: onboardingProvider)
-        self.preferredGlucoseUnit = PreferredGlucoseUnit(preferredGlucoseUnit)
 
         let rootView = OnboardingRootView()
-            .environmentObject(self.onboardingViewModel)
-            .environmentObject(self.preferredGlucoseUnit)
+            .environmentObject(onboardingViewModel)
+            .environmentObject(displayGlucoseUnitObservable)
             .environment(\.colorPalette, colorPalette)
 
         super.init(rootView: AnyView(rootView))
@@ -67,11 +65,5 @@ class OnboardingRootViewController: UIHostingController<AnyView>, OnboardingView
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - PreferredGlucoseUnitObserver
-
-    func preferredGlucoseUnitDidChange(to preferredGlucoseUnit: HKUnit) {
-        self.preferredGlucoseUnit.preferredGlucoseUnitDidChange(to: preferredGlucoseUnit)
     }
 }

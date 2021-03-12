@@ -68,7 +68,7 @@ struct OnboardingRootView_Previews: PreviewProvider {
         ContentPreview {
             OnboardingRootView()
                 .environmentObject(OnboardingViewModel.preview)
-                .environmentObject(PreferredGlucoseUnit.preview)
+                .environmentObject(DisplayGlucoseUnitObservable.preview)
         }
     }
 }
@@ -79,9 +79,9 @@ extension OnboardingViewModel {
     }
 }
 
-extension PreferredGlucoseUnit {
-    static var preview: PreferredGlucoseUnit {
-        return PreferredGlucoseUnit(.milligramsPerDeciliter)
+extension DisplayGlucoseUnitObservable {
+    static var preview: DisplayGlucoseUnitObservable {
+        return DisplayGlucoseUnitObservable(displayGlucoseUnit: .milligramsPerDeciliter)
     }
 }
 

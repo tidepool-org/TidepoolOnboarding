@@ -50,7 +50,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
     public weak var onboardingDelegate: OnboardingDelegate?
     public weak var completionDelegate: CompletionDelegate?
 
-    private let preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel
+    private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
     private let colorPalette: LoopUIColorPalette
 
     private var screenStack = [PrescriptionReviewScreen]()
@@ -61,8 +61,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
 
     private let log = OSLog(category: "PrescriptionReviewUICoordinator")
 
-    init(preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel, colorPalette: LoopUIColorPalette) {
-        self.preferredGlucoseUnitViewModel = preferredGlucoseUnitViewModel
+    init(displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
+        self.displayGlucoseUnitObservable = displayGlucoseUnitObservable
         self.colorPalette = colorPalette
 
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
@@ -132,7 +132,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
             hostedView.title = TherapySetting.suspendThreshold.title
             return hostedView
         case .suspendThresholdEditor:
-            let view = SuspendThresholdEditor(viewModel: therapySettingsViewModel!)
+            let view = SuspendThresholdEditor(therapySettingsViewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -273,7 +273,10 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
     }
     
     private func hostingController<Content: View>(rootView: Content) -> DismissibleHostingController {
-        return DismissibleHostingController(rootView: rootView.environment(\.appName, Bundle.main.bundleDisplayName), colorPalette: colorPalette)
+        return DismissibleHostingController(rootView: rootView
+                                                .environmentObject(displayGlucoseUnitObservable)
+                                                .environment(\.appName, Bundle.main.bundleDisplayName),
+                                            colorPalette: colorPalette)
     }
 
     private func stepFinished() {
@@ -331,7 +334,6 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
         return TherapySettingsViewModel(
             mode: .acceptanceFlow,
             therapySettings: prescription.therapySettings,
-            preferredGlucoseUnit: preferredGlucoseUnitViewModel.preferredGlucoseUnit,   // TODO: From this point on, glucose unit is hard-coded, needs to pass preferredGlucoseUnitViewModel
             supportedInsulinModelSettings: supportedInsulinModelSettings,
             pumpSupportedIncrements: { pumpSupportedIncrements },
             syncPumpSchedule: {

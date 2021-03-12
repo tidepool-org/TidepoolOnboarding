@@ -12,18 +12,18 @@ import LoopKitUI
 
 struct OnboardingRootView: View {
     @ObservedObject private var onboardingViewModel: OnboardingViewModel
-    @ObservedObject private var preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel
+    @ObservedObject private var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
     private let colorPalette: LoopUIColorPalette
 
-    init(onboardingViewModel: OnboardingViewModel, preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel, colorPalette: LoopUIColorPalette) {
+    init(onboardingViewModel: OnboardingViewModel, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
         self.onboardingViewModel = onboardingViewModel
-        self.preferredGlucoseUnitViewModel = preferredGlucoseUnitViewModel
+        self.displayGlucoseUnitObservable = displayGlucoseUnitObservable
         self.colorPalette = colorPalette
     }
 
     var body: some View {
         rootView
-            .environmentObject(preferredGlucoseUnitViewModel)
+            .environmentObject(displayGlucoseUnitObservable)
             .environment(\.colorPalette, colorPalette)
     }
 
@@ -50,7 +50,7 @@ struct OnboardingRootView_Previews: PreviewProvider {
     static var previews: some View {
         ContentPreview {
             OnboardingRootView(onboardingViewModel: OnboardingViewModel.preview,
-                               preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel.preview,
+                               displayGlucoseUnitObservable: DisplayGlucoseUnitObservable.preview,
                                colorPalette: LoopUIColorPalette.preview)
         }
     }
@@ -62,9 +62,9 @@ extension OnboardingViewModel {
     }
 }
 
-extension PreferredGlucoseUnitViewModel {
-    static var preview: PreferredGlucoseUnitViewModel {
-        return PreferredGlucoseUnitViewModel(preferredGlucoseUnit: .milligramsPerDeciliter)
+extension DisplayGlucoseUnitObservable {
+    static var preview: DisplayGlucoseUnitObservable {
+        return DisplayGlucoseUnitObservable(displayGlucoseUnit: .milligramsPerDeciliter)
     }
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 import LoopKitUI
 
 struct PrescriptionReviewViewController: UIViewControllerRepresentable {
-    @EnvironmentObject var preferredGlucoseUnitViewModel: PreferredGlucoseUnitViewModel
+    @EnvironmentObject var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
     @Environment(\.colorPalette) var colorPalette: LoopUIColorPalette
 
     private let onboardingDelegate: OnboardingDelegate
@@ -22,7 +22,7 @@ struct PrescriptionReviewViewController: UIViewControllerRepresentable {
     }
     
     func makeUIViewController(context: Context) -> UINavigationController {
-        let prescriptionReviewUICoordinator = PrescriptionReviewUICoordinator(preferredGlucoseUnitViewModel: preferredGlucoseUnitViewModel, colorPalette: colorPalette)
+        let prescriptionReviewUICoordinator = PrescriptionReviewUICoordinator(displayGlucoseUnitObservable: displayGlucoseUnitObservable, colorPalette: colorPalette)
         prescriptionReviewUICoordinator.onboardingDelegate = onboardingDelegate
         prescriptionReviewUICoordinator.completionDelegate = completionDelegate
         return prescriptionReviewUICoordinator

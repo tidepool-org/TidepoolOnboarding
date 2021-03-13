@@ -7,14 +7,14 @@
 //
 
 import HealthKit
+import Combine
 import SwiftUI
+import LoopKit
 import LoopKitUI
 
-class OnboardingRootViewController: UIHostingController<OnboardingRootView>, OnboardingViewController {
-    var onboardingDelegate: OnboardingDelegate? {
-        get { onboardingViewModel.onboardingDelegate }
-        set { onboardingViewModel.onboardingDelegate = newValue }
-    }
+class OnboardingRootViewController: UIHostingController<AnyView>, OnboardingViewController {
+    weak var completionDelegate: CompletionDelegate?
+
     var cgmManagerCreateDelegate: CGMManagerCreateDelegate? {
         get { onboardingViewModel.cgmManagerCreateDelegate }
         set { onboardingViewModel.cgmManagerCreateDelegate = newValue }
@@ -39,31 +39,31 @@ class OnboardingRootViewController: UIHostingController<OnboardingRootView>, Onb
         get { onboardingViewModel.serviceOnboardDelegate }
         set { onboardingViewModel.serviceOnboardDelegate = newValue }
     }
-    weak var completionDelegate: CompletionDelegate?
 
     private let onboardingViewModel: OnboardingViewModel
-    private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
 
-    init(cgmManagerProvider: CGMManagerProvider, pumpManagerProvider: PumpManagerProvider, serviceProvider: ServiceProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
-        self.onboardingViewModel = OnboardingViewModel(cgmManagerProvider: cgmManagerProvider, pumpManagerProvider: pumpManagerProvider, serviceProvider: serviceProvider)
-        self.displayGlucoseUnitObservable = displayGlucoseUnitObservable
+    private lazy var cancellables = Set<AnyCancellable>()
 
-        super.init(rootView: OnboardingRootView(onboardingViewModel: onboardingViewModel, displayGlucoseUnitObservable: displayGlucoseUnitObservable, colorPalette: colorPalette))
+    init(onboarding: TidepoolOnboardingUI, onboardingProvider: OnboardingProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
+        self.onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: onboardingProvider)
+
+        let rootView = OnboardingRootView()
+            .environmentObject(onboardingViewModel)
+            .environmentObject(displayGlucoseUnitObservable)
+            .environment(\.colorPalette, colorPalette)
+
+        super.init(rootView: AnyView(rootView))
+
+        onboarding.$isOnboarded
+            .filter { $0 }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.completionDelegate?.completionNotifyingDidComplete(self)
+            }
+            .store(in: &cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        self.onboardingViewModel.completionDelegate = self
-    }
-}
-
-extension OnboardingRootViewController: CompletionDelegate {
-    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
-        completionDelegate?.completionNotifyingDidComplete(self)
     }
 }

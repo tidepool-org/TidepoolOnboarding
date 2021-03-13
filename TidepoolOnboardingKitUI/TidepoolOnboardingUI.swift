@@ -21,15 +21,8 @@ public final class TidepoolOnboardingUI: ObservableObject, OnboardingUI {
 
     public let onboardingIdentifier = "TidepoolOnboarding"
 
-    var isWelcomeComplete: Bool {
+    var sectionProgression: OnboardingSectionProgression {
         didSet {
-            guard isWelcomeComplete != oldValue else { return }
-            notifyDidUpdateState()
-        }
-    }
-    var isTherapySettingsComplete: Bool {
-        didSet {
-            guard isTherapySettingsComplete != oldValue else { return }
             notifyDidUpdateState()
         }
     }
@@ -42,41 +35,37 @@ public final class TidepoolOnboardingUI: ObservableObject, OnboardingUI {
     }
 
     init() {
-        self.isWelcomeComplete = false
-        self.isTherapySettingsComplete = false
+        self.sectionProgression = OnboardingSectionProgression()
 
         self.isOnboarded = false
     }
 
     public init?(rawState: RawState) {
-        guard let isWelcomeComplete = rawState["isWelcomeComplete"] as? Bool,
-              let isTherapySettingsComplete = rawState["isTherapySettingsComplete"] as? Bool
-        else {
+        guard let rawSectionProgression = rawState["sectionProgression"] as? OnboardingSectionProgression.RawValue,
+              let sectionProgression = OnboardingSectionProgression(rawValue: rawSectionProgression) else {
             return nil
         }
 
-        self.isWelcomeComplete = isWelcomeComplete
-        self.isTherapySettingsComplete = isTherapySettingsComplete
+        self.sectionProgression = sectionProgression
 
-        self.isOnboarded = isWelcomeComplete && isTherapySettingsComplete
+        self.isOnboarded = sectionProgression.hasCompletedAllSections
     }
 
     public var rawState: RawState {
         return [
-            "isWelcomeComplete": isWelcomeComplete,
-            "isTherapySettingsComplete": isTherapySettingsComplete
+            "sectionProgression": sectionProgression.rawValue
         ]
     }
 
     @Published public var isOnboarded: Bool
 
     public func onboardingViewController(onboardingProvider: OnboardingProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) -> (UIViewController & OnboardingViewController) {
-        return OnboardingRootViewController(onboarding: self, onboardingProvider: onboardingProvider, displayGlucoseUnitObservable: displayGlucoseUnitObservable, colorPalette: colorPalette)
+        return OnboardingRootNavigationController(onboarding: self, onboardingProvider: onboardingProvider, displayGlucoseUnitObservable: displayGlucoseUnitObservable, colorPalette: colorPalette)
     }
 
     private func notifyDidUpdateState() {
         onboardingDelegate?.onboardingDidUpdateState(self)
-        self.isOnboarded = isWelcomeComplete && isTherapySettingsComplete
+        self.isOnboarded = sectionProgression.hasCompletedAllSections
     }
 
     private func notifyHasNewTherapySettings(_ therapySettings: TherapySettings) {

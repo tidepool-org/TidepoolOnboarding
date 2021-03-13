@@ -1,18 +1,18 @@
 //
-//  OnboardingRootViewController.swift
+//  OnboardingRootNavigationController.swift
 //  TidepoolOnboardingKitUI
 //
 //  Created by Darin Krauss on 1/29/21.
 //  Copyright © 2021 Tidepool Project. All rights reserved.
 //
 
-import HealthKit
 import Combine
+import HealthKit
 import SwiftUI
 import LoopKit
 import LoopKitUI
 
-class OnboardingRootViewController: UIHostingController<AnyView>, OnboardingViewController {
+class OnboardingRootNavigationController: UINavigationController, OnboardingViewController {
     weak var completionDelegate: CompletionDelegate?
 
     var cgmManagerCreateDelegate: CGMManagerCreateDelegate? {
@@ -41,18 +41,17 @@ class OnboardingRootViewController: UIHostingController<AnyView>, OnboardingView
     }
 
     private let onboardingViewModel: OnboardingViewModel
+    private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
+    private let colorPalette: LoopUIColorPalette
 
     private lazy var cancellables = Set<AnyCancellable>()
 
     init(onboarding: TidepoolOnboardingUI, onboardingProvider: OnboardingProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
         self.onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: onboardingProvider)
+        self.displayGlucoseUnitObservable = displayGlucoseUnitObservable
+        self.colorPalette = colorPalette
 
-        let rootView = OnboardingRootView()
-            .environmentObject(onboardingViewModel)
-            .environmentObject(displayGlucoseUnitObservable)
-            .environment(\.colorPalette, colorPalette)
-
-        super.init(rootView: AnyView(rootView))
+        super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
 
         onboarding.$isOnboarded
             .filter { $0 }
@@ -61,9 +60,32 @@ class OnboardingRootViewController: UIHostingController<AnyView>, OnboardingView
                 self.completionDelegate?.completionNotifyingDidComplete(self)
             }
             .store(in: &cancellables)
+        onboardingViewModel.$sectionProgression
+            .first { $0.hasCompletedSection(.welcome) }
+            .sink { [weak self] _ in
+                self?.setRootView(GettingToKnowTidepoolLoopView())
+            }
+            .store(in: &cancellables)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if viewControllers.isEmpty {
+            setRootView(WelcomeTabView())
+        }
+    }
+
+    private func setRootView<Content: View>(_ rootView: Content) {
+        let rootView = rootView
+            .environmentObject(onboardingViewModel)
+            .environmentObject(displayGlucoseUnitObservable)
+            .environment(\.colorPalette, colorPalette)
+            .navigationBarHidden(true)
+        setViewControllers([UIHostingController(rootView: rootView)], animated: true)
     }
 }

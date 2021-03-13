@@ -6,20 +6,80 @@
 //  Copyright © 2021 Tidepool Project. All rights reserved.
 //
 
+import Combine
 import HealthKit
-import SwiftUI
 import LoopKit
 import LoopKitUI
 import TidepoolOnboardingKit
 
-public final class TidepoolOnboardingUI: OnboardingUI {
-    public let onboardingIdentifier = "TidepoolOnboarding"
-
+public final class TidepoolOnboardingUI: ObservableObject, OnboardingUI {
     public static func createOnboarding() -> OnboardingUI {
-        return TidepoolOnboardingUI()
+        return Self()
     }
 
-    public func onboardingViewController(cgmManagerProvider: CGMManagerProvider, pumpManagerProvider: PumpManagerProvider, serviceProvider: ServiceProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) -> (UIViewController & OnboardingViewController) {
-        return OnboardingRootViewController(cgmManagerProvider: cgmManagerProvider, pumpManagerProvider: pumpManagerProvider, serviceProvider: serviceProvider, displayGlucoseUnitObservable: displayGlucoseUnitObservable, colorPalette: colorPalette)
+    public weak var onboardingDelegate: OnboardingDelegate?
+
+    public let onboardingIdentifier = "TidepoolOnboarding"
+
+    var isWelcomeComplete: Bool {
+        didSet {
+            guard isWelcomeComplete != oldValue else { return }
+            notifyDidUpdateState()
+        }
+    }
+    var isTherapySettingsComplete: Bool {
+        didSet {
+            guard isTherapySettingsComplete != oldValue else { return }
+            notifyDidUpdateState()
+        }
+    }
+
+    var therapySettings: TherapySettings? {
+        didSet {
+            guard therapySettings != oldValue, let therapySettings = therapySettings else { return }
+            notifyHasNewTherapySettings(therapySettings)
+        }
+    }
+
+    init() {
+        self.isWelcomeComplete = false
+        self.isTherapySettingsComplete = false
+
+        self.isOnboarded = false
+    }
+
+    public init?(rawState: RawState) {
+        guard let isWelcomeComplete = rawState["isWelcomeComplete"] as? Bool,
+              let isTherapySettingsComplete = rawState["isTherapySettingsComplete"] as? Bool
+        else {
+            return nil
+        }
+
+        self.isWelcomeComplete = isWelcomeComplete
+        self.isTherapySettingsComplete = isTherapySettingsComplete
+
+        self.isOnboarded = isWelcomeComplete && isTherapySettingsComplete
+    }
+
+    public var rawState: RawState {
+        return [
+            "isWelcomeComplete": isWelcomeComplete,
+            "isTherapySettingsComplete": isTherapySettingsComplete
+        ]
+    }
+
+    @Published public var isOnboarded: Bool
+
+    public func onboardingViewController(onboardingProvider: OnboardingProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) -> (UIViewController & OnboardingViewController) {
+        return OnboardingRootViewController(onboarding: self, onboardingProvider: onboardingProvider, displayGlucoseUnitObservable: displayGlucoseUnitObservable, colorPalette: colorPalette)
+    }
+
+    private func notifyDidUpdateState() {
+        onboardingDelegate?.onboardingDidUpdateState(self)
+        self.isOnboarded = isWelcomeComplete && isTherapySettingsComplete
+    }
+
+    private func notifyHasNewTherapySettings(_ therapySettings: TherapySettings) {
+        onboardingDelegate?.onboarding(self, hasNewTherapySettings: therapySettings)
     }
 }

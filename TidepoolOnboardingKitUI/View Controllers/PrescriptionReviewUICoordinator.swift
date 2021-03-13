@@ -13,6 +13,14 @@ import SwiftUI
 import LoopKit
 import LoopKitUI
 
+protocol PrescriptionReviewDelegate: AnyObject {
+    /// Informs the delegate that prescription review has new therapy settings.
+    ///
+    /// - Parameters:
+    ///     - therapySettings: The new therapy settings.
+    func prescriptionReview(hasNewTherapySettings therapySettings: TherapySettings)
+}
+
 enum PrescriptionReviewScreen: CaseIterable {
     case enterCode
     case reviewDevices
@@ -46,8 +54,8 @@ enum PrescriptionReviewScreen: CaseIterable {
     }
 }
 
-class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifying, CompletionNotifying {
-    public weak var onboardingDelegate: OnboardingDelegate?
+class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifying {
+    public weak var prescriptionReviewDelegate: PrescriptionReviewDelegate?
     public weak var completionDelegate: CompletionDelegate?
 
     private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
@@ -82,6 +90,8 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        navigationController?.setNavigationBarHidden(true, animated: animated)
 
         screenStack = [.enterCode]
         let viewController = viewControllerForScreen(currentScreen)
@@ -260,7 +270,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
             let nextButtonString = LocalizedString("Save Settings", comment: "Therapy settings save button title")
             let actionButton = TherapySettingsView.ActionButton(localizedString: nextButtonString) { [weak self] in
                 if let self = self {
-                    self.onboardingDelegate?.onboardingNotifying(hasNewTherapySettings: self.therapySettingsViewModel!.therapySettings)
+                    self.prescriptionReviewDelegate?.prescriptionReview(hasNewTherapySettings: self.therapySettingsViewModel!.therapySettings)
                     self.stepFinished()
                 }
             }
@@ -275,6 +285,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
     private func hostingController<Content: View>(rootView: Content) -> DismissibleHostingController {
         return DismissibleHostingController(rootView: rootView
                                                 .environmentObject(displayGlucoseUnitObservable)
+                                                .environment(\.colorPalette, colorPalette)
                                                 .environment(\.appName, Bundle.main.bundleDisplayName),
                                             colorPalette: colorPalette)
     }

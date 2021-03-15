@@ -160,7 +160,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
             hostedView.title = TherapySetting.preMealCorrectionRangeOverride.smallTitle
             return hostedView
         case .correctionRangePreMealOverrideEditor:
-            let view = CorrectionRangeOverridesEditor(viewModel: therapySettingsViewModel!, preset: .preMeal)
+            let view = CorrectionRangeOverridesEditor(therapySettingsViewModel: therapySettingsViewModel!, preset: .preMeal)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -174,7 +174,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, OnboardingNotifyi
             hostedView.title = TherapySetting.workoutCorrectionRangeOverride.smallTitle
             return hostedView
         case .correctionRangeWorkoutOverrideEditor:
-            let view = CorrectionRangeOverridesEditor(viewModel: therapySettingsViewModel!, preset: .workout)
+            let view = CorrectionRangeOverridesEditor(therapySettingsViewModel: therapySettingsViewModel!, preset: .workout)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView

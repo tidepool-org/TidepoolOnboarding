@@ -24,6 +24,7 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
             OnboardingSectionSheetButton(section: section, destination: destination) {
                 content
             }
+            .navigationBarTransparent(true)
             .accessibilityLabel(accessibilityLabel)
         case .unavailable:
             content

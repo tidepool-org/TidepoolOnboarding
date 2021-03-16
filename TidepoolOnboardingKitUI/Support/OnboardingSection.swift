@@ -6,6 +6,7 @@
 //  Copyright © 2021 Tidepool Project. All rights reserved.
 //
 
+/// The onboarding sections, in order of progression
 enum OnboardingSection: String, CaseIterable, Codable, Equatable {
     case welcome
     case introduction

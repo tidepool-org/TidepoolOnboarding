@@ -39,7 +39,9 @@ struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
                     isActive = false
                 })
                 .environment(\.complete, {
-                    onboardingViewModel.sectionProgression.completeSection(section)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        onboardingViewModel.sectionProgression.completeSection(section)
+                    }
                     isActive = false
                 })
                 .onAppear {

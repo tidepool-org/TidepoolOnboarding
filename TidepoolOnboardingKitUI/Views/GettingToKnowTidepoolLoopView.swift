@@ -50,7 +50,6 @@ struct GettingToKnowTidepoolLoopView: View {
             YourDevicesNavigationButton()
             GetLoopingNavigationButton()
         }
-        .navigationBarTransparent(true)
     }
 }
 

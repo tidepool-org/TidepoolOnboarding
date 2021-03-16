@@ -156,7 +156,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             hostedView.title = TherapySetting.glucoseTargetRange.title
             return hostedView
         case .correctionRangeEditor:
-            let view = CorrectionRangeScheduleEditor(viewModel: therapySettingsViewModel!)
+            let view = CorrectionRangeScheduleEditor(therapySettingsViewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -199,7 +199,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .carbRatioEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = CarbRatioScheduleEditor(viewModel: therapySettingsViewModel!)
+            let view = CarbRatioScheduleEditor(therapySettingsViewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -214,7 +214,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .basalRatesEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = BasalRateScheduleEditor(viewModel: therapySettingsViewModel!)
+            let view = BasalRateScheduleEditor(therapySettingsViewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -229,7 +229,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .deliveryLimitsEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = DeliveryLimitsEditor(viewModel: therapySettingsViewModel!)
+            let view = DeliveryLimitsEditor(therapySettingsViewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView
@@ -244,7 +244,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .insulinModelEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = InsulinModelSelection(viewModel: therapySettingsViewModel!)
+            let view = InsulinModelSelection(therapySettingsViewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .always // TODO: hack to fix jumping, will be removed once editors have titles
             hostedView.title = TherapySetting.insulinModel.title
@@ -260,7 +260,7 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return hostedView
         case .insulinSensitivityEditor:
             precondition(prescriptionViewModel.prescription != nil)
-            let view = InsulinSensitivityScheduleEditor(viewModel: therapySettingsViewModel!)
+            let view = InsulinSensitivityScheduleEditor(therapySettingsViewModel: therapySettingsViewModel!)
             let hostedView = hostingController(rootView: view)
             hostedView.navigationItem.largeTitleDisplayMode = .never // TODO: hack to fix jumping, will be removed once editors have titles
             return hostedView

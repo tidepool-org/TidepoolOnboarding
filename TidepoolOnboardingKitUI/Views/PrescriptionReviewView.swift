@@ -11,11 +11,11 @@ import LoopKit
 import LoopKitUI
 
 struct PrescriptionReviewView: UIViewControllerRepresentable {
+    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
     @EnvironmentObject var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
     @Environment(\.colorPalette) var colorPalette: LoopUIColorPalette
     @Environment(\.complete) var complete
-
-    var hasNewTherapySettings: (TherapySettings) -> Void
+    @Environment(\.dismiss) var dismiss
 
     final class Coordinator: PrescriptionReviewDelegate, CompletionDelegate {
         private let parent: PrescriptionReviewView
@@ -25,13 +25,12 @@ struct PrescriptionReviewView: UIViewControllerRepresentable {
         }
 
         func prescriptionReview(hasNewTherapySettings therapySettings: TherapySettings) {
-            parent.hasNewTherapySettings(therapySettings)
+            parent.onboardingViewModel.therapySettings = therapySettings
+            parent.complete()
         }
 
         func completionNotifyingDidComplete(_ object: CompletionNotifying) {
-            guard let prescriptionReviewUICoordinator = object as? PrescriptionReviewUICoordinator else { return }
-            prescriptionReviewUICoordinator.dismiss(animated: true)
-            parent.complete()
+            parent.dismiss()
         }
     }
     

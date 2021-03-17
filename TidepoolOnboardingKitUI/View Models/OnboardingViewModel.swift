@@ -21,8 +21,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
 
     let onboardingProvider: OnboardingProvider
 
-    @Published var isWelcomeComplete: Bool
-    @Published var isTherapySettingsComplete: Bool
+    @Published var sectionProgression: OnboardingSectionProgression
     @Published var therapySettings: TherapySettings?
 
     private lazy var cancellables = Set<AnyCancellable>()
@@ -30,22 +29,59 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
     init(onboarding: TidepoolOnboardingUI, onboardingProvider: OnboardingProvider) {
         self.onboardingProvider = onboardingProvider
 
-        self.isWelcomeComplete = onboarding.isWelcomeComplete
-        self.isTherapySettingsComplete = onboarding.isTherapySettingsComplete
+        self.sectionProgression = onboarding.sectionProgression
         self.therapySettings = onboarding.therapySettings
 
-        $isWelcomeComplete
+        $sectionProgression
             .dropFirst()
-            .sink { onboarding.isWelcomeComplete = $0 }
-            .store(in: &cancellables)
-        $isTherapySettingsComplete
-            .dropFirst()
-            .sink { onboarding.isTherapySettingsComplete = $0 }
+            .sink { onboarding.sectionProgression = $0 }
             .store(in: &cancellables)
         $therapySettings
             .dropFirst()
             .sink { onboarding.therapySettings = $0 }
             .store(in: &cancellables)
+    }
+
+    func titleForSection(_ section: OnboardingSection) -> String {
+        switch section {
+        case .welcome:
+            return LocalizedString("Welcome", comment: "Title for Welcome onboarding section")
+        case .introduction:
+            return LocalizedString("Introduction", comment: "Title for Introduction onboarding section")
+        case .howTheAppWorks:
+            return LocalizedString("How the App Works", comment: "Title for How the App Works onboarding section")
+        case .aDayInTheLife:
+            return LocalizedString("A Day in the Life", comment: "Title for A Day in the Life onboarding section")
+        case .yourSettings:
+            return LocalizedString("Your Settings", comment: "Title for Your Settings onboarding section")
+        case .yourDevices:
+            return LocalizedString("Your Devices", comment: "Title for Your Devices onboarding section")
+        case .getLooping:
+            return LocalizedString("Get Looping", comment: "Title for Get Looping onboarding section")
+        }
+    }
+
+    func durationForSection(_ section: OnboardingSection) -> TimeInterval {
+        switch section {
+        case .welcome:
+            return .minutes(5)
+        case .introduction:
+            return .minutes(5)
+        case .howTheAppWorks:
+            return .minutes(15)
+        case .aDayInTheLife:
+            return .minutes(10)
+        case .yourSettings:
+            return .minutes(10)
+        case .yourDevices:
+            return .minutes(15)
+        case .getLooping:
+            return .minutes(5)
+        }
+    }
+
+    func durationStringForSection(_ section: OnboardingSection) -> String {
+        return String(format: LocalizedString("%d min.", comment: "Section duration with minutes units (1: section duration in minutes)"), Int(durationForSection(section).minutes))
     }
 }
 

@@ -39,6 +39,7 @@ struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
                     isActive = false
                 })
                 .environment(\.complete, {
+                    // Let sheet dismiss animation finish before completing section (and initiating UI update)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         onboardingViewModel.sectionProgression.completeSection(section)
                     }

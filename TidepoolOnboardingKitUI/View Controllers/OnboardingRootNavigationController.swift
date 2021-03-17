@@ -63,7 +63,7 @@ class OnboardingRootNavigationController: UINavigationController, OnboardingView
         onboardingViewModel.$sectionProgression
             .first { $0.hasCompletedSection(.welcome) }
             .sink { [weak self] _ in
-                self?.setRootView(GettingToKnowTidepoolLoopView())
+                self?.setRootView(GettingToKnowTidepoolLoopView())  // If Welcome is complete, then Getting to Know Tidepool Loop becomes the root view
             }
             .store(in: &cancellables)
     }
@@ -75,6 +75,7 @@ class OnboardingRootNavigationController: UINavigationController, OnboardingView
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        // If there is no root view yet (because Welcome not complete), then Welcome becomes the root view
         if viewControllers.isEmpty {
             setRootView(WelcomeTabView())
         }

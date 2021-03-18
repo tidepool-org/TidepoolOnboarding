@@ -33,6 +33,7 @@
 		A923335D25C3789800D8CF69 /* WelcomeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923334B25C3789700D8CF69 /* WelcomeViews.swift */; };
 		A923336525C3789800D8CF69 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923335525C3789800D8CF69 /* ActionButton.swift */; };
 		A923336725C3789800D8CF69 /* ContentPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923335825C3789800D8CF69 /* ContentPreview.swift */; };
+		A93D2B112602606E0091FB65 /* AbortOnLongPressGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93D2B102602606E0091FB65 /* AbortOnLongPressGesture.swift */; };
 		A95422D325CC9A74003F3080 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95422D225CC9A74003F3080 /* Image.swift */; };
 		A98AD2BE25830807001AAD6F /* TidepoolOnboardingPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A98AD2D325830843001AAD6F /* TidepoolOnboardingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */; };
@@ -142,6 +143,7 @@
 		A923334B25C3789700D8CF69 /* WelcomeViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViews.swift; sourceTree = "<group>"; };
 		A923335525C3789800D8CF69 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		A923335825C3789800D8CF69 /* ContentPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPreview.swift; sourceTree = "<group>"; };
+		A93D2B102602606E0091FB65 /* AbortOnLongPressGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbortOnLongPressGesture.swift; sourceTree = "<group>"; };
 		A95422D225CC9A74003F3080 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingPlugin.h; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 		A9A5629125F86DAB00A272B9 /* View Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				A93D2B102602606E0091FB65 /* AbortOnLongPressGesture.swift */,
 				A9A5624F25F8224B00A272B9 /* TransparentNavigationBar.swift */,
 			);
 			path = "View Modifiers";
@@ -878,6 +881,7 @@
 				A9BEF06C2588380F00860217 /* PrescriptionCodeEntryView.swift in Sources */,
 				A923334225C3786100D8CF69 /* Environment+Complete.swift in Sources */,
 				A916AA5125F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift in Sources */,
+				A93D2B112602606E0091FB65 /* AbortOnLongPressGesture.swift in Sources */,
 				A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */,
 				A99EAA9B25F7FCF700503A6D /* ADayInTheLifeViews.swift in Sources */,
 				A923334125C3786100D8CF69 /* TimeInterval.swift in Sources */,

@@ -3,12 +3,15 @@
 //  TidepoolOnboardingKitUITests
 //
 //  Created by Darin Krauss on 3/12/21.
+//  Copyright © 2021 Tidepool Project. All rights reserved.
 //
 
 import LoopKit
 import LoopKitUI
 
 class MockOnboardingProvider: OnboardingProvider {
+    var allowSkipOnboarding: Bool = true
+
     func getNotificationAuthorization(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
     func authorizeNotification(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
 

@@ -83,6 +83,26 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
     func durationStringForSection(_ section: OnboardingSection) -> String {
         return String(format: LocalizedString("%d min.", comment: "Section duration with minutes units (1: section duration in minutes)"), Int(durationForSection(section).minutes))
     }
+
+    // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
+
+    var allowSkipOnboarding: Bool { onboardingProvider.allowSkipOnboarding }
+
+    func skipOnboarding() {
+        guard allowSkipOnboarding else { return }
+
+        OnboardingSection.allCases.forEach { section in
+            if !sectionProgression.hasStartedSection(section) {
+                sectionProgression.startSection(section)
+            }
+            if !sectionProgression.hasCompletedSection(section) {
+                if section == .yourSettings {
+                    self.therapySettings = .mockTherapySettings     // If therapy settings not completed, then use mock therapy settings
+                }
+                sectionProgression.completeSection(section)
+            }
+        }
+    }
 }
 
 extension OnboardingViewModel: CGMManagerCreateDelegate {

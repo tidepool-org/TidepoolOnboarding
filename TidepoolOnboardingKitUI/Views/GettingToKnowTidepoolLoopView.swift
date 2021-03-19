@@ -10,6 +10,8 @@ import SwiftUI
 import LoopKitUI
 
 struct GettingToKnowTidepoolLoopView: View {
+    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
+
     var body: some View {
         ZStack {
             Color(.systemGroupedBackground)
@@ -32,6 +34,9 @@ struct GettingToKnowTidepoolLoopView: View {
             .bold()
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
+            .abortOnLongPressGesture(enabled: onboardingViewModel.allowSkipOnboarding) {
+                onboardingViewModel.skipOnboarding()   // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
+            }
     }
 
     private var description: some View {

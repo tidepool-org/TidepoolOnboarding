@@ -14,6 +14,8 @@ extension OnboardingViewModel {
 }
 
 fileprivate class PreviewOnboardingProvider: OnboardingProvider {
+    var allowSkipOnboarding: Bool = true
+
     func getNotificationAuthorization(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
     func authorizeNotification(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
 

@@ -34,7 +34,7 @@ public final class TidepoolOnboardingUI: ObservableObject, OnboardingUI {
         }
     }
 
-    init() {
+    public init() {
         self.sectionProgression = OnboardingSectionProgression()
 
         self.isOnboarded = false
@@ -70,5 +70,11 @@ public final class TidepoolOnboardingUI: ObservableObject, OnboardingUI {
 
     private func notifyHasNewTherapySettings(_ therapySettings: TherapySettings) {
         onboardingDelegate?.onboarding(self, hasNewTherapySettings: therapySettings)
+    }
+
+    public func reset() {
+        self.sectionProgression = OnboardingSectionProgression()
+        self.therapySettings = nil
+        self.isOnboarded = false
     }
 }

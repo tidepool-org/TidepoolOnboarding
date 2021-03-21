@@ -1,5 +1,5 @@
 //
-//  AbortOnLongPressGesture.swift
+//  AlertOnLongPressGesture.swift
 //  TidepoolOnboardingKitUI
 //
 //  Created by Darin Krauss on 3/17/21.
@@ -9,21 +9,23 @@
 import SwiftUI
 
 extension View {
-    func abortOnLongPressGesture(enabled: Bool = true, minimumDuration: Double = 2, perform action: @escaping () -> Void) -> some View {
-        modifier(AbortOnLongPressGesture(enabled: enabled, minimumDuration: minimumDuration, perform: action))
+    func alertOnLongPressGesture(enabled: Bool = true, minimumDuration: Double = 2, title: String, perform action: @escaping () -> Void) -> some View {
+        modifier(AlertOnLongPressGesture(enabled: enabled, minimumDuration: minimumDuration, title: title, perform: action))
     }
 }
 
-fileprivate struct AbortOnLongPressGesture: ViewModifier {
+fileprivate struct AlertOnLongPressGesture: ViewModifier {
     @State private var isAlertPresented = false
 
     private let enabled: Bool
     private let minimumDuration: Double
+    private let title: String
     private let action: () -> Void
 
-    init(enabled: Bool, minimumDuration: Double, perform action: @escaping () -> Void) {
+    init(enabled: Bool, minimumDuration: Double, title: String, perform action: @escaping () -> Void) {
         self.enabled = enabled
         self.minimumDuration = minimumDuration
+        self.title = title
         self.action = action
     }
 
@@ -39,8 +41,8 @@ fileprivate struct AbortOnLongPressGesture: ViewModifier {
     }
 
     private var alert: Alert {
-        Alert(title: Text("Are you sure you want to abort?"),
+        Alert(title: Text(title),
               primaryButton: .cancel { isAlertPresented = false },
-              secondaryButton: .destructive(Text("Abort"), action: action))
+              secondaryButton: .destructive(Text("Yes"), action: action))
     }
 }

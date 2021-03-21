@@ -26,7 +26,7 @@ struct NavigationButton_Previews: PreviewProvider {
         ContentPreview {
             NavigationView {
                 ScrollView {
-                    NavigationButton(title: "Continue", destination: Text("Destination"))
+                    NavigationButton(title: "Navigate", destination: Text("Destination"))
                 }
                 .padding()
                 .navigationBarHidden(true)

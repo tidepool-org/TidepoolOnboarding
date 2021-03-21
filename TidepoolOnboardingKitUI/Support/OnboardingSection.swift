@@ -106,6 +106,8 @@ struct OnboardingSectionProgression: RawRepresentable, Codable, Equatable {
         }
     }
 
+    func isAvailableSection(_ section: OnboardingSection) -> Bool { hasCompletedAllPreviousSections(section) && !hasCompletedSection(section) }
+
     func hasStartedSection(_ section: OnboardingSection) -> Bool { progression.contains { $0.section == section && $0.progress == .started } }
 
     func hasCompletedSection(_ section: OnboardingSection) -> Bool { progression.contains { $0.section == section && $0.progress == .completed } }

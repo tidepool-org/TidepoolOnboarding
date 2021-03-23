@@ -29,18 +29,19 @@ struct GettingToKnowTidepoolLoopView: View {
     }
 
     private var title: some View {
-        Text(LocalizedString("Getting to Know Tidepool Loop", comment: "Title of Getting to Know Tidepool Loop view"))
+        Text(LocalizedString("Getting to Know Tidepool Loop", comment: "Onboarding, Getting to Know Tidepool Loop summary, title"))
             .font(.largeTitle)
             .bold()
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
-            .abortOnLongPressGesture(enabled: onboardingViewModel.allowSkipOnboarding) {
-                onboardingViewModel.skipOnboarding()   // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
+            .alertOnLongPressGesture(enabled: onboardingViewModel.allowSkipOnboarding,
+                                     title: "Are you sure you want to skip the rest of onboarding?") {  // Not localized
+                onboardingViewModel.skipAllSections()   // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
             }
     }
 
     private var description: some View {
-        Text(LocalizedString("You can take your time through each section. The app will save your place and start you back at the beginning of a section if you step away.", comment: "Description on Getting to Know Tidepool Loop view"))
+        Text(LocalizedString("You can take your time through each section. The app will save your place and start you back at the beginning of a section if you step away.", comment: "Onboarding, Getting to Know Tidepool Loop summary, body"))
             .font(.body)
             .accentColor(.secondary)
             .foregroundColor(.accentColor)
@@ -59,11 +60,21 @@ struct GettingToKnowTidepoolLoopView: View {
 }
 
 struct GettingToKnowTidepoolLoopView_Previews: PreviewProvider {
+    static var onboardingViewModel: OnboardingViewModel = {
+        let onboardingViewModel = OnboardingViewModel.preview
+        onboardingViewModel.skipUntilSection(.introduction)
+        return onboardingViewModel
+    }()
+
+    static var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable = {
+        return DisplayGlucoseUnitObservable.preview
+    }()
+
     static var previews: some View {
         ContentPreview {
             GettingToKnowTidepoolLoopView()
-                .environmentObject(OnboardingViewModel.preview)
-                .environmentObject(DisplayGlucoseUnitObservable.preview)
+                .environmentObject(onboardingViewModel)
+                .environmentObject(displayGlucoseUnitObservable)
         }
     }
 }

@@ -38,3 +38,24 @@ struct ContentPreview<Content: View>: View {
         }
     }
 }
+
+struct ContentPreviewWithBackground<Content: View>: View {
+    private let content: Content
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    var body: some View {
+        ContentPreview {
+            ZStack {
+                Color(.systemGroupedBackground)
+                    .edgesIgnoringSafeArea(.all)
+                ScrollView {
+                    content
+                }
+                .padding()
+            }
+        }
+    }
+}

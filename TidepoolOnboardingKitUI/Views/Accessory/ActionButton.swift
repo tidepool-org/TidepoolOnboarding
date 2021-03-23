@@ -26,11 +26,8 @@ struct ActionButton: View {
 
 struct ActionButton_Previews: PreviewProvider {
     static var previews: some View {
-        ContentPreview {
-            ScrollView {
-                ActionButton(title: "Continue", action: {})
-            }
-            .padding()
+        ContentPreviewWithBackground {
+            ActionButton(title: "Action", action: {})
         }
     }
 }

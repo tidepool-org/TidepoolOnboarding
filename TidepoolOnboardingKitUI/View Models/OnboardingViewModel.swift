@@ -45,19 +45,19 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
     func titleForSection(_ section: OnboardingSection) -> String {
         switch section {
         case .welcome:
-            return LocalizedString("Welcome", comment: "Title for Welcome onboarding section")
+            return LocalizedString("Welcome", comment: "Onboarding, Welcome section, button title")
         case .introduction:
-            return LocalizedString("Introduction", comment: "Title for Introduction onboarding section")
+            return LocalizedString("Introduction", comment: "Onboarding, Introduction section, button title")
         case .howTheAppWorks:
-            return LocalizedString("How the App Works", comment: "Title for How the App Works onboarding section")
+            return LocalizedString("How the App Works", comment: "Onboarding, How the App Works section, button title")
         case .aDayInTheLife:
-            return LocalizedString("A Day in the Life", comment: "Title for A Day in the Life onboarding section")
+            return LocalizedString("A Day in the Life", comment: "Onboarding, A Day in the Life section, button title")
         case .yourSettings:
-            return LocalizedString("Your Settings", comment: "Title for Your Settings onboarding section")
+            return LocalizedString("Your Settings", comment: "Onboarding, Your Settings section, button title")
         case .yourDevices:
-            return LocalizedString("Your Devices", comment: "Title for Your Devices onboarding section")
+            return LocalizedString("Your Devices", comment: "Onboarding, Your Devices section, button title")
         case .getLooping:
-            return LocalizedString("Get Looping", comment: "Title for Get Looping onboarding section")
+            return LocalizedString("Get Looping", comment: "Onboarding, Get Looping section, button title")
         }
     }
 
@@ -81,26 +81,37 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
     }
 
     func durationStringForSection(_ section: OnboardingSection) -> String {
-        return String(format: LocalizedString("%d min.", comment: "Section duration with minutes units (1: section duration in minutes)"), Int(durationForSection(section).minutes))
+        return String(format: LocalizedString("%d min.", comment: "Section duration label (1: section duration in minutes)"), Int(durationForSection(section).minutes))
     }
 
     // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
 
     var allowSkipOnboarding: Bool { onboardingProvider.allowSkipOnboarding }
 
-    func skipOnboarding() {
+    func skipAllSections() {
+        OnboardingSection.allCases.forEach { skipSection($0) }
+    }
+
+    func skipThroughSection(_ section: OnboardingSection) {
+        skipUntilSection(section)
+        skipSection(section)
+    }
+
+    func skipUntilSection(_ section: OnboardingSection) {
+        OnboardingSection.allCases.prefix(while: { $0 != section }).forEach { skipSection($0) }
+    }
+
+    func skipSection(_ section: OnboardingSection) {
         guard allowSkipOnboarding else { return }
 
-        OnboardingSection.allCases.forEach { section in
-            if !sectionProgression.hasStartedSection(section) {
-                sectionProgression.startSection(section)
+        if !sectionProgression.hasStartedSection(section) {
+            sectionProgression.startSection(section)
+        }
+        if !sectionProgression.hasCompletedSection(section) {
+            if section == .yourSettings {
+                self.therapySettings = .mockTherapySettings     // If therapy settings not completed, then use mock therapy settings
             }
-            if !sectionProgression.hasCompletedSection(section) {
-                if section == .yourSettings {
-                    self.therapySettings = .mockTherapySettings     // If therapy settings not completed, then use mock therapy settings
-                }
-                sectionProgression.completeSection(section)
-            }
+            sectionProgression.completeSection(section)
         }
     }
 }

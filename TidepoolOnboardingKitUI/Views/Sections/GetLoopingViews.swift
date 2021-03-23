@@ -10,18 +10,15 @@ import SwiftUI
 
 struct GetLoopingNavigationButton: View {
     var body: some View {
-        OnboardingSectionNavigationButton(section: .getLooping, destination: GetLoopingNavigationView())
+        OnboardingSectionNavigationButton(section: .getLooping, destination: NavigationView { GetLoopingView1() })
             .accessibilityIdentifier("button_get_looping")
     }
 }
 
-fileprivate struct GetLoopingNavigationView: View {
+fileprivate struct GetLoopingView1: View {
     var body: some View {
-        NavigationView() {
-            OnboardingSectionPagesView(sectionPages: getLoopingSectionPages)
+        OnboardingSectionPageView(section: .getLooping, backButtonHidden: true) {
+            EmptyView()
         }
     }
 }
-
-fileprivate let getLoopingSectionPages = OnboardingSectionPages(section: .getLooping, pages: getLoopingPages)
-fileprivate let getLoopingPages = [OnboardingPage(title: "Get Looping", view: EmptyView())]

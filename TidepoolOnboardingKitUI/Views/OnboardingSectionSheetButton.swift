@@ -48,21 +48,20 @@ struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
                 .onAppear {
                     onboardingViewModel.sectionProgression.startSection(section)
                 }
+                .presentation(isModal: true)
         }
     }
 }
 
 struct OnboardingSectionSheetButton_Previews: PreviewProvider {
     static var previews: some View {
-        ContentPreview {
-            ScrollView {
-                OnboardingSectionSheetButton(section: .introduction, destination: Text("Destination")) {
-                    Text("Continue")
-                }
-                .environmentObject(OnboardingViewModel.preview)
-                .environmentObject(DisplayGlucoseUnitObservable.preview)
+        ContentPreviewWithBackground {
+            OnboardingSectionSheetButton(section: .welcome, destination: CompleteDismissView()) {
+                Text("Section")
             }
-            .padding()
+            .buttonStyle(ActionButtonStyle())
+            .environmentObject(OnboardingViewModel.preview)
+            .environmentObject(DisplayGlucoseUnitObservable.preview)
         }
     }
 }

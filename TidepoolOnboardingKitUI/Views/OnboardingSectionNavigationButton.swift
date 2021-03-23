@@ -41,6 +41,10 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
                 selectionIndicator
                     .frame(width: 22, height: 22)
                     .foregroundColor(.accentColor)
+                    .alertOnLongPressGesture(enabled: onboardingViewModel.allowSkipOnboarding && !onboardingViewModel.sectionProgression.hasCompletedSection(section),
+                                             title: "Are you sure you want to skip through this section?") {  // Not localized
+                        onboardingViewModel.skipThroughSection(section)   // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
+                    }
             }
             Spacer()
             durationText
@@ -83,17 +87,28 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
 }
 
 struct OnboardingSectionNavigationButton_Previews: PreviewProvider {
+    static var onboardingViewModel: OnboardingViewModel = {
+        let onboardingViewModel = OnboardingViewModel.preview
+        onboardingViewModel.skipUntilSection(.howTheAppWorks)
+        return onboardingViewModel
+    }()
+
+    static var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable = {
+        return DisplayGlucoseUnitObservable.preview
+    }()
+
     static var previews: some View {
-        ContentPreview {
-            ZStack {
-                Color(.systemGroupedBackground)
-                    .edgesIgnoringSafeArea(.all)
-                ScrollView {
-                    OnboardingSectionNavigationButton(section: .introduction, destination: NavigationView() { EmptyView() })
-                        .environmentObject(OnboardingViewModel.preview)
-                        .environmentObject(DisplayGlucoseUnitObservable.preview)
-                }
-                .padding()
+        return ContentPreviewWithBackground {
+            VStack {
+                OnboardingSectionNavigationButton(section: .introduction, destination: CompleteDismissView())
+                    .environmentObject(onboardingViewModel)
+                    .environmentObject(displayGlucoseUnitObservable)
+                OnboardingSectionNavigationButton(section: .howTheAppWorks, destination: CompleteDismissView())
+                    .environmentObject(onboardingViewModel)
+                    .environmentObject(displayGlucoseUnitObservable)
+                OnboardingSectionNavigationButton(section: .aDayInTheLife, destination: CompleteDismissView())
+                    .environmentObject(onboardingViewModel)
+                    .environmentObject(displayGlucoseUnitObservable)
             }
         }
     }

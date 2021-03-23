@@ -10,21 +10,10 @@ import SwiftUI
 
 struct YourDevicesNavigationButton: View {
     var body: some View {
-        OnboardingSectionNavigationButton(section: .yourDevices, destination: YourDevicesNavigationView())
+        OnboardingSectionNavigationButton(section: .yourDevices, destination: NavigationView { YourDevicesView1() })
             .accessibilityIdentifier("button_your_devices")
     }
 }
-
-fileprivate struct YourDevicesNavigationView: View {
-    var body: some View {
-        NavigationView() {
-            OnboardingSectionPagesView(sectionPages: yourDevicesSectionPages)
-        }
-    }
-}
-
-fileprivate let yourDevicesSectionPages = OnboardingSectionPages(section: .yourDevices, pages: yourDevicesPages)
-fileprivate let yourDevicesPages = [OnboardingPage(title: "Authorization", view: YourDevicesView1())]
 
 fileprivate struct YourDevicesView1: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
@@ -34,12 +23,14 @@ fileprivate struct YourDevicesView1: View {
     @State var authorizeBluetoothEnabled = false
 
     var body: some View {
-        VStack {
-            Spacer()
-            authorizeNotificationButton
-            authorizeHealthStoreButton
-            authorizeBluetoothButton
-            Spacer()
+        OnboardingSectionPageView(section: .yourDevices, backButtonHidden: true) {
+            VStack {
+                Spacer()
+                authorizeNotificationButton
+                authorizeHealthStoreButton
+                authorizeBluetoothButton
+                Spacer()
+            }
         }
         .onAppear {
             checkAuthorization()

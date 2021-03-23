@@ -10,18 +10,15 @@ import SwiftUI
 
 struct HowTheAppWorksNavigationButton: View {
     var body: some View {
-        OnboardingSectionNavigationButton(section: .howTheAppWorks, destination: HowTheAppWorksNavigationView())
+        OnboardingSectionNavigationButton(section: .howTheAppWorks, destination: NavigationView { HowTheAppWorksView1() })
             .accessibilityIdentifier("button_how_the_app_works")
     }
 }
 
-fileprivate struct HowTheAppWorksNavigationView: View {
+fileprivate struct HowTheAppWorksView1: View {
     var body: some View {
-        NavigationView() {
-            OnboardingSectionPagesView(sectionPages: howTheAppWorksSectionPages)
+        OnboardingSectionPageView(section: .howTheAppWorks, backButtonHidden: true) {
+            EmptyView()
         }
     }
 }
-
-fileprivate let howTheAppWorksSectionPages = OnboardingSectionPages(section: .howTheAppWorks, pages: howTheAppWorksPages)
-fileprivate let howTheAppWorksPages = [OnboardingPage(title: "How the App Works", view: EmptyView())]

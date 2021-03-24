@@ -49,7 +49,7 @@ struct WelcomeTabView: View {
                 .bold()
                 .multilineTextAlignment(welcomeData[index].alignment)
             if let description = welcomeData[index].description {
-                BodyText(description)
+                Paragraph(description)
             } else {
                 EmptyView()
             }
@@ -80,27 +80,27 @@ struct WelcomeTabView: View {
 }
 
 fileprivate let welcomeData = [
-    WelcomeData(image: "Welcome_1_Top",
+    WelcomeData(image: "Welcome_1",
                 title: LocalizedString("Welcome to\nTidepool Loop", comment: "Onboarding, Welcome section, view 1, title"),
                 alignment: .center),
-    WelcomeData(image: "Welcome_2_Top",
+    WelcomeData(image: "Welcome_2",
                 title: LocalizedString("What is Automated Insulin Dosing?", comment: "Onboarding, Welcome section, view 2, title"),
-                description: LocalizedString("An automated insulin dosing system is different than a typical insulin pump. It automatically adjusts your background (or basal) insulin in response to your glucose readings from a CGM sensor.", comment: "Onboarding, Welcome section, view 2, body")),
-    WelcomeData(image: "Welcome_3_Top",
+                description: LocalizedString("An automated insulin dosing system is different than a typical insulin pump. It automatically adjusts your background (or basal) insulin in response to your glucose readings from a CGM sensor.", comment: "Onboarding, Welcome section, view 2, description")),
+    WelcomeData(image: "Welcome_3",
                 title: LocalizedString("What is Tidepool Loop?", comment: "Onboarding, Welcome section, view 3, title"),
-                description: LocalizedString("Tidepool Loop is an app designed to automate your insulin dosing by doing the following:", comment: "Onboarding, Welcome section, view 3, body")),
-    WelcomeData(image: "Welcome_4_Top",
+                description: LocalizedString("Tidepool Loop is an app designed to automate your insulin dosing by doing the following:", comment: "Onboarding, Welcome section, view 3, description")),
+    WelcomeData(image: "Welcome_4",
                 title: LocalizedString("Pulling Together Information", comment: "Onboarding, Welcome section, view 4, title"),
-                description: LocalizedString("about your glucose and insulin from the Bluetooth-connected diabetes devices you wear: a continuous glucose monitor (CGM) and an insulin pump.", comment: "Onboarding, Welcome section, view 4, body")),
-    WelcomeData(image: "Welcome_5_Top",
+                description: LocalizedString("about your glucose and insulin from the Bluetooth-connected diabetes devices you wear: a continuous glucose monitor (CGM) and an insulin pump.", comment: "Onboarding, Welcome section, view 4, description")),
+    WelcomeData(image: "Welcome_5",
                 title: LocalizedString("Connecting that Information", comment: "Onboarding, Welcome section, view 5, title"),
-                description: LocalizedString("with details you enter about carbs you eat, plans for exercise, and glucose targets you’re aiming for.", comment: "Onboarding, Welcome section, view 5, body")),
-    WelcomeData(image: "Welcome_6_Top",
+                description: LocalizedString("with details you enter about carbs you eat, plans for exercise, and glucose targets you’re aiming for.", comment: "Onboarding, Welcome section, view 5, description")),
+    WelcomeData(image: "Welcome_6",
                 title: LocalizedString("Adjusting Your Insulin Delivery", comment: "Onboarding, Welcome section, view 6, title"),
-                description: LocalizedString("in the background to reduce high and low glucose and work to keep you in your target Correction Range.", comment: "Onboarding, Welcome section, view 6, body")),
-    WelcomeData(image: "Welcome_7_Top",
+                description: LocalizedString("in the background to reduce high and low glucose and work to keep you in your target Correction Range.", comment: "Onboarding, Welcome section, view 6, description")),
+    WelcomeData(image: "Welcome_7",
                 title: LocalizedString("You Have a Role to Play", comment: "Onboarding, Welcome section, view 7, title"),
-                description: LocalizedString("While Tidepool Loop has many features to support you in managing your diabetes, you have an important role to play in using the app safely and effectively.\n\nThat’s why you’ll need to complete this in-app learning to begin using Tidepool Loop.", comment: "Onboarding, Welcome section, view 7, body"))
+                description: LocalizedString("While Tidepool Loop has many features to support you in managing your diabetes, you have an important role to play in using the app safely and effectively.\n\nThat’s why you’ll need to complete this in-app learning to begin using Tidepool Loop.", comment: "Onboarding, Welcome section, view 7, description"))
 ]
 
 fileprivate struct WelcomeData {

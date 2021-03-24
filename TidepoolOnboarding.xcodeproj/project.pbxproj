@@ -42,6 +42,9 @@
 		A923335D25C3789800D8CF69 /* WelcomeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923334B25C3789700D8CF69 /* WelcomeViews.swift */; };
 		A923336525C3789800D8CF69 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923335525C3789800D8CF69 /* ActionButton.swift */; };
 		A923336725C3789800D8CF69 /* ContentPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923335825C3789800D8CF69 /* ContentPreview.swift */; };
+		A933F3142608EFF500DB84B9 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933F3132608EFF500DB84B9 /* Segment.swift */; };
+		A933F31D260925EA00DB84B9 /* LoopIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933F31C260925EA00DB84B9 /* LoopIcon.swift */; };
+		A933F362260975A400DB84B9 /* AccessibleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933F361260975A400DB84B9 /* AccessibleImage.swift */; };
 		A93D2B112602606E0091FB65 /* AlertOnLongPressGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93D2B102602606E0091FB65 /* AlertOnLongPressGesture.swift */; };
 		A9502CB625FFEE8E00146AD3 /* OnboardingSectionPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CB525FFEE8E00146AD3 /* OnboardingSectionPageView.swift */; };
 		A9502CBE25FFEF7B00146AD3 /* PageHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CBD25FFEF7B00146AD3 /* PageHeader.swift */; };
@@ -96,6 +99,7 @@
 		A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */; };
 		A9A5625025F8224B00A272B9 /* TransparentNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A5624F25F8224B00A272B9 /* TransparentNavigationBar.swift */; };
 		A9A5739F2603AA080084592C /* WarningIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A5739E2603AA080084592C /* WarningIcon.swift */; };
+		A9A90F92260A50FD00264BCB /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A90F91260A50FD00264BCB /* Paragraph.swift */; };
 		A9ABAE832607C3AE00E7CD4A /* CheckpointCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */; };
 		A9B6736825F159A400D27872 /* YourDevicesViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B6736725F159A400D27872 /* YourDevicesViews.swift */; };
 		A9BEF02C25882F4E00860217 /* TidepoolOnboardingUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */; };
@@ -185,6 +189,9 @@
 		A923334B25C3789700D8CF69 /* WelcomeViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViews.swift; sourceTree = "<group>"; };
 		A923335525C3789800D8CF69 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		A923335825C3789800D8CF69 /* ContentPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentPreview.swift; sourceTree = "<group>"; };
+		A933F3132608EFF500DB84B9 /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
+		A933F31C260925EA00DB84B9 /* LoopIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopIcon.swift; sourceTree = "<group>"; };
+		A933F361260975A400DB84B9 /* AccessibleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleImage.swift; sourceTree = "<group>"; };
 		A93D2B102602606E0091FB65 /* AlertOnLongPressGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertOnLongPressGesture.swift; sourceTree = "<group>"; };
 		A9502CB525FFEE8E00146AD3 /* OnboardingSectionPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionPageView.swift; sourceTree = "<group>"; };
 		A9502CBD25FFEF7B00146AD3 /* PageHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHeader.swift; sourceTree = "<group>"; };
@@ -242,6 +249,7 @@
 		A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewView.swift; sourceTree = "<group>"; };
 		A9A5624F25F8224B00A272B9 /* TransparentNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentNavigationBar.swift; sourceTree = "<group>"; };
 		A9A5739E2603AA080084592C /* WarningIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningIcon.swift; sourceTree = "<group>"; };
+		A9A90F91260A50FD00264BCB /* Paragraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
 		A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointCheckmark.swift; sourceTree = "<group>"; };
 		A9B6736725F159A400D27872 /* YourDevicesViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourDevicesViews.swift; sourceTree = "<group>"; };
 		A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboardingUI.swift; sourceTree = "<group>"; };
@@ -366,6 +374,7 @@
 		A923335325C3789700D8CF69 /* Accessory */ = {
 			isa = PBXGroup;
 			children = (
+				A933F361260975A400DB84B9 /* AccessibleImage.swift */,
 				A923335525C3789800D8CF69 /* ActionButton.swift */,
 				A9502CD92600293200146AD3 /* BodyText.swift */,
 				A9502CEF2600298300146AD3 /* BulletedBodyTextList.swift */,
@@ -374,9 +383,12 @@
 				A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */,
 				A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */,
 				A9502CE72600295A00146AD3 /* HeaderText.swift */,
+				A933F31C260925EA00DB84B9 /* LoopIcon.swift */,
 				A903C78F25F143BC00C88786 /* NavigationButton.swift */,
 				A9502CBD25FFEF7B00146AD3 /* PageHeader.swift */,
+				A9A90F91260A50FD00264BCB /* Paragraph.swift */,
 				A9502CCB25FFEFD500146AD3 /* PresentableImage.swift */,
+				A933F3132608EFF500DB84B9 /* Segment.swift */,
 				A9A5739E2603AA080084592C /* WarningIcon.swift */,
 			);
 			path = Accessory;
@@ -1046,7 +1058,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A933F31D260925EA00DB84B9 /* LoopIcon.swift in Sources */,
 				A99EAAA325F7FD1F00503A6D /* YourSettingsViews.swift in Sources */,
+				A933F3142608EFF500DB84B9 /* Segment.swift in Sources */,
 				A95BB9122603230B00E9FD17 /* Callout.swift in Sources */,
 				A903C7A025F1444300C88786 /* OnboardingSectionNavigationButton.swift in Sources */,
 				A9ABAE832607C3AE00E7CD4A /* CheckpointCheckmark.swift in Sources */,
@@ -1076,9 +1090,11 @@
 				A9502CCC25FFEFD500146AD3 /* PresentableImage.swift in Sources */,
 				A9BEF038258835DF00860217 /* PrescriptionReviewUICoordinator.swift in Sources */,
 				A99EAA9325F7FCEA00503A6D /* HowTheAppWorksViews.swift in Sources */,
+				A9A90F92260A50FD00264BCB /* Paragraph.swift in Sources */,
 				A9EFBD322602D09B0070E9CC /* ModalPresentation.swift in Sources */,
 				A9A5625025F8224B00A272B9 /* TransparentNavigationBar.swift in Sources */,
 				A923336525C3789800D8CF69 /* ActionButton.swift in Sources */,
+				A933F362260975A400DB84B9 /* AccessibleImage.swift in Sources */,
 				A903C79025F143BC00C88786 /* NavigationButton.swift in Sources */,
 				A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */,
 				A99EAA8B25F7FCDA00503A6D /* IntroductionViews.swift in Sources */,

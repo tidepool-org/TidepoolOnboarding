@@ -29,8 +29,15 @@ public final class TidepoolOnboardingUI: ObservableObject, OnboardingUI {
 
     var therapySettings: TherapySettings? {
         didSet {
-            guard therapySettings != oldValue, let therapySettings = therapySettings else { return }
+            guard let therapySettings = therapySettings else { return }
             notifyHasNewTherapySettings(therapySettings)
+        }
+    }
+
+    var dosingEnabled: Bool? {
+        didSet {
+            guard let dosingEnabled = dosingEnabled else { return }
+            notifyHasNewDosingEnabled(dosingEnabled)
         }
     }
 
@@ -70,6 +77,10 @@ public final class TidepoolOnboardingUI: ObservableObject, OnboardingUI {
 
     private func notifyHasNewTherapySettings(_ therapySettings: TherapySettings) {
         onboardingDelegate?.onboarding(self, hasNewTherapySettings: therapySettings)
+    }
+
+    private func notifyHasNewDosingEnabled(_ dosingEnabled: Bool) {
+        onboardingDelegate?.onboarding(self, hasNewDosingEnabled: dosingEnabled)
     }
 
     public func reset() {

@@ -33,7 +33,7 @@ struct PresentableImage: View {
 struct PresentableImage_Previews: PreviewProvider {
     static var previews: some View {
         ContentPreviewWithBackground {
-            PresentableImage("Welcome_1_Top")
+            PresentableImage("Welcome_1")
         }
     }
 }

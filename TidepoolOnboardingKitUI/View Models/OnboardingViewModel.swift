@@ -23,6 +23,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
 
     @Published var sectionProgression: OnboardingSectionProgression
     @Published var therapySettings: TherapySettings?
+    @Published var dosingEnabled: Bool
 
     private lazy var cancellables = Set<AnyCancellable>()
 
@@ -31,14 +32,21 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
 
         self.sectionProgression = onboarding.sectionProgression
         self.therapySettings = onboarding.therapySettings
+        self.dosingEnabled = onboarding.dosingEnabled ?? true
 
         $sectionProgression
             .dropFirst()
             .sink { onboarding.sectionProgression = $0 }
             .store(in: &cancellables)
-        $therapySettings
+        $sectionProgression
             .dropFirst()
-            .sink { onboarding.therapySettings = $0 }
+            .filter { $0.hasCompletedSection(.yourSettings) && !$0.hasStartedSection(.yourDevices) }
+            .sink { _ in onboarding.therapySettings = self.therapySettings }
+            .store(in: &cancellables)
+        $sectionProgression
+            .dropFirst()
+            .filter { $0.hasCompletedSection(.getLooping) }
+            .sink { _ in onboarding.dosingEnabled = self.dosingEnabled }
             .store(in: &cancellables)
     }
 

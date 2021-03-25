@@ -10,20 +10,20 @@ import LoopKitUI
 
 extension LoopUIColorPalette {
     static var demo: LoopUIColorPalette {
-        LoopUIColorPalette(guidanceColors: GuidanceColors(acceptable: .green,
-                                                          warning: .yellow,
-                                                          critical: .red),
-                           carbTintColor: .green,
-                           glucoseTintColor: .blue,
-                           insulinTintColor: .orange,
-                           loopStatusColorPalette: StateColorPalette(unknown: .systemGray4,
-                                                                     normal: .green,
-                                                                     warning: .orange,
-                                                                     error: .red),
-                           chartColorPalette: ChartColorPalette(axisLine: .label,
-                                                                axisLabel: .label,
-                                                                grid: .secondaryLabel,
-                                                                glucoseTint: .blue,
-                                                                insulinTint: .orange))
+        return LoopUIColorPalette(guidanceColors: GuidanceColors(acceptable: .green,
+                                                                 warning: .yellow,
+                                                                 critical: .red),
+                                  carbTintColor: .green,
+                                  glucoseTintColor: .blue,
+                                  insulinTintColor: .orange,
+                                  loopStatusColorPalette: StateColorPalette(unknown: .systemGray4,
+                                                                            normal: .green,
+                                                                            warning: .orange,
+                                                                            error: .red),
+                                  chartColorPalette: ChartColorPalette(axisLine: .label,
+                                                                       axisLabel: .label,
+                                                                       grid: .secondaryLabel,
+                                                                       glucoseTint: .blue,
+                                                                       insulinTint: .orange))
     }
 }

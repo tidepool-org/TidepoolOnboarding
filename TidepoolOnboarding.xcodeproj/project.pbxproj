@@ -30,8 +30,7 @@
 		A916AA5925F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916AA5825F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift */; };
 		A91F7C94260524A0008FBAED /* CompleteDismissView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F7C93260524A0008FBAED /* CompleteDismissView.swift */; };
 		A91F7CF3260528FE008FBAED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A91F7CF2260528FE008FBAED /* Assets.xcassets */; };
-		A91F7D0B26052938008FBAED /* TidepoolOnboardingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */; };
-		A91F7D0F26052938008FBAED /* TidepoolOnboardingKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboardingKitUI.framework */; };
+		A91F7D0F26052938008FBAED /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; };
 		A91F7D1626052A4D008FBAED /* DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F7D1526052A4D008FBAED /* DemoApp.swift */; };
 		A91F7D3026052A6D008FBAED /* DemoOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F7D2F26052A6D008FBAED /* DemoOnboardingView.swift */; };
 		A91F7D3A26052A84008FBAED /* DisplayGlucoseUnitObservable+Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E9329C2605166A00E28144 /* DisplayGlucoseUnitObservable+Demo.swift */; };
@@ -56,44 +55,35 @@
 		A95422D325CC9A74003F3080 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95422D225CC9A74003F3080 /* Image.swift */; };
 		A95BB9122603230B00E9FD17 /* Callout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95BB9112603230B00E9FD17 /* Callout.swift */; };
 		A98AD2BE25830807001AAD6F /* TidepoolOnboardingPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A98AD2D325830843001AAD6F /* TidepoolOnboardingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */; };
-		A98AD2DA25830843001AAD6F /* TidepoolOnboardingKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2CC25830842001AAD6F /* TidepoolOnboardingKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A98AD2F225830851001AAD6F /* TidepoolOnboardingKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboardingKitUI.framework */; };
-		A98AD2F925830851001AAD6F /* TidepoolOnboardingKitUI.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2EB25830851001AAD6F /* TidepoolOnboardingKitUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A98AD30D25830879001AAD6F /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD30C25830879001AAD6F /* LocalizedString.swift */; };
+		A98AD2F225830851001AAD6F /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; };
+		A98AD2F925830851001AAD6F /* TidepoolOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2EB25830851001AAD6F /* TidepoolOnboarding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A98AD30E25830879001AAD6F /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD30C25830879001AAD6F /* LocalizedString.swift */; };
-		A98AD31A25830887001AAD6F /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD31925830887001AAD6F /* OSLog.swift */; };
 		A98AD31B25830887001AAD6F /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD31925830887001AAD6F /* OSLog.swift */; };
-		A98AD31C25830887001AAD6F /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD31925830887001AAD6F /* OSLog.swift */; };
 		A98AD33225830909001AAD6F /* TidepoolOnboardingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD33125830909001AAD6F /* TidepoolOnboardingPlugin.swift */; };
-		A98AD39025832125001AAD6F /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD38D25832125001AAD6F /* LoopKit.framework */; };
-		A98AD39225832125001AAD6F /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD38E25832125001AAD6F /* TidepoolKit.framework */; };
-		A98AD39425832125001AAD6F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD38F25832125001AAD6F /* TidepoolServiceKit.framework */; };
-		A98AD39D2583214B001AAD6F /* TidepoolOnboardingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */; };
 		A98AD3A12583214B001AAD6F /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3972583214B001AAD6F /* LoopKit.framework */; };
 		A98AD3A32583214B001AAD6F /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3982583214B001AAD6F /* LoopKitUI.framework */; };
 		A98AD3A52583214B001AAD6F /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3992583214B001AAD6F /* TidepoolKit.framework */; };
 		A98AD3A72583214B001AAD6F /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD39A2583214B001AAD6F /* TidepoolKitUI.framework */; };
 		A98AD3A92583214B001AAD6F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD39B2583214B001AAD6F /* TidepoolServiceKit.framework */; };
 		A98AD3AB2583214B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD39C2583214B001AAD6F /* TidepoolServiceKitUI.framework */; };
-		A98AD3BC2583221A001AAD6F /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3BB2583221A001AAD6F /* LoopKit.framework */; };
-		A98AD3BE2583221A001AAD6F /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3BD2583221A001AAD6F /* TidepoolKit.framework */; };
-		A98AD3C02583221A001AAD6F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3BF2583221A001AAD6F /* TidepoolServiceKit.framework */; };
 		A98AD3C32583227B001AAD6F /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3C22583227B001AAD6F /* LoopKit.framework */; };
 		A98AD3C52583227B001AAD6F /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3C42583227B001AAD6F /* LoopKitUI.framework */; };
 		A98AD3C72583227B001AAD6F /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3C62583227B001AAD6F /* TidepoolKit.framework */; };
 		A98AD3C92583227B001AAD6F /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3C82583227B001AAD6F /* TidepoolKitUI.framework */; };
 		A98AD3CB2583227B001AAD6F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3CA2583227B001AAD6F /* TidepoolServiceKit.framework */; };
 		A98AD3CD2583227B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3CC2583227B001AAD6F /* TidepoolServiceKitUI.framework */; };
-		A98AD3CE25832287001AAD6F /* TidepoolOnboardingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */; };
 		A99D0E0525FC8F6F00CFFEA3 /* OnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99D0E0425FC8F6F00CFFEA3 /* OnboardingViewModelTests.swift */; };
 		A99D0E1425FC8FDA00CFFEA3 /* MockOnboardingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99D0E1325FC8FDA00CFFEA3 /* MockOnboardingProvider.swift */; };
-		A99D0E2825FC971700CFFEA3 /* TidepoolOnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99D0E2725FC971700CFFEA3 /* TidepoolOnboardingUITests.swift */; };
+		A99D0E2825FC971700CFFEA3 /* TidepoolOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99D0E2725FC971700CFFEA3 /* TidepoolOnboardingTests.swift */; };
 		A99EAA8B25F7FCDA00503A6D /* IntroductionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAA8A25F7FCDA00503A6D /* IntroductionViews.swift */; };
 		A99EAA9325F7FCEA00503A6D /* HowTheAppWorksViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAA9225F7FCEA00503A6D /* HowTheAppWorksViews.swift */; };
 		A99EAA9B25F7FCF700503A6D /* ADayInTheLifeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAA9A25F7FCF700503A6D /* ADayInTheLifeViews.swift */; };
 		A99EAAA325F7FD1F00503A6D /* YourSettingsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAAA225F7FD1F00503A6D /* YourSettingsViews.swift */; };
 		A99EAAAB25F7FD2900503A6D /* GetLoopingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAAAA25F7FD2900503A6D /* GetLoopingViews.swift */; };
+		A9A09A12260D238800046528 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF07B2588396F00860217 /* HKUnit.swift */; };
+		A9A09A30260D240400046528 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD31925830887001AAD6F /* OSLog.swift */; };
+		A9A09A77260D24DF00046528 /* MockPrescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF055258836D200860217 /* MockPrescription.swift */; };
+		A9A09A78260D24DF00046528 /* MockPrescriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF054258836D200860217 /* MockPrescriptionManager.swift */; };
 		A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */; };
 		A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46025C4FC3300C2D63F /* OnboardingRootNavigationController.swift */; };
 		A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */; };
@@ -102,15 +92,11 @@
 		A9A90F92260A50FD00264BCB /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A90F91260A50FD00264BCB /* Paragraph.swift */; };
 		A9ABAE832607C3AE00E7CD4A /* CheckpointCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */; };
 		A9B6736825F159A400D27872 /* YourDevicesViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B6736725F159A400D27872 /* YourDevicesViews.swift */; };
-		A9BEF02C25882F4E00860217 /* TidepoolOnboardingUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */; };
+		A9BEF02C25882F4E00860217 /* TidepoolOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF02B25882F4E00860217 /* TidepoolOnboarding.swift */; };
 		A9BEF038258835DF00860217 /* PrescriptionReviewUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */; };
 		A9BEF0462588367100860217 /* PrescriptionReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */; };
-		A9BEF056258836D200860217 /* MockPrescriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF054258836D200860217 /* MockPrescriptionManager.swift */; };
-		A9BEF057258836D200860217 /* MockPrescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF055258836D200860217 /* MockPrescription.swift */; };
 		A9BEF06C2588380F00860217 /* PrescriptionCodeEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */; };
 		A9BEF06D2588380F00860217 /* PrescriptionDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */; };
-		A9BEF07C2588396F00860217 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF07B2588396F00860217 /* HKUnit.swift */; };
-		A9D98C7025A3ED58001E25FE /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD30C25830879001AAD6F /* LocalizedString.swift */; };
 		A9E2829226012D1C00C86C6B /* CalloutText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E2829126012D1C00C86C6B /* CalloutText.swift */; };
 		A9E2906825A7C8B7004E361D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9E2906725A7C8B7004E361D /* Assets.xcassets */; };
 		A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */; };
@@ -118,54 +104,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A91F7D0D26052938008FBAED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A98AD2B025830807001AAD6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A98AD2C925830842001AAD6F;
-			remoteInfo = TidepoolOnboardingKit;
-		};
 		A91F7D1126052938008FBAED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A98AD2B025830807001AAD6F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A98AD2E825830851001AAD6F;
-			remoteInfo = TidepoolOnboardingKitUI;
-		};
-		A98AD2D425830843001AAD6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A98AD2B025830807001AAD6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A98AD2C925830842001AAD6F;
-			remoteInfo = TidepoolOnboardingKit;
+			remoteInfo = TidepoolOnboarding;
 		};
 		A98AD2F325830851001AAD6F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A98AD2B025830807001AAD6F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A98AD2E825830851001AAD6F;
-			remoteInfo = TidepoolOnboardingKitUI;
-		};
-		A98AD39F2583214B001AAD6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A98AD2B025830807001AAD6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A98AD2C925830842001AAD6F;
-			remoteInfo = TidepoolOnboardingKit;
-		};
-		A98AD3D0258322E1001AAD6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A98AD2B025830807001AAD6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A98AD2C925830842001AAD6F;
-			remoteInfo = TidepoolOnboardingKit;
+			remoteInfo = TidepoolOnboarding;
 		};
 		A98AD3D2258322E1001AAD6F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A98AD2B025830807001AAD6F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A98AD2E825830851001AAD6F;
-			remoteInfo = TidepoolOnboardingKitUI;
+			remoteInfo = TidepoolOnboarding;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -205,15 +163,10 @@
 		A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingPlugin.h; sourceTree = "<group>"; };
 		A98AD2BD25830807001AAD6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A98AD2CC25830842001AAD6F /* TidepoolOnboardingKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingKit.h; sourceTree = "<group>"; };
-		A98AD2CD25830842001AAD6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A98AD2D225830843001AAD6F /* TidepoolOnboardingKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TidepoolOnboardingKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A98AD2D925830843001AAD6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A98AD2E925830851001AAD6F /* TidepoolOnboardingKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A98AD2EB25830851001AAD6F /* TidepoolOnboardingKitUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingKitUI.h; sourceTree = "<group>"; };
+		A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboarding.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A98AD2EB25830851001AAD6F /* TidepoolOnboarding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboarding.h; sourceTree = "<group>"; };
 		A98AD2EC25830851001AAD6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A98AD2F125830851001AAD6F /* TidepoolOnboardingKitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TidepoolOnboardingKitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A98AD2F125830851001AAD6F /* TidepoolOnboardingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TidepoolOnboardingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD2F825830851001AAD6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A98AD30C25830879001AAD6F /* LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		A98AD31925830887001AAD6F /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
@@ -238,7 +191,7 @@
 		A98AD3CC2583227B001AAD6F /* TidepoolServiceKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolServiceKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A99D0E0425FC8F6F00CFFEA3 /* OnboardingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModelTests.swift; sourceTree = "<group>"; };
 		A99D0E1325FC8FDA00CFFEA3 /* MockOnboardingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOnboardingProvider.swift; sourceTree = "<group>"; };
-		A99D0E2725FC971700CFFEA3 /* TidepoolOnboardingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboardingUITests.swift; sourceTree = "<group>"; };
+		A99D0E2725FC971700CFFEA3 /* TidepoolOnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboardingTests.swift; sourceTree = "<group>"; };
 		A99EAA8A25F7FCDA00503A6D /* IntroductionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionViews.swift; sourceTree = "<group>"; };
 		A99EAA9225F7FCEA00503A6D /* HowTheAppWorksViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowTheAppWorksViews.swift; sourceTree = "<group>"; };
 		A99EAA9A25F7FCF700503A6D /* ADayInTheLifeViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADayInTheLifeViews.swift; sourceTree = "<group>"; };
@@ -252,7 +205,7 @@
 		A9A90F91260A50FD00264BCB /* Paragraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
 		A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointCheckmark.swift; sourceTree = "<group>"; };
 		A9B6736725F159A400D27872 /* YourDevicesViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourDevicesViews.swift; sourceTree = "<group>"; };
-		A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboardingUI.swift; sourceTree = "<group>"; };
+		A9BEF02B25882F4E00860217 /* TidepoolOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboarding.swift; sourceTree = "<group>"; };
 		A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewUICoordinator.swift; sourceTree = "<group>"; };
 		A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewViewModel.swift; sourceTree = "<group>"; };
 		A9BEF054258836D200860217 /* MockPrescriptionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPrescriptionManager.swift; sourceTree = "<group>"; };
@@ -273,8 +226,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A91F7D0B26052938008FBAED /* TidepoolOnboardingKit.framework in Frameworks */,
-				A91F7D0F26052938008FBAED /* TidepoolOnboardingKitUI.framework in Frameworks */,
+				A91F7D0F26052938008FBAED /* TidepoolOnboarding.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,34 +237,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A98AD2C725830842001AAD6F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A98AD39425832125001AAD6F /* TidepoolServiceKit.framework in Frameworks */,
-				A98AD39025832125001AAD6F /* LoopKit.framework in Frameworks */,
-				A98AD39225832125001AAD6F /* TidepoolKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A98AD2CF25830843001AAD6F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A98AD3BC2583221A001AAD6F /* LoopKit.framework in Frameworks */,
-				A98AD3BE2583221A001AAD6F /* TidepoolKit.framework in Frameworks */,
-				A98AD3C02583221A001AAD6F /* TidepoolServiceKit.framework in Frameworks */,
-				A98AD2D325830843001AAD6F /* TidepoolOnboardingKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A98AD2E625830851001AAD6F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A98AD3A72583214B001AAD6F /* TidepoolKitUI.framework in Frameworks */,
 				A98AD3AB2583214B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */,
-				A98AD39D2583214B001AAD6F /* TidepoolOnboardingKit.framework in Frameworks */,
 				A98AD3A52583214B001AAD6F /* TidepoolKit.framework in Frameworks */,
 				A98AD3A92583214B001AAD6F /* TidepoolServiceKit.framework in Frameworks */,
 				A98AD3A12583214B001AAD6F /* LoopKit.framework in Frameworks */,
@@ -330,8 +260,7 @@
 				A98AD3C92583227B001AAD6F /* TidepoolKitUI.framework in Frameworks */,
 				A98AD3CB2583227B001AAD6F /* TidepoolServiceKit.framework in Frameworks */,
 				A98AD3CD2583227B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */,
-				A98AD3CE25832287001AAD6F /* TidepoolOnboardingKit.framework in Frameworks */,
-				A98AD2F225830851001AAD6F /* TidepoolOnboardingKitUI.framework in Frameworks */,
+				A98AD2F225830851001AAD6F /* TidepoolOnboarding.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				A923334025C3786100D8CF69 /* Environment+Complete.swift */,
+				A9BEF07B2588396F00860217 /* HKUnit.swift */,
 				A95422D225CC9A74003F3080 /* Image.swift */,
 				A923333F25C3786100D8CF69 /* TimeInterval.swift */,
 			);
@@ -408,12 +338,9 @@
 		A98AD2AF25830807001AAD6F = {
 			isa = PBXGroup;
 			children = (
-				A98AD30A2583085C001AAD6F /* Common */,
-				A98AD30B25830861001AAD6F /* Extensions */,
-				A98AD2CB25830842001AAD6F /* TidepoolOnboardingKit */,
-				A98AD2D625830843001AAD6F /* TidepoolOnboardingKitTests */,
-				A98AD2EA25830851001AAD6F /* TidepoolOnboardingKitUI */,
-				A98AD2F525830851001AAD6F /* TidepoolOnboardingKitUITests */,
+				A9A09A28260D23F300046528 /* Extensions */,
+				A98AD2EA25830851001AAD6F /* TidepoolOnboarding */,
+				A98AD2F525830851001AAD6F /* TidepoolOnboardingTests */,
 				A91F7CED260528FD008FBAED /* TidepoolOnboardingDemo */,
 				A98AD2BB25830807001AAD6F /* TidepoolOnboardingPlugin */,
 				A98AD2BA25830807001AAD6F /* Products */,
@@ -425,10 +352,8 @@
 			isa = PBXGroup;
 			children = (
 				A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */,
-				A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */,
-				A98AD2D225830843001AAD6F /* TidepoolOnboardingKitTests.xctest */,
-				A98AD2E925830851001AAD6F /* TidepoolOnboardingKitUI.framework */,
-				A98AD2F125830851001AAD6F /* TidepoolOnboardingKitUITests.xctest */,
+				A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */,
+				A98AD2F125830851001AAD6F /* TidepoolOnboardingTests.xctest */,
 				A91F7CEC260528FD008FBAED /* TidepoolOnboardingDemo.app */,
 			);
 			name = Products;
@@ -444,33 +369,16 @@
 			path = TidepoolOnboardingPlugin;
 			sourceTree = "<group>";
 		};
-		A98AD2CB25830842001AAD6F /* TidepoolOnboardingKit */ = {
+		A98AD2EA25830851001AAD6F /* TidepoolOnboarding */ = {
 			isa = PBXGroup;
 			children = (
-				A98AD2CC25830842001AAD6F /* TidepoolOnboardingKit.h */,
-				A98AD2CD25830842001AAD6F /* Info.plist */,
-				A9BEF07A2588396200860217 /* Extensions */,
-				A9BEF053258836AA00860217 /* Mocks */,
-			);
-			path = TidepoolOnboardingKit;
-			sourceTree = "<group>";
-		};
-		A98AD2D625830843001AAD6F /* TidepoolOnboardingKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				A98AD2D925830843001AAD6F /* Info.plist */,
-			);
-			path = TidepoolOnboardingKitTests;
-			sourceTree = "<group>";
-		};
-		A98AD2EA25830851001AAD6F /* TidepoolOnboardingKitUI */ = {
-			isa = PBXGroup;
-			children = (
-				A98AD2EB25830851001AAD6F /* TidepoolOnboardingKitUI.h */,
+				A98AD2EB25830851001AAD6F /* TidepoolOnboarding.h */,
 				A98AD2EC25830851001AAD6F /* Info.plist */,
-				A9BEF02B25882F4E00860217 /* TidepoolOnboardingUI.swift */,
+				A9BEF02B25882F4E00860217 /* TidepoolOnboarding.swift */,
 				A9E2906725A7C8B7004E361D /* Assets.xcassets */,
+				A98AD30A2583085C001AAD6F /* Common */,
 				A923333E25C3786100D8CF69 /* Extensions */,
+				A9BEF053258836AA00860217 /* Mocks */,
 				A926402D2605048A006B1BB9 /* Previews */,
 				A9D0401B25E43BDD00200E4E /* Support */,
 				A9BEF0342588358C00860217 /* View Controllers */,
@@ -478,18 +386,18 @@
 				A9A5629125F86DAB00A272B9 /* View Modifiers */,
 				A9BEF0352588359600860217 /* Views */,
 			);
-			path = TidepoolOnboardingKitUI;
+			path = TidepoolOnboarding;
 			sourceTree = "<group>";
 		};
-		A98AD2F525830851001AAD6F /* TidepoolOnboardingKitUITests */ = {
+		A98AD2F525830851001AAD6F /* TidepoolOnboardingTests */ = {
 			isa = PBXGroup;
 			children = (
 				A98AD2F825830851001AAD6F /* Info.plist */,
-				A99D0E2725FC971700CFFEA3 /* TidepoolOnboardingUITests.swift */,
+				A99D0E2725FC971700CFFEA3 /* TidepoolOnboardingTests.swift */,
 				A99D0E1225FC8FB800CFFEA3 /* Mocks */,
 				A99D0E0325FC8F2E00CFFEA3 /* View Models */,
 			);
-			path = TidepoolOnboardingKitUITests;
+			path = TidepoolOnboardingTests;
 			sourceTree = "<group>";
 		};
 		A98AD30A2583085C001AAD6F /* Common */ = {
@@ -498,14 +406,6 @@
 				A98AD30C25830879001AAD6F /* LocalizedString.swift */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		A98AD30B25830861001AAD6F /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				A98AD31925830887001AAD6F /* OSLog.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		A98AD38C25832125001AAD6F /* Frameworks */ = {
@@ -547,6 +447,14 @@
 				A99D0E1325FC8FDA00CFFEA3 /* MockOnboardingProvider.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		A9A09A28260D23F300046528 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A98AD31925830887001AAD6F /* OSLog.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		A9A5629125F86DAB00A272B9 /* View Modifiers */ = {
@@ -616,14 +524,6 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
-		A9BEF07A2588396200860217 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				A9BEF07B2588396F00860217 /* HKUnit.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		A9D0401B25E43BDD00200E4E /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -643,19 +543,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A98AD2C525830842001AAD6F /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A98AD2DA25830843001AAD6F /* TidepoolOnboardingKit.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A98AD2E425830851001AAD6F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A98AD2F925830851001AAD6F /* TidepoolOnboardingKitUI.h in Headers */,
+				A98AD2F925830851001AAD6F /* TidepoolOnboarding.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,7 +566,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A91F7D0E26052938008FBAED /* PBXTargetDependency */,
 				A91F7D1226052938008FBAED /* PBXTargetDependency */,
 			);
 			name = TidepoolOnboardingDemo;
@@ -695,7 +586,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A98AD3D1258322E1001AAD6F /* PBXTargetDependency */,
 				A98AD3D3258322E1001AAD6F /* PBXTargetDependency */,
 			);
 			name = TidepoolOnboardingPlugin;
@@ -703,46 +593,9 @@
 			productReference = A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */;
 			productType = "com.apple.product-type.framework";
 		};
-		A98AD2C925830842001AAD6F /* TidepoolOnboardingKit */ = {
+		A98AD2E825830851001AAD6F /* TidepoolOnboarding */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A98AD2DB25830843001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingKit" */;
-			buildPhases = (
-				A98AD2C525830842001AAD6F /* Headers */,
-				A98AD2C625830842001AAD6F /* Sources */,
-				A98AD2C725830842001AAD6F /* Frameworks */,
-				A98AD2C825830842001AAD6F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TidepoolOnboardingKit;
-			productName = TidepoolOnboardingKit;
-			productReference = A98AD2CA25830842001AAD6F /* TidepoolOnboardingKit.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		A98AD2D125830843001AAD6F /* TidepoolOnboardingKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A98AD2DE25830843001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingKitTests" */;
-			buildPhases = (
-				A98AD2CE25830843001AAD6F /* Sources */,
-				A98AD2CF25830843001AAD6F /* Frameworks */,
-				A98AD2D025830843001AAD6F /* Resources */,
-				A98AD3C12583222A001AAD6F /* Copy Frameworks with Carthage */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A98AD2D525830843001AAD6F /* PBXTargetDependency */,
-			);
-			name = TidepoolOnboardingKitTests;
-			productName = TidepoolOnboardingKitTests;
-			productReference = A98AD2D225830843001AAD6F /* TidepoolOnboardingKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		A98AD2E825830851001AAD6F /* TidepoolOnboardingKitUI */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A98AD2FA25830851001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingKitUI" */;
+			buildConfigurationList = A98AD2FA25830851001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboarding" */;
 			buildPhases = (
 				A98AD2E425830851001AAD6F /* Headers */,
 				A98AD2E525830851001AAD6F /* Sources */,
@@ -752,16 +605,15 @@
 			buildRules = (
 			);
 			dependencies = (
-				A98AD3A02583214B001AAD6F /* PBXTargetDependency */,
 			);
-			name = TidepoolOnboardingKitUI;
-			productName = TidepoolOnboardingKitUI;
-			productReference = A98AD2E925830851001AAD6F /* TidepoolOnboardingKitUI.framework */;
+			name = TidepoolOnboarding;
+			productName = TidepoolOnboarding;
+			productReference = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		A98AD2F025830851001AAD6F /* TidepoolOnboardingKitUITests */ = {
+		A98AD2F025830851001AAD6F /* TidepoolOnboardingTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A98AD2FD25830851001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingKitUITests" */;
+			buildConfigurationList = A98AD2FD25830851001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingTests" */;
 			buildPhases = (
 				A98AD2ED25830851001AAD6F /* Sources */,
 				A98AD2EE25830851001AAD6F /* Frameworks */,
@@ -773,9 +625,9 @@
 			dependencies = (
 				A98AD2F425830851001AAD6F /* PBXTargetDependency */,
 			);
-			name = TidepoolOnboardingKitUITests;
-			productName = TidepoolOnboardingKitUITests;
-			productReference = A98AD2F125830851001AAD6F /* TidepoolOnboardingKitUITests.xctest */;
+			name = TidepoolOnboardingTests;
+			productName = TidepoolOnboardingTests;
+			productReference = A98AD2F125830851001AAD6F /* TidepoolOnboardingTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -793,13 +645,6 @@
 					A98AD2B825830807001AAD6F = {
 						CreatedOnToolsVersion = 12.2;
 						LastSwiftMigration = 1220;
-					};
-					A98AD2C925830842001AAD6F = {
-						CreatedOnToolsVersion = 12.2;
-						LastSwiftMigration = 1220;
-					};
-					A98AD2D125830843001AAD6F = {
-						CreatedOnToolsVersion = 12.2;
 					};
 					A98AD2E825830851001AAD6F = {
 						CreatedOnToolsVersion = 12.2;
@@ -836,10 +681,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A98AD2C925830842001AAD6F /* TidepoolOnboardingKit */,
-				A98AD2D125830843001AAD6F /* TidepoolOnboardingKitTests */,
-				A98AD2E825830851001AAD6F /* TidepoolOnboardingKitUI */,
-				A98AD2F025830851001AAD6F /* TidepoolOnboardingKitUITests */,
+				A98AD2E825830851001AAD6F /* TidepoolOnboarding */,
+				A98AD2F025830851001AAD6F /* TidepoolOnboardingTests */,
 				A91F7CEB260528FD008FBAED /* TidepoolOnboardingDemo */,
 				A98AD2B825830807001AAD6F /* TidepoolOnboardingPlugin */,
 				A98AD3AE2583216B001AAD6F /* Cartfile */,
@@ -857,20 +700,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A98AD2B725830807001AAD6F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A98AD2C825830842001AAD6F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A98AD2D025830843001AAD6F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -910,8 +739,7 @@
 				"$(BUILT_PRODUCTS_DIR)/TidepoolKitUI.framework",
 				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKitUI.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolOnboardingKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolOnboardingKitUI.framework",
+				"$(BUILT_PRODUCTS_DIR)/TidepoolOnboarding.framework",
 			);
 			name = "Copy Frameworks with Carthage";
 			outputFileListPaths = (
@@ -939,27 +767,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "echo \"Bootstrapping Carthage dependencies...\"\nunset LLVM_TARGET_TRIPLE_SUFFIX\n\nif ! cmp -s Cartfile.Resolved Carthage/Cartfile.resolved; then\n    time ./Scripts/carthage.sh bootstrap --project-directory \"$SRCROOT\" --platform ios --cache-builds --verbose\n    cp Cartfile.resolved Carthage\nelse\n    echo \"Carthage: not bootstrapping\"\nfi\n";
-		};
-		A98AD3C12583222A001AAD6F /* Copy Frameworks with Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/LoopKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKit.framework",
-			);
-			name = "Copy Frameworks with Carthage";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "CARTHAGE_BUILD_DIR=\"${SRCROOT}/Carthage/Build\"\nif [ -n \"${IPHONEOS_DEPLOYMENT_TARGET}\" ]; then\n    CARTHAGE_BUILD_DIR=\"${CARTHAGE_BUILD_DIR}/iOS\"\nelif [ -n \"${WATCHOS_DEPLOYMENT_TARGET}\" ]; then\n    CARTHAGE_BUILD_DIR=\"${CARTHAGE_BUILD_DIR}/watchOS\"\nelse\n    echo \"ERROR: Unexpected deployment target type\"\n    exit 1\nfi\n\nfor SCRIPT_INPUT_FILE in ${!SCRIPT_INPUT_FILE_*}; do\n    CARTHAGE_BUILD_FILE=\"${!SCRIPT_INPUT_FILE/${BUILT_PRODUCTS_DIR}/${CARTHAGE_BUILD_DIR}}\"\n    if [ -e \"${CARTHAGE_BUILD_FILE}\" ]; then\n        if [ -e \"${SCRIPT_INPUT_FILE}\" ]; then\n            echo \"ERROR: Duplicate frameworks found at:\"\n            echo \"  ${SCRIPT_INPUT_FILE}\"\n            echo \"  ${CARTHAGE_BUILD_FILE}\"\n            exit 1\n        fi\n        echo \"Substituting \\\"${CARTHAGE_BUILD_FILE}\\\" for \\\"${!SCRIPT_INPUT_FILE}\\\"\"\n        export ${SCRIPT_INPUT_FILE}=\"${CARTHAGE_BUILD_FILE}\"\n    fi\ndone\n\necho \"Copy Frameworks with Carthage\"\ncarthage copy-frameworks\n";
 		};
 		A98AD3CF25832290001AAD6F /* Copy Frameworks with Carthage */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -997,8 +804,7 @@
 				"$(BUILT_PRODUCTS_DIR)/TidepoolKitUI.framework",
 				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/TidepoolServiceKitUI.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolOnboardingKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/TidepoolOnboardingKitUI.framework",
+				"$(BUILT_PRODUCTS_DIR)/TidepoolOnboarding.framework",
 			);
 			name = "Copy Frameworks with Carthage";
 			outputFileListPaths = (
@@ -1029,28 +835,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A98AD31C25830887001AAD6F /* OSLog.swift in Sources */,
 				A98AD33225830909001AAD6F /* TidepoolOnboardingPlugin.swift in Sources */,
-				A9D98C7025A3ED58001E25FE /* LocalizedString.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A98AD2C625830842001AAD6F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A98AD31A25830887001AAD6F /* OSLog.swift in Sources */,
-				A9BEF07C2588396F00860217 /* HKUnit.swift in Sources */,
-				A98AD30D25830879001AAD6F /* LocalizedString.swift in Sources */,
-				A9BEF056258836D200860217 /* MockPrescriptionManager.swift in Sources */,
-				A9BEF057258836D200860217 /* MockPrescription.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A98AD2CE25830843001AAD6F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				A9A09A30260D240400046528 /* OSLog.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1076,6 +862,7 @@
 				A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */,
 				A9502CB625FFEE8E00146AD3 /* OnboardingSectionPageView.swift in Sources */,
 				A99EAA9B25F7FCF700503A6D /* ADayInTheLifeViews.swift in Sources */,
+				A9A09A12260D238800046528 /* HKUnit.swift in Sources */,
 				A923334125C3786100D8CF69 /* TimeInterval.swift in Sources */,
 				A99EAAAB25F7FD2900503A6D /* GetLoopingViews.swift in Sources */,
 				A9502CF8260029A000146AD3 /* CheckmarkedBodyTextList.swift in Sources */,
@@ -1100,12 +887,14 @@
 				A99EAA8B25F7FCDA00503A6D /* IntroductionViews.swift in Sources */,
 				A903C7A825F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift in Sources */,
 				A9502CE82600295A00146AD3 /* HeaderText.swift in Sources */,
-				A9BEF02C25882F4E00860217 /* TidepoolOnboardingUI.swift in Sources */,
+				A9BEF02C25882F4E00860217 /* TidepoolOnboarding.swift in Sources */,
 				A9BEF0462588367100860217 /* PrescriptionReviewViewModel.swift in Sources */,
 				A91F7C94260524A0008FBAED /* CompleteDismissView.swift in Sources */,
 				A9502CF02600298300146AD3 /* BulletedBodyTextList.swift in Sources */,
 				A9E2829226012D1C00C86C6B /* CalloutText.swift in Sources */,
 				A923335D25C3789800D8CF69 /* WelcomeViews.swift in Sources */,
+				A9A09A77260D24DF00046528 /* MockPrescription.swift in Sources */,
+				A9A09A78260D24DF00046528 /* MockPrescriptionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1115,46 +904,26 @@
 			files = (
 				A99D0E0525FC8F6F00CFFEA3 /* OnboardingViewModelTests.swift in Sources */,
 				A99D0E1425FC8FDA00CFFEA3 /* MockOnboardingProvider.swift in Sources */,
-				A99D0E2825FC971700CFFEA3 /* TidepoolOnboardingUITests.swift in Sources */,
+				A99D0E2825FC971700CFFEA3 /* TidepoolOnboardingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A91F7D0E26052938008FBAED /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A98AD2C925830842001AAD6F /* TidepoolOnboardingKit */;
-			targetProxy = A91F7D0D26052938008FBAED /* PBXContainerItemProxy */;
-		};
 		A91F7D1226052938008FBAED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A98AD2E825830851001AAD6F /* TidepoolOnboardingKitUI */;
+			target = A98AD2E825830851001AAD6F /* TidepoolOnboarding */;
 			targetProxy = A91F7D1126052938008FBAED /* PBXContainerItemProxy */;
-		};
-		A98AD2D525830843001AAD6F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A98AD2C925830842001AAD6F /* TidepoolOnboardingKit */;
-			targetProxy = A98AD2D425830843001AAD6F /* PBXContainerItemProxy */;
 		};
 		A98AD2F425830851001AAD6F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A98AD2E825830851001AAD6F /* TidepoolOnboardingKitUI */;
+			target = A98AD2E825830851001AAD6F /* TidepoolOnboarding */;
 			targetProxy = A98AD2F325830851001AAD6F /* PBXContainerItemProxy */;
-		};
-		A98AD3A02583214B001AAD6F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A98AD2C925830842001AAD6F /* TidepoolOnboardingKit */;
-			targetProxy = A98AD39F2583214B001AAD6F /* PBXContainerItemProxy */;
-		};
-		A98AD3D1258322E1001AAD6F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A98AD2C925830842001AAD6F /* TidepoolOnboardingKit */;
-			targetProxy = A98AD3D0258322E1001AAD6F /* PBXContainerItemProxy */;
 		};
 		A98AD3D3258322E1001AAD6F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A98AD2E825830851001AAD6F /* TidepoolOnboardingKitUI */;
+			target = A98AD2E825830851001AAD6F /* TidepoolOnboarding */;
 			targetProxy = A98AD3D2258322E1001AAD6F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1464,94 +1233,6 @@
 			};
 			name = Release;
 		};
-		A98AD2DC25830843001AAD6F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = TidepoolOnboardingKit/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingKit;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		A98AD2DD25830843001AAD6F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = TidepoolOnboardingKit/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingKit;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		A98AD2DF25830843001AAD6F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = TidepoolOnboardingKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		A98AD2E025830843001AAD6F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = TidepoolOnboardingKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		A98AD2FB25830851001AAD6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1564,14 +1245,14 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = TidepoolOnboardingKitUI/Info.plist;
+				INFOPLIST_FILE = TidepoolOnboarding/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingKitUI;
+				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboarding;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -1592,14 +1273,14 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = TidepoolOnboardingKitUI/Info.plist;
+				INFOPLIST_FILE = TidepoolOnboarding/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingKitUI;
+				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboarding;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -1614,13 +1295,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = TidepoolOnboardingKitUITests/Info.plist;
+				INFOPLIST_FILE = TidepoolOnboardingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingKitUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1634,13 +1315,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = TidepoolOnboardingKitUITests/Info.plist;
+				INFOPLIST_FILE = TidepoolOnboardingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingKitUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.TidepoolOnboardingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1691,25 +1372,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A98AD2DB25830843001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingKit" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A98AD2DC25830843001AAD6F /* Debug */,
-				A98AD2DD25830843001AAD6F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A98AD2DE25830843001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A98AD2DF25830843001AAD6F /* Debug */,
-				A98AD2E025830843001AAD6F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A98AD2FA25830851001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingKitUI" */ = {
+		A98AD2FA25830851001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboarding" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A98AD2FB25830851001AAD6F /* Debug */,
@@ -1718,7 +1381,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A98AD2FD25830851001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingKitUITests" */ = {
+		A98AD2FD25830851001AAD6F /* Build configuration list for PBXNativeTarget "TidepoolOnboardingTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A98AD2FE25830851001AAD6F /* Debug */,

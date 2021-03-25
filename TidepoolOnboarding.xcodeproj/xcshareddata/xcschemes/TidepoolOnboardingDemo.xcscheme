@@ -88,19 +88,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A98AD2D125830843001AAD6F"
-               BuildableName = "TidepoolOnboardingKitTests.xctest"
-               BlueprintName = "TidepoolOnboardingKitTests"
-               ReferencedContainer = "container:TidepoolOnboarding.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "A98AD2F025830851001AAD6F"
-               BuildableName = "TidepoolOnboardingKitUITests.xctest"
-               BlueprintName = "TidepoolOnboardingKitUITests"
+               BuildableName = "TidepoolOnboardingTests.xctest"
+               BlueprintName = "TidepoolOnboardingTests"
                ReferencedContainer = "container:TidepoolOnboarding.xcodeproj">
             </BuildableReference>
          </TestableReference>

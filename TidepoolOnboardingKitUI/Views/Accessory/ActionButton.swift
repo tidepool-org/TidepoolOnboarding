@@ -16,6 +16,7 @@ struct ActionButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
+                .multilineTextAlignment(.center)
         }
         .buttonStyle(ActionButtonStyle())
         .accessibilityElement()

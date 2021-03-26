@@ -44,6 +44,8 @@ class DemoViewModel: ObservableObject, OnboardingProvider, OnboardingDelegate, C
 
     func onboarding(_ onboarding: OnboardingUI, hasNewTherapySettings therapySettings: TherapySettings) {}
 
+    func onboarding(_ onboarding: OnboardingUI, hasNewDosingEnabled dosingEnabled: Bool) {}
+
     // NotificationAuthorizationProvider
 
     private var notificationAuthorization: NotificationAuthorization = .notDetermined

@@ -10,9 +10,7 @@ import SwiftUI
 
 struct BulletedBodyTextList: View {
     private let strings: [String]
-    
-    @ScaledMetric var padding: CGFloat = 5
-    
+
     init(_ strings: [String]) {
         self.strings = strings
     }
@@ -24,10 +22,9 @@ struct BulletedBodyTextList: View {
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(strings.indices) { index in
-                HStack {
+                HStack(spacing: 10) {
                     Bullet()
                         .foregroundColor(.accentColor)
-                        .padding(.trailing, padding)
                     BodyText(strings[index])
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -50,7 +47,7 @@ struct BulletedBodyTextList: View {
 struct BulletedBodyTextList_Previews: PreviewProvider {
     static var previews: some View {
         ContentPreviewWithBackground {
-            BulletedBodyTextList("First", "Second", "Third")
+            BulletedBodyTextList("First", "Second", "Close Encounters of the Third Kind")
         }
     }
 }

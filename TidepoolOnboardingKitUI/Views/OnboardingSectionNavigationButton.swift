@@ -24,7 +24,6 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
             OnboardingSectionSheetButton(section: section, destination: destination) {
                 content
             }
-            .navigationBarTransparent(true)
             .accessibilityLabel(accessibilityLabel)
         case .unavailable:
             content
@@ -99,7 +98,7 @@ struct OnboardingSectionNavigationButton_Previews: PreviewProvider {
 
     static var previews: some View {
         return ContentPreviewWithBackground {
-            VStack {
+            VStack(alignment: .leading) {
                 OnboardingSectionNavigationButton(section: .introduction, destination: CompleteDismissView())
                     .environmentObject(onboardingViewModel)
                     .environmentObject(displayGlucoseUnitObservable)

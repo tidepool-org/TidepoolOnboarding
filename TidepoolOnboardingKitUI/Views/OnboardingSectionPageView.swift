@@ -18,19 +18,22 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     @State private var isCloseAlertPresented = false
 
     private let section: OnboardingSection
+    private let editMode: Bool
     private let backButtonHidden: Bool
     private let destination: Destination?
     private let content: Content
 
-    init(section: OnboardingSection, backButtonHidden: Bool = false, destination: Destination, @ViewBuilder content: () -> Content) {
+    init(section: OnboardingSection, editMode: Bool = false, backButtonHidden: Bool = false, destination: Destination, @ViewBuilder content: () -> Content) {
         self.section = section
+        self.editMode = editMode
         self.backButtonHidden = backButtonHidden
         self.destination = destination
         self.content = content()
     }
 
-    init(section: OnboardingSection, backButtonHidden: Bool = false, @ViewBuilder content: () -> Content) where Destination == EmptyView {
+    init(section: OnboardingSection, editMode: Bool = false, backButtonHidden: Bool = false, @ViewBuilder content: () -> Content) where Destination == EmptyView {
         self.section = section
+        self.editMode = editMode
         self.backButtonHidden = backButtonHidden
         self.destination = nil
         self.content = content()
@@ -38,12 +41,14 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
 
     var body: some View {
         ZStack {
-            Color(.systemBackground)
+            Color(editMode ? .secondarySystemBackground : .systemBackground)
                 .edgesIgnoringSafeArea(.all)
             GeometryReader { geometry in
                 ScrollView {
                     VStack(spacing: 10) {
-                        content
+                        Segment {
+                            content
+                        }
                         Spacer()
                         continueButton
                     }
@@ -56,6 +61,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         .navigationBarTitle(Text(onboardingViewModel.titleForSection(section)), displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton, trailing: closeButton)
+        .navigationBarTransparent(true)
     }
 
     @ViewBuilder

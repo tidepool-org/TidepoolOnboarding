@@ -32,7 +32,6 @@ struct GettingToKnowTidepoolLoopView: View {
         Text(LocalizedString("Getting to Know Tidepool Loop", comment: "Onboarding, Getting to Know Tidepool Loop summary, title"))
             .font(.largeTitle)
             .bold()
-            .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
             .alertOnLongPressGesture(enabled: onboardingViewModel.allowSkipOnboarding,
                                      title: "Are you sure you want to skip the rest of onboarding?") {  // Not localized

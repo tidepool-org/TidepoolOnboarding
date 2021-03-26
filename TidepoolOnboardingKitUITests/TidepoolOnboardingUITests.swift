@@ -14,6 +14,7 @@ import LoopKitUI
 class TidepoolOnboardingUITests: XCTestCase {
     var didUpdateStateExpectation: XCTestExpectation?
     var hasNewTherapySettingsExpectation: XCTestExpectation?
+    var hasNewDosingEnabledExpectation: XCTestExpectation?
 
     func testCreateOnboarding() {
         XCTAssertNotNil(TidepoolOnboardingUI.createOnboarding())
@@ -78,6 +79,16 @@ class TidepoolOnboardingUITests: XCTestCase {
 
         wait(for: [hasNewTherapySettingsExpectation!], timeout: 1)
     }
+
+    func testNewDosingEnabledNotifiesDelegateOfNewDosingEnabled() {
+        hasNewDosingEnabledExpectation = expectation(description: "HasNewDosingEnabled")
+
+        let onboarding = TidepoolOnboardingUI()
+        onboarding.onboardingDelegate = self
+        onboarding.dosingEnabled = true
+
+        wait(for: [hasNewDosingEnabledExpectation!], timeout: 1)
+    }
 }
 
 extension TidepoolOnboardingUITests: OnboardingDelegate {
@@ -87,5 +98,9 @@ extension TidepoolOnboardingUITests: OnboardingDelegate {
 
     func onboarding(_ onboarding: OnboardingUI, hasNewTherapySettings therapySettings: TherapySettings) {
         hasNewTherapySettingsExpectation?.fulfill()
+    }
+
+    func onboarding(_ onboarding: OnboardingUI, hasNewDosingEnabled dosingEnabled: Bool) {
+        hasNewDosingEnabledExpectation?.fulfill()
     }
 }

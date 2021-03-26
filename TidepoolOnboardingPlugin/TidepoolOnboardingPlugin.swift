@@ -8,14 +8,13 @@
 
 import os.log
 import LoopKitUI
-import TidepoolOnboardingKit
-import TidepoolOnboardingKitUI
+import TidepoolOnboarding
 
 class TidepoolOnboardingPlugin: NSObject, OnboardingUIPlugin {
     private let log = OSLog(category: "TidepoolOnboardingPlugin")
 
     public var onboardingType: OnboardingUI.Type? {
-        return TidepoolOnboardingUI.self
+        return TidepoolOnboarding.self
     }
 
     override init() {

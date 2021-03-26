@@ -9,19 +9,19 @@
 import SwiftUI
 import LoopKit
 import LoopKitUI
-import TidepoolOnboardingKitUI
+import TidepoolOnboarding
 
 class DemoViewModel: ObservableObject, OnboardingProvider, OnboardingDelegate, CGMManagerCreateDelegate, CGMManagerOnboardDelegate, PumpManagerCreateDelegate, PumpManagerOnboardDelegate, ServiceCreateDelegate, ServiceOnboardDelegate, CompletionDelegate, DeviceOrientationController {
-    let onboarding: TidepoolOnboardingUI
+    let onboarding: TidepoolOnboarding
 
     @Published var isComplete: Bool = false
 
     init() {
         if let onboardingRawState = UserDefaults.standard.onboardingRawState,
-           let onboarding = TidepoolOnboardingUI(rawState: onboardingRawState) {
+           let onboarding = TidepoolOnboarding(rawState: onboardingRawState) {
             self.onboarding = onboarding
         } else {
-            self.onboarding = TidepoolOnboardingUI()
+            self.onboarding = TidepoolOnboarding()
         }
 
         // If fully onboarded then reset (to avoid delete/resintall)

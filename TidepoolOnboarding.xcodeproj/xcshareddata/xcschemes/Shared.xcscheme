@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A98AD2C925830842001AAD6F"
-               BuildableName = "TidepoolOnboardingKit.framework"
-               BlueprintName = "TidepoolOnboardingKit"
-               ReferencedContainer = "container:TidepoolOnboarding.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "A98AD2E825830851001AAD6F"
-               BuildableName = "TidepoolOnboardingKitUI.framework"
-               BlueprintName = "TidepoolOnboardingKitUI"
+               BuildableName = "TidepoolOnboarding.framework"
+               BlueprintName = "TidepoolOnboarding"
                ReferencedContainer = "container:TidepoolOnboarding.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,19 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A98AD2D125830843001AAD6F"
-               BuildableName = "TidepoolOnboardingKitTests.xctest"
-               BlueprintName = "TidepoolOnboardingKitTests"
-               ReferencedContainer = "container:TidepoolOnboarding.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "A98AD2F025830851001AAD6F"
-               BuildableName = "TidepoolOnboardingKitUITests.xctest"
-               BlueprintName = "TidepoolOnboardingKitUITests"
+               BuildableName = "TidepoolOnboardingTests.xctest"
+               BlueprintName = "TidepoolOnboardingTests"
                ReferencedContainer = "container:TidepoolOnboarding.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -81,15 +57,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A98AD2C925830842001AAD6F"
-            BuildableName = "TidepoolOnboardingKit.framework"
-            BlueprintName = "TidepoolOnboardingKit"
-            ReferencedContainer = "container:TidepoolOnboarding.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

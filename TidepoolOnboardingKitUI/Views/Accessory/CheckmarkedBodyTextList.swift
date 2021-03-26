@@ -10,9 +10,7 @@ import SwiftUI
 
 struct CheckmarkedBodyTextList: View {
     private let strings: [String]
-    
-    @ScaledMetric var padding: CGFloat = 5
-    
+
     init(_ strings: [String]) {
         self.strings = strings
     }
@@ -24,16 +22,14 @@ struct CheckmarkedBodyTextList: View {
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(strings.indices) { index in
-                HStack {
+                HStack(spacing: 10) {
                     Checkmark()
                         .foregroundColor(.accentColor)
-                        .padding(.trailing, padding)
                     BodyText(strings[index])
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
-        .padding(.horizontal)
     }
     
     private struct Checkmark: View {
@@ -50,7 +46,7 @@ struct CheckmarkedBodyTextList: View {
 struct CheckmarkedBodyTextList_Previews: PreviewProvider {
     static var previews: some View {
         ContentPreviewWithBackground {
-            CheckmarkedBodyTextList("Alpha", "Bravo", "Charlie")
+            CheckmarkedBodyTextList("Alpha", "Bravo", "Charlie Brown and his dog Snoopy")
         }
     }
 }

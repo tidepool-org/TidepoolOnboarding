@@ -38,6 +38,7 @@ struct PageHeader: View {
         Text(title)
             .font(.largeTitle)
             .bold()
+            .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
     }
 

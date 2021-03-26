@@ -8,9 +8,14 @@
 
 import SwiftUI
 
-struct Callout: View {
-    let title: String
-    let description: String
+struct Callout<Content: View>: View {
+    private let title: String
+    private let content: Content
+
+    init(title: String, @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.content = content()
+    }
 
     var body: some View {
         Group {
@@ -24,8 +29,11 @@ struct Callout: View {
                         .padding(.leading, 5)
                         .layoutPriority(1)
                 }
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.bottom)
-                BodyText(description)
+                Segment {
+                    content
+                }
             }
             .padding()
         }
@@ -52,8 +60,14 @@ struct Callout: View {
 struct Callout_Previews: PreviewProvider {
     static var previews: some View {
         ContentPreviewWithBackground {
-            Callout(title: "Note: Lorem ipsum",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+            Callout(title: "Note: Lorem ipsum") {
+                VStack(alignment: .leading, spacing: 20) {
+                    BodyText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+                    BodyText("Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
+                    BodyText("Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.")
+                    BodyText("Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                }
+            }
         }
     }
 }

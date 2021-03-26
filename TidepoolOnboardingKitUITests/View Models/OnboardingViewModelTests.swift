@@ -18,6 +18,7 @@ class OnboardingViewModelTests: XCTestCase {
         onboarding = TidepoolOnboardingUI()
         onboarding.sectionProgression.startSection(.welcome)
         onboarding.therapySettings = TherapySettings(insulinModelSettings: .exponentialPreset(.humalogNovologAdult))
+        onboarding.dosingEnabled = false
         onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: MockOnboardingProvider())
     }
 
@@ -36,6 +37,23 @@ class OnboardingViewModelTests: XCTestCase {
 
     func testTherapySettingsForwarding() {
         onboardingViewModel.therapySettings = TherapySettings(insulinModelSettings: .exponentialPreset(.fiasp))
+        XCTAssertNotEqual(onboarding.therapySettings, onboardingViewModel.therapySettings)
+        onboardingViewModel.skipUntilSection(.yourSettings)
+        XCTAssertNotEqual(onboarding.therapySettings, onboardingViewModel.therapySettings)
+        onboardingViewModel.skipThroughSection(.yourSettings)
         XCTAssertEqual(onboarding.therapySettings, onboardingViewModel.therapySettings)
+    }
+
+    func testDosingEnabledInitialization() {
+        XCTAssertEqual(onboardingViewModel.dosingEnabled, onboarding.dosingEnabled)
+    }
+
+    func testDosingEnabledForwarding() {
+        onboardingViewModel.dosingEnabled = true
+        XCTAssertNotEqual(onboarding.dosingEnabled, onboardingViewModel.dosingEnabled)
+        onboardingViewModel.skipUntilSection(.getLooping)
+        XCTAssertNotEqual(onboarding.dosingEnabled, onboardingViewModel.dosingEnabled)
+        onboardingViewModel.skipThroughSection(.getLooping)
+        XCTAssertEqual(onboarding.dosingEnabled, onboardingViewModel.dosingEnabled)
     }
 }

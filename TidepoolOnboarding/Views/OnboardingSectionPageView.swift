@@ -117,11 +117,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     private var closeAlert: Alert {
         Alert(title: Text(LocalizedString("Are you sure?", comment: "Alert title confirming close of an onboarding section page view")),
               message: Text(LocalizedString("You'll have to restart this section.", comment: "Alert message confirming close of an onboarding section page view")),
-              primaryButton: .cancel {
-                isCloseAlertPresented = false
-              },
-              secondaryButton: .destructive(Text(LocalizedString("End", comment: "Alert button confirming close of an onboarding section page view"))) {
-                dismiss()
-              })
+              primaryButton: .cancel(),
+              secondaryButton: .destructive(Text(LocalizedString("End", comment: "Alert button confirming close of an onboarding section page view")), action: dismiss))
     }
 }

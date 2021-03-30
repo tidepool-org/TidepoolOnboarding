@@ -97,7 +97,7 @@ struct OnboardingSectionNavigationButton_Previews: PreviewProvider {
     }()
 
     static var previews: some View {
-        return ContentPreviewWithBackground {
+        ContentPreviewWithBackground {
             VStack(alignment: .leading) {
                 OnboardingSectionNavigationButton(section: .introduction, destination: CompleteDismissView())
                     .environmentObject(onboardingViewModel)

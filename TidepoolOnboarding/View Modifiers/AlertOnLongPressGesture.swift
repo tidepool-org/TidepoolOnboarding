@@ -42,7 +42,7 @@ fileprivate struct AlertOnLongPressGesture: ViewModifier {
 
     private var alert: Alert {
         Alert(title: Text(title),
-              primaryButton: .cancel { isAlertPresented = false },
+              primaryButton: .cancel(),
               secondaryButton: .destructive(Text("Yes"), action: action))
     }
 }

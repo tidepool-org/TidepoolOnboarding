@@ -92,6 +92,17 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
         return String(format: LocalizedString("%d min.", comment: "Section duration label (1: section duration in minutes)"), Int(durationForSection(section).minutes))
     }
 
+    func stateStringForSection(_ section: OnboardingSection) -> String {
+        switch sectionProgression.stateForSection(section) {
+        case .completed:
+            return LocalizedString("completed", comment: "Section completed")
+        case .available:
+            return LocalizedString("not completed, available", comment: "Section available")
+        case .unavailable:
+            return LocalizedString("not available", comment: "Section unavailable")
+        }
+    }
+    
     // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
 
     var allowSkipOnboarding: Bool { onboardingProvider.allowSkipOnboarding }

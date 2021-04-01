@@ -16,19 +16,24 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
     let destination: Destination
 
     var body: some View {
+        button
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(accessibilityLabel)
+            .accessibilityAddTraits(.isButton)
+    }
+
+    @ViewBuilder
+    private var button: some View {
         switch onboardingViewModel.sectionProgression.stateForSection(section) {
         case .completed:
             content
-                .accessibilityHidden(true)
         case .available:
             OnboardingSectionSheetButton(section: section, destination: destination) {
                 content
             }
-            .accessibilityLabel(accessibilityLabel)
         case .unavailable:
             content
                 .opacity(0.5)
-                .accessibilityHidden(true)
         }
     }
 
@@ -51,7 +56,6 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
         .padding()
         .background(Color(.secondarySystemGroupedBackground))
         .cornerRadius(10)
-        .accessibilityElement(children: .ignore)
     }
 
     private var titleText: some View {
@@ -79,9 +83,10 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
     }
 
     private var accessibilityLabel: String {
-        return String(format: LocalizedString("%1@, %2@", comment: "Section navigation button accessibility label (1: title, 2: estimated duration)"),
+        return String(format: LocalizedString("%1@, %2@, %3@", comment: "Section navigation button accessibility label (1: title, 2: estimated duration, 3: state)"),
                       onboardingViewModel.titleForSection(section),
-                      onboardingViewModel.durationStringForSection(section))
+                      onboardingViewModel.durationStringForSection(section),
+                      onboardingViewModel.stateStringForSection(section))
     }
 }
 

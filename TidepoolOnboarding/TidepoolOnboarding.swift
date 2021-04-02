@@ -20,7 +20,19 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
 
     public let onboardingIdentifier = "TidepoolOnboarding"
 
+    var lastAccessDate: Date {
+        didSet {
+            notifyDidUpdateState()
+        }
+    }
+
     var sectionProgression: OnboardingSectionProgression {
+        didSet {
+            notifyDidUpdateState()
+        }
+    }
+
+    var prescription: Prescription? {
         didSet {
             notifyDidUpdateState()
         }
@@ -41,26 +53,38 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
     }
 
     public init() {
+        self.lastAccessDate = Date()
         self.sectionProgression = OnboardingSectionProgression()
 
         self.isOnboarded = false
     }
 
     public init?(rawState: RawState) {
-        guard let rawSectionProgression = rawState["sectionProgression"] as? OnboardingSectionProgression.RawValue,
+        guard let lastAccessDate = rawState["lastAccessDate"] as? Date,
+              let rawSectionProgression = rawState["sectionProgression"] as? OnboardingSectionProgression.RawValue,
               let sectionProgression = OnboardingSectionProgression(rawValue: rawSectionProgression) else {
             return nil
         }
 
+        self.lastAccessDate = lastAccessDate
         self.sectionProgression = sectionProgression
+
+        if let rawPrescription = rawState["prescription"] as? Prescription.RawValue {
+            self.prescription = Prescription(rawValue: rawPrescription)
+        }
 
         self.isOnboarded = sectionProgression.hasCompletedAllSections
     }
 
     public var rawState: RawState {
-        return [
+        var rawState: RawState = [
+            "lastAccessDate": lastAccessDate,
             "sectionProgression": sectionProgression.rawValue
         ]
+
+        rawState["prescription"] = prescription?.rawValue
+
+        return rawState
     }
 
     @Published public var isOnboarded: Bool
@@ -83,8 +107,10 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
     }
 
     public func reset() {
-        self.sectionProgression = OnboardingSectionProgression()
+        self.dosingEnabled = nil
         self.therapySettings = nil
-        self.isOnboarded = false
+        self.prescription = nil
+        self.sectionProgression = OnboardingSectionProgression()
+        self.lastAccessDate = Date()
     }
 }

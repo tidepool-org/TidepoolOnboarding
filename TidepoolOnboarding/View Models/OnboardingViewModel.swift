@@ -21,7 +21,9 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
 
     let onboardingProvider: OnboardingProvider
 
+    @Published var lastAccessDate: Date
     @Published var sectionProgression: OnboardingSectionProgression
+    @Published var prescription: Prescription?
     @Published var therapySettings: TherapySettings?
     @Published var dosingEnabled: Bool
 
@@ -30,10 +32,16 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
     init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider) {
         self.onboardingProvider = onboardingProvider
 
+        self.lastAccessDate = onboarding.lastAccessDate
         self.sectionProgression = onboarding.sectionProgression
+        self.prescription = onboarding.prescription
         self.therapySettings = onboarding.therapySettings
         self.dosingEnabled = onboarding.dosingEnabled ?? true
 
+        $lastAccessDate
+            .dropFirst()
+            .sink { onboarding.lastAccessDate = $0 }
+            .store(in: &cancellables)
         $sectionProgression
             .dropFirst()
             .sink { onboarding.sectionProgression = $0 }
@@ -41,12 +49,22 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
         $sectionProgression
             .dropFirst()
             .filter { $0.hasCompletedSection(.yourSettings) && !$0.hasStartedSection(.yourDevices) }
-            .sink { _ in onboarding.therapySettings = self.therapySettings }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                onboarding.therapySettings = self.therapySettings
+            }
             .store(in: &cancellables)
         $sectionProgression
             .dropFirst()
             .filter { $0.hasCompletedSection(.getLooping) }
-            .sink { _ in onboarding.dosingEnabled = self.dosingEnabled }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                onboarding.dosingEnabled = self.dosingEnabled
+            }
+            .store(in: &cancellables)
+        $prescription
+            .dropFirst()
+            .sink { onboarding.prescription = $0 }
             .store(in: &cancellables)
     }
 
@@ -103,6 +121,30 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
         }
     }
     
+    func updateLastAccessedDate() {
+        if shouldRestart {
+            restart()
+        }
+
+        self.lastAccessDate = Date()
+    }
+
+    // The maximum duration from onboarding last access to now is 7 days, if greater, then restart, if possible
+    private let lastAccessDurationMaximum: TimeInterval = .days(7)
+
+    // Onboarding should restart only if it can be restarted and it wants to restart
+    private var shouldRestart: Bool { canRestart && wantRestart }
+
+    // Onboarding can be restarted only if the prescription has not yet been claimed
+    private var canRestart: Bool { prescription == nil }
+
+    // Onboarding wants to restart if it was last accessed over 7 days ago
+    private var wantRestart: Bool { lastAccessDate.addingTimeInterval(lastAccessDurationMaximum) < Date() }
+
+    private func restart() {
+        self.sectionProgression = OnboardingSectionProgression()
+    }
+
     // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
 
     var allowSkipOnboarding: Bool { onboardingProvider.allowSkipOnboarding }
@@ -128,7 +170,12 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
         }
         if !sectionProgression.hasCompletedSection(section) {
             if section == .yourSettings {
-                self.therapySettings = .mockTherapySettings     // If therapy settings not completed, then use mock therapy settings
+                if prescription == nil {
+                    self.prescription = .mock
+                }
+                if therapySettings == nil {
+                    self.therapySettings = .mockTherapySettings
+                }
             }
             sectionProgression.completeSection(section)
         }

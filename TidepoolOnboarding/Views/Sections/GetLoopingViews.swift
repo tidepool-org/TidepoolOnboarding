@@ -68,14 +68,18 @@ fileprivate struct GetLoopingView2: View {
             }
             Paragraph(LocalizedString("You can toggle it on and off now or later in Settings.", comment: "Onboarding, Get Looping section, view 2, paragraph 2"))
             HStack(spacing: 10) {
-                Toggle(LocalizedString("Closed Loop", comment: "Onboarding, Get Looping section, view 2, closed loop"), isOn: isClosedLoopOn)
-                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                    .padding(.horizontal)
-                    .padding(.vertical, 7)
+                toggle
             }
             .background(editableBackground)
         }
         .alert(isPresented: $isOffAlertPresented) { offAlert }
+    }
+
+    private var toggle: some View {
+        Toggle(LocalizedString("Closed Loop", comment: "Onboarding, Get Looping section, view 2, closed loop"), isOn: isClosedLoopOn)
+            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+            .padding(.horizontal)
+            .padding(.vertical, 7)
     }
     
     private var isClosedLoopOn: Binding<Bool> {

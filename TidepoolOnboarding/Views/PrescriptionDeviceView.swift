@@ -11,7 +11,7 @@ import LoopKitUI
 
 struct PrescriptionDeviceView: View {
     @ObservedObject var viewModel: PrescriptionReviewViewModel
-    var prescription: MockPrescription
+    var prescription: Prescription
     static let imageWidth: CGFloat = 48
     
     var body: some View {
@@ -55,8 +55,8 @@ struct PrescriptionDeviceView: View {
     }
     
     private var pumpStack: some View {
-        switch prescription.pump {
-        case .dash:
+        switch prescription.pumpType {
+        case .insulet_dash:
             return dashStack
         }
     }
@@ -85,8 +85,8 @@ struct PrescriptionDeviceView: View {
     }
     
     private var cgmStack: some View {
-        switch prescription.cgm {
-        case .g6:
+        switch prescription.cgmType {
+        case .dexcom_g6:
             return dexcomStack
         }
     }

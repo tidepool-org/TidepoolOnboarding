@@ -82,8 +82,7 @@
 		A99EAAAB25F7FD2900503A6D /* GetLoopingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAAAA25F7FD2900503A6D /* GetLoopingViews.swift */; };
 		A9A09A12260D238800046528 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF07B2588396F00860217 /* HKUnit.swift */; };
 		A9A09A30260D240400046528 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD31925830887001AAD6F /* OSLog.swift */; };
-		A9A09A77260D24DF00046528 /* MockPrescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF055258836D200860217 /* MockPrescription.swift */; };
-		A9A09A78260D24DF00046528 /* MockPrescriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF054258836D200860217 /* MockPrescriptionManager.swift */; };
+		A9A09A77260D24DF00046528 /* Prescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF055258836D200860217 /* Prescription.swift */; };
 		A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */; };
 		A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46025C4FC3300C2D63F /* OnboardingRootNavigationController.swift */; };
 		A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */; };
@@ -208,8 +207,7 @@
 		A9BEF02B25882F4E00860217 /* TidepoolOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboarding.swift; sourceTree = "<group>"; };
 		A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewUICoordinator.swift; sourceTree = "<group>"; };
 		A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewViewModel.swift; sourceTree = "<group>"; };
-		A9BEF054258836D200860217 /* MockPrescriptionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPrescriptionManager.swift; sourceTree = "<group>"; };
-		A9BEF055258836D200860217 /* MockPrescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPrescription.swift; sourceTree = "<group>"; };
+		A9BEF055258836D200860217 /* Prescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prescription.swift; sourceTree = "<group>"; };
 		A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryView.swift; sourceTree = "<group>"; };
 		A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionDeviceView.swift; sourceTree = "<group>"; };
 		A9BEF07B2588396F00860217 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
@@ -378,7 +376,6 @@
 				A9E2906725A7C8B7004E361D /* Assets.xcassets */,
 				A98AD30A2583085C001AAD6F /* Common */,
 				A923333E25C3786100D8CF69 /* Extensions */,
-				A9BEF053258836AA00860217 /* Mocks */,
 				A926402D2605048A006B1BB9 /* Previews */,
 				A9D0401B25E43BDD00200E4E /* Support */,
 				A9BEF0342588358C00860217 /* View Controllers */,
@@ -515,19 +512,11 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
-		A9BEF053258836AA00860217 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				A9BEF055258836D200860217 /* MockPrescription.swift */,
-				A9BEF054258836D200860217 /* MockPrescriptionManager.swift */,
-			);
-			path = Mocks;
-			sourceTree = "<group>";
-		};
 		A9D0401B25E43BDD00200E4E /* Support */ = {
 			isa = PBXGroup;
 			children = (
 				A903C79725F1443200C88786 /* OnboardingSection.swift */,
+				A9BEF055258836D200860217 /* Prescription.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -893,8 +882,7 @@
 				A9502CF02600298300146AD3 /* BulletedBodyTextList.swift in Sources */,
 				A9E2829226012D1C00C86C6B /* CalloutText.swift in Sources */,
 				A923335D25C3789800D8CF69 /* WelcomeViews.swift in Sources */,
-				A9A09A77260D24DF00046528 /* MockPrescription.swift in Sources */,
-				A9A09A78260D24DF00046528 /* MockPrescriptionManager.swift in Sources */,
+				A9A09A77260D24DF00046528 /* Prescription.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

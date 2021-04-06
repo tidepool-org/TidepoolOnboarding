@@ -9,6 +9,22 @@
 import Foundation
 
 extension TimeInterval {
+    static func days(_ days: Double) -> TimeInterval {
+        return TimeInterval(days: days)
+    }
+
+    static func days(_ days: Int) -> TimeInterval {
+        return TimeInterval(days: days)
+    }
+
+    static func hours(_ hours: Double) -> TimeInterval {
+        return TimeInterval(hours: hours)
+    }
+
+    static func hours(_ hours: Int) -> TimeInterval {
+        return TimeInterval(hours: hours)
+    }
+
     static func minutes(_ minutes: Double) -> TimeInterval {
         return TimeInterval(minutes: minutes)
     }
@@ -25,12 +41,28 @@ extension TimeInterval {
         return TimeInterval(seconds: seconds)
     }
 
-    init(minutes: Double) {
-        self.init(minutes * 60)
+    init(days: Double) {
+        self.init(hours: days * 24)
+    }
+
+    init(days: Int) {
+        self.init(hours: days * 24)
+    }
+
+    init(hours: Double) {
+        self.init(minutes: hours * 60)
+    }
+
+    init(hours: Int) {
+        self.init(minutes: hours * 60)
     }
 
     init(minutes: Int) {
-        self.init(minutes * 60)
+        self.init(seconds: minutes * 60)
+    }
+
+    init(minutes: Double) {
+        self.init(seconds: minutes * 60)
     }
 
     init(seconds: Double) {
@@ -41,8 +73,16 @@ extension TimeInterval {
         self.init(seconds)
     }
 
+    var days: Double {
+        return hours / 24
+    }
+
+    var hours: Double {
+        return minutes / 60
+    }
+
     var minutes: Double {
-        return self / 60.0
+        return seconds / 60
     }
 
     var seconds: Double {

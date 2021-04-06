@@ -86,6 +86,8 @@ struct OnboardingSectionProgression: RawRepresentable, Codable, Equatable {
         return progression.map { $0.rawValue }
     }
 
+    var isStarted: Bool { !progression.isEmpty }
+
     mutating func startSection(_ section: OnboardingSection) {
         precondition(hasCompletedAllPreviousSections(section))
         progression.append(OnboardingSectionProgress(section, .started))

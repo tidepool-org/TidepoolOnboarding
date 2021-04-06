@@ -13,6 +13,11 @@ import LoopKit
 import LoopKitUI
 
 class OnboardingRootNavigationController: UINavigationController, OnboardingViewController {
+    private enum State {
+        case welcome
+        case gettingToKnowTidepoolLoop
+    }
+
     weak var completionDelegate: CompletionDelegate?
 
     var cgmManagerCreateDelegate: CGMManagerCreateDelegate? {
@@ -44,6 +49,8 @@ class OnboardingRootNavigationController: UINavigationController, OnboardingView
     private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
     private let colorPalette: LoopUIColorPalette
 
+    private var state: State?
+
     private lazy var cancellables = Set<AnyCancellable>()
 
     init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
@@ -61,11 +68,20 @@ class OnboardingRootNavigationController: UINavigationController, OnboardingView
             }
             .store(in: &cancellables)
         onboardingViewModel.$sectionProgression
-            .first { $0.hasCompletedSection(.welcome) }
-            .sink { [weak self] _ in
-                self?.setRootView(GettingToKnowTidepoolLoopView())  // If Welcome is complete, then Getting to Know Tidepool Loop becomes the root view
+            .sink { [weak self] sectionProgression in
+                guard let self = self else { return }
+                if !sectionProgression.hasCompletedSection(.welcome) {
+                    self.setState(.welcome, reset: !sectionProgression.isStarted)
+                } else {
+                    self.setState(.gettingToKnowTidepoolLoop)
+                }
             }
             .store(in: &cancellables)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -75,18 +91,41 @@ class OnboardingRootNavigationController: UINavigationController, OnboardingView
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        // If there is no root view yet (because Welcome not complete), then Welcome becomes the root view
-        if viewControllers.isEmpty {
-            setRootView(WelcomeTabView())
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForegroundNotificationReceived(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundNotificationReceived(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
-    private func setRootView<Content: View>(_ rootView: Content) {
+    private func setState(_ state: State, reset: Bool = false) {
+        guard state != self.state || reset else {
+            return
+        }
+
+        switch state {
+        case .welcome:
+            setRootView(WelcomeTabView(), animated: false)
+        case .gettingToKnowTidepoolLoop:
+            setRootView(GettingToKnowTidepoolLoopView())
+        }
+
+        self.state = state
+    }
+
+    private func setRootView<Content: View>(_ rootView: Content, animated: Bool = true) {
+        topViewController?.dismiss(animated: animated)  // Dismiss any section modal displayed above Getting to Know Tidepool Loop
+
         let rootView = rootView
             .environmentObject(onboardingViewModel)
             .environmentObject(displayGlucoseUnitObservable)
             .environment(\.colorPalette, colorPalette)
             .navigationBarHidden(true)
-        setViewControllers([UIHostingController(rootView: rootView)], animated: true)
+        setViewControllers([UIHostingController(rootView: rootView)], animated: animated)
+    }
+
+    @objc private func willEnterForegroundNotificationReceived(_ notification: Notification) {
+        onboardingViewModel.updateLastAccessedDate()
+    }
+
+    @objc private func didEnterBackgroundNotificationReceived(_ notification: Notification) {
+        onboardingViewModel.updateLastAccessedDate()
     }
 }

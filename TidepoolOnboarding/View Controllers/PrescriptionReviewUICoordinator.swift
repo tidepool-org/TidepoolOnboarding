@@ -313,23 +313,23 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
             return nil
         }
         var supportedBasalRates: [Double] {
-            switch prescription.pump {
-            case .dash:
+            switch prescription.pumpType {
+            case .insulet_dash:
                 return (1...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
             }
         }
         
         // TODO: don't hard-code these values
         var maximumBasalScheduleEntryCount: Int {
-            switch prescription.pump {
-            case .dash:
+            switch prescription.pumpType {
+            case .insulet_dash:
                 return 24
             }
         }
         
         var supportedBolusVolumes: [Double] {
-            switch prescription.pump {
-            case .dash:
+            switch prescription.pumpType {
+            case .insulet_dash:
                 // TODO: don't hard-code this value
                 return (1...600).map { Double($0) / Double(1/0.05) }
             }

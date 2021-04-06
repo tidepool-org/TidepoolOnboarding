@@ -20,7 +20,7 @@ class PrescriptionReviewViewModel: ObservableObject {
     @Published var shouldDisplayError = false
     
     // MARK: Prescription Information
-    var prescription: MockPrescription?
+    var prescription: Prescription?
     let prescriptionCodeLength = 6
 
     // MARK: Date Picker Information
@@ -53,15 +53,9 @@ class PrescriptionReviewViewModel: ObservableObject {
         }
 
         // TODO: call function to properly query the backend; if prescription couldn't be retrieved, raise unableToRetreivePrescription error
-        MockPrescriptionManager().getPrescriptionData { result in
-            switch result {
-            case .failure:
-                fatalError("Mock prescription manager should always return a prescription")
-            case .success(let prescription):
-                self.prescription = prescription
-                self.entryNavigation(success: true)
-            }
-        }
+
+        self.prescription = .mock
+        self.entryNavigation(success: true)
     }
 }
 

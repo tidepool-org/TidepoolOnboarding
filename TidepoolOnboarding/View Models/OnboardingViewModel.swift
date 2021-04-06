@@ -129,12 +129,16 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
         self.lastAccessDate = Date()
     }
 
+    // The maximum duration from onboarding last access to now is 7 days, if greater, then restart, if possible
     private let lastAccessDurationMaximum: TimeInterval = .days(7)
 
+    // Onboarding should restart only if it can be restarted and it wants to restart
     private var shouldRestart: Bool { canRestart && wantRestart }
 
+    // Onboarding can be restarted only if the prescription has not yet been claimed
     private var canRestart: Bool { prescription == nil }
 
+    // Onboarding wants to restart if it was last accessed over 7 days ago
     private var wantRestart: Bool { lastAccessDate.addingTimeInterval(lastAccessDurationMaximum) < Date() }
 
     private func restart() {

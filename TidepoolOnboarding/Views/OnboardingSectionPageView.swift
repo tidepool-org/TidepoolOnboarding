@@ -20,28 +20,31 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     private let section: OnboardingSection
     private let editMode: Bool
     private let backButtonHidden: Bool
+    private let nextButtonTitle: String?
     private let destination: Destination?
     private let content: Content
 
-    init(section: OnboardingSection, editMode: Bool = false, backButtonHidden: Bool = false, destination: Destination, @ViewBuilder content: () -> Content) {
+    init(section: OnboardingSection, editMode: Bool = false, backButtonHidden: Bool = false, nextButtonTitle: String? = nil, destination: Destination, @ViewBuilder content: () -> Content) {
         self.section = section
         self.editMode = editMode
         self.backButtonHidden = backButtonHidden
+        self.nextButtonTitle = nextButtonTitle
         self.destination = destination
         self.content = content()
     }
 
-    init(section: OnboardingSection, editMode: Bool = false, backButtonHidden: Bool = false, @ViewBuilder content: () -> Content) where Destination == EmptyView {
+    init(section: OnboardingSection, editMode: Bool = false, backButtonHidden: Bool = false, nextButtonTitle: String? = nil, @ViewBuilder content: () -> Content) where Destination == EmptyView {
         self.section = section
         self.editMode = editMode
         self.backButtonHidden = backButtonHidden
+        self.nextButtonTitle = nextButtonTitle
         self.destination = nil
         self.content = content()
     }
 
     var body: some View {
         ZStack {
-            Color(editMode ? .secondarySystemBackground : .systemBackground)
+            Color(backgroundColor)
                 .edgesIgnoringSafeArea(.all)
             GeometryReader { geometry in
                 ScrollView {
@@ -50,7 +53,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
                             content
                         }
                         Spacer()
-                        continueButton
+                        nextButton
                     }
                     .padding()
                     .frame(minHeight: geometry.size.height)
@@ -61,21 +64,23 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         .navigationBarTitle(Text(onboardingViewModel.titleForSection(section)), displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton, trailing: closeButton)
-        .navigationBarTransparent(true)
+        .navigationBarTranslucent(false)
+        .navigationBarBackgroundColor(backgroundColor)
+        .navigationBarShadowColor(.clear)
     }
 
     @ViewBuilder
-    private var continueButton: some View {
+    private var nextButton: some View {
         if let destination = destination {
-            NavigationButton(title: continueButtonTitle, destination: destination)
-                .accessibilityIdentifier("button_continue")
+            NavigationButton(title: nextButtonTitle ?? nextButtonTitleDefault, destination: destination)
+                .accessibilityIdentifier("button_next")
         } else {
-            ActionButton(title: continueButtonTitle, action: complete)
-                .accessibilityIdentifier("button_continue")
+            ActionButton(title: nextButtonTitle ?? nextButtonTitleDefault, action: complete)
+                .accessibilityIdentifier("button_next")
         }
     }
 
-    private var continueButtonTitle: String { LocalizedString("Continue", comment: "Continue button of an onboarding section page view") }
+    private var nextButtonTitleDefault: String { LocalizedString("Continue", comment: "Default next button title of an onboarding section page view") }
 
     @ViewBuilder
     private var backButton: some View {
@@ -99,7 +104,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         }
     }
 
-    private var backButtonTitle: String { LocalizedString("Back", comment: "Back navigation button of an onboarding section page view") }
+    private var backButtonTitle: String { LocalizedString("Back", comment: "Back navigation button title of an onboarding section page view") }
 
     private var closeButton: some View {
         Button(action: { isCloseAlertPresented = true }) {
@@ -112,7 +117,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         .accessibilityIdentifier("button_close")
     }
 
-    private var closeButtonTitle: String { LocalizedString("Close", comment: "Close navigation button of an onboarding section page view") }
+    private var closeButtonTitle: String { LocalizedString("Close", comment: "Close navigation button title of an onboarding section page view") }
 
     private var closeAlert: Alert {
         Alert(title: Text(LocalizedString("Are you sure?", comment: "Alert title confirming close of an onboarding section page view")),
@@ -120,4 +125,6 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
               primaryButton: .cancel(),
               secondaryButton: .destructive(Text(LocalizedString("End", comment: "Alert button confirming close of an onboarding section page view")), action: dismiss))
     }
+
+    private var backgroundColor: UIColor { editMode ? .secondarySystemBackground : .systemBackground }
 }

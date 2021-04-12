@@ -10,7 +10,7 @@ import SwiftUI
 
 struct YourDevicesNavigationButton: View {
     var body: some View {
-        OnboardingSectionNavigationButton(section: .yourDevices, destination: NavigationView { YourDevicesView1() })
+        OnboardingSectionNavigationButton(section: .yourDevices, destination: NavigationViewWithNavigationBarAppearance { YourDevicesView1() })
             .accessibilityIdentifier("button_your_devices")
     }
 }

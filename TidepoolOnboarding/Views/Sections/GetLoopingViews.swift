@@ -11,7 +11,7 @@ import LoopKitUI
 
 struct GetLoopingNavigationButton: View {
     var body: some View {
-        OnboardingSectionNavigationButton(section: .getLooping, destination: NavigationView { GetLoopingView1() })
+        OnboardingSectionNavigationButton(section: .getLooping, destination: NavigationViewWithNavigationBarAppearance { GetLoopingView1() })
             .accessibilityIdentifier("button_get_looping")
     }
 }
@@ -109,7 +109,7 @@ fileprivate struct GetLoopingView2: View {
 
 fileprivate struct GetLoopingView3: View {
     var body: some View {
-        OnboardingSectionPageView(section: .getLooping) {
+        OnboardingSectionPageView(section: .getLooping, nextButtonTitle: LocalizedString("Start Tidepool Loop", comment: "Onboarding, Get Looping section, view 3, next button, title")) {
             PageHeader(title: LocalizedString("You’re Ready", comment: "Onboarding, Get Looping section, view 3, title"), page: 3, of: 3)
             PresentableImage(decorative: "GetLooping_3")
             Paragraph(LocalizedString("If you need help, you can find help in Settings to:", comment: "Onboarding, Get Looping section, view 3, paragraph 1"))

@@ -54,6 +54,7 @@
 		A9502CF8260029A000146AD3 /* CheckmarkedBodyTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */; };
 		A95422D325CC9A74003F3080 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95422D225CC9A74003F3080 /* Image.swift */; };
 		A95BB9122603230B00E9FD17 /* Callout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95BB9112603230B00E9FD17 /* Callout.swift */; };
+		A967D849261FB121009D9675 /* NavigationBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A967D848261FB121009D9675 /* NavigationBarAppearance.swift */; };
 		A98AD2BE25830807001AAD6F /* TidepoolOnboardingPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A98AD2F225830851001AAD6F /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; };
 		A98AD2F925830851001AAD6F /* TidepoolOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2EB25830851001AAD6F /* TidepoolOnboarding.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -86,7 +87,6 @@
 		A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */; };
 		A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46025C4FC3300C2D63F /* OnboardingRootNavigationController.swift */; };
 		A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */; };
-		A9A5625025F8224B00A272B9 /* TransparentNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A5624F25F8224B00A272B9 /* TransparentNavigationBar.swift */; };
 		A9A5739F2603AA080084592C /* WarningIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A5739E2603AA080084592C /* WarningIcon.swift */; };
 		A9A90F92260A50FD00264BCB /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A90F91260A50FD00264BCB /* Paragraph.swift */; };
 		A9ABAE832607C3AE00E7CD4A /* CheckpointCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */; };
@@ -159,6 +159,7 @@
 		A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkedBodyTextList.swift; sourceTree = "<group>"; };
 		A95422D225CC9A74003F3080 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		A95BB9112603230B00E9FD17 /* Callout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callout.swift; sourceTree = "<group>"; };
+		A967D848261FB121009D9675 /* NavigationBarAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarAppearance.swift; sourceTree = "<group>"; };
 		A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingPlugin.h; sourceTree = "<group>"; };
 		A98AD2BD25830807001AAD6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -199,7 +200,6 @@
 		A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		A9A0E46025C4FC3300C2D63F /* OnboardingRootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRootNavigationController.swift; sourceTree = "<group>"; };
 		A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewView.swift; sourceTree = "<group>"; };
-		A9A5624F25F8224B00A272B9 /* TransparentNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentNavigationBar.swift; sourceTree = "<group>"; };
 		A9A5739E2603AA080084592C /* WarningIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningIcon.swift; sourceTree = "<group>"; };
 		A9A90F91260A50FD00264BCB /* Paragraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
 		A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointCheckmark.swift; sourceTree = "<group>"; };
@@ -459,7 +459,7 @@
 			children = (
 				A93D2B102602606E0091FB65 /* AlertOnLongPressGesture.swift */,
 				A9EFBD312602D09B0070E9CC /* ModalPresentation.swift */,
-				A9A5624F25F8224B00A272B9 /* TransparentNavigationBar.swift */,
+				A967D848261FB121009D9675 /* NavigationBarAppearance.swift */,
 			);
 			path = "View Modifiers";
 			sourceTree = "<group>";
@@ -842,6 +842,7 @@
 				A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */,
 				A95422D325CC9A74003F3080 /* Image.swift in Sources */,
 				A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */,
+				A967D849261FB121009D9675 /* NavigationBarAppearance.swift in Sources */,
 				A916AA5925F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift in Sources */,
 				A9502CDA2600293200146AD3 /* BodyText.swift in Sources */,
 				A9BEF06C2588380F00860217 /* PrescriptionCodeEntryView.swift in Sources */,
@@ -868,7 +869,6 @@
 				A99EAA9325F7FCEA00503A6D /* HowTheAppWorksViews.swift in Sources */,
 				A9A90F92260A50FD00264BCB /* Paragraph.swift in Sources */,
 				A9EFBD322602D09B0070E9CC /* ModalPresentation.swift in Sources */,
-				A9A5625025F8224B00A272B9 /* TransparentNavigationBar.swift in Sources */,
 				A923336525C3789800D8CF69 /* ActionButton.swift in Sources */,
 				A933F362260975A400DB84B9 /* AccessibleImage.swift in Sources */,
 				A903C79025F143BC00C88786 /* NavigationButton.swift in Sources */,

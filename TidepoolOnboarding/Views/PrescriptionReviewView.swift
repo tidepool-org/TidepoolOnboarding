@@ -24,6 +24,10 @@ struct PrescriptionReviewView: UIViewControllerRepresentable {
             self.parent = parent
         }
 
+        func prescriptionReview(hasNewPrescription prescription: Prescription) {
+            parent.onboardingViewModel.prescription = prescription
+        }
+
         func prescriptionReview(hasNewTherapySettings therapySettings: TherapySettings) {
             parent.onboardingViewModel.therapySettings = therapySettings
             parent.complete()

@@ -14,6 +14,12 @@ import LoopKit
 import LoopKitUI
 
 protocol PrescriptionReviewDelegate: AnyObject {
+    /// Informs the delegate that prescription review has a new prescription.
+    ///
+    /// - Parameters:
+    ///     - prescription: The new prescription.
+    func prescriptionReview(hasNewPrescription prescription: Prescription)
+
     /// Informs the delegate that prescription review has new therapy settings.
     ///
     /// - Parameters:
@@ -105,8 +111,10 @@ class PrescriptionReviewUICoordinator: UINavigationController, CompletionNotifyi
                 self?.setupCanceled()
             }
             prescriptionViewModel.didFinishStep = { [weak self] in
-                self?.therapySettingsViewModel = self?.constructTherapySettingsViewModel()
-                self?.stepFinished()
+                guard let self = self else { return }
+                self.prescriptionReviewDelegate?.prescriptionReview(hasNewPrescription: self.prescriptionViewModel.prescription!)
+                self.therapySettingsViewModel = self.constructTherapySettingsViewModel()
+                self.stepFinished()
             }
             let view = PrescriptionCodeEntryView(viewModel: prescriptionViewModel)
             let hostedView = hostingController(rootView: view)

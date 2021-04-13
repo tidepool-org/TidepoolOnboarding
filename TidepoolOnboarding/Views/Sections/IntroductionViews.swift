@@ -11,7 +11,7 @@ import LoopKitUI
 
 struct IntroductionNavigationButton: View {
     var body: some View {
-        OnboardingSectionNavigationButton(section: .introduction, destination: NavigationView { IntroductionView1() })
+        OnboardingSectionNavigationButton(section: .introduction, destination: NavigationViewWithNavigationBarAppearance { IntroductionView1() })
             .accessibilityIdentifier("button_introduction")
     }
 }

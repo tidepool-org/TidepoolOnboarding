@@ -91,6 +91,8 @@ class OnboardingRootNavigationController: UINavigationController, OnboardingView
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        onboardingViewModel.updateLastAccessedDate()
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForegroundNotificationReceived(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundNotificationReceived(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }

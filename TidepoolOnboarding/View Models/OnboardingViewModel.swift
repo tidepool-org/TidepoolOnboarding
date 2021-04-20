@@ -11,18 +11,18 @@ import Combine
 import LoopKit
 import LoopKitUI
 
-class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManagerOnboardNotifying, PumpManagerCreateNotifying, PumpManagerOnboardNotifying, ServiceCreateNotifying, ServiceOnboardNotifying {
-    weak var cgmManagerCreateDelegate: CGMManagerCreateDelegate?
-    weak var cgmManagerOnboardDelegate: CGMManagerOnboardDelegate?
-    weak var pumpManagerCreateDelegate: PumpManagerCreateDelegate?
-    weak var pumpManagerOnboardDelegate: PumpManagerOnboardDelegate?
-    weak var serviceCreateDelegate: ServiceCreateDelegate?
-    weak var serviceOnboardDelegate: ServiceOnboardDelegate?
+let TidepoolServiceIdentifier = "TidepoolService"
+
+class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding {
+    weak var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate?
+    weak var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
+    weak var serviceOnboardingDelegate: ServiceOnboardingDelegate?
 
     let onboardingProvider: OnboardingProvider
 
     @Published var lastAccessDate: Date
     @Published var sectionProgression: OnboardingSectionProgression
+    @Published var tidepoolService: Service?
     @Published var prescription: Prescription?
     @Published var therapySettings: TherapySettings?
     @Published var dosingEnabled: Bool
@@ -34,6 +34,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
 
         self.lastAccessDate = onboarding.lastAccessDate
         self.sectionProgression = onboarding.sectionProgression
+        self.tidepoolService = onboardingProvider.activeServices.first { $0.serviceIdentifier == TidepoolServiceIdentifier }
         self.prescription = onboarding.prescription
         self.therapySettings = onboarding.therapySettings
         self.dosingEnabled = onboarding.dosingEnabled ?? true
@@ -145,9 +146,13 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
         self.sectionProgression = OnboardingSectionProgression()
     }
 
-    // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
+    func onboardTidepoolService() -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
+        return onboardingProvider.onboardService(withIdentifier: TidepoolServiceIdentifier)
+    }
 
-    var allowSkipOnboarding: Bool { onboardingProvider.allowSkipOnboarding }
+    // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+
+    var allowDebugFeatures: Bool { onboardingProvider.allowDebugFeatures }
 
     func skipAllSections() {
         OnboardingSection.allCases.forEach { skipSection($0) }
@@ -163,7 +168,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
     }
 
     func skipSection(_ section: OnboardingSection) {
-        guard allowSkipOnboarding else { return }
+        guard allowDebugFeatures else { return }
 
         if !sectionProgression.hasStartedSection(section) {
             sectionProgression.startSection(section)
@@ -182,38 +187,36 @@ class OnboardingViewModel: ObservableObject, CGMManagerCreateNotifying, CGMManag
     }
 }
 
-extension OnboardingViewModel: CGMManagerCreateDelegate {
-    func cgmManagerCreateNotifying(didCreateCGMManager cgmManager: CGMManagerUI) {
-        cgmManagerCreateDelegate?.cgmManagerCreateNotifying(didCreateCGMManager: cgmManager)
+extension OnboardingViewModel: CGMManagerOnboardingDelegate {
+    func cgmManagerOnboarding(didCreateCGMManager cgmManager: CGMManagerUI) {
+        cgmManagerOnboardingDelegate?.cgmManagerOnboarding(didCreateCGMManager: cgmManager)
+    }
+
+    func cgmManagerOnboarding(didOnboardCGMManager cgmManager: CGMManagerUI) {
+        cgmManagerOnboardingDelegate?.cgmManagerOnboarding(didOnboardCGMManager: cgmManager)
     }
 }
 
-extension OnboardingViewModel: CGMManagerOnboardDelegate {
-    func cgmManagerOnboardNotifying(didOnboardCGMManager cgmManager: CGMManagerUI) {
-        cgmManagerOnboardDelegate?.cgmManagerOnboardNotifying(didOnboardCGMManager: cgmManager)
+extension OnboardingViewModel: PumpManagerOnboardingDelegate {
+    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
+        pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManager)
+    }
+
+    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI, withFinalSettings settings: PumpManagerSetupSettings) {
+        pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager, withFinalSettings: settings)
     }
 }
 
-extension OnboardingViewModel: PumpManagerCreateDelegate {
-    func pumpManagerCreateNotifying(didCreatePumpManager pumpManager: PumpManagerUI) {
-        pumpManagerCreateDelegate?.pumpManagerCreateNotifying(didCreatePumpManager: pumpManager)
-    }
-}
+extension OnboardingViewModel: ServiceOnboardingDelegate {
+    func serviceOnboarding(didCreateService service: Service) {
+        serviceOnboardingDelegate?.serviceOnboarding(didCreateService: service)
 
-extension OnboardingViewModel: PumpManagerOnboardDelegate {
-    func pumpManagerOnboardNotifying(didOnboardPumpManager pumpManager: PumpManagerUI, withFinalSettings settings: PumpManagerSetupSettings) {
-        pumpManagerOnboardDelegate?.pumpManagerOnboardNotifying(didOnboardPumpManager: pumpManager, withFinalSettings: settings)
+        if service.serviceIdentifier == TidepoolServiceIdentifier {
+            self.tidepoolService = service
+        }
     }
-}
 
-extension OnboardingViewModel: ServiceCreateDelegate {
-    func serviceCreateNotifying(didCreateService service: Service) {
-        serviceCreateDelegate?.serviceCreateNotifying(didCreateService: service)
-    }
-}
-
-extension OnboardingViewModel: ServiceOnboardDelegate {
-    func serviceOnboardNotifying(didOnboardService service: Service) {
-        serviceOnboardDelegate?.serviceOnboardNotifying(didOnboardService: service)
+    func serviceOnboarding(didOnboardService service: Service) {
+        serviceOnboardingDelegate?.serviceOnboarding(didOnboardService: service)
     }
 }

@@ -18,12 +18,13 @@ struct HowTheAppWorksNavigationButton: View {
 
 fileprivate struct HowTheAppWorksView1: View {
     var body: some View {
-        OnboardingSectionPageView(section: .howTheAppWorks, backButtonHidden: true, destination: HowTheAppWorksView2()) {
+        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView2()) {
             PageHeader(title: LocalizedString("How Does the Tidepool Loop App Work?", comment: "Onboarding, How the App Works section, view 1, title"), page: 1, of: 24)
             PresentableImage(decorative: "HowTheAppWorks_1")
             Paragraph(LocalizedString("This section will explore how to use Tidepool Loop’s home screen.", comment: "Onboarding, How the App Works section, view 1, paragraph 1"))
             Paragraph(LocalizedString("Tidepool Loop allows you to view information about your diabetes on one screen so you can make important treatment decisions.", comment: "Onboarding, How the App Works section, view 1, paragraph 2"))
         }
+        .backButtonHidden(true)
     }
 }
 

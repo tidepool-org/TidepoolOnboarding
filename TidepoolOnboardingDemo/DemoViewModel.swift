@@ -10,8 +10,10 @@ import SwiftUI
 import LoopKit
 import LoopKitUI
 import TidepoolOnboarding
+import TidepoolServiceKit
+import TidepoolServiceKitUI
 
-class DemoViewModel: ObservableObject, OnboardingProvider, OnboardingDelegate, CGMManagerCreateDelegate, CGMManagerOnboardDelegate, PumpManagerCreateDelegate, PumpManagerOnboardDelegate, ServiceCreateDelegate, ServiceOnboardDelegate, CompletionDelegate, DeviceOrientationController {
+class DemoViewModel: ObservableObject, OnboardingProvider, OnboardingDelegate, CGMManagerOnboardingDelegate, PumpManagerOnboardingDelegate, ServiceOnboardingDelegate, CompletionDelegate, DeviceOrientationController {
     let onboarding: TidepoolOnboarding
 
     @Published var isComplete: Bool = false
@@ -34,7 +36,7 @@ class DemoViewModel: ObservableObject, OnboardingProvider, OnboardingDelegate, C
 
     // OnboardingProvider
 
-    var allowSkipOnboarding: Bool = true
+    var allowDebugFeatures: Bool = true
 
     // OnboardingDelegate
 
@@ -98,55 +100,68 @@ class DemoViewModel: ObservableObject, OnboardingProvider, OnboardingDelegate, C
 
     var activeCGMManager: CGMManager? = nil
     var availableCGMManagers: [CGMManagerDescriptor] = []
-    func setupCGMManager(withIdentifier identifier: String) -> Result<SetupUIResult<UIViewController & CGMManagerCreateNotifying & CGMManagerOnboardNotifying & CompletionNotifying, CGMManager>, Error> {
+    func onboardCGMManager(withIdentifier identifier: String) -> Result<OnboardingResult<CGMManagerViewController, CGMManager>, Error> {
         .failure(DemoError())
     }
 
-    // CGMManagerCreateDelegate
+    // CGMManagerOnboardingDelegate
 
-    func cgmManagerCreateNotifying(didCreateCGMManager cgmManager: CGMManagerUI) {
+    func cgmManagerOnboarding(didCreateCGMManager cgmManager: CGMManagerUI) {
         self.activeCGMManager = cgmManager
     }
-
-    // CGMManagerOnboardDelegate
-
-    func cgmManagerOnboardNotifying(didOnboardCGMManager cgmManager: CGMManagerUI) {}
+    func cgmManagerOnboarding(didOnboardCGMManager cgmManager: CGMManagerUI) {}
 
     // PumpManagerProvider
 
     var activePumpManager: PumpManager? = nil
     var availablePumpManagers: [PumpManagerDescriptor] = []
-    func setupPumpManager(withIdentifier identifier: String, initialSettings settings: PumpManagerSetupSettings) -> Result<SetupUIResult<UIViewController & CompletionNotifying & PumpManagerCreateNotifying & PumpManagerOnboardNotifying, PumpManager>, Error> {
+    func onboardPumpManager(withIdentifier identifier: String, initialSettings settings: PumpManagerSetupSettings) -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
         .failure(DemoError())
     }
 
-    // PumpManagerCreateDelegate
+    // PumpManagerOnboardingDelegate
 
-    func pumpManagerCreateNotifying(didCreatePumpManager pumpManager: PumpManagerUI) {
+    func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
         self.activePumpManager = pumpManager
     }
-
-    // PumpManagerOnboardDelegate
-
-    func pumpManagerOnboardNotifying(didOnboardPumpManager pumpManager: PumpManagerUI, withFinalSettings settings: PumpManagerSetupSettings) {}
+    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI, withFinalSettings settings: PumpManagerSetupSettings) {}
 
     // ServiceProvider
 
     var activeServices: [Service] = []
-    var availableServices: [ServiceDescriptor] = []
-    func setupService(withIdentifier identifier: String) -> Result<SetupUIResult<UIViewController & CompletionNotifying & ServiceCreateNotifying & ServiceOnboardNotifying, Service>, Error> {
-        .failure(DemoError())
+    var availableServices: [ServiceDescriptor] = [ServiceDescriptor(identifier: TidepoolService.serviceIdentifier, localizedTitle: TidepoolService.localizedTitle)]
+    func onboardService(withIdentifier identifier: String) -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
+        guard let service = activeServices.first(where: { $0.serviceIdentifier == identifier }) else {
+            switch identifier {
+            case TidepoolService.serviceIdentifier:
+                switch TidepoolService.setupViewController(colorPalette: .demo) {
+                case .userInteractionRequired(let viewController):
+                    return .success(.userInteractionRequired(viewController))
+                case .createdAndOnboarded(let service):
+                    return .success(.createdAndOnboarded(service))
+                }
+            default:
+                return .failure(DemoError())
+            }
+        }
+
+        if service.isOnboarded {
+            return .success(.createdAndOnboarded(service))
+        }
+
+        guard let serviceUI = service as? ServiceUI else {
+            return .failure(DemoError())
+        }
+
+        return .success(.userInteractionRequired(serviceUI.settingsViewController(colorPalette: .demo)))
     }
 
-    // ServiceCreateDelegate
+    // ServiceOnboardingDelegate
 
-    func serviceCreateNotifying(didCreateService service: Service) {
+    func serviceOnboarding(didCreateService service: Service) {
         activeServices.append(service)
     }
-
-    // ServiceCreateDelegate
-
-    func serviceOnboardNotifying(didOnboardService service: Service) {}
+    func serviceOnboarding(didOnboardService service: Service) {}
 
     // DeviceOrientationController
 

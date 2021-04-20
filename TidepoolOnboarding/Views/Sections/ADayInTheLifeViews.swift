@@ -18,7 +18,7 @@ struct ADayInTheLifeNavigationButton: View {
 
 fileprivate struct ADayInTheLifeView1: View {
     var body: some View {
-        OnboardingSectionPageView(section: .aDayInTheLife, backButtonHidden: true, destination: ADayInTheLifeView2()) {
+        OnboardingSectionPageView(section: .aDayInTheLife, destination: ADayInTheLifeView2()) {
             PageHeader(title: LocalizedString("A Day in the Life with Tidepool Loop", comment: "Onboarding, A Day In The Life section, view 1, title"), page: 1, of: 25)
             Paragraph(LocalizedString("Let’s take a look at how Tidepool Loop can help you handle four daily diabetes scenarios.", comment: "Onboarding, A Day In The Life section, view 1, paragraph"))
             BulletedBodyTextList(
@@ -28,6 +28,7 @@ fileprivate struct ADayInTheLifeView1: View {
                 LocalizedString("Dealing with highs and lows", comment: "Onboarding, A Day In The Life section, view 1, list, item 4")
             )
         }
+        .backButtonHidden(true)
     }
 }
 

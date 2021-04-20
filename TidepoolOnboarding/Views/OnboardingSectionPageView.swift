@@ -15,29 +15,33 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     @Environment(\.complete) var complete
     @Environment(\.dismiss) var dismiss
 
+    @State private var isDestinationActive = false
     @State private var isCloseAlertPresented = false
 
     private let section: OnboardingSection
     private let editMode: Bool
     private let backButtonHidden: Bool
     private let nextButtonTitle: String?
+    private let nextButtonAction: ((_ completion: @escaping (Bool) -> Void) -> Void)?
     private let destination: Destination?
     private let content: Content
 
-    init(section: OnboardingSection, editMode: Bool = false, backButtonHidden: Bool = false, nextButtonTitle: String? = nil, destination: Destination, @ViewBuilder content: () -> Content) {
+    init(section: OnboardingSection, destination: Destination, @ViewBuilder content: () -> Content) {
         self.section = section
-        self.editMode = editMode
-        self.backButtonHidden = backButtonHidden
-        self.nextButtonTitle = nextButtonTitle
+        self.editMode = false
+        self.backButtonHidden = false
+        self.nextButtonTitle = nil
+        self.nextButtonAction = nil
         self.destination = destination
         self.content = content()
     }
 
-    init(section: OnboardingSection, editMode: Bool = false, backButtonHidden: Bool = false, nextButtonTitle: String? = nil, @ViewBuilder content: () -> Content) where Destination == EmptyView {
+    init(section: OnboardingSection, @ViewBuilder content: () -> Content) where Destination == EmptyView {
         self.section = section
-        self.editMode = editMode
-        self.backButtonHidden = backButtonHidden
-        self.nextButtonTitle = nextButtonTitle
+        self.editMode = false
+        self.backButtonHidden = false
+        self.nextButtonTitle = nil
+        self.nextButtonAction = nil
         self.destination = nil
         self.content = content()
     }
@@ -60,7 +64,6 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
                 }
             }
         }
-        .alert(isPresented: $isCloseAlertPresented) { closeAlert }
         .navigationBarTitle(Text(onboardingViewModel.titleForSection(section)), displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton, trailing: closeButton)
@@ -71,16 +74,38 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
 
     @ViewBuilder
     private var nextButton: some View {
-        if let destination = destination {
-            NavigationButton(title: nextButtonTitle ?? nextButtonTitleDefault, destination: destination)
+        VStack {
+            ActionButton(title: nextButtonTitleResolved, action: nextButtonActionResolved)
                 .accessibilityIdentifier("button_next")
-        } else {
-            ActionButton(title: nextButtonTitle ?? nextButtonTitleDefault, action: complete)
-                .accessibilityIdentifier("button_next")
+            if let destination = destination {
+                NavigationLink(destination: destination, isActive: $isDestinationActive) { EmptyView() }
+            }
         }
     }
 
-    private var nextButtonTitleDefault: String { LocalizedString("Continue", comment: "Default next button title of an onboarding section page view") }
+    private var nextButtonTitleResolved: String {
+        return nextButtonTitle ?? LocalizedString("Continue", comment: "Default next button title of an onboarding section page view")
+    }
+
+    private func nextButtonActionResolved() {
+        if let nextButtonAction = nextButtonAction {
+            nextButtonAction { success in
+                if success {
+                    nextButtonActionComplete()
+                }
+            }
+        } else {
+            nextButtonActionComplete()
+        }
+    }
+
+    private func nextButtonActionComplete() {
+        if destination != nil {
+            isDestinationActive = true
+        } else {
+            complete()
+        }
+    }
 
     @ViewBuilder
     private var backButton: some View {
@@ -111,6 +136,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
             Text(closeButtonTitle)
                 .fontWeight(.regular)
         }
+        .alert(isPresented: $isCloseAlertPresented) { closeAlert }
         .accessibilityElement()
         .accessibilityAddTraits(.isButton)
         .accessibilityLabel(closeButtonTitle)
@@ -127,4 +153,24 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     }
 
     private var backgroundColor: UIColor { editMode ? .secondarySystemBackground : .systemBackground }
+}
+
+extension OnboardingSectionPageView {
+    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, nextButtonTitle: String? = nil, nextButtonAction: ((@escaping (Bool) -> Void) -> Void)? = nil) {
+        self.section = other.section
+        self.editMode = editMode ?? other.editMode
+        self.backButtonHidden = backButtonHidden ?? other.backButtonHidden
+        self.nextButtonTitle = nextButtonTitle ?? other.nextButtonTitle
+        self.nextButtonAction = nextButtonAction ?? other.nextButtonAction
+        self.destination = other.destination
+        self.content = other.content
+    }
+
+    func editMode(_ editMode: Bool) -> Self { Self(self, editMode: editMode) }
+
+    func backButtonHidden(_ backButtonHidden: Bool) -> Self { Self(self, backButtonHidden: backButtonHidden) }
+
+    func nextButtonTitle(_ nextButtonTitle: String) -> Self { Self(self, nextButtonTitle: nextButtonTitle) }
+
+    func nextButtonAction(_ nextButtonAction: @escaping (@escaping (Bool) -> Void) -> Void) -> Self { Self(self, nextButtonAction: nextButtonAction) }
 }

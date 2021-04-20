@@ -45,9 +45,9 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
                 selectionIndicator
                     .frame(width: 22, height: 22)
                     .foregroundColor(.accentColor)
-                    .alertOnLongPressGesture(enabled: onboardingViewModel.allowSkipOnboarding && !onboardingViewModel.sectionProgression.hasCompletedSection(section),
+                    .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures && !onboardingViewModel.sectionProgression.hasCompletedSection(section),
                                              title: "Are you sure you want to skip through this section?") {  // Not localized
-                        onboardingViewModel.skipThroughSection(section)   // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
+                        onboardingViewModel.skipThroughSection(section)   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                     }
             }
             Spacer()

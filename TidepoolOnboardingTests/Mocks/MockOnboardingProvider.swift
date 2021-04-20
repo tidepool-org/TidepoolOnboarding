@@ -10,7 +10,7 @@ import LoopKit
 import LoopKitUI
 
 class MockOnboardingProvider: OnboardingProvider {
-    var allowSkipOnboarding: Bool = true
+    var allowDebugFeatures: Bool = true
 
     func getNotificationAuthorization(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
     func authorizeNotification(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
@@ -26,19 +26,19 @@ class MockOnboardingProvider: OnboardingProvider {
 
     var activeCGMManager: CGMManager? = nil
     var availableCGMManagers: [CGMManagerDescriptor] = []
-    func setupCGMManager(withIdentifier identifier: String) -> Result<SetupUIResult<UIViewController & CGMManagerCreateNotifying & CGMManagerOnboardNotifying & CompletionNotifying, CGMManager>, Error> {
+    func onboardCGMManager(withIdentifier identifier: String) -> Result<OnboardingResult<CGMManagerViewController, CGMManager>, Error> {
         .failure(MockError())
     }
 
     var activePumpManager: PumpManager? = nil
     var availablePumpManagers: [PumpManagerDescriptor] = []
-    func setupPumpManager(withIdentifier identifier: String, initialSettings settings: PumpManagerSetupSettings) -> Result<SetupUIResult<UIViewController & CompletionNotifying & PumpManagerCreateNotifying & PumpManagerOnboardNotifying, PumpManager>, Error> {
+    func onboardPumpManager(withIdentifier identifier: String, initialSettings settings: PumpManagerSetupSettings) -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
         .failure(MockError())
     }
 
     var activeServices: [Service] = []
     var availableServices: [ServiceDescriptor] = []
-    func setupService(withIdentifier identifier: String) -> Result<SetupUIResult<UIViewController & CompletionNotifying & ServiceCreateNotifying & ServiceOnboardNotifying, Service>, Error> {
+    func onboardService(withIdentifier identifier: String) -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
         .failure(MockError())
     }
 }

@@ -18,12 +18,9 @@ struct DemoOnboardingView: UIViewControllerRepresentable {
         var onboardingViewController = viewModel.onboarding.onboardingViewController(onboardingProvider: viewModel,
                                                                                      displayGlucoseUnitObservable: DisplayGlucoseUnitObservable.demo,
                                                                                      colorPalette: LoopUIColorPalette.demo)
-        onboardingViewController.cgmManagerCreateDelegate = viewModel
-        onboardingViewController.cgmManagerOnboardDelegate = viewModel
-        onboardingViewController.pumpManagerCreateDelegate = viewModel
-        onboardingViewController.pumpManagerOnboardDelegate = viewModel
-        onboardingViewController.serviceCreateDelegate = viewModel
-        onboardingViewController.serviceOnboardDelegate = viewModel
+        onboardingViewController.cgmManagerOnboardingDelegate = viewModel
+        onboardingViewController.pumpManagerOnboardingDelegate = viewModel
+        onboardingViewController.serviceOnboardingDelegate = viewModel
         onboardingViewController.completionDelegate = viewModel
         
         return onboardingViewController

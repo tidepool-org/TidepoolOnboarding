@@ -18,7 +18,7 @@ struct GetLoopingNavigationButton: View {
 
 fileprivate struct GetLoopingView1: View {
     var body: some View {
-        OnboardingSectionPageView(section: .getLooping, backButtonHidden: true, destination: GetLoopingView2()) {
+        OnboardingSectionPageView(section: .getLooping, destination: GetLoopingView2()) {
             PageHeader(title: LocalizedString("Closed Loop Mode", comment: "Onboarding, Get Looping section, view 1, title"), page: 1, of: 3)
             PresentableImage(decorative: "GetLooping_1")
             Paragraph(LocalizedString("There are two modes of operation for Tidepool Loop:", comment: "Onboarding, Get Looping section, view 1, paragraph"))
@@ -30,6 +30,7 @@ fileprivate struct GetLoopingView1: View {
             segment1
             segment2
         }
+        .backButtonHidden(true)
     }
     
     private var segment1: some View {
@@ -59,7 +60,7 @@ fileprivate struct GetLoopingView2: View {
     @State private var isOffAlertPresented = false
     
     var body: some View {
-        OnboardingSectionPageView(section: .getLooping, editMode: true, destination: GetLoopingView3()) {
+        OnboardingSectionPageView(section: .getLooping, destination: GetLoopingView3()) {
             PageHeader(title: LocalizedString("Select Loop Mode", comment: "Onboarding, Get Looping section, view 2, title"), page: 2, of: 3)
             if onboardingViewModel.dosingEnabled {
                 Paragraph(LocalizedString("Closed Loop is now set to ON.", comment: "Onboarding, Get Looping section, view 2, paragraph 1, closed loop on"))
@@ -72,6 +73,7 @@ fileprivate struct GetLoopingView2: View {
             }
             .background(editableBackground)
         }
+        .editMode(true)
         .alert(isPresented: $isOffAlertPresented) { offAlert }
     }
 
@@ -109,7 +111,7 @@ fileprivate struct GetLoopingView2: View {
 
 fileprivate struct GetLoopingView3: View {
     var body: some View {
-        OnboardingSectionPageView(section: .getLooping, nextButtonTitle: LocalizedString("Start Tidepool Loop", comment: "Onboarding, Get Looping section, view 3, next button, title")) {
+        OnboardingSectionPageView(section: .getLooping) {
             PageHeader(title: LocalizedString("You’re Ready", comment: "Onboarding, Get Looping section, view 3, title"), page: 3, of: 3)
             PresentableImage(decorative: "GetLooping_3")
             Paragraph(LocalizedString("If you need help, you can find help in Settings to:", comment: "Onboarding, Get Looping section, view 3, paragraph 1"))
@@ -121,6 +123,7 @@ fileprivate struct GetLoopingView3: View {
             )
             Paragraph(LocalizedString("We’re here for you!", comment: "Onboarding, Get Looping section, view 3, paragraph 2"))
         }
+        .nextButtonTitle(LocalizedString("Start Tidepool Loop", comment: "Onboarding, Get Looping section, view 3, next button, title"))
     }
 }
 

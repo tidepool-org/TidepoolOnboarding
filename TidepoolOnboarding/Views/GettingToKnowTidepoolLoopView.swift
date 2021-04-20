@@ -33,9 +33,9 @@ struct GettingToKnowTidepoolLoopView: View {
             .font(.largeTitle)
             .bold()
             .accessibilityAddTraits(.isHeader)
-            .alertOnLongPressGesture(enabled: onboardingViewModel.allowSkipOnboarding,
+            .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures,
                                      title: "Are you sure you want to skip the rest of onboarding?") {  // Not localized
-                onboardingViewModel.skipAllSections()   // NOTE: SKIP ONBOARDING - DEBUG AND TEST ONLY
+                onboardingViewModel.skipAllSections()   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
             }
     }
 

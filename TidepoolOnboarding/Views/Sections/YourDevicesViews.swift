@@ -23,7 +23,7 @@ fileprivate struct YourDevicesView1: View {
     @State var authorizeBluetoothEnabled = false
 
     var body: some View {
-        OnboardingSectionPageView(section: .yourDevices, backButtonHidden: true) {
+        OnboardingSectionPageView(section: .yourDevices) {
             VStack {
                 Spacer()
                 authorizeNotificationButton
@@ -32,6 +32,7 @@ fileprivate struct YourDevicesView1: View {
                 Spacer()
             }
         }
+        .backButtonHidden(true)
         .onAppear {
             checkAuthorization()
         }

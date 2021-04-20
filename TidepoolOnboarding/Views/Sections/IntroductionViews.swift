@@ -18,13 +18,14 @@ struct IntroductionNavigationButton: View {
 
 fileprivate struct IntroductionView1: View {
     var body: some View {
-        OnboardingSectionPageView(section: .introduction, backButtonHidden: true, destination: IntroductionView2()) {
+        OnboardingSectionPageView(section: .introduction, destination: IntroductionView2()) {
             PageHeader(title: LocalizedString("The Parts of Tidepool Loop", comment: "Onboarding, Introduction section, view 1, title"), page: 1, of: 7)
             Graphic()
                 .accessibilityHidden(true)
             Paragraph(LocalizedString("The Tidepool Loop app connects and controls all of the pieces of your system.", comment: "Onboarding, Introduction section, view 1, paragraph 1"))
             Paragraph(LocalizedString("You may already be familiar with each of these devices, but here is a brief overview.", comment: "Onboarding, Introduction section, view 1, paragraph 2"))
         }
+        .backButtonHidden(true)
     }
     
     private struct Graphic: View {

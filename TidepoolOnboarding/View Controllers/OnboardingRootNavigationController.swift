@@ -12,38 +12,25 @@ import SwiftUI
 import LoopKit
 import LoopKitUI
 
-class OnboardingRootNavigationController: UINavigationController, OnboardingViewController {
+class OnboardingRootNavigationController: UINavigationController, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding, CompletionNotifying {
     private enum State {
         case welcome
         case gettingToKnowTidepoolLoop
     }
 
+    var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate? {
+        get { onboardingViewModel.cgmManagerOnboardingDelegate }
+        set { onboardingViewModel.cgmManagerOnboardingDelegate = newValue }
+    }
+    var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate? {
+        get { onboardingViewModel.pumpManagerOnboardingDelegate }
+        set { onboardingViewModel.pumpManagerOnboardingDelegate = newValue }
+    }
+    var serviceOnboardingDelegate: ServiceOnboardingDelegate? {
+        get { onboardingViewModel.serviceOnboardingDelegate }
+        set { onboardingViewModel.serviceOnboardingDelegate = newValue }
+    }
     weak var completionDelegate: CompletionDelegate?
-
-    var cgmManagerCreateDelegate: CGMManagerCreateDelegate? {
-        get { onboardingViewModel.cgmManagerCreateDelegate }
-        set { onboardingViewModel.cgmManagerCreateDelegate = newValue }
-    }
-    var cgmManagerOnboardDelegate: CGMManagerOnboardDelegate? {
-        get { onboardingViewModel.cgmManagerOnboardDelegate }
-        set { onboardingViewModel.cgmManagerOnboardDelegate = newValue }
-    }
-    var pumpManagerCreateDelegate: PumpManagerCreateDelegate? {
-        get { onboardingViewModel.pumpManagerCreateDelegate }
-        set { onboardingViewModel.pumpManagerCreateDelegate = newValue }
-    }
-    var pumpManagerOnboardDelegate: PumpManagerOnboardDelegate? {
-        get { onboardingViewModel.pumpManagerOnboardDelegate }
-        set { onboardingViewModel.pumpManagerOnboardDelegate = newValue }
-    }
-    var serviceCreateDelegate: ServiceCreateDelegate? {
-        get { onboardingViewModel.serviceCreateDelegate }
-        set { onboardingViewModel.serviceCreateDelegate = newValue }
-    }
-    var serviceOnboardDelegate: ServiceOnboardDelegate? {
-        get { onboardingViewModel.serviceOnboardDelegate }
-        set { onboardingViewModel.serviceOnboardDelegate = newValue }
-    }
 
     private let onboardingViewModel: OnboardingViewModel
     private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable

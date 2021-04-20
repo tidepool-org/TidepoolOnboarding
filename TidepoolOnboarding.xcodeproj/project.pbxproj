@@ -21,7 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		A903C79025F143BC00C88786 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C78F25F143BC00C88786 /* NavigationButton.swift */; };
 		A903C79825F1443200C88786 /* OnboardingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79725F1443200C88786 /* OnboardingSection.swift */; };
 		A903C7A025F1444300C88786 /* OnboardingSectionNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */; };
 		A903C7A825F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */; };
@@ -127,7 +126,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A903C78F25F143BC00C88786 /* NavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
 		A903C79725F1443200C88786 /* OnboardingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSection.swift; sourceTree = "<group>"; };
 		A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionNavigationButton.swift; sourceTree = "<group>"; };
 		A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GettingToKnowTidepoolLoopView.swift; sourceTree = "<group>"; };
@@ -312,7 +310,6 @@
 				A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */,
 				A9502CE72600295A00146AD3 /* HeaderText.swift */,
 				A933F31C260925EA00DB84B9 /* LoopIcon.swift */,
-				A903C78F25F143BC00C88786 /* NavigationButton.swift */,
 				A9502CBD25FFEF7B00146AD3 /* PageHeader.swift */,
 				A9A90F91260A50FD00264BCB /* Paragraph.swift */,
 				A9502CCB25FFEFD500146AD3 /* PresentableImage.swift */,
@@ -871,7 +868,6 @@
 				A9EFBD322602D09B0070E9CC /* ModalPresentation.swift in Sources */,
 				A923336525C3789800D8CF69 /* ActionButton.swift in Sources */,
 				A933F362260975A400DB84B9 /* AccessibleImage.swift in Sources */,
-				A903C79025F143BC00C88786 /* NavigationButton.swift in Sources */,
 				A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */,
 				A99EAA8B25F7FCDA00503A6D /* IntroductionViews.swift in Sources */,
 				A903C7A825F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift in Sources */,

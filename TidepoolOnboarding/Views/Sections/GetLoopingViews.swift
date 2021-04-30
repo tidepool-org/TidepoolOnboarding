@@ -19,7 +19,7 @@ struct GetLoopingNavigationButton: View {
 fileprivate struct GetLoopingView1: View {
     var body: some View {
         OnboardingSectionPageView(section: .getLooping, destination: GetLoopingView2()) {
-            PageHeader(title: LocalizedString("Closed Loop Mode", comment: "Onboarding, Get Looping section, view 1, title"), page: 1, of: 3)
+            PageHeader(title: LocalizedString("Closed Loop Mode", comment: "Onboarding, Get Looping section, view 1, title"))
             PresentableImage(decorative: "GetLooping_1")
             Paragraph(LocalizedString("There are two modes of operation for Tidepool Loop:", comment: "Onboarding, Get Looping section, view 1, paragraph"))
                 .fixedSize(horizontal: false, vertical: true)
@@ -61,7 +61,7 @@ fileprivate struct GetLoopingView2: View {
     
     var body: some View {
         OnboardingSectionPageView(section: .getLooping, destination: GetLoopingView3()) {
-            PageHeader(title: LocalizedString("Select Loop Mode", comment: "Onboarding, Get Looping section, view 2, title"), page: 2, of: 3)
+            PageHeader(title: LocalizedString("Select Loop Mode", comment: "Onboarding, Get Looping section, view 2, title"))
             if onboardingViewModel.dosingEnabled {
                 Paragraph(LocalizedString("Closed Loop is now set to ON.", comment: "Onboarding, Get Looping section, view 2, paragraph 1, closed loop on"))
             } else {
@@ -112,7 +112,7 @@ fileprivate struct GetLoopingView2: View {
 fileprivate struct GetLoopingView3: View {
     var body: some View {
         OnboardingSectionPageView(section: .getLooping) {
-            PageHeader(title: LocalizedString("You’re Ready", comment: "Onboarding, Get Looping section, view 3, title"), page: 3, of: 3)
+            PageHeader(title: LocalizedString("You’re Ready", comment: "Onboarding, Get Looping section, view 3, title"))
             PresentableImage(decorative: "GetLooping_3")
             Paragraph(LocalizedString("If you need help, you can find help in Settings to:", comment: "Onboarding, Get Looping section, view 3, paragraph 1"))
                 .fixedSize(horizontal: false, vertical: true)

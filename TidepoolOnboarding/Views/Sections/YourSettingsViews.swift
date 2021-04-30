@@ -41,7 +41,7 @@ fileprivate struct TidepoolServiceOnboardingView: View {
 
     var body: some View {
         OnboardingSectionPageView(section: .yourSettings, destination: PrescriptionReviewView()) {
-            PageHeader(title: LocalizedString("Your Tidepool Account", comment: "Onboarding, Your Settings section, view 1, title"), page: 1, of: 2)
+            PageHeader(title: LocalizedString("Your Tidepool Account", comment: "Onboarding, Your Settings section, view 1, title"))
             Paragraph(LocalizedString("If you already have a Tidepool acccount you can Sign In.", comment: "Onboarding, Your Settings section, view 1, paragraph"))
         }
         .backButtonHidden(true)

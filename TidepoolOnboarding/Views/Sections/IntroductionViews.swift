@@ -19,7 +19,7 @@ struct IntroductionNavigationButton: View {
 fileprivate struct IntroductionView1: View {
     var body: some View {
         OnboardingSectionPageView(section: .introduction, destination: IntroductionView2()) {
-            PageHeader(title: LocalizedString("The Parts of Tidepool Loop", comment: "Onboarding, Introduction section, view 1, title"), page: 1, of: 7)
+            PageHeader(title: LocalizedString("The Parts of Tidepool Loop", comment: "Onboarding, Introduction section, view 1, title"))
             Graphic()
                 .accessibilityHidden(true)
             Paragraph(LocalizedString("The Tidepool Loop app connects and controls all of the pieces of your system.", comment: "Onboarding, Introduction section, view 1, paragraph 1"))
@@ -73,7 +73,7 @@ fileprivate struct IntroductionView1: View {
 fileprivate struct IntroductionView2: View {
     var body: some View {
         OnboardingSectionPageView(section: .introduction, destination: IntroductionView3()) {
-            PageHeader(title: LocalizedString("CGM", comment: "Onboarding, Introduction section, view 2, title"), page: 2, of: 7)
+            PageHeader(title: LocalizedString("CGM", comment: "Onboarding, Introduction section, view 2, title"))
             PresentableImage(decorative: "Introduction_2")
             Paragraph(LocalizedString("A continuous glucose monitor (CGM) is made up of a small sensor attached to a transmitter.", comment: "Onboarding, Introduction section, view 2, paragraph 1"))
             Paragraph(LocalizedString("The sensor measures glucose levels just under the skin, and the transmitter sends the data wirelessly to the Tidepool Loop app via Bluetooth.", comment: "Onboarding, Introduction section, view 2, paragraph 2"))
@@ -90,7 +90,7 @@ fileprivate struct IntroductionView2: View {
 fileprivate struct IntroductionView3: View {
     var body: some View {
         OnboardingSectionPageView(section: .introduction, destination: IntroductionView4()) {
-            PageHeader(title: LocalizedString("Insulin Pump", comment: "Onboarding, Introduction section, view 3, title"), page: 3, of: 7)
+            PageHeader(title: LocalizedString("Insulin Pump", comment: "Onboarding, Introduction section, view 3, title"))
             PresentableImage(decorative: "Introduction_3")
             Paragraph(LocalizedString("An insulin pump continuously delivers U-100 rapid-acting insulin under the skin to cover your background insulin needs.", comment: "Onboarding, Introduction section, view 3, paragraph 1"))
             Paragraph(LocalizedString("This background insulin is called basal insulin.", comment: "Onboarding, Introduction section, view 3, paragraph 2"))
@@ -102,7 +102,7 @@ fileprivate struct IntroductionView3: View {
 fileprivate struct IntroductionView4: View {
     var body: some View {
         OnboardingSectionPageView(section: .introduction, destination: IntroductionView5()) {
-            PageHeader(title: LocalizedString("Tidepool Loop App", comment: "Onboarding, Introduction section, view 4, title"), page: 4, of: 7)
+            PageHeader(title: LocalizedString("Tidepool Loop App", comment: "Onboarding, Introduction section, view 4, title"))
             PresentableImage(decorative: "Introduction_4_1")
             Paragraph(LocalizedString("The Tidepool Loop app receives glucose and insulin information from your diabetes devices and sends commands back to the pump to adjust your insulin delivery.", comment: "Onboarding, Introduction section, view 4, paragraph"))
             segment1
@@ -143,7 +143,7 @@ fileprivate struct IntroductionView4: View {
 fileprivate struct IntroductionView5: View {
     var body: some View {
         OnboardingSectionPageView(section: .introduction, destination: IntroductionView6()) {
-            PageHeader(title: LocalizedString("Apple Watch (Optional)", comment: "Onboarding, Introduction section, view 5, title"), page: 5, of: 7)
+            PageHeader(title: LocalizedString("Apple Watch (Optional)", comment: "Onboarding, Introduction section, view 5, title"))
             PresentableImage(decorative: "Introduction_5_1")
             Paragraph(LocalizedString("You can choose to use an Apple Watch with Tidepool Loop.", comment: "Onboarding, Introduction section, view 5, paragraph 1"))
             Paragraph(LocalizedString("This optional component allows you a discreet way to view your sensor glucose and insulin information, enter carbs, and deliver a bolus.", comment: "Onboarding, Introduction section, view 5, paragraph 2"))
@@ -157,7 +157,7 @@ fileprivate struct IntroductionView5: View {
 fileprivate struct IntroductionView6: View {
     var body: some View {
         OnboardingSectionPageView(section: .introduction, destination: IntroductionView7()) {
-            PageHeader(title: LocalizedString("How Automation Works", comment: "Onboarding, Introduction section, view 5, title"), page: 6, of: 7)
+            PageHeader(title: LocalizedString("How Automation Works", comment: "Onboarding, Introduction section, view 5, title"))
             PresentableImage(decorative: "Introduction_6_1")
             Paragraph(LocalizedString("The Tidepool Loop app makes a prediction about your future glucose by looking at:", comment: "Onboarding, Introduction section, view 5, paragraph 1"))
             BulletedBodyTextList(
@@ -184,7 +184,7 @@ fileprivate struct IntroductionView6: View {
 fileprivate struct IntroductionView7: View {
     var body: some View {
         OnboardingSectionPageView(section: .introduction) {
-            PageHeader(title: LocalizedString("Checkpoint", comment: "Onboarding, Introduction section, view 7, title"), page: 7, of: 7)
+            PageHeader(title: LocalizedString("Checkpoint", comment: "Onboarding, Introduction section, view 7, title"))
             CheckpointCheckmark()
             Paragraph(LocalizedString("You’re now familiar with all the parts of Tidepool Loop! You’ve learned about:", comment: "Onboarding, Introduction section, view 7, paragraph 1"))
             CheckmarkedBodyTextList(

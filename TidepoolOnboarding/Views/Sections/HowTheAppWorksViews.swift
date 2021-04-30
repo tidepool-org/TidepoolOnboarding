@@ -19,7 +19,7 @@ struct HowTheAppWorksNavigationButton: View {
 fileprivate struct HowTheAppWorksView1: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView2()) {
-            PageHeader(title: LocalizedString("How Does the Tidepool Loop App Work?", comment: "Onboarding, How the App Works section, view 1, title"), page: 1, of: 24)
+            PageHeader(title: LocalizedString("How Does the Tidepool Loop App Work?", comment: "Onboarding, How the App Works section, view 1, title"))
             PresentableImage(decorative: "HowTheAppWorks_1")
             Paragraph(LocalizedString("This section will explore how to use Tidepool Loop’s home screen.", comment: "Onboarding, How the App Works section, view 1, paragraph 1"))
             Paragraph(LocalizedString("Tidepool Loop allows you to view information about your diabetes on one screen so you can make important treatment decisions.", comment: "Onboarding, How the App Works section, view 1, paragraph 2"))
@@ -31,7 +31,7 @@ fileprivate struct HowTheAppWorksView1: View {
 fileprivate struct HowTheAppWorksView2: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView3()) {
-            PageHeader(title: LocalizedString("Navigating Tidepool Loop", comment: "Onboarding, How the App Works section, view 2, title"), page: 2, of: 24)
+            PageHeader(title: LocalizedString("Navigating Tidepool Loop", comment: "Onboarding, How the App Works section, view 2, title"))
             Paragraph(LocalizedString("The app home screen is divided into three main areas:", comment: "Onboarding, How the App Works section, view 2, paragraph 1"))
             segment1
             segment2
@@ -62,7 +62,7 @@ fileprivate struct HowTheAppWorksView2: View {
 fileprivate struct HowTheAppWorksView3: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView4()) {
-            PageHeader(title: LocalizedString("Status Icons", comment: "Onboarding, How the App Works section, view 3, title"), page: 3, of: 24)
+            PageHeader(title: LocalizedString("Status Icons", comment: "Onboarding, How the App Works section, view 3, title"))
             PresentableImage(decorative: "HowTheAppWorks_3")
             Paragraph(LocalizedString("The top of the Tidepool Loop app has tappable status icons to check in on the components of your system.", comment: "Onboarding, How the App Works section, view 3, paragraph"))
         }
@@ -72,7 +72,7 @@ fileprivate struct HowTheAppWorksView3: View {
 fileprivate struct HowTheAppWorksView4: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView5()) {
-            PageHeader(title: LocalizedString("CGM Status", comment: "Onboarding, How the App Works section, view 4, title"), page: 4, of: 24)
+            PageHeader(title: LocalizedString("CGM Status", comment: "Onboarding, How the App Works section, view 4, title"))
             PresentableImage(decorative: "HowTheAppWorks_4_1")
             Paragraph(LocalizedString("The CGM Status icon allows you to see your current glucose and rate of change arrow.", comment: "Onboarding, How the App Works section, view 4, paragraph 1"))
             PresentableImage(decorative: "HowTheAppWorks_4_2")
@@ -85,7 +85,7 @@ fileprivate struct HowTheAppWorksView4: View {
 fileprivate struct HowTheAppWorksView5: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView6()) {
-            PageHeader(title: LocalizedString("Tidepool Loop Status", comment: "Onboarding, How the App Works section, view 5, title"), page: 5, of: 24)
+            PageHeader(title: LocalizedString("Tidepool Loop Status", comment: "Onboarding, How the App Works section, view 5, title"))
             Callout(title: LocalizedString("Note: Automating Basal Insulin", comment: "Onboarding, How the App Works section, view 5, callout")) {
                 Paragraph(LocalizedString("In traditional insulin pump therapy, your basal rate delivers as a scheduled rate per hour, programmed by you and your healthcare provider.", comment: "Onboarding, How the App Works section, view 5, callout, paragraph 1"))
                 Paragraph(LocalizedString("Tidepool Loop starts with this scheduled hourly rate, and then changes your basal rate automatically, often giving you more or less than your scheduled basal rate to help you keep your glucose in your Correction Range.", comment: "Onboarding, How the App Works section, view 5, callout, paragraph 2"))
@@ -148,7 +148,7 @@ fileprivate struct HowTheAppWorksView5: View {
 fileprivate struct HowTheAppWorksView6: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView7()) {
-            PageHeader(title: LocalizedString("Insulin Delivery Status", comment: "Onboarding, How the App Works section, view 6, title"), page: 6, of: 24)
+            PageHeader(title: LocalizedString("Insulin Delivery Status", comment: "Onboarding, How the App Works section, view 6, title"))
             PresentableImage(decorative: "HowTheAppWorks_6")
             Paragraph(LocalizedString("Tidepool Loop’s Insulin Delivery Status icon has three states to show you whether the app is delivering your scheduled basal rate or more or less than your scheduled rate.", comment: "Onboarding, How the App Works section, view 6, paragraph 1"))
             Paragraph(LocalizedString("You can tap the icon or your insulin charts for more details.", comment: "Onboarding, How the App Works section, view 6, paragraph 2"))
@@ -192,7 +192,7 @@ fileprivate struct HowTheAppWorksView6: View {
 fileprivate struct HowTheAppWorksView7: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView8()) {
-            PageHeader(title: LocalizedString("Insulin Pump Status", comment: "Onboarding, How the App Works section, view 7, title"), page: 7, of: 24)
+            PageHeader(title: LocalizedString("Insulin Pump Status", comment: "Onboarding, How the App Works section, view 7, title"))
             PresentableImage(decorative: "HowTheAppWorks_7_1")
             Paragraph(LocalizedString("The Insulin Pump Status icon allows you to see how much insulin remains in your pump’s reservoir or cartridge.", comment: "Onboarding, How the App Works section, view 7, paragraph 1"))
             PresentableImage(decorative: "HowTheAppWorks_7_2")
@@ -205,7 +205,7 @@ fileprivate struct HowTheAppWorksView7: View {
 fileprivate struct HowTheAppWorksView8: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView9()) {
-            PageHeader(title: LocalizedString("Temporary Status Banners", comment: "Onboarding, How the App Works section, view 8, title"), page: 8, of: 24)
+            PageHeader(title: LocalizedString("Temporary Status Banners", comment: "Onboarding, How the App Works section, view 8, title"))
             PresentableImage(decorative: "HowTheAppWorks_8")
             Paragraph(LocalizedString("Tidepool Loop will drop a banner notification below these Status Icons to alert you to a temporary status.", comment: "Onboarding, How the App Works section, view 8, paragraph 1"))
             Paragraph(LocalizedString("You’ll see and can interact with this banner during situations like these:", comment: "Onboarding, How the App Works section, view 8, paragraph 2"))
@@ -226,7 +226,7 @@ fileprivate struct HowTheAppWorksView8: View {
 fileprivate struct HowTheAppWorksView9: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView10()) {
-            PageHeader(title: LocalizedString("Charts", comment: "Onboarding, How the App Works section, view 9, title"), page: 9, of: 24)
+            PageHeader(title: LocalizedString("Charts", comment: "Onboarding, How the App Works section, view 9, title"))
             PresentableImage(decorative: "HowTheAppWorks_9")
             Paragraph(LocalizedString("The biggest part of the home screen has four tappable charts so you can see how your glucose is moving and how your insulin and the carbs you’ve entered are working to impact your glucose.", comment: "Onboarding, How the App Works section, view 9, paragraph 1"))
             Paragraph(LocalizedString("Let’s walk through each of these charts and their features in more detail.", comment: "Onboarding, How the App Works section, view 9, paragraph 2"))
@@ -237,7 +237,7 @@ fileprivate struct HowTheAppWorksView9: View {
 fileprivate struct HowTheAppWorksView10: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView11()) {
-            PageHeader(title: LocalizedString("Glucose Chart", comment: "Onboarding, How the App Works section, view 10, title"), page: 10, of: 24)
+            PageHeader(title: LocalizedString("Glucose Chart", comment: "Onboarding, How the App Works section, view 10, title"))
             PresentableImage(decorative: "HowTheAppWorks_10_1")
             Paragraph(LocalizedString("The Glucose Chart shows you three important pieces of information about your glucose:", comment: "Onboarding, How the App Works section, view 10, paragraph 1"))
             BulletedBodyTextList(
@@ -282,7 +282,7 @@ fileprivate struct HowTheAppWorksView10: View {
 fileprivate struct HowTheAppWorksView11: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView12()) {
-            PageHeader(title: LocalizedString("Tapping the Glucose Chart", comment: "Onboarding, How the App Works section, view 11, title"), page: 11, of: 24)
+            PageHeader(title: LocalizedString("Tapping the Glucose Chart", comment: "Onboarding, How the App Works section, view 11, title"))
             PresentableImage(decorative: "HowTheAppWorks_11_1")
             Paragraph(LocalizedString("Most of the information you need about your glucose is visible from the home screen itself, but tapping the Glucose Chart allows you to see and do more:", comment: "Onboarding, How the App Works section, view 11, paragraph 1"))
             BulletedBodyTextList(
@@ -327,7 +327,7 @@ fileprivate struct HowTheAppWorksView11: View {
 fileprivate struct HowTheAppWorksView12: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView13()) {
-            PageHeader(title: LocalizedString("Highs and Lows", comment: "Onboarding, How the App Works section, view 12, title"), page: 12, of: 24)
+            PageHeader(title: LocalizedString("Highs and Lows", comment: "Onboarding, How the App Works section, view 12, title"))
             Callout(title: LocalizedString("Note: About Highs and Lows", comment: "Onboarding, How the App Works section, view 12, callout, title")) {
                 Paragraph(LocalizedString("Tidepool Loop cannot prevent all highs and lows.", comment: "Onboarding, How the App Works section, view 12, callout, paragraph"))
             }
@@ -365,7 +365,7 @@ fileprivate struct HowTheAppWorksView12: View {
 fileprivate struct HowTheAppWorksView13: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView14()) {
-            PageHeader(title: LocalizedString("Active Insulin Chart", comment: "Onboarding, How the App Works section, view 13, title"), page: 13, of: 24)
+            PageHeader(title: LocalizedString("Active Insulin Chart", comment: "Onboarding, How the App Works section, view 13, title"))
             PresentableImage(decorative: "HowTheAppWorks_13_1")
             Paragraph(LocalizedString("The second chart on the home screen is the Active Insulin Chart.", comment: "Onboarding, How the App Works section, view 13, paragraph 1"))
             Paragraph(LocalizedString("It shows you how much insulin Tidepool Loop thinks is working in your body and predicts how much insulin is working over the next few hours.", comment: "Onboarding, How the App Works section, view 13, paragraph 2"))
@@ -392,7 +392,7 @@ fileprivate struct HowTheAppWorksView13: View {
 fileprivate struct HowTheAppWorksView14: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView15()) {
-            PageHeader(title: LocalizedString("Insulin Delivery Chart", comment: "Onboarding, How the App Works section, view 14, title"), page: 14, of: 24)
+            PageHeader(title: LocalizedString("Insulin Delivery Chart", comment: "Onboarding, How the App Works section, view 14, title"))
             PresentableImage(decorative: "HowTheAppWorks_14")
             Paragraph(LocalizedString("The Insulin Delivery Chart shows you both your basal and bolus insulin delivery history over the last few hours.", comment: "Onboarding, How the App Works section, view 14, paragraph 1"))
             Paragraph(LocalizedString("Your total insulin use for the day is displayed above the chart.", comment: "Onboarding, How the App Works section, view 14, paragraph 2"))
@@ -424,7 +424,7 @@ fileprivate struct HowTheAppWorksView14: View {
 fileprivate struct HowTheAppWorksView15: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView16()) {
-            PageHeader(title: LocalizedString("Tapping the Insulin Charts", comment: "Onboarding, How the App Works section, view 15, title"), page: 15, of: 24)
+            PageHeader(title: LocalizedString("Tapping the Insulin Charts", comment: "Onboarding, How the App Works section, view 15, title"))
             PresentableImage(decorative: "HowTheAppWorks_15")
             Paragraph(LocalizedString("Most of the information you need about your insulin is visible from the home screen itself, but tapping either of the insulin charts allows you to see your recent insulin history log.", comment: "Onboarding, How the App Works section, view 15, paragraph"))
         }
@@ -434,7 +434,7 @@ fileprivate struct HowTheAppWorksView15: View {
 fileprivate struct HowTheAppWorksView16: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView17()) {
-            PageHeader(title: LocalizedString("Active Carbohydrates Chart", comment: "Onboarding, How the App Works section, view 16, title"), page: 16, of: 24)
+            PageHeader(title: LocalizedString("Active Carbohydrates Chart", comment: "Onboarding, How the App Works section, view 16, title"))
             Callout(title: LocalizedString("Note: A New Way to Think About Carbs", comment: "Onboarding, How the App Works section, view 16, callout, title")) {
                 Paragraph(LocalizedString("This is a concept that may be new to you if you’re coming from traditional pump or injection therapy.", comment: "Onboarding, How the App Works section, view 16, callout, paragraph"))
             }
@@ -449,7 +449,7 @@ fileprivate struct HowTheAppWorksView16: View {
 fileprivate struct HowTheAppWorksView17: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView18()) {
-            PageHeader(title: LocalizedString("Tapping the Carbs Chart", comment: "Onboarding, How the App Works section, view 17, title"), page: 17, of: 24)
+            PageHeader(title: LocalizedString("Tapping the Carbs Chart", comment: "Onboarding, How the App Works section, view 17, title"))
             PresentableImage(decorative: "HowTheAppWorks_17_1")
             Paragraph(LocalizedString("Most of the information you need about your carbs is visible from the home screen itself, but tapping the Active Carbohydrates Chart allows you to see and do more:", comment: "Onboarding, How the App Works section, view 17, paragraph"))
             BulletedBodyTextList(
@@ -480,7 +480,7 @@ fileprivate struct HowTheAppWorksView17: View {
 fileprivate struct HowTheAppWorksView18: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView19()) {
-            PageHeader(title: LocalizedString("Toolbar", comment: "Onboarding, How the App Works section, view 18, title"), page: 18, of: 24)
+            PageHeader(title: LocalizedString("Toolbar", comment: "Onboarding, How the App Works section, view 18, title"))
             PresentableImage(decorative: "HowTheAppWorks_18")
             Paragraph(LocalizedString("At the bottom of the home screen, you’ll see a toolbar with five buttons for some of the most common actions you’ll take in the app.", comment: "Onboarding, How the App Works section, view 18, paragraph 1"))
             Paragraph(LocalizedString("Each of these buttons allows you to tell Tidepool Loop important information for the app to act on. Let’s explore how they work.", comment: "Onboarding, How the App Works section, view 18, paragraph 2"))
@@ -491,7 +491,7 @@ fileprivate struct HowTheAppWorksView18: View {
 fileprivate struct HowTheAppWorksView19: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView20()) {
-            PageHeader(title: LocalizedString("Carb Entry", comment: "Onboarding, How the App Works section, view 19, title"), page: 19, of: 24)
+            PageHeader(title: LocalizedString("Carb Entry", comment: "Onboarding, How the App Works section, view 19, title"))
             PresentableImage(decorative: "HowTheAppWorks_19_1")
             Paragraph(LocalizedString("Tapping the Carb Entry button allows you to enter details about what you are eating.", comment: "Onboarding, How the App Works section, view 19, paragraph"))
             PresentableImage(decorative: "HowTheAppWorks_19_2")
@@ -608,7 +608,7 @@ fileprivate struct HowTheAppWorksView19: View {
 fileprivate struct HowTheAppWorksView20: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView21()) {
-            PageHeader(title: LocalizedString("Pre-Meal Preset", comment: "Onboarding, How the App Works section, view 20, title"), page: 20, of: 24)
+            PageHeader(title: LocalizedString("Pre-Meal Preset", comment: "Onboarding, How the App Works section, view 20, title"))
             PresentableImage(decorative: "HowTheAppWorks_20_1")
             Paragraph(LocalizedString("If you’d like Tidepool Loop to temporarily work a little harder before you begin eating so that your post-meal glucose spike is reduced, you can use Pre-Meal Preset.", comment: "Onboarding, How the App Works section, view 20, paragraph 1"))
             Paragraph(LocalizedString("Activating this feature before your meal tells Tidepool Loop to adjust your basal insulin and lower your glucose Correction Range to your Pre-Meal Range in advance of your meal.", comment: "Onboarding, How the App Works section, view 20, paragraph 2"))
@@ -622,7 +622,7 @@ fileprivate struct HowTheAppWorksView20: View {
 fileprivate struct HowTheAppWorksView21: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView22()) {
-            PageHeader(title: LocalizedString("Bolus Entry", comment: "Onboarding, How the App Works section, view 21, title"), page: 21, of: 24)
+            PageHeader(title: LocalizedString("Bolus Entry", comment: "Onboarding, How the App Works section, view 21, title"))
             PresentableImage(decorative: "HowTheAppWorks_21_1")
             Paragraph(LocalizedString("The Bolus Entry button allows you to deliver bolus insulin to bring down high glucose.", comment: "Onboarding, How the App Works section, view 21, paragraph"))
             segment
@@ -646,7 +646,7 @@ fileprivate struct HowTheAppWorksView21: View {
 fileprivate struct HowTheAppWorksView22: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView23()) {
-            PageHeader(title: LocalizedString("Workout Preset", comment: "Onboarding, How the App Works section, view 22, title"), page: 22, of: 24)
+            PageHeader(title: LocalizedString("Workout Preset", comment: "Onboarding, How the App Works section, view 22, title"))
             PresentableImage(decorative: "HowTheAppWorks_22_1")
             Paragraph(LocalizedString("If you’d like Tidepool Loop to temporarily adjust your settings for activity, such as exercise, you can use Workout Preset.", comment: "Onboarding, How the App Works section, view 22, paragraph 1"))
             Paragraph(LocalizedString("Activating this button before activity tells Tidepool Loop to adjust both your basal insulin and your glucose Correction Range to help you meet your glucose goals during that activity.", comment: "Onboarding, How the App Works section, view 22, paragraph 2"))
@@ -661,7 +661,7 @@ fileprivate struct HowTheAppWorksView22: View {
 fileprivate struct HowTheAppWorksView23: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView24()) {
-            PageHeader(title: LocalizedString("Settings", comment: "Onboarding, How the App Works section, view 23, title"), page: 23, of: 24)
+            PageHeader(title: LocalizedString("Settings", comment: "Onboarding, How the App Works section, view 23, title"))
             PresentableImage(decorative: "HowTheAppWorks_23_1")
             Paragraph(LocalizedString("The Settings button takes you to the Settings Screen where you can enter information about your personal insulin needs and glucose targets, your insulin pump, your CGM, and your notifications preferences.", comment: "Onboarding, How the App Works section, view 23, paragraph 1"))
             Paragraph(LocalizedString("We’ll enter these settings a little later in your setup.", comment: "Onboarding, How the App Works section, view 23, paragraph 2"))
@@ -673,7 +673,7 @@ fileprivate struct HowTheAppWorksView23: View {
 fileprivate struct HowTheAppWorksView24: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks) {
-            PageHeader(title: LocalizedString("Checkpoint", comment: "Onboarding, Introduction section, view 24, title"), page: 24, of: 24)
+            PageHeader(title: LocalizedString("Checkpoint", comment: "Onboarding, Introduction section, view 24, title"))
             CheckpointCheckmark()
             Paragraph(LocalizedString("Now that you’ve finished learning how the home screen of Tidepool Loop works, you’ll take a look at how you’ll use the app throughout your day.", comment: "Onboarding, Introduction section, view 24, paragraph 1"))
             Paragraph(LocalizedString("You’ve learned about:", comment: "Onboarding, Introduction section, view 24, paragraph 2"))

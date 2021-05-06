@@ -13,7 +13,6 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
 
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.complete) var complete
-    @Environment(\.dismiss) var dismiss
 
     @State private var isDestinationActive = false
     @State private var isCloseAlertPresented = false
@@ -21,8 +20,10 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     private let section: OnboardingSection
     private let editMode: Bool
     private let backButtonHidden: Bool
+    private let closeButtonHidden: Bool
     private let nextButtonTitle: String?
     private let nextButtonAction: ((_ completion: @escaping (Bool) -> Void) -> Void)?
+    private let nextButtonDisabled: Bool
     private let destination: Destination?
     private let content: Content
 
@@ -30,8 +31,10 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.section = section
         self.editMode = false
         self.backButtonHidden = false
+        self.closeButtonHidden = false
         self.nextButtonTitle = nil
         self.nextButtonAction = nil
+        self.nextButtonDisabled = false
         self.destination = destination
         self.content = content()
     }
@@ -40,16 +43,16 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.section = section
         self.editMode = false
         self.backButtonHidden = false
+        self.closeButtonHidden = false
         self.nextButtonTitle = nil
         self.nextButtonAction = nil
+        self.nextButtonDisabled = false
         self.destination = nil
         self.content = content()
     }
 
     var body: some View {
-        ZStack {
-            Color(backgroundColor)
-                .edgesIgnoringSafeArea(.all)
+        OnboardingSectionWrapperView(section: section) {
             GeometryReader { geometry in
                 ScrollView {
                     VStack(spacing: 10) {
@@ -64,18 +67,16 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
                 }
             }
         }
-        .navigationBarTitle(Text(onboardingViewModel.titleForSection(section)), displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: backButton, trailing: closeButton)
-        .navigationBarTranslucent(false)
-        .navigationBarBackgroundColor(backgroundColor)
-        .navigationBarShadowColor(.clear)
+        .editMode(editMode)
+        .backButtonHidden(backButtonHidden)
+        .closeButtonHidden(closeButtonHidden)
     }
 
     @ViewBuilder
     private var nextButton: some View {
         VStack {
             ActionButton(title: nextButtonTitleResolved, action: nextButtonActionResolved)
+                .disabled(nextButtonDisabled)
                 .accessibilityIdentifier("button_next")
             if let destination = destination {
                 NavigationLink(destination: destination, isActive: $isDestinationActive) { EmptyView() }
@@ -106,62 +107,17 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
             complete()
         }
     }
-
-    @ViewBuilder
-    private var backButton: some View {
-        if !backButtonHidden {
-            Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                HStack {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .frame(width: 12, height: 20)
-                    Text(backButtonTitle)
-                        .fontWeight(.regular)
-                }
-                .offset(x: -6, y: 0)
-            }
-            .accessibilityElement()
-            .accessibilityAddTraits(.isButton)
-            .accessibilityLabel(backButtonTitle)
-            .accessibilityIdentifier("button_back")
-        } else {
-            EmptyView()
-        }
-    }
-
-    private var backButtonTitle: String { LocalizedString("Back", comment: "Back navigation button title of an onboarding section page view") }
-
-    private var closeButton: some View {
-        Button(action: { isCloseAlertPresented = true }) {
-            Text(closeButtonTitle)
-                .fontWeight(.regular)
-        }
-        .alert(isPresented: $isCloseAlertPresented) { closeAlert }
-        .accessibilityElement()
-        .accessibilityAddTraits(.isButton)
-        .accessibilityLabel(closeButtonTitle)
-        .accessibilityIdentifier("button_close")
-    }
-
-    private var closeButtonTitle: String { LocalizedString("Close", comment: "Close navigation button title of an onboarding section page view") }
-
-    private var closeAlert: Alert {
-        Alert(title: Text(LocalizedString("Are you sure?", comment: "Alert title confirming close of an onboarding section page view")),
-              message: Text(LocalizedString("You'll have to restart this section.", comment: "Alert message confirming close of an onboarding section page view")),
-              primaryButton: .cancel(),
-              secondaryButton: .destructive(Text(LocalizedString("End", comment: "Alert button confirming close of an onboarding section page view")), action: dismiss))
-    }
-
-    private var backgroundColor: UIColor { editMode ? .secondarySystemBackground : .systemBackground }
 }
 
 extension OnboardingSectionPageView {
-    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, nextButtonTitle: String? = nil, nextButtonAction: ((@escaping (Bool) -> Void) -> Void)? = nil) {
+    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, closeButtonHidden: Bool? = nil, nextButtonTitle: String? = nil, nextButtonAction: ((@escaping (Bool) -> Void) -> Void)? = nil, nextButtonDisabled: Bool? = nil) {
         self.section = other.section
         self.editMode = editMode ?? other.editMode
         self.backButtonHidden = backButtonHidden ?? other.backButtonHidden
+        self.closeButtonHidden = closeButtonHidden ?? other.closeButtonHidden
         self.nextButtonTitle = nextButtonTitle ?? other.nextButtonTitle
         self.nextButtonAction = nextButtonAction ?? other.nextButtonAction
+        self.nextButtonDisabled = nextButtonDisabled ?? other.nextButtonDisabled
         self.destination = other.destination
         self.content = other.content
     }
@@ -170,7 +126,11 @@ extension OnboardingSectionPageView {
 
     func backButtonHidden(_ backButtonHidden: Bool) -> Self { Self(self, backButtonHidden: backButtonHidden) }
 
+    func closeButtonHidden(_ closeButtonHidden: Bool) -> Self { Self(self, closeButtonHidden: closeButtonHidden) }
+
     func nextButtonTitle(_ nextButtonTitle: String) -> Self { Self(self, nextButtonTitle: nextButtonTitle) }
 
     func nextButtonAction(_ nextButtonAction: @escaping (@escaping (Bool) -> Void) -> Void) -> Self { Self(self, nextButtonAction: nextButtonAction) }
+
+    func nextButtonDisabled(_ nextButtonDisabled: Bool) -> Self { Self(self, nextButtonDisabled: nextButtonDisabled) }
 }

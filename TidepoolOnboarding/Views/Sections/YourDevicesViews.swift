@@ -18,9 +18,9 @@ struct YourDevicesNavigationButton: View {
 fileprivate struct YourDevicesView1: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
-    @State var authorizeNotificationEnabled = false
-    @State var authorizeHealthStoreEnabled = false
-    @State var authorizeBluetoothEnabled = false
+    @State private var authorizeNotificationEnabled = false
+    @State private var authorizeHealthStoreEnabled = false
+    @State private var authorizeBluetoothEnabled = false
 
     var body: some View {
         OnboardingSectionPageView(section: .yourDevices) {

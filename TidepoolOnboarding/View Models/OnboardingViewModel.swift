@@ -8,8 +8,11 @@
 
 import Foundation
 import Combine
+import UIKit
 import LoopKit
 import LoopKitUI
+import TidepoolKit
+import TidepoolServiceKit
 
 let TidepoolServiceIdentifier = "TidepoolService"
 
@@ -22,10 +25,14 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
     @Published var lastAccessDate: Date
     @Published var sectionProgression: OnboardingSectionProgression
-    @Published var tidepoolService: Service?
-    @Published var prescription: Prescription?
+    @Published var tidepoolService: TidepoolService?
+    @Published var prescription: TPrescription?
+    @Published var prescriberProfile: TProfile?
     @Published var therapySettings: TherapySettings?
     @Published var dosingEnabled: Bool
+
+    lazy var initialTherapySettingsViewModel: TherapySettingsViewModel = constructInitialTherapySettingsViewModel()
+    lazy var currentTherapySettingsViewModel: TherapySettingsViewModel = constructCurrentTherapySettingsViewModel()
 
     private lazy var cancellables = Set<AnyCancellable>()
 
@@ -34,8 +41,9 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         self.lastAccessDate = onboarding.lastAccessDate
         self.sectionProgression = onboarding.sectionProgression
-        self.tidepoolService = onboardingProvider.activeServices.first { $0.serviceIdentifier == TidepoolServiceIdentifier }
+        self.tidepoolService = onboardingProvider.activeServices.first { $0.serviceIdentifier == TidepoolServiceIdentifier } as? TidepoolService
         self.prescription = onboarding.prescription
+        self.prescriberProfile = onboarding.prescriberProfile
         self.therapySettings = onboarding.therapySettings
         self.dosingEnabled = onboarding.dosingEnabled ?? true
 
@@ -47,25 +55,21 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             .dropFirst()
             .sink { onboarding.sectionProgression = $0 }
             .store(in: &cancellables)
-        $sectionProgression
-            .dropFirst()
-            .filter { $0.hasCompletedSection(.yourSettings) && !$0.hasStartedSection(.yourDevices) }
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                onboarding.therapySettings = self.therapySettings
-            }
-            .store(in: &cancellables)
-        $sectionProgression
-            .dropFirst()
-            .filter { $0.hasCompletedSection(.getLooping) }
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                onboarding.dosingEnabled = self.dosingEnabled
-            }
-            .store(in: &cancellables)
         $prescription
             .dropFirst()
             .sink { onboarding.prescription = $0 }
+            .store(in: &cancellables)
+        $prescriberProfile
+            .dropFirst()
+            .sink { onboarding.prescriberProfile = $0 }
+            .store(in: &cancellables)
+        $therapySettings
+            .dropFirst()
+            .sink { onboarding.therapySettings = $0 }
+            .store(in: &cancellables)
+        $dosingEnabled
+            .dropFirst()
+            .sink { onboarding.dosingEnabled = $0 }
             .store(in: &cancellables)
     }
 
@@ -150,6 +154,103 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         return onboardingProvider.onboardService(withIdentifier: TidepoolServiceIdentifier)
     }
 
+    func claimPrescription(accessCode: String, birthday: Date, completion: @escaping (Error?) -> Void) {
+        guard prescription == nil else {
+            completion(nil)
+            return
+        }
+        guard let tidepoolService = tidepoolService else {
+            completion(OnboardingError.unexpectedState)
+            return
+        }
+
+        let prescriptionClaim = TPrescriptionClaim(accessCode: accessCode, birthday: birthday)
+        tidepoolService.tapi.claimPrescription(prescriptionClaim: prescriptionClaim) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    completion(error.onboardingError)
+                case .success(let prescription):
+                    self.prescription = prescription
+                    completion(nil)
+                }
+            }
+        }
+    }
+
+    func getPrescriberProfile(completion: @escaping (Error?) -> Void) {
+        guard prescriberProfile == nil else {
+            completion(nil)
+            return
+        }
+        guard let tidepoolService = tidepoolService, let prescription = prescription else {
+            completion(OnboardingError.unexpectedState)
+            return
+        }
+
+        tidepoolService.tapi.getProfile(userId: prescription.prescriberUserId) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure:
+                    // completion(error.onboardingError)
+                    // TODO: https://tidepool.atlassian.net/browse/LOOP-3475
+                    // The backend does not *yet* automatically create a sharing connection between the prescriber account
+                    // and the prescription account. This API call will fail unless the two accounts had a previous
+                    // sharing connection. To allow onboarding to function, create a placeholder prescriber profile.
+                    self.prescriberProfile = TProfile(fullName: "Unknown Prescriber")
+                    completion(nil)
+                case .success(let profile):
+                    self.prescriberProfile = profile
+                    completion(nil)
+                }
+            }
+        }
+    }
+
+    private func constructInitialTherapySettingsViewModel() -> TherapySettingsViewModel {
+        guard let datePrescribed = prescription?.modifiedTime ?? prescription?.createdTime,   // TODO: https://tidepool.atlassian.net/browse/LOOP-3476
+              let providerName = prescriberProfile?.fullName,
+              let therapySettings = prescription?.therapySettings else {
+            preconditionFailure("Must have prescription and prescriber profile to construct therapy settings view model")
+        }
+
+        let prescription = OnboardingPrescription(datePrescribed: datePrescribed, providerName: providerName)
+        return TherapySettingsViewModel(therapySettings: therapySettings,
+                                        supportedInsulinModelSettings: supportedInsulinModelSettings,
+                                        pumpSupportedIncrements: { self.pumpSupportedIncrements },
+                                        prescription: prescription)
+    }
+
+    private func constructCurrentTherapySettingsViewModel() -> TherapySettingsViewModel {
+        if therapySettings == nil {
+            guard let therapySettings = prescription?.therapySettings else {
+                preconditionFailure("Must have prescription to construct therapy settings view model")
+            }
+
+            self.therapySettings = therapySettings
+        }
+
+        return TherapySettingsViewModel(therapySettings: therapySettings!,
+                                        supportedInsulinModelSettings: supportedInsulinModelSettings,
+                                        pumpSupportedIncrements: { self.pumpSupportedIncrements },
+                                        didSave: { (_, therapySettings) in self.therapySettings = therapySettings })
+    }
+
+    private let supportedInsulinModelSettings = SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
+
+    private var pumpSupportedIncrements: PumpSupportedIncrements {
+
+        // TODO: https://tidepool.atlassian.net/browse/LOOP-3112
+        // Pull from pump type specified by prescription
+
+        let supportedBasalRates: [Double] = (1...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
+        let maximumBasalScheduleEntryCount = 24
+        let supportedBolusVolumes: [Double] = (1...600).map { Double($0) / Double(1/0.05) }
+        return PumpSupportedIncrements(basalRates: supportedBasalRates,
+                                       bolusVolumes: supportedBolusVolumes,
+                                       maximumBasalScheduleEntryCount: maximumBasalScheduleEntryCount)
+    }
+
     // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
 
     var allowDebugFeatures: Bool { onboardingProvider.allowDebugFeatures }
@@ -179,7 +280,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
                     self.prescription = .mock
                 }
                 if therapySettings == nil {
-                    self.therapySettings = .mockTherapySettings
+                    self.therapySettings = prescription?.therapySettings
                 }
             }
             sectionProgression.completeSection(section)
@@ -212,7 +313,7 @@ extension OnboardingViewModel: ServiceOnboardingDelegate {
         serviceOnboardingDelegate?.serviceOnboarding(didCreateService: service)
 
         if service.serviceIdentifier == TidepoolServiceIdentifier {
-            self.tidepoolService = service
+            self.tidepoolService = service as? TidepoolService
         }
     }
 
@@ -220,3 +321,55 @@ extension OnboardingViewModel: ServiceOnboardingDelegate {
         serviceOnboardingDelegate?.serviceOnboarding(didOnboardService: service)
     }
 }
+
+enum OnboardingError: LocalizedError {
+    case unexpectedState
+    case networkFailure
+    case authenticationFailure
+    case resourceNotFound
+
+    var errorDescription: String? {
+        switch self {
+        case .unexpectedState:
+            return LocalizedString("An unexpected state occurred.", comment: "Error description for an unexpected state.")
+        case .networkFailure:
+            return LocalizedString("A network error occurred.", comment: "Error description for a network failure.")
+        case .authenticationFailure:
+            return LocalizedString("An authentication error occurred.", comment: "Error description for an authentication failure.")
+        case .resourceNotFound:
+            return LocalizedString("A network error occurred.", comment: "Error description for a resource not found.")
+        }
+    }
+}
+
+fileprivate extension TError {
+    var onboardingError: OnboardingError {
+        switch self {
+        case .requestNotAuthenticated:
+            return .authenticationFailure
+        case .requestResourceNotFound:
+            return .resourceNotFound
+        default:
+            return .networkFailure
+        }
+    }
+}
+
+fileprivate struct OnboardingPrescription: Prescription {
+    let datePrescribed: Date
+    let providerName: String
+}
+
+fileprivate extension TPrescriptionClaim {
+    init(accessCode: String, birthday: Date) {
+        self.init(accessCode: accessCode, birthday: Self.birthdayFormatter.string(from: birthday))
+    }
+
+    private static let birthdayFormatter: ISO8601DateFormatter = {
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
+        dateFormatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
+        return dateFormatter
+    }()
+}
+

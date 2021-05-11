@@ -62,6 +62,7 @@ fileprivate struct GetLoopingView2: View {
     var body: some View {
         OnboardingSectionPageView(section: .getLooping, destination: GetLoopingView3()) {
             PageHeader(title: LocalizedString("Select Loop Mode", comment: "Onboarding, Get Looping section, view 2, title"))
+                .dividerHidden(true)
             if onboardingViewModel.dosingEnabled {
                 Paragraph(LocalizedString("Closed Loop is now set to ON.", comment: "Onboarding, Get Looping section, view 2, paragraph 1, closed loop on"))
             } else {

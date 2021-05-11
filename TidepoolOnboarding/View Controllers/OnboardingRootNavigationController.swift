@@ -106,6 +106,13 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
             .environmentObject(onboardingViewModel)
             .environmentObject(displayGlucoseUnitObservable)
             .environment(\.colorPalette, colorPalette)
+            .environment(\.guidanceColors, colorPalette.guidanceColors)
+            .environment(\.carbTintColor, colorPalette.carbTintColor)
+            .environment(\.glucoseTintColor, colorPalette.glucoseTintColor)
+            .environment(\.insulinTintColor, colorPalette.insulinTintColor)
+            .environment(\.loopStatusColorPalette, colorPalette.loopStatusColorPalette)
+            .environment(\.chartColorPalette, colorPalette.chartColorPalette)
+            .environment(\.appName, Bundle.main.bundleDisplayName)
             .navigationBarHidden(true)
         setViewControllers([UIHostingController(rootView: rootView)], animated: animated)
     }
@@ -116,5 +123,11 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
 
     @objc private func didEnterBackgroundNotificationReceived(_ notification: Notification) {
         onboardingViewModel.updateLastAccessedDate()
+    }
+}
+
+fileprivate extension Bundle {
+    var bundleDisplayName: String {
+        return object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import TidepoolKit
 import LoopKit
 @testable import TidepoolOnboarding
 
@@ -17,18 +18,47 @@ class OnboardingViewModelTests: XCTestCase {
     override func setUp() {
         onboarding = TidepoolOnboarding()
         onboarding.sectionProgression.startSection(.welcome)
-        onboarding.therapySettings = TherapySettings(insulinModelSettings: .exponentialPreset(.humalogNovologAdult))
+        onboarding.prescription = .test
+        onboarding.prescriberProfile = .test
+        onboarding.therapySettings = .test
         onboarding.dosingEnabled = false
         onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: MockOnboardingProvider())
     }
 
-    func testSectionProgressInitialization() {
+    func testlastAccessDateInitialization() {
+        XCTAssertEqual(onboardingViewModel.lastAccessDate, onboarding.lastAccessDate)
+    }
+
+    func testlastAccessDateForwarding() {
+        onboardingViewModel.lastAccessDate = Date()
+        XCTAssertEqual(onboarding.lastAccessDate, onboardingViewModel.lastAccessDate)
+    }
+
+    func testSectionProgressionInitialization() {
         XCTAssertEqual(onboardingViewModel.sectionProgression, onboarding.sectionProgression)
     }
 
-    func testSectionProgressForwarding() {
+    func testSectionProgressionForwarding() {
         onboardingViewModel.sectionProgression.completeSection(.welcome)
         XCTAssertEqual(onboarding.sectionProgression, onboardingViewModel.sectionProgression)
+    }
+
+    func testPrescriptionInitialization() {
+        XCTAssertEqual(onboardingViewModel.prescription, onboarding.prescription)
+    }
+
+    func testPrescriptionForwarding() {
+        onboardingViewModel.prescription = TPrescription(id: "abcdef")
+        XCTAssertEqual(onboarding.prescription, onboardingViewModel.prescription)
+    }
+
+    func testPrescriberProfileInitialization() {
+        XCTAssertEqual(onboardingViewModel.prescriberProfile, onboarding.prescriberProfile)
+    }
+
+    func testPrescriberProfileForwarding() {
+        onboardingViewModel.prescriberProfile = TProfile(fullName: "Forwarding Test")
+        XCTAssertEqual(onboarding.prescriberProfile, onboardingViewModel.prescriberProfile)
     }
 
     func testTherapySettingsInitialization() {
@@ -37,10 +67,6 @@ class OnboardingViewModelTests: XCTestCase {
 
     func testTherapySettingsForwarding() {
         onboardingViewModel.therapySettings = TherapySettings(insulinModelSettings: .exponentialPreset(.fiasp))
-        XCTAssertNotEqual(onboarding.therapySettings, onboardingViewModel.therapySettings)
-        onboardingViewModel.skipUntilSection(.yourSettings)
-        XCTAssertNotEqual(onboarding.therapySettings, onboardingViewModel.therapySettings)
-        onboardingViewModel.skipThroughSection(.yourSettings)
         XCTAssertEqual(onboarding.therapySettings, onboardingViewModel.therapySettings)
     }
 
@@ -50,10 +76,47 @@ class OnboardingViewModelTests: XCTestCase {
 
     func testDosingEnabledForwarding() {
         onboardingViewModel.dosingEnabled = true
-        XCTAssertNotEqual(onboarding.dosingEnabled, onboardingViewModel.dosingEnabled)
-        onboardingViewModel.skipUntilSection(.getLooping)
-        XCTAssertNotEqual(onboarding.dosingEnabled, onboardingViewModel.dosingEnabled)
-        onboardingViewModel.skipThroughSection(.getLooping)
         XCTAssertEqual(onboarding.dosingEnabled, onboardingViewModel.dosingEnabled)
     }
+
+    func testUpdateLastAccessedDateUpdatesDate() {
+        let lastAccessDate = onboardingViewModel.lastAccessDate
+        onboardingViewModel.updateLastAccessedDate()
+        XCTAssertNotEqual(onboardingViewModel.lastAccessDate, lastAccessDate)
+    }
+
+    func testUpdateLastAccessDateRestartsWithoutPrescriptionAndPastDate() {
+        onboardingViewModel.prescription = nil
+        onboardingViewModel.lastAccessDate = Date().addingTimeInterval(.days(-7)).addingTimeInterval(.seconds(-5))
+        XCTAssertTrue(onboardingViewModel.sectionProgression.isStarted)
+        onboardingViewModel.updateLastAccessedDate()
+        XCTAssertFalse(onboardingViewModel.sectionProgression.isStarted)
+    }
+
+    func testUpdateLastAccessDateDoesNotRestartsWithPrescriptionAndPastDate() {
+        onboardingViewModel.lastAccessDate = Date().addingTimeInterval(.days(-7)).addingTimeInterval(.seconds(-5))
+        XCTAssertTrue(onboardingViewModel.sectionProgression.isStarted)
+        onboardingViewModel.updateLastAccessedDate()
+        XCTAssertTrue(onboardingViewModel.sectionProgression.isStarted)
+    }
+
+    func testUpdateLastAccessDateDoesNotRestartsWithoutPrescriptionAndNotPastDate() {
+        onboardingViewModel.prescription = nil
+        onboardingViewModel.lastAccessDate = Date().addingTimeInterval(.days(-7)).addingTimeInterval(.seconds(5))
+        XCTAssertTrue(onboardingViewModel.sectionProgression.isStarted)
+        onboardingViewModel.updateLastAccessedDate()
+        XCTAssertTrue(onboardingViewModel.sectionProgression.isStarted)
+    }
+}
+
+fileprivate extension TherapySettings {
+    static var test: Self { .mockTherapySettings }
+}
+
+fileprivate extension TPrescription {
+    static var test: Self { .mock }
+}
+
+fileprivate extension TProfile {
+    static var test: Self { TProfile(fullName: "Test") }
 }

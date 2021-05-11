@@ -24,6 +24,8 @@
 		A903C79825F1443200C88786 /* OnboardingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79725F1443200C88786 /* OnboardingSection.swift */; };
 		A903C7A025F1444300C88786 /* OnboardingSectionNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */; };
 		A903C7A825F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */; };
+		A906344A26433B9300CAFED1 /* TidepoolServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906344926433B9300CAFED1 /* TidepoolServiceView.swift */; };
+		A90634562643426900CAFED1 /* OnboardingSectionWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90634552643426900CAFED1 /* OnboardingSectionWrapperView.swift */; };
 		A90E9F8826057CAF00566ED4 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E9F8726057CAF00566ED4 /* DemoView.swift */; };
 		A916AA5125F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916AA5025F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift */; };
 		A916AA5925F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916AA5825F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift */; };
@@ -48,7 +50,6 @@
 		A9502CBE25FFEF7B00146AD3 /* PageHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CBD25FFEF7B00146AD3 /* PageHeader.swift */; };
 		A9502CCC25FFEFD500146AD3 /* PresentableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CCB25FFEFD500146AD3 /* PresentableImage.swift */; };
 		A9502CDA2600293200146AD3 /* BodyText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CD92600293200146AD3 /* BodyText.swift */; };
-		A9502CE82600295A00146AD3 /* HeaderText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CE72600295A00146AD3 /* HeaderText.swift */; };
 		A9502CF02600298300146AD3 /* BulletedBodyTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CEF2600298300146AD3 /* BulletedBodyTextList.swift */; };
 		A9502CF8260029A000146AD3 /* CheckmarkedBodyTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */; };
 		A95422D325CC9A74003F3080 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95422D225CC9A74003F3080 /* Image.swift */; };
@@ -82,21 +83,17 @@
 		A99EAAAB25F7FD2900503A6D /* GetLoopingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAAAA25F7FD2900503A6D /* GetLoopingViews.swift */; };
 		A9A09A12260D238800046528 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF07B2588396F00860217 /* HKUnit.swift */; };
 		A9A09A30260D240400046528 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD31925830887001AAD6F /* OSLog.swift */; };
-		A9A09A77260D24DF00046528 /* Prescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF055258836D200860217 /* Prescription.swift */; };
 		A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */; };
 		A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46025C4FC3300C2D63F /* OnboardingRootNavigationController.swift */; };
-		A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */; };
 		A9A5739F2603AA080084592C /* WarningIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A5739E2603AA080084592C /* WarningIcon.swift */; };
+		A9A80D852639DC6100770DA7 /* TPrescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A80D842639DC6100770DA7 /* TPrescription.swift */; };
 		A9A90F92260A50FD00264BCB /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A90F91260A50FD00264BCB /* Paragraph.swift */; };
 		A9ABAE832607C3AE00E7CD4A /* CheckpointCheckmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */; };
 		A9B6736825F159A400D27872 /* YourDevicesViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B6736725F159A400D27872 /* YourDevicesViews.swift */; };
 		A9BEF02C25882F4E00860217 /* TidepoolOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF02B25882F4E00860217 /* TidepoolOnboarding.swift */; };
-		A9BEF038258835DF00860217 /* PrescriptionReviewUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */; };
-		A9BEF0462588367100860217 /* PrescriptionReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */; };
-		A9BEF06C2588380F00860217 /* PrescriptionCodeEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */; };
-		A9BEF06D2588380F00860217 /* PrescriptionDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */; };
 		A9E2829226012D1C00C86C6B /* CalloutText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E2829126012D1C00C86C6B /* CalloutText.swift */; };
 		A9E2906825A7C8B7004E361D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9E2906725A7C8B7004E361D /* Assets.xcassets */; };
+		A9E56C32262E1C4600A10627 /* NumberedBodyTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E56C31262E1C4600A10627 /* NumberedBodyTextList.swift */; };
 		A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */; };
 		A9EFBD322602D09B0070E9CC /* ModalPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFBD312602D09B0070E9CC /* ModalPresentation.swift */; };
 /* End PBXBuildFile section */
@@ -129,6 +126,8 @@
 		A903C79725F1443200C88786 /* OnboardingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSection.swift; sourceTree = "<group>"; };
 		A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionNavigationButton.swift; sourceTree = "<group>"; };
 		A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GettingToKnowTidepoolLoopView.swift; sourceTree = "<group>"; };
+		A906344926433B9300CAFED1 /* TidepoolServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceView.swift; sourceTree = "<group>"; };
+		A90634552643426900CAFED1 /* OnboardingSectionWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionWrapperView.swift; sourceTree = "<group>"; };
 		A90E9F8726057CAF00566ED4 /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		A916AA5025F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewModel+Preview.swift"; sourceTree = "<group>"; };
 		A916AA5825F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisplayGlucoseUnitObservable+Preview.swift"; sourceTree = "<group>"; };
@@ -152,7 +151,6 @@
 		A9502CBD25FFEF7B00146AD3 /* PageHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageHeader.swift; sourceTree = "<group>"; };
 		A9502CCB25FFEFD500146AD3 /* PresentableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableImage.swift; sourceTree = "<group>"; };
 		A9502CD92600293200146AD3 /* BodyText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyText.swift; sourceTree = "<group>"; };
-		A9502CE72600295A00146AD3 /* HeaderText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderText.swift; sourceTree = "<group>"; };
 		A9502CEF2600298300146AD3 /* BulletedBodyTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletedBodyTextList.swift; sourceTree = "<group>"; };
 		A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkedBodyTextList.swift; sourceTree = "<group>"; };
 		A95422D225CC9A74003F3080 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -197,20 +195,16 @@
 		A99EAAAA25F7FD2900503A6D /* GetLoopingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLoopingViews.swift; sourceTree = "<group>"; };
 		A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		A9A0E46025C4FC3300C2D63F /* OnboardingRootNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRootNavigationController.swift; sourceTree = "<group>"; };
-		A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewView.swift; sourceTree = "<group>"; };
 		A9A5739E2603AA080084592C /* WarningIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningIcon.swift; sourceTree = "<group>"; };
+		A9A80D842639DC6100770DA7 /* TPrescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPrescription.swift; sourceTree = "<group>"; };
 		A9A90F91260A50FD00264BCB /* Paragraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paragraph.swift; sourceTree = "<group>"; };
 		A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointCheckmark.swift; sourceTree = "<group>"; };
 		A9B6736725F159A400D27872 /* YourDevicesViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourDevicesViews.swift; sourceTree = "<group>"; };
 		A9BEF02B25882F4E00860217 /* TidepoolOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboarding.swift; sourceTree = "<group>"; };
-		A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewUICoordinator.swift; sourceTree = "<group>"; };
-		A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionReviewViewModel.swift; sourceTree = "<group>"; };
-		A9BEF055258836D200860217 /* Prescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prescription.swift; sourceTree = "<group>"; };
-		A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionCodeEntryView.swift; sourceTree = "<group>"; };
-		A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionDeviceView.swift; sourceTree = "<group>"; };
 		A9BEF07B2588396F00860217 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9E2829126012D1C00C86C6B /* CalloutText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutText.swift; sourceTree = "<group>"; };
 		A9E2906725A7C8B7004E361D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9E56C31262E1C4600A10627 /* NumberedBodyTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberedBodyTextList.swift; sourceTree = "<group>"; };
 		A9E9329C2605166A00E28144 /* DisplayGlucoseUnitObservable+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisplayGlucoseUnitObservable+Demo.swift"; sourceTree = "<group>"; };
 		A9E932A52605168200E28144 /* LoopUIColorPalette+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoopUIColorPalette+Demo.swift"; sourceTree = "<group>"; };
 		A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionSheetButton.swift; sourceTree = "<group>"; };
@@ -293,6 +287,7 @@
 				A9BEF07B2588396F00860217 /* HKUnit.swift */,
 				A95422D225CC9A74003F3080 /* Image.swift */,
 				A923333F25C3786100D8CF69 /* TimeInterval.swift */,
+				A9A80D842639DC6100770DA7 /* TPrescription.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -308,8 +303,8 @@
 				A9E2829126012D1C00C86C6B /* CalloutText.swift */,
 				A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */,
 				A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */,
-				A9502CE72600295A00146AD3 /* HeaderText.swift */,
 				A933F31C260925EA00DB84B9 /* LoopIcon.swift */,
+				A9E56C31262E1C4600A10627 /* NumberedBodyTextList.swift */,
 				A9502CBD25FFEF7B00146AD3 /* PageHeader.swift */,
 				A9A90F91260A50FD00264BCB /* Paragraph.swift */,
 				A9502CCB25FFEFD500146AD3 /* PresentableImage.swift */,
@@ -479,7 +474,6 @@
 			isa = PBXGroup;
 			children = (
 				A9A0E46025C4FC3300C2D63F /* OnboardingRootNavigationController.swift */,
-				A9BEF037258835DF00860217 /* PrescriptionReviewUICoordinator.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -491,9 +485,8 @@
 				A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */,
 				A9502CB525FFEE8E00146AD3 /* OnboardingSectionPageView.swift */,
 				A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */,
-				A9BEF06A2588380F00860217 /* PrescriptionCodeEntryView.swift */,
-				A9BEF06B2588380F00860217 /* PrescriptionDeviceView.swift */,
-				A9A0E46E25C4FD5000C2D63F /* PrescriptionReviewView.swift */,
+				A90634552643426900CAFED1 /* OnboardingSectionWrapperView.swift */,
+				A906344926433B9300CAFED1 /* TidepoolServiceView.swift */,
 				A923335325C3789700D8CF69 /* Accessory */,
 				A9B6733A25F158AF00D27872 /* Sections */,
 			);
@@ -504,7 +497,6 @@
 			isa = PBXGroup;
 			children = (
 				A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */,
-				A9BEF0452588367100860217 /* PrescriptionReviewViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -513,7 +505,6 @@
 			isa = PBXGroup;
 			children = (
 				A903C79725F1443200C88786 /* OnboardingSection.swift */,
-				A9BEF055258836D200860217 /* Prescription.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -838,14 +829,14 @@
 				A9ABAE832607C3AE00E7CD4A /* CheckpointCheckmark.swift in Sources */,
 				A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */,
 				A95422D325CC9A74003F3080 /* Image.swift in Sources */,
-				A9A0E46F25C4FD5000C2D63F /* PrescriptionReviewView.swift in Sources */,
 				A967D849261FB121009D9675 /* NavigationBarAppearance.swift in Sources */,
 				A916AA5925F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift in Sources */,
 				A9502CDA2600293200146AD3 /* BodyText.swift in Sources */,
-				A9BEF06C2588380F00860217 /* PrescriptionCodeEntryView.swift in Sources */,
 				A923334225C3786100D8CF69 /* Environment+Complete.swift in Sources */,
 				A916AA5125F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift in Sources */,
 				A93D2B112602606E0091FB65 /* AlertOnLongPressGesture.swift in Sources */,
+				A906344A26433B9300CAFED1 /* TidepoolServiceView.swift in Sources */,
+				A9A80D852639DC6100770DA7 /* TPrescription.swift in Sources */,
 				A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */,
 				A9502CB625FFEE8E00146AD3 /* OnboardingSectionPageView.swift in Sources */,
 				A99EAA9B25F7FCF700503A6D /* ADayInTheLifeViews.swift in Sources */,
@@ -855,30 +846,27 @@
 				A9502CF8260029A000146AD3 /* CheckmarkedBodyTextList.swift in Sources */,
 				A9B6736825F159A400D27872 /* YourDevicesViews.swift in Sources */,
 				A98AD31B25830887001AAD6F /* OSLog.swift in Sources */,
+				A90634562643426900CAFED1 /* OnboardingSectionWrapperView.swift in Sources */,
 				A9502CBE25FFEF7B00146AD3 /* PageHeader.swift in Sources */,
 				A9A5739F2603AA080084592C /* WarningIcon.swift in Sources */,
 				A98AD30E25830879001AAD6F /* LocalizedString.swift in Sources */,
 				A923336725C3789800D8CF69 /* ContentPreview.swift in Sources */,
-				A9BEF06D2588380F00860217 /* PrescriptionDeviceView.swift in Sources */,
 				A903C79825F1443200C88786 /* OnboardingSection.swift in Sources */,
 				A9502CCC25FFEFD500146AD3 /* PresentableImage.swift in Sources */,
-				A9BEF038258835DF00860217 /* PrescriptionReviewUICoordinator.swift in Sources */,
 				A99EAA9325F7FCEA00503A6D /* HowTheAppWorksViews.swift in Sources */,
 				A9A90F92260A50FD00264BCB /* Paragraph.swift in Sources */,
 				A9EFBD322602D09B0070E9CC /* ModalPresentation.swift in Sources */,
+				A9E56C32262E1C4600A10627 /* NumberedBodyTextList.swift in Sources */,
 				A923336525C3789800D8CF69 /* ActionButton.swift in Sources */,
 				A933F362260975A400DB84B9 /* AccessibleImage.swift in Sources */,
 				A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */,
 				A99EAA8B25F7FCDA00503A6D /* IntroductionViews.swift in Sources */,
 				A903C7A825F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift in Sources */,
-				A9502CE82600295A00146AD3 /* HeaderText.swift in Sources */,
 				A9BEF02C25882F4E00860217 /* TidepoolOnboarding.swift in Sources */,
-				A9BEF0462588367100860217 /* PrescriptionReviewViewModel.swift in Sources */,
 				A91F7C94260524A0008FBAED /* CompleteDismissView.swift in Sources */,
 				A9502CF02600298300146AD3 /* BulletedBodyTextList.swift in Sources */,
 				A9E2829226012D1C00C86C6B /* CalloutText.swift in Sources */,
 				A923335D25C3789800D8CF69 /* WelcomeViews.swift in Sources */,
-				A9A09A77260D24DF00046528 /* Prescription.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -918,6 +906,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				DEVELOPMENT_TEAM = Z4S6G3G5ZX;
 				INFOPLIST_FILE = TidepoolOnboardingDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -933,6 +922,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				DEVELOPMENT_TEAM = Z4S6G3G5ZX;
 				INFOPLIST_FILE = TidepoolOnboardingDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1166,7 +1156,7 @@
 		A98AD2C225830807001AAD6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
@@ -1193,7 +1183,7 @@
 		A98AD2C325830807001AAD6F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
@@ -1220,7 +1210,7 @@
 		A98AD2FB25830851001AAD6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -1248,7 +1238,7 @@
 		A98AD2FC25830851001AAD6F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;

@@ -41,6 +41,14 @@ extension TimeInterval {
         return TimeInterval(seconds: seconds)
     }
 
+    static func milliseconds(_ milliseconds: Double) -> TimeInterval {
+        return TimeInterval(milliseconds: milliseconds)
+    }
+
+    static func milliseconds(_ milliseconds: Int) -> TimeInterval {
+        return TimeInterval(milliseconds: milliseconds)
+    }
+
     init(days: Double) {
         self.init(hours: days * 24)
     }
@@ -57,11 +65,11 @@ extension TimeInterval {
         self.init(minutes: hours * 60)
     }
 
-    init(minutes: Int) {
+    init(minutes: Double) {
         self.init(seconds: minutes * 60)
     }
 
-    init(minutes: Double) {
+    init(minutes: Int) {
         self.init(seconds: minutes * 60)
     }
 
@@ -71,6 +79,14 @@ extension TimeInterval {
 
     init(seconds: Int) {
         self.init(seconds)
+    }
+
+    init(milliseconds: Double) {
+        self.init(seconds: milliseconds / 1000)
+    }
+
+    init(milliseconds: Int) {
+        self.init(seconds: Double(milliseconds) / 1000)
     }
 
     var days: Double {
@@ -87,5 +103,9 @@ extension TimeInterval {
 
     var seconds: Double {
         return self
+    }
+
+    var milliseconds: Double {
+        return seconds * 1000
     }
 }

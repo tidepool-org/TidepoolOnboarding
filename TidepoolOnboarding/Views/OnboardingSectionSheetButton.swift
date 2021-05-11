@@ -13,6 +13,13 @@ struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
     @EnvironmentObject var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
     @Environment(\.colorPalette) var colorPalette: LoopUIColorPalette
+    @Environment(\.guidanceColors) var guidanceColors: GuidanceColors
+    @Environment(\.carbTintColor) var carbTintColor: Color
+    @Environment(\.glucoseTintColor) var glucoseTintColor: Color
+    @Environment(\.insulinTintColor) var insulinTintColor: Color
+    @Environment(\.loopStatusColorPalette) var loopStatusColorPalette: StateColorPalette
+    @Environment(\.chartColorPalette) var chartColorPalette: ChartColorPalette
+    @Environment(\.appName) var appName: String
 
     @State private var isActive: Bool = false
 
@@ -35,6 +42,13 @@ struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
                 .environmentObject(onboardingViewModel)
                 .environmentObject(displayGlucoseUnitObservable)
                 .environment(\.colorPalette, colorPalette)
+                .environment(\.guidanceColors, colorPalette.guidanceColors)
+                .environment(\.carbTintColor, colorPalette.carbTintColor)
+                .environment(\.glucoseTintColor, colorPalette.glucoseTintColor)
+                .environment(\.insulinTintColor, colorPalette.insulinTintColor)
+                .environment(\.loopStatusColorPalette, colorPalette.loopStatusColorPalette)
+                .environment(\.chartColorPalette, colorPalette.chartColorPalette)
+                .environment(\.appName, appName)
                 .environment(\.dismiss, {
                     isActive = false
                 })

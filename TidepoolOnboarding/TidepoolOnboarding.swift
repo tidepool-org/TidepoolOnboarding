@@ -147,6 +147,7 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
     public func reset() {
         self.dosingEnabled = nil
         self.therapySettings = nil
+        self.prescriberProfile = nil
         self.prescription = nil
         self.sectionProgression = OnboardingSectionProgression()
         self.lastAccessDate = Date()

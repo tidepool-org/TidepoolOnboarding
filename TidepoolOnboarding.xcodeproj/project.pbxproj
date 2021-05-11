@@ -27,6 +27,7 @@
 		A906344A26433B9300CAFED1 /* TidepoolServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906344926433B9300CAFED1 /* TidepoolServiceView.swift */; };
 		A90634562643426900CAFED1 /* OnboardingSectionWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90634552643426900CAFED1 /* OnboardingSectionWrapperView.swift */; };
 		A90E9F8826057CAF00566ED4 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E9F8726057CAF00566ED4 /* DemoView.swift */; };
+		A911C236264B284D00EF3B85 /* AttributedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A911C235264B284D00EF3B85 /* AttributedStringTests.swift */; };
 		A916AA5125F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916AA5025F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift */; };
 		A916AA5925F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916AA5825F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift */; };
 		A91F7C94260524A0008FBAED /* CompleteDismissView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91F7C93260524A0008FBAED /* CompleteDismissView.swift */; };
@@ -54,6 +55,8 @@
 		A9502CF8260029A000146AD3 /* CheckmarkedBodyTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */; };
 		A95422D325CC9A74003F3080 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95422D225CC9A74003F3080 /* Image.swift */; };
 		A95BB9122603230B00E9FD17 /* Callout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95BB9112603230B00E9FD17 /* Callout.swift */; };
+		A95D62402649FF410018B9EA /* AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D623F2649FF410018B9EA /* AttributedString.swift */; };
+		A95D624C264A006D0018B9EA /* Text+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D624B264A006C0018B9EA /* Text+AttributedString.swift */; };
 		A967D849261FB121009D9675 /* NavigationBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A967D848261FB121009D9675 /* NavigationBarAppearance.swift */; };
 		A98AD2BE25830807001AAD6F /* TidepoolOnboardingPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A98AD2F225830851001AAD6F /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; };
@@ -129,6 +132,7 @@
 		A906344926433B9300CAFED1 /* TidepoolServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceView.swift; sourceTree = "<group>"; };
 		A90634552643426900CAFED1 /* OnboardingSectionWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionWrapperView.swift; sourceTree = "<group>"; };
 		A90E9F8726057CAF00566ED4 /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
+		A911C235264B284D00EF3B85 /* AttributedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringTests.swift; sourceTree = "<group>"; };
 		A916AA5025F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewModel+Preview.swift"; sourceTree = "<group>"; };
 		A916AA5825F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisplayGlucoseUnitObservable+Preview.swift"; sourceTree = "<group>"; };
 		A91F7C93260524A0008FBAED /* CompleteDismissView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDismissView.swift; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 		A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkedBodyTextList.swift; sourceTree = "<group>"; };
 		A95422D225CC9A74003F3080 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		A95BB9112603230B00E9FD17 /* Callout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callout.swift; sourceTree = "<group>"; };
+		A95D623F2649FF410018B9EA /* AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedString.swift; sourceTree = "<group>"; };
+		A95D624B264A006C0018B9EA /* Text+AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+AttributedString.swift"; sourceTree = "<group>"; };
 		A967D848261FB121009D9675 /* NavigationBarAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarAppearance.swift; sourceTree = "<group>"; };
 		A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingPlugin.h; sourceTree = "<group>"; };
@@ -257,6 +263,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A911C234264B283500EF3B85 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				A911C235264B284D00EF3B85 /* AttributedStringTests.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		A91F7CED260528FD008FBAED /* TidepoolOnboardingDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +300,7 @@
 				A923334025C3786100D8CF69 /* Environment+Complete.swift */,
 				A9BEF07B2588396F00860217 /* HKUnit.swift */,
 				A95422D225CC9A74003F3080 /* Image.swift */,
+				A95D624B264A006C0018B9EA /* Text+AttributedString.swift */,
 				A923333F25C3786100D8CF69 /* TimeInterval.swift */,
 				A9A80D842639DC6100770DA7 /* TPrescription.swift */,
 			);
@@ -384,6 +399,7 @@
 				A98AD2F825830851001AAD6F /* Info.plist */,
 				A99D0E2725FC971700CFFEA3 /* TidepoolOnboardingTests.swift */,
 				A99D0E1225FC8FB800CFFEA3 /* Mocks */,
+				A911C234264B283500EF3B85 /* Support */,
 				A99D0E0325FC8F2E00CFFEA3 /* View Models */,
 			);
 			path = TidepoolOnboardingTests;
@@ -504,6 +520,7 @@
 		A9D0401B25E43BDD00200E4E /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				A95D623F2649FF410018B9EA /* AttributedString.swift */,
 				A903C79725F1443200C88786 /* OnboardingSection.swift */,
 			);
 			path = Support;
@@ -847,6 +864,7 @@
 				A9B6736825F159A400D27872 /* YourDevicesViews.swift in Sources */,
 				A98AD31B25830887001AAD6F /* OSLog.swift in Sources */,
 				A90634562643426900CAFED1 /* OnboardingSectionWrapperView.swift in Sources */,
+				A95D62402649FF410018B9EA /* AttributedString.swift in Sources */,
 				A9502CBE25FFEF7B00146AD3 /* PageHeader.swift in Sources */,
 				A9A5739F2603AA080084592C /* WarningIcon.swift in Sources */,
 				A98AD30E25830879001AAD6F /* LocalizedString.swift in Sources */,
@@ -857,6 +875,7 @@
 				A9A90F92260A50FD00264BCB /* Paragraph.swift in Sources */,
 				A9EFBD322602D09B0070E9CC /* ModalPresentation.swift in Sources */,
 				A9E56C32262E1C4600A10627 /* NumberedBodyTextList.swift in Sources */,
+				A95D624C264A006D0018B9EA /* Text+AttributedString.swift in Sources */,
 				A923336525C3789800D8CF69 /* ActionButton.swift in Sources */,
 				A933F362260975A400DB84B9 /* AccessibleImage.swift in Sources */,
 				A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */,
@@ -874,6 +893,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A911C236264B284D00EF3B85 /* AttributedStringTests.swift in Sources */,
 				A99D0E0525FC8F6F00CFFEA3 /* OnboardingViewModelTests.swift in Sources */,
 				A99D0E1425FC8FDA00CFFEA3 /* MockOnboardingProvider.swift in Sources */,
 				A99D0E2825FC971700CFFEA3 /* TidepoolOnboardingTests.swift in Sources */,

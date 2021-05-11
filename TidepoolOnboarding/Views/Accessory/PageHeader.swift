@@ -9,12 +9,18 @@
 import SwiftUI
 
 struct PageHeader: View {
-    let title: String
+    private let title: String
+    private let dividerHidden: Bool
+
+    init(title: String) {
+        self.title = title
+        self.dividerHidden = false
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             titleView
-            Divider()
+            dividerView
         }
     }
 
@@ -25,6 +31,24 @@ struct PageHeader: View {
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityAddTraits(.isHeader)
     }
+
+    @ViewBuilder
+    private var dividerView: some View {
+        if !dividerHidden {
+            Divider()
+        } else {
+            EmptyView()
+        }
+    }
+}
+
+extension PageHeader {
+    init(_ other: Self, dividerHidden: Bool? = nil) {
+        self.title = other.title
+        self.dividerHidden = dividerHidden ?? other.dividerHidden
+    }
+
+    func dividerHidden(_ dividerHidden: Bool) -> Self { Self(self, dividerHidden: dividerHidden) }
 }
 
 struct PageHeader_Previews: PreviewProvider {

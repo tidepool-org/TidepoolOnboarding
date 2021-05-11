@@ -10,6 +10,7 @@ import Combine
 import HealthKit
 import LoopKit
 import LoopKitUI
+import TidepoolKit
 
 public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
     public static func createOnboarding() -> OnboardingUI {
@@ -29,10 +30,19 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
     var sectionProgression: OnboardingSectionProgression {
         didSet {
             notifyDidUpdateState()
+            notifyHasNewTherapySettingsIfAvailable()
+            notifyHasNewDosingEnabledIfAvailable()
+            updateIsOnboarded()
         }
     }
 
-    var prescription: Prescription? {
+    var prescription: TPrescription? {
+        didSet {
+            notifyDidUpdateState()
+        }
+    }
+
+    var prescriberProfile: TProfile? {
         didSet {
             notifyDidUpdateState()
         }
@@ -40,15 +50,13 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
 
     var therapySettings: TherapySettings? {
         didSet {
-            guard let therapySettings = therapySettings else { return }
-            notifyHasNewTherapySettings(therapySettings)
+            notifyDidUpdateState()
         }
     }
 
     var dosingEnabled: Bool? {
         didSet {
-            guard let dosingEnabled = dosingEnabled else { return }
-            notifyHasNewDosingEnabled(dosingEnabled)
+            notifyDidUpdateState()
         }
     }
 
@@ -69,9 +77,16 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         self.lastAccessDate = lastAccessDate
         self.sectionProgression = sectionProgression
 
-        if let rawPrescription = rawState["prescription"] as? Prescription.RawValue {
-            self.prescription = Prescription(rawValue: rawPrescription)
+        if let rawPrescription = rawState["prescription"] as? Data {
+            self.prescription = try? Self.decoder.decode(TPrescription.self, from: rawPrescription)
         }
+        if let rawPrescriberProfile = rawState["prescriberProfile"] as? Data {
+            self.prescriberProfile = try? Self.decoder.decode(TProfile.self, from: rawPrescriberProfile)
+        }
+        if let rawTherapySettings = rawState["therapySettings"] as? Data {
+            self.therapySettings = try? Self.decoder.decode(TherapySettings.self, from: rawTherapySettings)
+        }
+        self.dosingEnabled = rawState["dosingEnabled"] as? Bool
 
         self.isOnboarded = sectionProgression.hasCompletedAllSections
     }
@@ -82,7 +97,16 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
             "sectionProgression": sectionProgression.rawValue
         ]
 
-        rawState["prescription"] = prescription?.rawValue
+        if let prescription = prescription {
+            rawState["prescription"] = try? Self.encoder.encode(prescription)
+        }
+        if let prescriberProfile = prescriberProfile {
+            rawState["prescriberProfile"] = try? Self.encoder.encode(prescriberProfile)
+        }
+        if let therapySettings = therapySettings {
+            rawState["therapySettings"] = try? Self.encoder.encode(therapySettings)
+        }
+        rawState["dosingEnabled"] = dosingEnabled
 
         return rawState
     }
@@ -95,15 +119,29 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
 
     private func notifyDidUpdateState() {
         onboardingDelegate?.onboardingDidUpdateState(self)
-        self.isOnboarded = sectionProgression.hasCompletedAllSections
     }
 
-    private func notifyHasNewTherapySettings(_ therapySettings: TherapySettings) {
+    private func notifyHasNewTherapySettingsIfAvailable() {
+        guard let therapySettings = therapySettings,
+              sectionProgression.hasCompletedSection(.yourSettings),
+              !sectionProgression.hasStartedSection(.yourDevices)
+        else {
+            return
+        }
         onboardingDelegate?.onboarding(self, hasNewTherapySettings: therapySettings)
     }
 
-    private func notifyHasNewDosingEnabled(_ dosingEnabled: Bool) {
+    private func notifyHasNewDosingEnabledIfAvailable() {
+        guard let dosingEnabled = dosingEnabled,
+              sectionProgression.hasCompletedSection(.getLooping)
+        else {
+            return
+        }
         onboardingDelegate?.onboarding(self, hasNewDosingEnabled: dosingEnabled)
+    }
+
+    private func updateIsOnboarded() {
+        self.isOnboarded = sectionProgression.hasCompletedAllSections
     }
 
     public func reset() {
@@ -113,4 +151,12 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         self.sectionProgression = OnboardingSectionProgression()
         self.lastAccessDate = Date()
     }
+
+    private static var encoder: PropertyListEncoder = {
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .binary
+        return encoder
+    }()
+
+    private static var decoder = PropertyListDecoder()
 }

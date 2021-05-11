@@ -88,6 +88,46 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A943535823C932A10093CFA3"
+               BuildableName = "TidepoolKitTests.xctest"
+               BlueprintName = "TidepoolKitTests"
+               ReferencedContainer = "container:../../Common/TidepoolKit/TidepoolKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A943537623C932BF0093CFA3"
+               BuildableName = "TidepoolKitUITests.xctest"
+               BlueprintName = "TidepoolKitUITests"
+               ReferencedContainer = "container:../../Common/TidepoolKit/TidepoolKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A9DAAD0622E7987800E76C9F"
+               BuildableName = "TidepoolServiceKitTests.xctest"
+               BlueprintName = "TidepoolServiceKitTests"
+               ReferencedContainer = "container:../../Common/TidepoolService/TidepoolService.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A9DAAD2222E7988900E76C9F"
+               BuildableName = "TidepoolServiceKitUITests.xctest"
+               BlueprintName = "TidepoolServiceKitUITests"
+               ReferencedContainer = "container:../../Common/TidepoolService/TidepoolService.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "A98AD2F025830851001AAD6F"
                BuildableName = "TidepoolOnboardingTests.xctest"
                BlueprintName = "TidepoolOnboardingTests"

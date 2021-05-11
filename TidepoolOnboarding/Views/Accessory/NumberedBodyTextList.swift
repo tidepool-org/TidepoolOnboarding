@@ -10,20 +10,23 @@ import SwiftUI
 
 struct NumberedBodyTextList: View {
     private let strings: [String]
+    private let startingAt: Int
 
     init(_ strings: [String]) {
         self.strings = strings
+        self.startingAt = 1
     }
 
     init(_ strings: String...) {
         self.strings = strings
+        self.startingAt = 1
     }
 
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(strings.indices) { index in
                 HStack(spacing: 10) {
-                    Number(index + 1)
+                    Number(startingAt + index)
                         .foregroundColor(.accentColor)
                     BodyText(strings[index])
                         .fixedSize(horizontal: false, vertical: true)
@@ -35,7 +38,7 @@ struct NumberedBodyTextList: View {
     }
 
     private func accessibilityValue(for index: Int) -> String {
-        String(format: LocalizedString("%d, %2$@", comment: "Accessibility value for numbered list item (1: item number)(2: item text)"), index + 1, strings[index])
+        String(format: LocalizedString("%d, %2$@", comment: "Accessibility value for numbered list item (1: item number)(2: item text)"), startingAt + index, strings[index])
     }
 
     private struct Number: View {
@@ -57,6 +60,15 @@ struct NumberedBodyTextList: View {
             }
         }
     }
+}
+
+extension NumberedBodyTextList {
+    init(_ other: Self, startingAt: Int? = nil) {
+        self.strings = other.strings
+        self.startingAt = startingAt ?? other.startingAt
+    }
+
+    func startingAt(_ startingAt: Int) -> Self { Self(self, startingAt: startingAt) }
 }
 
 struct NumberedBodyTextList_Previews: PreviewProvider {

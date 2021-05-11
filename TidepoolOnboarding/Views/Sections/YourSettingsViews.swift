@@ -19,17 +19,12 @@ struct YourSettingsNavigationButton: View {
 
     @ViewBuilder
     private var destination: some View {
-        if onboardingViewModel.tidepoolService?.isOnboarded != true {
-            YourSettingsTidepoolServiceOnboardingView(destination: nextDestination)
-        } else {
-            nextDestination
-        }
-    }
-
-    @ViewBuilder
-    private var nextDestination: some View {
         if onboardingViewModel.prescription == nil {
-            YourSettingsPrescriptionAccessCodeEntryView()
+            if onboardingViewModel.tidepoolService?.isOnboarded != true {
+                YourSettingsTidepoolServiceOnboardingView()
+            } else {
+                YourSettingsPrescriptionAccessCodeEntryView()
+            }
         } else {
             YourSettingsReviewYourSettingsView()
         }
@@ -39,28 +34,43 @@ struct YourSettingsNavigationButton: View {
 // MARK: - YourSettingsTidepoolServiceOnboardingView
 
 // TODO: PLACEHOLDER - Will be replaced with final view(s) once delivered by product and design
-fileprivate struct YourSettingsTidepoolServiceOnboardingView<Destination: View>: View {
+fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     @State private var alertMessage: String?
     @State private var isAlertPresented = false
 
-    @State private var sheetViewController: ServiceViewController?
+    @State private var serviceViewController: ServiceViewController?
     @State private var isSheetPresented = false
     @State private var onSheetDismiss: (() -> Void)?
 
-    let destination: Destination
+    @State private var skip = false
 
     var body: some View {
-        OnboardingSectionPageView(section: .yourSettings, destination: destination) {
-            PageHeader(title: LocalizedString("Your Tidepool Account", comment: "Onboarding, Your Settings section, view 1, title"))
-            Paragraph(LocalizedString("If you already have a Tidepool acccount you can Sign In.", comment: "Onboarding, Your Settings section, view 1, paragraph"))
+        OnboardingSectionPageView(section: .yourSettings, destination: destination, isDestinationActive: $skip) {
+            PageHeader(title: LocalizedString("Your Tidepool Account", comment: "Onboarding, Your Settings section, Your Tidepool Account view, title"))
+                .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures,
+                                         title: "Are you sure you want to skip setting up your Tidepool account and claiming a prescription?") {  // Not localized
+                    onboardingViewModel.prescription = .mock        // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                    onboardingViewModel.prescriberProfile = .mock   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                    skip = true
+                }
+            Paragraph(LocalizedString("If you already have a Tidepool acccount you can Sign In.", comment: "Onboarding, Your Settings section, Your Tidepool Account view, paragraph"))
+                .alert(isPresented: $isAlertPresented) { alert }
         }
         .backButtonHidden(true)
-        .nextButtonTitle(LocalizedString("Sign In", comment: "Onboarding, Your Settings section, view 1, sign up button, title"))
+        .nextButtonTitle(LocalizedString("Sign In", comment: "Onboarding, Your Settings section, Your Tidepool Account view, sign up button, title"))
         .nextButtonAction(nextButtonAction)
-        .alert(isPresented: $isAlertPresented) { alert }
         .sheet(isPresented: $isSheetPresented, onDismiss: onSheetDismiss) { sheet }
+    }
+
+    @ViewBuilder
+    private var destination: some View {
+        if !skip {
+            YourSettingsPrescriptionAccessCodeEntryView()
+        } else {
+            YourSettingsReviewYourSettingsView()
+        }
     }
 
     private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
@@ -71,13 +81,17 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView<Destination: View>:
         case .success(let success):
             switch success {
             case .userInteractionRequired(let viewController):
-                self.sheetViewController = viewController
+                self.serviceViewController = viewController
                 self.isSheetPresented = true
-                self.onSheetDismiss = { completion(onboardingViewModel.tidepoolService?.isOnboarded == true) }
+                self.onSheetDismiss = { onboardTidepoolServiceComplete(completion) }
             case .createdAndOnboarded:
-                completion(onboardingViewModel.tidepoolService?.isOnboarded == true)
+                onboardTidepoolServiceComplete(completion)
             }
         }
+    }
+
+    private func onboardTidepoolServiceComplete(_ completion: @escaping (Bool) -> Void) {
+        completion(onboardingViewModel.tidepoolService?.isOnboarded == true)
     }
 
     private var alert: Alert {
@@ -85,7 +99,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView<Destination: View>:
     }
 
     private var sheet: some View {
-        TidepoolServiceView(sheetViewController!)
+        ServiceView(serviceViewController!)
             .presentation(isModal: true)
             .environment(\.dismiss, { isSheetPresented = false })
     }
@@ -106,7 +120,7 @@ struct YourSettingsPrescriptionAccessCodeEntryView: View {
 
     var body: some View {
         OnboardingSectionPageView(section: .yourSettings, destination: YourSettingsReviewYourSettingsView()) {
-            PageHeader(title: LocalizedString("Your Settings", comment: "Onboarding, Your Settings section, view 2, title"))
+            PageHeader(title: LocalizedString("Your Settings", comment: "Onboarding, Your Settings section, Your Settings view, title"))
             Segment {
                 segment1
                     .padding(.bottom)
@@ -117,19 +131,19 @@ struct YourSettingsPrescriptionAccessCodeEntryView: View {
             }
         }
         .backButtonHidden(true)
-        .nextButtonTitle(LocalizedString("Submit", comment: "Onboarding, Your Settings section, view 2, next button, title"))
+        .nextButtonTitle(LocalizedString("Submit", comment: "Onboarding, Your Settings section, Your Settings view, next button, title"))
         .nextButtonAction(nextButtonAction)
         .nextButtonDisabled(accessCode.count != accessCodeLength || !hasBirthdayPickerShown || isNextButtonActing)
         .onTapGesture(perform: dismissAccessories)
     }
 
     private var segment1: some View {
-        Segment(header: LocalizedString("What you’ll need", comment: "Onboarding, Your Settings section, view 2, segment 1, header")) {
-            Paragraph(LocalizedString("For this next section, you’ll want to have the following:", comment: "Onboarding, Your Settings section, view 2, segment 1, paragraph"))
+        Segment(header: LocalizedString("What you’ll need", comment: "Onboarding, Your Settings section, Your Settings view, segment 1, header")) {
+            Paragraph(LocalizedString("For this next section, you’ll want to have the following:", comment: "Onboarding, Your Settings section, Your Settings view, segment 1, paragraph"))
                 .padding(.bottom)
             NumberedBodyTextList(
-                LocalizedString("Prescription activation code", comment: "Onboarding, Your Settings section, view 2, segment 1, list, item 1"),
-                LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Onboarding, Your Settings section, view 2, segment 1, list, item 1")
+                LocalizedString("Prescription activation code", comment: "Onboarding, Your Settings section, Your Settings view, segment 1, list, item 1"),
+                LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Onboarding, Your Settings section, Your Settings view, segment 1, list, item 1")
             )
         }
         .headerFont(.headline)
@@ -137,8 +151,8 @@ struct YourSettingsPrescriptionAccessCodeEntryView: View {
     }
 
     private var segment2: some View {
-        Segment(header: LocalizedString("Enter your 6-digit prescription code", comment: "Onboarding, Your Settings section, view 2, segment 2, header")) {
-            Paragraph(LocalizedString("If you have a prescription activation code, please enter it now.", comment: "Onboarding, Your Settings section, view 2, segment 2, paragraph"))
+        Segment(header: LocalizedString("Enter your 6-digit prescription code", comment: "Onboarding, Your Settings section, Your Settings view, segment 2, header")) {
+            Paragraph(LocalizedString("If you have a prescription activation code, please enter it now.", comment: "Onboarding, Your Settings section, Your Settings view, segment 2, paragraph"))
             accessCodeField
         }
         .headerFont(.headline)
@@ -146,8 +160,8 @@ struct YourSettingsPrescriptionAccessCodeEntryView: View {
     }
 
     private var segment3: some View {
-        Segment(header: LocalizedString("Enter your birthday", comment: "Onboarding, Your Settings section, view 2, segment 3, header")) {
-            Paragraph(LocalizedString("In order for us to verify the prescription code, please enter the birthday associated with your Tidepool account.", comment: "Onboarding, Your Settings section, view 2, segment 3, paragraph"))
+        Segment(header: LocalizedString("Enter your birthday", comment: "Onboarding, Your Settings section, Your Settings view, segment 3, header")) {
+            Paragraph(LocalizedString("In order for us to verify the prescription code, please enter the birthday associated with your Tidepool account.", comment: "Onboarding, Your Settings section, Your Settings view, segment 3, paragraph"))
             birthdayField
         }
         .headerFont(.headline)
@@ -160,7 +174,7 @@ struct YourSettingsPrescriptionAccessCodeEntryView: View {
     }
 
     private var accessCodeField: some View {
-        TextField(LocalizedString("Activation code", comment: "Onboarding, Your Settings section, view 2, segment 2, code, placeholder"), text: $accessCode, onCommit: showBirthdayPicker)
+        TextField(LocalizedString("Activation code", comment: "Onboarding, Your Settings section, Your Settings view, segment 2, code, placeholder"), text: $accessCode, onCommit: showBirthdayPicker)
             .autocapitalization(.allCharacters)
             .disableAutocorrection(true)
             .keyboardType(.asciiCapable)
@@ -210,7 +224,7 @@ struct YourSettingsPrescriptionAccessCodeEntryView: View {
         if hasBirthdayPickerShown {
             Text(Self.birthdayFormatter.string(from: birthday))
         } else {
-            Text(LocalizedString("Select birthday", comment: "Onboarding, Your Settings section, view 2, segment 2, birthday, placeholder"))
+            Text(LocalizedString("Select birthday", comment: "Onboarding, Your Settings section, Your Settings view, segment 2, birthday, placeholder"))
                 .opacity(0.25)
         }
     }
@@ -329,18 +343,20 @@ fileprivate struct YourSettingsReviewYourSettingsView: View {
 
     @State private var error: Error?
 
+    @State private var isPumpManagerActionSheetPresented = false
+    @State private var isCGMManagerActionSheetPresented = false
     @State private var isNextButtonActing = false
     @State private var isErrorAlertPresented = false
 
     var body: some View {
         OnboardingSectionPageView(section: .yourSettings, destination: YourSettingsTherapySettingsPreviewView()) {
-            PageHeader(title: LocalizedString("Review Your Settings", comment: "Onboarding, Your Settings section, view 3, title"))
-            Paragraph(LocalizedString("Since your provider included your recommended settings with your prescription, you’ll have a chance to review and confirm each of these settings now.", comment: "Onboarding, Your Settings section, view 3, paragraph 1"))
-            Paragraph(LocalizedString("Your prescription contains recommended settings for the devices listed below.", comment: "Onboarding, Your Settings section, view 3, paragraph 2"))
-            Callout(title: LocalizedString("Note", comment: "Onboarding, Your Settings section, view 3, callout")) {
-                Paragraph(LocalizedString("Tidepool Loop does NOT automatically adjust or recommend changes to your settings.", comment: "Onboarding, Your Settings section, view 3, callout, paragraph 1"))
+            PageHeader(title: LocalizedString("Review Your Settings", comment: "Onboarding, Your Settings section, Review Your Settings view, title"))
+            Paragraph(LocalizedString("Since your provider included your recommended settings with your prescription, you’ll have a chance to review and confirm each of these settings now.", comment: "Onboarding, Your Settings section, Review Your Settings view, paragraph 1"))
+            Paragraph(LocalizedString("Your prescription contains recommended settings for the devices listed below.", comment: "Onboarding, Your Settings section, Review Your Settings view, paragraph 2"))
+            Callout(title: LocalizedString("Note", comment: "Onboarding, Your Settings section, Review Your Settings view, callout")) {
+                Paragraph(LocalizedString("Tidepool Loop does NOT automatically adjust or recommend changes to your settings.", comment: "Onboarding, Your Settings section, Review Your Settings view, callout, paragraph 1"))
                     .bold()
-                Paragraph(LocalizedString("Work with your healthcare provider to find the right settings for you.", comment: "Onboarding, Your Settings section, view 3, callout, paragraph 2"))
+                Paragraph(LocalizedString("Work with your healthcare provider to find the right settings for you.", comment: "Onboarding, Your Settings section, Review Your Settings view, callout, paragraph 2"))
                     .bold()
             }
             pumpView
@@ -356,14 +372,18 @@ fileprivate struct YourSettingsReviewYourSettingsView: View {
 
     private var pumpView: some View {
         deviceView(image: Image(frameworkImage: "dash").renderingMode(.template),
-                   title: LocalizedString("Omnipod 5", comment: "Text describing insulin pump name"),
+                   title: onboardingViewModel.pumpManagerTitle,
                    description: LocalizedString("Insulin Pump", comment: "Insulin pump label"))
+            .onLongPressGesture(minimumDuration: 2, perform: selectPumpManager)                         // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+            .actionSheet(isPresented: $isPumpManagerActionSheetPresented) { pumpManagerActionSheet }    // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
     }
 
     private var cgmView: some View {
         deviceView(image: Image(frameworkImage: "dexcom"),
-                   title: LocalizedString("Dexcom G6", comment: "Text describing CGM name"),
+                   title: onboardingViewModel.cgmManagerTitle,
                    description: LocalizedString("Continuous Glucose Monitor", comment: "CGM label"))
+            .onLongPressGesture(minimumDuration: 2, perform: selectCGMManager)                          // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+            .actionSheet(isPresented: $isCGMManagerActionSheetPresented) { cgmManagerActionSheet }      // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
     }
 
     private func deviceView(image: Image, title: String, description: String) -> some View {
@@ -384,9 +404,51 @@ fileprivate struct YourSettingsReviewYourSettingsView: View {
         }
     }
 
-    private static var imageWidth: CGFloat = 48
+    // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+    private func selectPumpManager() {
+        guard onboardingViewModel.onboardingProvider.allowDebugFeatures,
+              onboardingViewModel.onboardingProvider.activePumpManager == nil else {
+            return
+        }
 
-    private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
+        UINotificationFeedbackGenerator().notificationOccurred(.warning)
+        isPumpManagerActionSheetPresented = true
+    }
+
+    // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+    private var pumpManagerActionSheet: ActionSheet {
+        var buttons: [ActionSheet.Button] = onboardingViewModel.onboardingProvider.availablePumpManagers.map { managerDescriptor in
+            .default(Text(managerDescriptor.localizedTitle)) {
+                onboardingViewModel.pumpManagerIdentifier = managerDescriptor.identifier
+            }
+        }
+        buttons.append(.cancel())
+        return ActionSheet(title: Text("Pump Manager"), buttons: buttons)   // Not localized
+    }
+
+    // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+    private func selectCGMManager() {
+        guard onboardingViewModel.onboardingProvider.allowDebugFeatures,
+              onboardingViewModel.onboardingProvider.activeCGMManager == nil else {
+            return
+        }
+
+        UINotificationFeedbackGenerator().notificationOccurred(.warning)
+        isCGMManagerActionSheetPresented = true
+    }
+
+    // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+    private var cgmManagerActionSheet: ActionSheet {
+        var buttons: [ActionSheet.Button] = onboardingViewModel.onboardingProvider.availableCGMManagers.map { managerDescriptor in
+            .default(Text(managerDescriptor.localizedTitle)) {
+                onboardingViewModel.cgmManagerIdentifier = managerDescriptor.identifier
+            }
+        }
+        buttons.append(.cancel())
+        return ActionSheet(title: Text("CGM Manager"), buttons: buttons)   // Not localized
+    }
+
+     private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
         guard !isNextButtonActing else { return }
 
         isNextButtonActing = true
@@ -428,7 +490,7 @@ fileprivate struct YourSettingsTherapySettingsPreviewView: View {
 fileprivate struct YourSettingsSuspendThresholdInformationView: View {
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             SuspendThresholdInformationView(onExit: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsSuspendThresholdEditor(), isActive: $isDestinationActive) { EmptyView() }
@@ -441,7 +503,7 @@ fileprivate struct YourSettingsSuspendThresholdEditor: View {
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             SuspendThresholdEditor(mode: .acceptanceFlow,
                                    therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
@@ -455,7 +517,7 @@ fileprivate struct YourSettingsSuspendThresholdEditor: View {
 fileprivate struct YourSettingsCorrectionRangeInformationView: View {
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             CorrectionRangeInformationView(onExit: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsCorrectionRangeScheduleEditor(), isActive: $isDestinationActive) { EmptyView() }
@@ -468,7 +530,7 @@ fileprivate struct YourSettingsCorrectionRangeScheduleEditor: View {
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             CorrectionRangeScheduleEditor(mode: .acceptanceFlow,
                                           therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
@@ -484,7 +546,7 @@ fileprivate struct YourSettingsCorrectionRangeScheduleEditor: View {
 fileprivate struct YourSettingsPreMealCorrectionRangeOverrideInformationView: View {
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             CorrectionRangeOverrideInformationView(preset: .preMeal, onExit: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsPreMealCorrectionRangeOverridesEditor(), isActive: $isDestinationActive) { EmptyView() }
@@ -497,7 +559,7 @@ fileprivate struct YourSettingsPreMealCorrectionRangeOverridesEditor: View {
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             CorrectionRangeOverridesEditor(mode: .acceptanceFlow,
                                            therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel, preset: .preMeal,
@@ -511,7 +573,7 @@ fileprivate struct YourSettingsPreMealCorrectionRangeOverridesEditor: View {
 fileprivate struct YourSettingsWorkoutCorrectionRangeOverrideInformationView: View {
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             CorrectionRangeOverrideInformationView(preset: .workout, onExit: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsWorkoutCorrectionRangeOverridesEditor(), isActive: $isDestinationActive) { EmptyView() }
@@ -524,7 +586,7 @@ fileprivate struct YourSettingsWorkoutCorrectionRangeOverridesEditor: View {
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             CorrectionRangeOverridesEditor(mode: .acceptanceFlow,
                                            therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel, preset: .workout,
@@ -538,7 +600,7 @@ fileprivate struct YourSettingsWorkoutCorrectionRangeOverridesEditor: View {
 fileprivate struct YourSettingsCarbRatioInformationView: View {
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             CarbRatioInformationView(onExit: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsCarbRatioScheduleEditor(), isActive: $isDestinationActive) { EmptyView() }
@@ -551,7 +613,7 @@ fileprivate struct YourSettingsCarbRatioScheduleEditor: View {
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             CarbRatioScheduleEditor(mode: .acceptanceFlow,
                                     therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
@@ -567,7 +629,7 @@ fileprivate struct YourSettingsCarbRatioScheduleEditor: View {
 fileprivate struct YourSettingsBasalRatesInformationView: View {
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             BasalRatesInformationView(onExit: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsBasalRateScheduleEditor(), isActive: $isDestinationActive) { EmptyView() }
@@ -580,7 +642,7 @@ fileprivate struct YourSettingsBasalRateScheduleEditor: View {
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             BasalRateScheduleEditor(mode: .acceptanceFlow,
                                     therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
@@ -596,7 +658,7 @@ fileprivate struct YourSettingsBasalRateScheduleEditor: View {
 fileprivate struct YourSettingsDeliveryLimitsInformationView: View {
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             DeliveryLimitsInformationView(onExit: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsDeliveryLimitsEditor(), isActive: $isDestinationActive) { EmptyView() }
@@ -609,7 +671,7 @@ fileprivate struct YourSettingsDeliveryLimitsEditor: View {
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             DeliveryLimitsEditor(mode: .acceptanceFlow,
                                  therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
@@ -623,7 +685,7 @@ fileprivate struct YourSettingsDeliveryLimitsEditor: View {
 fileprivate struct YourSettingsInsulinModelInformationView: View {
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             InsulinModelInformationView(onExit: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsInsulinModelSelection(), isActive: $isDestinationActive) { EmptyView() }
@@ -637,7 +699,7 @@ fileprivate struct YourSettingsInsulinModelSelection: View {
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             InsulinModelSelection(mode: .acceptanceFlow,
                                   therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
@@ -652,7 +714,7 @@ fileprivate struct YourSettingsInsulinModelSelection: View {
 fileprivate struct YourSettingsInsulinSensitivityInformationView: View {
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             InsulinSensitivityInformationView(onExit: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsInsulinSensitivityScheduleEditor(), isActive: $isDestinationActive) { EmptyView() }
@@ -665,7 +727,7 @@ fileprivate struct YourSettingsInsulinSensitivityScheduleEditor: View {
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             InsulinSensitivityScheduleEditor(mode: .acceptanceFlow,
                                              therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
@@ -680,18 +742,35 @@ fileprivate struct YourSettingsInsulinSensitivityScheduleEditor: View {
 
 fileprivate struct YourSettingsTherapySettingsReviewView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
-    @Environment(\.complete) var complete
 
     @State private var isDestinationActive = false
 
-    var body : some View {
+    var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
             TherapySettingsView(mode: .acceptanceFlow,
                                 viewModel: onboardingViewModel.currentTherapySettingsViewModel,
                                 actionButton: TherapySettingsView.ActionButton(localizedString: LocalizedString("Save Settings", comment: "Your Settings therapy settings review next button title"),
-                                                                               action: complete))
+                                                                               action: { isDestinationActive = true }))
+            NavigationLink(destination: YourSettingsCheckpoint(), isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)
+    }
+}
+
+// MARK: - YourSettingsCheckpoint
+
+fileprivate struct YourSettingsCheckpoint: View {
+    var body: some View {
+        OnboardingSectionPageView(section: .yourSettings) {
+            PageHeader(title: LocalizedString("Checkpoint", comment: "Onboarding, Your Settings section, Checkpoint view, title"))
+            CheckpointCheckmark()
+            Paragraph(LocalizedString("Now that you’ve entered your personal Tidepool Loop Therapy settings, it’s time to pair and set up your devices.", comment: "Onboarding, Your Settings section, Checkpoint view, paragraph 1"))
+            Paragraph(LocalizedString("You’ve now:", comment: "Onboarding, Your Settings section, Checkpoint view, paragraph 2"))
+            CheckmarkedBodyTextList(
+                LocalizedString("Confirmed your glucose settings", comment: "Onboarding, Your Settings section, Checkpoint view, list, item 1"),
+                LocalizedString("Confirmed your insulin settings", comment: "Onboarding, Your Settings section, Checkpoint view, list, item 2")
+            )
+        }
     }
 }
 

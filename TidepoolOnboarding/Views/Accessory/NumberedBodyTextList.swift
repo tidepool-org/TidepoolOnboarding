@@ -31,8 +31,7 @@ struct NumberedBodyTextList: View {
         VStack(alignment: .leading) {
             ForEach(attributedStrings.indices) { index in
                 HStack(spacing: 10) {
-                    Number(startingAt + index)
-                        .foregroundColor(.accentColor)
+                    NumberCircle(startingAt + index)
                     BodyText(attributedStrings[index])
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -45,24 +44,25 @@ struct NumberedBodyTextList: View {
     private func accessibilityValue(for index: Int) -> String {
         String(format: LocalizedString("%d, %2$@", comment: "Accessibility value for numbered list item (1: item number)(2: item text)"), startingAt + index, attributedStrings[index].string)
     }
+}
 
-    private struct Number: View {
-        private let number: Int
+struct NumberCircle: View {
+    private let number: Int
 
-        @ScaledMetric var size: CGFloat = 21
+    @ScaledMetric var size: CGFloat = 21
 
-        init(_ number: Int) {
-            self.number = number
-        }
+    init(_ number: Int) {
+        self.number = number
+    }
 
-        var body: some View {
-            ZStack {
-                Circle()
-                    .frame(width: size, height: size)
-                Text("\(number)")
-                    .font(.footnote)
-                    .foregroundColor(.white)
-            }
+    var body: some View {
+        ZStack {
+            Circle()
+                .foregroundColor(.accentColor)
+                .frame(width: size, height: size)
+            Text("\(number)")
+                .font(.footnote)
+                .foregroundColor(.white)
         }
     }
 }
@@ -73,7 +73,7 @@ extension NumberedBodyTextList {
         self.startingAt = startingAt ?? other.startingAt
     }
 
-    func startingAt(_ startingAt: Int) -> Self { Self(self, startingAt: startingAt) }
+    func startingAt(_ startingAt: Int?) -> Self { Self(self, startingAt: startingAt) }
 }
 
 struct NumberedBodyTextList_Previews: PreviewProvider {

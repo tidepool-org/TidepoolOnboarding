@@ -28,7 +28,6 @@ struct BulletedBodyTextList: View {
             ForEach(attributedStrings.indices) { index in
                 HStack(spacing: 10) {
                     Bullet()
-                        .foregroundColor(.accentColor)
                     BodyText(attributedStrings[index])
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -36,15 +35,16 @@ struct BulletedBodyTextList: View {
         }
         .padding(.horizontal)
     }
+}
     
-    private struct Bullet: View {
-        @ScaledMetric var size: CGFloat = 8
-        
-        var body: some View {
-            Circle()
-                .frame(width: size, height: size)
-                .opacity(0.5)
-        }
+struct Bullet: View {
+    @ScaledMetric var size: CGFloat = 8
+
+    var body: some View {
+        Circle()
+            .frame(width: size, height: size)
+            .opacity(0.5)
+            .foregroundColor(.accentColor)
     }
 }
 

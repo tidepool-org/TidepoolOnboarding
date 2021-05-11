@@ -1,28 +1,28 @@
 //
-//  TidepoolServiceView.swift
+//  CGMManagerView.swift
 //  TidepoolOnboarding
 //
-//  Created by Darin Krauss on 5/5/21.
+//  Created by Darin Krauss on 5/10/21.
 //  Copyright © 2021 Tidepool Project. All rights reserved.
 //
 
 import SwiftUI
 import LoopKitUI
 
-struct TidepoolServiceView: UIViewControllerRepresentable {
+struct CGMManagerView: UIViewControllerRepresentable {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
     @Environment(\.dismiss) var dismiss
 
-    private let serviceViewController: ServiceViewController
+    private let cgmManagerViewController: CGMManagerViewController
 
-    init(_ serviceViewController: ServiceViewController) {
-        self.serviceViewController = serviceViewController
+    init(_ cgmManagerViewController: CGMManagerViewController) {
+        self.cgmManagerViewController = cgmManagerViewController
     }
 
     final class Coordinator: CompletionDelegate {
-        private let parent: TidepoolServiceView
+        private let parent: CGMManagerView
 
-        init(_ parent: TidepoolServiceView) {
+        init(_ parent: CGMManagerView) {
             self.parent = parent
         }
 
@@ -32,10 +32,10 @@ struct TidepoolServiceView: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> UIViewController {
-        var serviceViewController = self.serviceViewController
-        serviceViewController.serviceOnboardingDelegate = onboardingViewModel
-        serviceViewController.completionDelegate = context.coordinator
-        return serviceViewController
+        var cgmManagerViewController = self.cgmManagerViewController
+        cgmManagerViewController.cgmManagerOnboardingDelegate = onboardingViewModel
+        cgmManagerViewController.completionDelegate = context.coordinator
+        return cgmManagerViewController
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

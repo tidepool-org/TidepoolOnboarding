@@ -53,7 +53,7 @@ extension BodyText {
 
     func italic() -> Self { Self(self, isItalic: true) }
 
-    func foregroundColor(_ color: Color) -> Self { Self(self, foregroundColor: color) }
+    func foregroundColor(_ color: Color?) -> Self { Self(self, foregroundColor: color) }
 }
 
 struct BodyText_Previews: PreviewProvider {

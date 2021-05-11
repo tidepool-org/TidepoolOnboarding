@@ -24,9 +24,11 @@
 		A903C79825F1443200C88786 /* OnboardingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79725F1443200C88786 /* OnboardingSection.swift */; };
 		A903C7A025F1444300C88786 /* OnboardingSectionNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */; };
 		A903C7A825F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */; };
-		A906344A26433B9300CAFED1 /* TidepoolServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906344926433B9300CAFED1 /* TidepoolServiceView.swift */; };
+		A906344A26433B9300CAFED1 /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A906344926433B9300CAFED1 /* ServiceView.swift */; };
 		A90634562643426900CAFED1 /* OnboardingSectionWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90634552643426900CAFED1 /* OnboardingSectionWrapperView.swift */; };
 		A90E9F8826057CAF00566ED4 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E9F8726057CAF00566ED4 /* DemoView.swift */; };
+		A911C20E264AEA3B00EF3B85 /* TProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A911C20D264AEA3B00EF3B85 /* TProfile.swift */; };
+		A911C224264B0FB200EF3B85 /* OnboardingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A911C223264B0FB200EF3B85 /* OnboardingError.swift */; };
 		A911C236264B284D00EF3B85 /* AttributedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A911C235264B284D00EF3B85 /* AttributedStringTests.swift */; };
 		A916AA5125F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916AA5025F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift */; };
 		A916AA5925F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A916AA5825F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift */; };
@@ -57,6 +59,8 @@
 		A95BB9122603230B00E9FD17 /* Callout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95BB9112603230B00E9FD17 /* Callout.swift */; };
 		A95D62402649FF410018B9EA /* AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D623F2649FF410018B9EA /* AttributedString.swift */; };
 		A95D624C264A006D0018B9EA /* Text+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D624B264A006C0018B9EA /* Text+AttributedString.swift */; };
+		A95D625D264A0F330018B9EA /* CGMManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D625C264A0F330018B9EA /* CGMManagerView.swift */; };
+		A95D6264264A0F3C0018B9EA /* PumpManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */; };
 		A967D849261FB121009D9675 /* NavigationBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A967D848261FB121009D9675 /* NavigationBarAppearance.swift */; };
 		A98AD2BE25830807001AAD6F /* TidepoolOnboardingPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A98AD2F225830851001AAD6F /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; };
@@ -129,9 +133,11 @@
 		A903C79725F1443200C88786 /* OnboardingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSection.swift; sourceTree = "<group>"; };
 		A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionNavigationButton.swift; sourceTree = "<group>"; };
 		A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GettingToKnowTidepoolLoopView.swift; sourceTree = "<group>"; };
-		A906344926433B9300CAFED1 /* TidepoolServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolServiceView.swift; sourceTree = "<group>"; };
+		A906344926433B9300CAFED1 /* ServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceView.swift; sourceTree = "<group>"; };
 		A90634552643426900CAFED1 /* OnboardingSectionWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionWrapperView.swift; sourceTree = "<group>"; };
 		A90E9F8726057CAF00566ED4 /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
+		A911C20D264AEA3B00EF3B85 /* TProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TProfile.swift; sourceTree = "<group>"; };
+		A911C223264B0FB200EF3B85 /* OnboardingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingError.swift; sourceTree = "<group>"; };
 		A911C235264B284D00EF3B85 /* AttributedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringTests.swift; sourceTree = "<group>"; };
 		A916AA5025F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewModel+Preview.swift"; sourceTree = "<group>"; };
 		A916AA5825F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisplayGlucoseUnitObservable+Preview.swift"; sourceTree = "<group>"; };
@@ -161,6 +167,8 @@
 		A95BB9112603230B00E9FD17 /* Callout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callout.swift; sourceTree = "<group>"; };
 		A95D623F2649FF410018B9EA /* AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedString.swift; sourceTree = "<group>"; };
 		A95D624B264A006C0018B9EA /* Text+AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+AttributedString.swift"; sourceTree = "<group>"; };
+		A95D625C264A0F330018B9EA /* CGMManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManagerView.swift; sourceTree = "<group>"; };
+		A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerView.swift; sourceTree = "<group>"; };
 		A967D848261FB121009D9675 /* NavigationBarAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarAppearance.swift; sourceTree = "<group>"; };
 		A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingPlugin.h; sourceTree = "<group>"; };
@@ -303,6 +311,7 @@
 				A95D624B264A006C0018B9EA /* Text+AttributedString.swift */,
 				A923333F25C3786100D8CF69 /* TimeInterval.swift */,
 				A9A80D842639DC6100770DA7 /* TPrescription.swift */,
+				A911C20D264AEA3B00EF3B85 /* TProfile.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -497,12 +506,14 @@
 		A9BEF0352588359600860217 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A95D625C264A0F330018B9EA /* CGMManagerView.swift */,
 				A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */,
 				A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */,
 				A9502CB525FFEE8E00146AD3 /* OnboardingSectionPageView.swift */,
 				A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */,
 				A90634552643426900CAFED1 /* OnboardingSectionWrapperView.swift */,
-				A906344926433B9300CAFED1 /* TidepoolServiceView.swift */,
+				A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */,
+				A906344926433B9300CAFED1 /* ServiceView.swift */,
 				A923335325C3789700D8CF69 /* Accessory */,
 				A9B6733A25F158AF00D27872 /* Sections */,
 			);
@@ -521,6 +532,7 @@
 			isa = PBXGroup;
 			children = (
 				A95D623F2649FF410018B9EA /* AttributedString.swift */,
+				A911C223264B0FB200EF3B85 /* OnboardingError.swift */,
 				A903C79725F1443200C88786 /* OnboardingSection.swift */,
 			);
 			path = Support;
@@ -838,6 +850,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A95D6264264A0F3C0018B9EA /* PumpManagerView.swift in Sources */,
 				A933F31D260925EA00DB84B9 /* LoopIcon.swift in Sources */,
 				A99EAAA325F7FD1F00503A6D /* YourSettingsViews.swift in Sources */,
 				A933F3142608EFF500DB84B9 /* Segment.swift in Sources */,
@@ -852,7 +865,7 @@
 				A923334225C3786100D8CF69 /* Environment+Complete.swift in Sources */,
 				A916AA5125F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift in Sources */,
 				A93D2B112602606E0091FB65 /* AlertOnLongPressGesture.swift in Sources */,
-				A906344A26433B9300CAFED1 /* TidepoolServiceView.swift in Sources */,
+				A906344A26433B9300CAFED1 /* ServiceView.swift in Sources */,
 				A9A80D852639DC6100770DA7 /* TPrescription.swift in Sources */,
 				A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */,
 				A9502CB625FFEE8E00146AD3 /* OnboardingSectionPageView.swift in Sources */,
@@ -866,8 +879,11 @@
 				A90634562643426900CAFED1 /* OnboardingSectionWrapperView.swift in Sources */,
 				A95D62402649FF410018B9EA /* AttributedString.swift in Sources */,
 				A9502CBE25FFEF7B00146AD3 /* PageHeader.swift in Sources */,
+				A95D625D264A0F330018B9EA /* CGMManagerView.swift in Sources */,
+				A911C20E264AEA3B00EF3B85 /* TProfile.swift in Sources */,
 				A9A5739F2603AA080084592C /* WarningIcon.swift in Sources */,
 				A98AD30E25830879001AAD6F /* LocalizedString.swift in Sources */,
+				A911C224264B0FB200EF3B85 /* OnboardingError.swift in Sources */,
 				A923336725C3789800D8CF69 /* ContentPreview.swift in Sources */,
 				A903C79825F1443200C88786 /* OnboardingSection.swift in Sources */,
 				A9502CCC25FFEFD500146AD3 /* PresentableImage.swift in Sources */,

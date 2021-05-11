@@ -48,7 +48,7 @@ extension PageHeader {
         self.dividerHidden = dividerHidden ?? other.dividerHidden
     }
 
-    func dividerHidden(_ dividerHidden: Bool) -> Self { Self(self, dividerHidden: dividerHidden) }
+    func dividerHidden(_ dividerHidden: Bool?) -> Self { Self(self, dividerHidden: dividerHidden) }
 }
 
 struct PageHeader_Previews: PreviewProvider {

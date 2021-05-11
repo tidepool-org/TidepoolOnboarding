@@ -27,23 +27,23 @@ struct CheckmarkedBodyTextList: View {
         VStack(alignment: .leading) {
             ForEach(attributedStrings.indices) { index in
                 HStack(spacing: 10) {
-                    Checkmark()
-                        .foregroundColor(.accentColor)
+                    CheckmarkCircle()
                     BodyText(attributedStrings[index])
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
     }
-    
-    private struct Checkmark: View {
-        @ScaledMetric var size: CGFloat = 22
-        
-        var body: some View {
-            Image(systemName: "checkmark.circle.fill")
-                .resizable()
-                .frame(width: size, height: size)
-        }
+}
+
+struct CheckmarkCircle: View {
+    @ScaledMetric var size: CGFloat = 22
+
+    var body: some View {
+        Image(systemName: "checkmark.circle.fill")
+            .resizable()
+            .foregroundColor(.accentColor)
+            .frame(width: size, height: size)
     }
 }
 

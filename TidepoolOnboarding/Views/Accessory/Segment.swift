@@ -50,7 +50,7 @@ extension Segment {
         self.content = other.content
     }
 
-    func headerFont(_ headerFont: Font) -> Self { Self(self, headerFont: headerFont) }
+    func headerFont(_ headerFont: Font?) -> Self { Self(self, headerFont: headerFont) }
 
-    func headerSpacing(_ headerSpacing: CGFloat) -> Self { Self(self, headerSpacing: headerSpacing) }
+    func headerSpacing(_ headerSpacing: CGFloat?) -> Self { Self(self, headerSpacing: headerSpacing) }
 }

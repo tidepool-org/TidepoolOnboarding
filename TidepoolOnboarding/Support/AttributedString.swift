@@ -59,7 +59,7 @@ struct AttributedString {
             switch elementName {
             case "b":
                 attributes.append(.bold)
-            case "em":
+            case "em", "i":
                 attributes.append(.italic)
             default:
                 break
@@ -68,7 +68,7 @@ struct AttributedString {
 
         func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
             switch elementName {
-            case "b", "em":
+            case "b", "em", "i":
                 _ = attributes.popLast()
             default:
                 break

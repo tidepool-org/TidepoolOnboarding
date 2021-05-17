@@ -42,7 +42,7 @@ class AttributedStringTests: XCTestCase {
         XCTAssertNil(attributedString.fragments[2].attributes)
     }
 
-    func testAttributedInitializerWithItalicString() {
+    func testAttributedInitializerWithEmphasisString() {
         let attributedString = AttributedString(attributed: "This is <em>italic</em> test")
         XCTAssertEqual(attributedString.fragments.count, 3)
         XCTAssertEqual(attributedString.fragments[0].string, "This is ")
@@ -53,7 +53,18 @@ class AttributedStringTests: XCTestCase {
         XCTAssertNil(attributedString.fragments[2].attributes)
     }
 
-    func testAttributedInitializerWithBoldAndItalicString() {
+    func testAttributedInitializerWithItalicString() {
+        let attributedString = AttributedString(attributed: "This is <i>italic</i> test")
+        XCTAssertEqual(attributedString.fragments.count, 3)
+        XCTAssertEqual(attributedString.fragments[0].string, "This is ")
+        XCTAssertNil(attributedString.fragments[0].attributes)
+        XCTAssertEqual(attributedString.fragments[1].string, "italic")
+        XCTAssertEqual(attributedString.fragments[1].attributes, [.italic])
+        XCTAssertEqual(attributedString.fragments[2].string, " test")
+        XCTAssertNil(attributedString.fragments[2].attributes)
+    }
+
+    func testAttributedInitializerWithBoldAndEmphasisString() {
         let attributedString = AttributedString(attributed: "This is <b><em>bold and italic</em></b> test")
         XCTAssertEqual(attributedString.fragments.count, 3)
         XCTAssertEqual(attributedString.fragments[0].string, "This is ")
@@ -64,8 +75,19 @@ class AttributedStringTests: XCTestCase {
         XCTAssertNil(attributedString.fragments[2].attributes)
     }
 
+    func testAttributedInitializerWithBoldAndItalicString() {
+        let attributedString = AttributedString(attributed: "This is <b><i>bold and italic</i></b> test")
+        XCTAssertEqual(attributedString.fragments.count, 3)
+        XCTAssertEqual(attributedString.fragments[0].string, "This is ")
+        XCTAssertNil(attributedString.fragments[0].attributes)
+        XCTAssertEqual(attributedString.fragments[1].string, "bold and italic")
+        XCTAssertEqual(attributedString.fragments[1].attributes, [.bold, .italic])
+        XCTAssertEqual(attributedString.fragments[2].string, " test")
+        XCTAssertNil(attributedString.fragments[2].attributes)
+    }
+
     func testAttributedInitializerWithComplexString() {
-        let attributedString = AttributedString(attributed: "<b><b/><em/></b>This is <b>bold</b>, <em>italic</em>, and <b><em><b><em>bold and italic</em></b></em></b> test<em/>")
+        let attributedString = AttributedString(attributed: "<b><b/><em/></b>This is <b>bold</b>, <i>italic</i>, and <b><em><b><i>bold and italic</i></b></em></b> test<em/>")
         XCTAssertEqual(attributedString.fragments.count, 7)
         XCTAssertEqual(attributedString.fragments[0].string, "This is ")
         XCTAssertNil(attributedString.fragments[0].attributes)

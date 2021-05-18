@@ -21,6 +21,10 @@ class OnboardingViewModelTests: XCTestCase {
         onboarding.prescription = .test
         onboarding.prescriberProfile = .test
         onboarding.therapySettings = .test
+        onboarding.notificationAuthorization = .notDetermined
+        onboarding.healthStoreAuthorization = .notDetermined
+        onboarding.cgmManagerIdentifier = "CGM Manager Identifier"
+        onboarding.pumpManagerIdentifier = "Pump Manager Identifier"
         onboarding.dosingEnabled = false
         onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: MockOnboardingProvider())
     }
@@ -52,6 +56,24 @@ class OnboardingViewModelTests: XCTestCase {
         XCTAssertEqual(onboarding.prescription, onboardingViewModel.prescription)
     }
 
+    func testPrescriptionSetsTherapySettings() {
+        onboarding.therapySettings = nil
+        onboardingViewModel.prescription = .mock
+        XCTAssertNotNil(onboarding.therapySettings)
+    }
+
+    func testPrescriptionSetsCGMManagerIdentifier() {
+        onboarding.cgmManagerIdentifier = nil
+        onboardingViewModel.prescription = .mock
+        XCTAssertNotNil(onboarding.cgmManagerIdentifier)
+    }
+
+    func testPrescriptionSetsPumpManagerIdentifier() {
+        onboarding.pumpManagerIdentifier = nil
+        onboardingViewModel.prescription = .mock
+        XCTAssertNotNil(onboarding.pumpManagerIdentifier)
+    }
+
     func testPrescriberProfileInitialization() {
         XCTAssertEqual(onboardingViewModel.prescriberProfile, onboarding.prescriberProfile)
     }
@@ -68,6 +90,42 @@ class OnboardingViewModelTests: XCTestCase {
     func testTherapySettingsForwarding() {
         onboardingViewModel.therapySettings = TherapySettings(insulinModelSettings: .exponentialPreset(.fiasp))
         XCTAssertEqual(onboarding.therapySettings, onboardingViewModel.therapySettings)
+    }
+
+    func testNotificationAuthorizationInitialization() {
+        XCTAssertEqual(onboardingViewModel.notificationAuthorization, onboarding.notificationAuthorization)
+    }
+
+    func testNotificationAuthorizationForwarding() {
+        onboardingViewModel.notificationAuthorization = .authorized
+        XCTAssertEqual(onboarding.notificationAuthorization, onboardingViewModel.notificationAuthorization)
+    }
+
+    func testHealthStoreAuthorizationInitialization() {
+        XCTAssertEqual(onboardingViewModel.healthStoreAuthorization, onboarding.healthStoreAuthorization)
+    }
+
+    func testHealthStoreAuthorizationForwarding() {
+        onboardingViewModel.healthStoreAuthorization = .determined
+        XCTAssertEqual(onboarding.healthStoreAuthorization, onboardingViewModel.healthStoreAuthorization)
+    }
+
+    func testCGMManagerIdentifierInitialization() {
+        XCTAssertEqual(onboardingViewModel.cgmManagerIdentifier, onboarding.cgmManagerIdentifier)
+    }
+
+    func testCGMManagerIdentifierForwarding() {
+        onboardingViewModel.cgmManagerIdentifier = "New CGM Manager Identifier"
+        XCTAssertEqual(onboarding.cgmManagerIdentifier, onboardingViewModel.cgmManagerIdentifier)
+    }
+
+    func testPumpManagerIdentifierInitialization() {
+        XCTAssertEqual(onboardingViewModel.pumpManagerIdentifier, onboarding.pumpManagerIdentifier)
+    }
+
+    func testPumpManagerIdentifierForwarding() {
+        onboardingViewModel.pumpManagerIdentifier = "New Pump Manager Identifier"
+        XCTAssertEqual(onboarding.pumpManagerIdentifier, onboardingViewModel.pumpManagerIdentifier)
     }
 
     func testDosingEnabledInitialization() {

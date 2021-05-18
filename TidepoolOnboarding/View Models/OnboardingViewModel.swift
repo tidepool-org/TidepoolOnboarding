@@ -26,10 +26,20 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var lastAccessDate: Date
     @Published var sectionProgression: OnboardingSectionProgression
     @Published var tidepoolService: TidepoolService?
-    @Published var prescription: TPrescription?
+    @Published var prescription: TPrescription? {
+        didSet {
+            self.therapySettings = prescription?.therapySettings
+            self.cgmManagerIdentifier = prescription?.cgmManagerIdentifier
+            self.pumpManagerIdentifier = prescription?.pumpManagerIdentifier
+        }
+    }
     @Published var prescriberProfile: TProfile?
     @Published var therapySettings: TherapySettings?
-    @Published var dosingEnabled: Bool
+    @Published var notificationAuthorization: NotificationAuthorization?
+    @Published var healthStoreAuthorization: HealthStoreAuthorization?
+    @Published var cgmManagerIdentifier: String?
+    @Published var pumpManagerIdentifier: String?
+    @Published var dosingEnabled: Bool?
 
     lazy var initialTherapySettingsViewModel: TherapySettingsViewModel = constructInitialTherapySettingsViewModel()
     lazy var currentTherapySettingsViewModel: TherapySettingsViewModel = constructCurrentTherapySettingsViewModel()
@@ -45,7 +55,11 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.prescription = onboarding.prescription
         self.prescriberProfile = onboarding.prescriberProfile
         self.therapySettings = onboarding.therapySettings
-        self.dosingEnabled = onboarding.dosingEnabled ?? true
+        self.notificationAuthorization = onboarding.notificationAuthorization
+        self.healthStoreAuthorization = onboarding.healthStoreAuthorization
+        self.cgmManagerIdentifier = onboarding.cgmManagerIdentifier
+        self.pumpManagerIdentifier = onboarding.pumpManagerIdentifier
+        self.dosingEnabled = onboarding.dosingEnabled
 
         $lastAccessDate
             .dropFirst()
@@ -66,6 +80,22 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         $therapySettings
             .dropFirst()
             .sink { onboarding.therapySettings = $0 }
+            .store(in: &cancellables)
+        $notificationAuthorization
+            .dropFirst()
+            .sink { onboarding.notificationAuthorization = $0 }
+            .store(in: &cancellables)
+        $healthStoreAuthorization
+            .dropFirst()
+            .sink { onboarding.healthStoreAuthorization = $0 }
+            .store(in: &cancellables)
+        $cgmManagerIdentifier
+            .dropFirst()
+            .sink { onboarding.cgmManagerIdentifier = $0 }
+            .store(in: &cancellables)
+        $pumpManagerIdentifier
+            .dropFirst()
+            .sink { onboarding.pumpManagerIdentifier = $0 }
             .store(in: &cancellables)
         $dosingEnabled
             .dropFirst()
@@ -222,15 +252,11 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     private func constructCurrentTherapySettingsViewModel() -> TherapySettingsViewModel {
-        if therapySettings == nil {
-            guard let therapySettings = prescription?.therapySettings else {
-                preconditionFailure("Must have prescription to construct therapy settings view model")
-            }
-
-            self.therapySettings = therapySettings
+        guard let therapySettings = therapySettings else {
+            preconditionFailure("Must have therapy settings to construct therapy settings view model")
         }
 
-        return TherapySettingsViewModel(therapySettings: therapySettings!,
+        return TherapySettingsViewModel(therapySettings: therapySettings,
                                         supportedInsulinModelSettings: supportedInsulinModelSettings,
                                         pumpSupportedIncrements: { self.pumpSupportedIncrements },
                                         didSave: { (_, therapySettings) in self.therapySettings = therapySettings })
@@ -249,6 +275,63 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         return PumpSupportedIncrements(basalRates: supportedBasalRates,
                                        bolusVolumes: supportedBolusVolumes,
                                        maximumBasalScheduleEntryCount: maximumBasalScheduleEntryCount)
+    }
+
+    var cgmManagerTitle: String {
+        guard let cgmManagerIdentifier = cgmManagerIdentifier,
+              let cgmManagerDescriptor = onboardingProvider.availableCGMManagers.first(where: { $0.identifier == cgmManagerIdentifier }) else {
+                return LocalizedString("Unknown CGM", comment: "Unknown CGM manager title")
+        }
+        return cgmManagerDescriptor.localizedTitle
+    }
+
+    var isCGMManagerOnboarded: Bool {
+        guard let activeCGMManager = onboardingProvider.activeCGMManager,
+              activeCGMManager.managerIdentifier == cgmManagerIdentifier else {
+            return false
+        }
+        return activeCGMManager.isOnboarded
+    }
+
+    func onboardCGMManager() -> Result<OnboardingResult<CGMManagerViewController, CGMManager>, Error> {
+        guard let cgmManagerIdentifier = cgmManagerIdentifier else {
+            return .failure(OnboardingError.unexpectedState)
+        }
+        return onboardingProvider.onboardCGMManager(withIdentifier: cgmManagerIdentifier)
+    }
+
+    var pumpManagerTitle: String {
+        guard let pumpManagerIdentifier = pumpManagerIdentifier,
+              let pumpManagerDescriptor = onboardingProvider.availablePumpManagers.first(where: { $0.identifier == pumpManagerIdentifier }) else {
+            return LocalizedString("Unknown Pump", comment: "Unknown pump manager title")
+        }
+        return pumpManagerDescriptor.localizedTitle
+    }
+
+    var isPumpManagerOnboarded: Bool {
+        guard let activePumpManager = onboardingProvider.activePumpManager,
+              activePumpManager.managerIdentifier == pumpManagerIdentifier else {
+            return false
+        }
+        return activePumpManager.isOnboarded
+    }
+
+    func onboardPumpManager() -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
+        guard let pumpManagerIdentifier = pumpManagerIdentifier else {
+            return .failure(OnboardingError.unexpectedState)
+        }
+        return onboardingProvider.onboardPumpManager(withIdentifier: pumpManagerIdentifier,
+                                                     initialSettings: pumpManagerInitialSettings)
+    }
+
+    private var pumpManagerInitialSettings: PumpManagerSetupSettings {
+        guard let therapySettings = therapySettings else {
+            preconditionFailure("Must have therapy settings to construct pump manager initial settings")
+        }
+
+        return PumpManagerSetupSettings(maxBasalRateUnitsPerHour: therapySettings.maximumBasalRatePerHour,
+                                        maxBolusUnits: therapySettings.maximumBolus,
+                                        basalSchedule: therapySettings.basalRateSchedule)
     }
 
     // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
@@ -279,8 +362,20 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
                 if prescription == nil {
                     self.prescription = .mock
                 }
+                if prescriberProfile == nil {
+                    self.prescriberProfile = .mock
+                }
                 if therapySettings == nil {
                     self.therapySettings = prescription?.therapySettings
+                }
+            } else if section == .yourDevices {
+                if notificationAuthorization == nil || notificationAuthorization == .notDetermined {
+                    self.notificationAuthorization = .authorized
+                    onboardingProvider.authorizeNotification { _ in }
+                }
+                if healthStoreAuthorization == nil || healthStoreAuthorization == .notDetermined {
+                    self.healthStoreAuthorization = .determined
+                    onboardingProvider.authorizeHealthStore { _ in }
                 }
             }
             sectionProgression.completeSection(section)
@@ -322,39 +417,6 @@ extension OnboardingViewModel: ServiceOnboardingDelegate {
     }
 }
 
-enum OnboardingError: LocalizedError {
-    case unexpectedState
-    case networkFailure
-    case authenticationFailure
-    case resourceNotFound
-
-    var errorDescription: String? {
-        switch self {
-        case .unexpectedState:
-            return LocalizedString("An unexpected state occurred.", comment: "Error description for an unexpected state.")
-        case .networkFailure:
-            return LocalizedString("Poor network connection detected. Please check your connectivity and try again.", comment: "Error description for a network failure.")
-        case .authenticationFailure:
-            return LocalizedString("An authentication error occurred.", comment: "Error description for an authentication failure.")
-        case .resourceNotFound:
-            return LocalizedString("A network error occurred.", comment: "Error description for a resource not found.")
-        }
-    }
-}
-
-fileprivate extension TError {
-    var onboardingError: OnboardingError {
-        switch self {
-        case .requestNotAuthenticated:
-            return .authenticationFailure
-        case .requestResourceNotFound:
-            return .resourceNotFound
-        default:
-            return .networkFailure
-        }
-    }
-}
-
 fileprivate struct OnboardingPrescription: Prescription {
     let datePrescribed: Date
     let providerName: String
@@ -373,3 +435,35 @@ fileprivate extension TPrescriptionClaim {
     }()
 }
 
+fileprivate extension TPrescription {
+    var cgmManagerIdentifier: String? {
+        switch latestRevision?.attributes?.initialSettings?.cgmId {
+        case "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245":    // Hard-coded Tidepool backend device identifier
+            return "DexcomCGM"
+        default:
+            return nil
+        }
+    }
+
+    var pumpManagerIdentifier: String? {
+        switch latestRevision?.attributes?.initialSettings?.pumpId {
+        case "6678c377-928c-49b3-84c1-19e2dafaff8d":    // Hard-coded Tidepool backend device identifier
+            return "OmnipodDash"
+        default:
+            return nil
+        }
+    }
+}
+
+fileprivate extension TError {
+    var onboardingError: OnboardingError {
+        switch self {
+        case .requestNotAuthenticated:
+            return .authenticationFailure
+        case .requestResourceNotFound:
+            return .resourceNotFound
+        default:
+            return .networkFailure
+        }
+    }
+}

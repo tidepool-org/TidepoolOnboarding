@@ -9,48 +9,43 @@
 import SwiftUI
 
 struct BodyText: View {
-    private let string: String
-    private let isBold: Bool
-    private let isItalic: Bool
+    private let attributedString: AttributedString
     private let foregroundColor: Color
 
+    init(_ attributedString: AttributedString) {
+        self.attributedString = attributedString
+        self.foregroundColor = .accentColor
+    }
+
     init(_ string: String) {
-        self.string = string
-        self.isBold = false
-        self.isItalic = false
+        self.attributedString = AttributedString(string)
+        self.foregroundColor = .accentColor
+    }
+
+    init(attributed string: String) {
+        self.attributedString = AttributedString(attributed: string)
         self.foregroundColor = .accentColor
     }
 
     var body: some View {
-        formattedText
+        Text(attributedString)
+            .font(.body)
             .accentColor(.secondary)
             .foregroundColor(foregroundColor)
-    }
-
-    @ViewBuilder
-    var formattedText: some View {
-        if isBold && isItalic {
-            bodyText.bold().italic()
-        } else if isBold {
-            bodyText.bold()
-        } else if isItalic {
-            bodyText.italic()
-        } else {
-            bodyText
-        }
-    }
-
-    var bodyText: Text {
-        Text(string)
-            .font(.body)
     }
 }
 
 extension BodyText {
     init(_ other: Self, isBold: Bool? = nil, isItalic: Bool? = nil, foregroundColor: Color? = nil) {
-        self.string = other.string
-        self.isBold = isBold ?? other.isBold
-        self.isItalic = isItalic ?? other.isItalic
+        var attributedString = other.attributedString
+        if isBold == true {
+            attributedString = attributedString.bold()
+        }
+        if isItalic == true {
+            attributedString = attributedString.italic()
+        }
+
+        self.attributedString = attributedString
         self.foregroundColor = foregroundColor ?? other.foregroundColor
     }
 
@@ -58,7 +53,7 @@ extension BodyText {
 
     func italic() -> Self { Self(self, isItalic: true) }
 
-    func foregroundColor(_ color: Color) -> Self { Self(self, foregroundColor: color) }
+    func foregroundColor(_ color: Color?) -> Self { Self(self, foregroundColor: color) }
 }
 
 struct BodyText_Previews: PreviewProvider {

@@ -63,7 +63,7 @@ fileprivate struct GetLoopingView2: View {
         OnboardingSectionPageView(section: .getLooping, destination: GetLoopingView3()) {
             PageHeader(title: LocalizedString("Select Loop Mode", comment: "Onboarding, Get Looping section, view 2, title"))
                 .dividerHidden(true)
-            if onboardingViewModel.dosingEnabled {
+            if onboardingViewModel.dosingEnabled == true {
                 Paragraph(LocalizedString("Closed Loop is now set to ON.", comment: "Onboarding, Get Looping section, view 2, paragraph 1, closed loop on"))
             } else {
                 Paragraph(LocalizedString("Closed Loop is now set to OFF.", comment: "Onboarding, Get Looping section, view 2, paragraph 1, closed loop off"))
@@ -76,6 +76,11 @@ fileprivate struct GetLoopingView2: View {
         }
         .editMode(true)
         .alert(isPresented: $isOffAlertPresented) { offAlert }
+        .onAppear {
+            if onboardingViewModel.dosingEnabled == nil {
+                onboardingViewModel.dosingEnabled = true
+            }
+        }
     }
 
     private var toggle: some View {
@@ -87,10 +92,10 @@ fileprivate struct GetLoopingView2: View {
     
     private var isClosedLoopOn: Binding<Bool> {
         Binding(
-            get: { onboardingViewModel.dosingEnabled },
+            get: { onboardingViewModel.dosingEnabled ?? false },
             set: {
                 onboardingViewModel.dosingEnabled = $0
-                if !onboardingViewModel.dosingEnabled {
+                if !$0 {
                     isOffAlertPresented = true
                 }
             }

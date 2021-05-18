@@ -107,9 +107,9 @@ extension OnboardingSectionWrapperView {
         self.content = other.content
     }
 
-    func editMode(_ editMode: Bool) -> Self { Self(self, editMode: editMode) }
+    func editMode(_ editMode: Bool?) -> Self { Self(self, editMode: editMode) }
 
-    func backButtonHidden(_ backButtonHidden: Bool) -> Self { Self(self, backButtonHidden: backButtonHidden) }
+    func backButtonHidden(_ backButtonHidden: Bool?) -> Self { Self(self, backButtonHidden: backButtonHidden) }
 
-    func closeButtonHidden(_ closeButtonHidden: Bool) -> Self { Self(self, closeButtonHidden: closeButtonHidden) }
+    func closeButtonHidden(_ closeButtonHidden: Bool?) -> Self { Self(self, closeButtonHidden: closeButtonHidden) }
 }

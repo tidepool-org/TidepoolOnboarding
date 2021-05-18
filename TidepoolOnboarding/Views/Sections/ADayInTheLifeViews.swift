@@ -341,7 +341,7 @@ fileprivate struct ADayInTheLifeView25: View {
             PageHeader(title: LocalizedString("Checkpoint", comment: "Onboarding, A Day In The Life section, view 25, title"))
             CheckpointCheckmark()
             Paragraph(LocalizedString("You’ve seen how you might use Tidepool Loop in daily life for:", comment: "Onboarding, A Day In The Life section, view 25, paragraph 1"))
-            BulletedBodyTextList(
+            CheckmarkedBodyTextList(
                 LocalizedString("Eating", comment: "Onboarding, A Day In The Life section, view 25, list, item 1"),
                 LocalizedString("Sleeping", comment: "Onboarding, A Day In The Life section, view 25, list, item 2"),
                 LocalizedString("Exercising", comment: "Onboarding, A Day In The Life section, view 25, list, item 3"),

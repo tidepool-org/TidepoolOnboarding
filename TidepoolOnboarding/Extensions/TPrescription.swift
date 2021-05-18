@@ -46,29 +46,29 @@ extension TPrescription {
         let initialSettings = TPrescription.InitialSettings(bloodGlucoseUnits: .milligramsPerDeciliter,
                                                             basalRateSchedule: [
                                                                 TPrescription.BasalRateStart(start: 0, rate: 1.0),
-                                                                TPrescription.BasalRateStart(start: 360000, rate: 1.5),
-                                                                TPrescription.BasalRateStart(start: 1080000, rate: 1.25)
+                                                                TPrescription.BasalRateStart(start: 21600000, rate: 1.5),
+                                                                TPrescription.BasalRateStart(start: 64800000, rate: 1.25)
                                                             ],
                                                             bloodGlucoseTargetPhysicalActivity: TPrescription.BloodGlucoseTarget(low: 150, high: 160),
                                                             bloodGlucoseTargetPreprandial: TPrescription.BloodGlucoseTarget(low: 80, high: 90),
                                                             bloodGlucoseTargetSchedule: [
-                                                                TPrescription.BloodGlucoseStartTarget(start: 0, low: 110, high: 120),
-                                                                TPrescription.BloodGlucoseStartTarget(start: 360000, low: 100, high: 110),
-                                                                TPrescription.BloodGlucoseStartTarget(start: 1320000, low: 110, high: 120),
+                                                                TPrescription.BloodGlucoseStartTarget(start: 0, low: 105, high: 115),
+                                                                TPrescription.BloodGlucoseStartTarget(start: 21600000, low: 100, high: 110),
+                                                                TPrescription.BloodGlucoseStartTarget(start: 79200000, low: 105, high: 115),
                                                             ],
                                                             carbohydrateRatioSchedule: [
                                                                 TPrescription.CarbohydrateRatioStart(start: 0, amount: 15),
-                                                                TPrescription.CarbohydrateRatioStart(start: 360000, amount: 12),
-                                                                TPrescription.CarbohydrateRatioStart(start: 720000, amount: 15)
+                                                                TPrescription.CarbohydrateRatioStart(start: 21600000, amount: 12),
+                                                                TPrescription.CarbohydrateRatioStart(start: 43200000, amount: 15)
                                                             ],
                                                             glucoseSafetyLimit: 80,
                                                             insulinModel: .rapidChild,
                                                             insulinSensitivitySchedule: [
                                                                 TPrescription.InsulinSensitivityStart(start: 0, amount: 55.0),
-                                                                TPrescription.InsulinSensitivityStart(start: 360000, amount: 45.0),
-                                                                TPrescription.InsulinSensitivityStart(start: 1320000, amount: 55.0),
+                                                                TPrescription.InsulinSensitivityStart(start: 21600000, amount: 45.0),
+                                                                TPrescription.InsulinSensitivityStart(start: 79200000, amount: 55.0),
                                                             ],
-                                                            basalRateMaximum: TPrescription.BasalRateMaximum(2.5, .unitsPerHour),
+                                                            basalRateMaximum: TPrescription.BasalRateMaximum(4.5, .unitsPerHour),
                                                             bolusAmountMaximum: TPrescription.BolusAmountMaximum(10, .units),
                                                             pumpId: "6678c377-928c-49b3-84c1-19e2dafaff8d",
                                                             cgmId: "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245")

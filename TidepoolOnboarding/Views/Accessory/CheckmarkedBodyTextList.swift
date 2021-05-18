@@ -9,37 +9,41 @@
 import SwiftUI
 
 struct CheckmarkedBodyTextList: View {
-    private let strings: [String]
+    private let attributedStrings: [AttributedString]
 
-    init(_ strings: [String]) {
-        self.strings = strings
+    init(_ attributedStrings: AttributedString...) {
+        self.attributedStrings = attributedStrings
     }
     
     init(_ strings: String...) {
-        self.strings = strings
+        self.attributedStrings = strings.map { AttributedString($0) }
     }
     
+    init(attributed strings: String...) {
+        self.attributedStrings = strings.map { AttributedString(attributed: $0) }
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
-            ForEach(strings.indices) { index in
+            ForEach(attributedStrings.indices) { index in
                 HStack(spacing: 10) {
-                    Checkmark()
-                        .foregroundColor(.accentColor)
-                    BodyText(strings[index])
+                    CheckmarkCircle()
+                    BodyText(attributedStrings[index])
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
     }
-    
-    private struct Checkmark: View {
-        @ScaledMetric var size: CGFloat = 22
-        
-        var body: some View {
-            Image(systemName: "checkmark.circle.fill")
-                .resizable()
-                .frame(width: size, height: size)
-        }
+}
+
+struct CheckmarkCircle: View {
+    @ScaledMetric var size: CGFloat = 22
+
+    var body: some View {
+        Image(systemName: "checkmark.circle.fill")
+            .resizable()
+            .foregroundColor(.accentColor)
+            .frame(width: size, height: size)
     }
 }
 

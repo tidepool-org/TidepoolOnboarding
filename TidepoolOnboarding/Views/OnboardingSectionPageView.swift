@@ -14,7 +14,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.complete) var complete
 
-    @State private var isDestinationActive = false
+    @State private var isDestinationActiveFromNextButton = false
     @State private var isCloseAlertPresented = false
 
     private let section: OnboardingSection
@@ -25,9 +25,10 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     private let nextButtonAction: ((_ completion: @escaping (Bool) -> Void) -> Void)?
     private let nextButtonDisabled: Bool
     private let destination: Destination?
+    private let isDestinationActive: Binding<Bool>
     private let content: Content
 
-    init(section: OnboardingSection, destination: Destination, @ViewBuilder content: () -> Content) {
+    init(section: OnboardingSection, destination: Destination, isDestinationActive: Binding<Bool> = .constant(false), @ViewBuilder content: () -> Content) {
         self.section = section
         self.editMode = false
         self.backButtonHidden = false
@@ -36,6 +37,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.nextButtonAction = nil
         self.nextButtonDisabled = false
         self.destination = destination
+        self.isDestinationActive = isDestinationActive
         self.content = content()
     }
 
@@ -48,6 +50,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.nextButtonAction = nil
         self.nextButtonDisabled = false
         self.destination = nil
+        self.isDestinationActive = .constant(false)
         self.content = content()
     }
 
@@ -79,7 +82,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
                 .disabled(nextButtonDisabled)
                 .accessibilityIdentifier("button_next")
             if let destination = destination {
-                NavigationLink(destination: destination, isActive: $isDestinationActive) { EmptyView() }
+                NavigationLink(destination: destination, isActive: isDestinationActiveResolved) { EmptyView() }
             }
         }
     }
@@ -102,10 +105,20 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
 
     private func nextButtonActionComplete() {
         if destination != nil {
-            isDestinationActive = true
+            isDestinationActiveFromNextButton = true
         } else {
             complete()
         }
+    }
+
+    private var isDestinationActiveResolved: Binding<Bool> {
+        Binding(
+            get: { isDestinationActive.wrappedValue || isDestinationActiveFromNextButton },
+            set: {
+                isDestinationActive.wrappedValue = $0
+                isDestinationActiveFromNextButton = $0
+            }
+        )
     }
 }
 
@@ -119,18 +132,19 @@ extension OnboardingSectionPageView {
         self.nextButtonAction = nextButtonAction ?? other.nextButtonAction
         self.nextButtonDisabled = nextButtonDisabled ?? other.nextButtonDisabled
         self.destination = other.destination
+        self.isDestinationActive = other.isDestinationActive
         self.content = other.content
     }
 
-    func editMode(_ editMode: Bool) -> Self { Self(self, editMode: editMode) }
+    func editMode(_ editMode: Bool?) -> Self { Self(self, editMode: editMode) }
 
-    func backButtonHidden(_ backButtonHidden: Bool) -> Self { Self(self, backButtonHidden: backButtonHidden) }
+    func backButtonHidden(_ backButtonHidden: Bool?) -> Self { Self(self, backButtonHidden: backButtonHidden) }
 
-    func closeButtonHidden(_ closeButtonHidden: Bool) -> Self { Self(self, closeButtonHidden: closeButtonHidden) }
+    func closeButtonHidden(_ closeButtonHidden: Bool?) -> Self { Self(self, closeButtonHidden: closeButtonHidden) }
 
-    func nextButtonTitle(_ nextButtonTitle: String) -> Self { Self(self, nextButtonTitle: nextButtonTitle) }
+    func nextButtonTitle(_ nextButtonTitle: String?) -> Self { Self(self, nextButtonTitle: nextButtonTitle) }
 
-    func nextButtonAction(_ nextButtonAction: @escaping (@escaping (Bool) -> Void) -> Void) -> Self { Self(self, nextButtonAction: nextButtonAction) }
+    func nextButtonAction(_ nextButtonAction: ((@escaping (Bool) -> Void) -> Void)?) -> Self { Self(self, nextButtonAction: nextButtonAction) }
 
-    func nextButtonDisabled(_ nextButtonDisabled: Bool) -> Self { Self(self, nextButtonDisabled: nextButtonDisabled) }
+    func nextButtonDisabled(_ nextButtonDisabled: Bool?) -> Self { Self(self, nextButtonDisabled: nextButtonDisabled) }
 }

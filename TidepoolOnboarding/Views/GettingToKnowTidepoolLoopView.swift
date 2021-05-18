@@ -40,10 +40,7 @@ struct GettingToKnowTidepoolLoopView: View {
     }
 
     private var description: some View {
-        Text(LocalizedString("You can take your time through each section. The app will save your place and start you back at the beginning of a section if you step away.", comment: "Onboarding, Getting to Know Tidepool Loop summary, body"))
-            .font(.body)
-            .accentColor(.secondary)
-            .foregroundColor(.accentColor)
+        BodyText(LocalizedString("You can take your time through each section. The app will save your place and start you back at the beginning of a section if you step away.", comment: "Onboarding, Getting to Know Tidepool Loop summary, body"))
     }
 
     private var buttons: some View {

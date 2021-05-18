@@ -9,38 +9,42 @@
 import SwiftUI
 
 struct BulletedBodyTextList: View {
-    private let strings: [String]
+    private let attributedStrings: [AttributedString]
 
-    init(_ strings: [String]) {
-        self.strings = strings
+    init(_ attributedStrings: AttributedString...) {
+        self.attributedStrings = attributedStrings
     }
     
     init(_ strings: String...) {
-        self.strings = strings
+        self.attributedStrings = strings.map { AttributedString($0) }
     }
     
+    init(attributed strings: String...) {
+        self.attributedStrings = strings.map { AttributedString(attributed: $0) }
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
-            ForEach(strings.indices) { index in
+            ForEach(attributedStrings.indices) { index in
                 HStack(spacing: 10) {
                     Bullet()
-                        .foregroundColor(.accentColor)
-                    BodyText(strings[index])
+                    BodyText(attributedStrings[index])
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
         .padding(.horizontal)
     }
+}
     
-    private struct Bullet: View {
-        @ScaledMetric var size: CGFloat = 8
-        
-        var body: some View {
-            Circle()
-                .frame(width: size, height: size)
-                .opacity(0.5)
-        }
+struct Bullet: View {
+    @ScaledMetric var size: CGFloat = 8
+
+    var body: some View {
+        Circle()
+            .frame(width: size, height: size)
+            .opacity(0.5)
+            .foregroundColor(.accentColor)
     }
 }
 

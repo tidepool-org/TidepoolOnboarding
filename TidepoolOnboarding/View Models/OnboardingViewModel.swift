@@ -38,11 +38,17 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var notificationAuthorization: NotificationAuthorization?
     @Published var healthStoreAuthorization: HealthStoreAuthorization?
     @Published var cgmManagerIdentifier: String?
-    @Published var pumpManagerIdentifier: String?
+    @Published var pumpManagerIdentifier: String? {
+        didSet {
+            self.pumpSupportedIncrements = nil
+        }
+    }
     @Published var dosingEnabled: Bool?
 
     lazy var initialTherapySettingsViewModel: TherapySettingsViewModel = constructInitialTherapySettingsViewModel()
     lazy var currentTherapySettingsViewModel: TherapySettingsViewModel = constructCurrentTherapySettingsViewModel()
+
+    private var pumpSupportedIncrements: PumpSupportedIncrements?
 
     private lazy var cancellables = Set<AnyCancellable>()
 
@@ -247,7 +253,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         let prescription = OnboardingPrescription(datePrescribed: datePrescribed, providerName: providerName)
         return TherapySettingsViewModel(therapySettings: therapySettings,
                                         supportedInsulinModelSettings: supportedInsulinModelSettings,
-                                        pumpSupportedIncrements: { self.pumpSupportedIncrements },
+                                        pumpSupportedIncrements: getPumpSupportedIncrements,
                                         prescription: prescription)
     }
 
@@ -258,23 +264,21 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         return TherapySettingsViewModel(therapySettings: therapySettings,
                                         supportedInsulinModelSettings: supportedInsulinModelSettings,
-                                        pumpSupportedIncrements: { self.pumpSupportedIncrements },
+                                        pumpSupportedIncrements: getPumpSupportedIncrements,
                                         didSave: { (_, therapySettings) in self.therapySettings = therapySettings })
     }
 
     private let supportedInsulinModelSettings = SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
 
-    private var pumpSupportedIncrements: PumpSupportedIncrements {
-
-        // TODO: https://tidepool.atlassian.net/browse/LOOP-3112
-        // Pull from pump type specified by prescription
-
-        let supportedBasalRates: [Double] = (1...600).map { round(Double($0) / Double(1/0.05) * 100) / 100 }
-        let maximumBasalScheduleEntryCount = 24
-        let supportedBolusVolumes: [Double] = (1...600).map { Double($0) / Double(1/0.05) }
-        return PumpSupportedIncrements(basalRates: supportedBasalRates,
-                                       bolusVolumes: supportedBolusVolumes,
-                                       maximumBasalScheduleEntryCount: maximumBasalScheduleEntryCount)
+    private func getPumpSupportedIncrements() -> PumpSupportedIncrements? {
+        guard pumpSupportedIncrements == nil else {
+            return pumpSupportedIncrements
+        }
+        guard let pumpManagerIdentifier = pumpManagerIdentifier else {
+            return nil
+        }
+        self.pumpSupportedIncrements = onboardingProvider.supportedIncrementsForPumpManager(withIdentifier: pumpManagerIdentifier)
+        return pumpSupportedIncrements
     }
 
     var cgmManagerTitle: String {
@@ -283,6 +287,14 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
                 return LocalizedString("Unknown CGM", comment: "Unknown CGM manager title")
         }
         return cgmManagerDescriptor.localizedTitle
+    }
+
+    var cgmManagerImage: UIImage {
+        guard let cgmManagerIdentifier = cgmManagerIdentifier,
+              let cgmManagerImage = onboardingProvider.imageForCGMManager(withIdentifier: cgmManagerIdentifier) else {
+            return UIColor.clear.image()
+        }
+        return cgmManagerImage
     }
 
     var isCGMManagerOnboarded: Bool {
@@ -306,6 +318,14 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             return LocalizedString("Unknown Pump", comment: "Unknown pump manager title")
         }
         return pumpManagerDescriptor.localizedTitle
+    }
+
+    var pumpManagerImage: UIImage {
+        guard let pumpManagerIdentifier = pumpManagerIdentifier,
+              let pumpManagerImage = onboardingProvider.imageForPumpManager(withIdentifier: pumpManagerIdentifier) else {
+            return UIColor.clear.image()
+        }
+        return pumpManagerImage
     }
 
     var isPumpManagerOnboarded: Bool {

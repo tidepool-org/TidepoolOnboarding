@@ -61,6 +61,7 @@
 		A95D624C264A006D0018B9EA /* Text+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D624B264A006C0018B9EA /* Text+AttributedString.swift */; };
 		A95D625D264A0F330018B9EA /* CGMManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D625C264A0F330018B9EA /* CGMManagerView.swift */; };
 		A95D6264264A0F3C0018B9EA /* PumpManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */; };
+		A9641CF2264F48FE00189E3A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9641CF1264F48FE00189E3A /* UIColor.swift */; };
 		A967D849261FB121009D9675 /* NavigationBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A967D848261FB121009D9675 /* NavigationBarAppearance.swift */; };
 		A98AD2BE25830807001AAD6F /* TidepoolOnboardingPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A98AD2F225830851001AAD6F /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; };
@@ -169,6 +170,7 @@
 		A95D624B264A006C0018B9EA /* Text+AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+AttributedString.swift"; sourceTree = "<group>"; };
 		A95D625C264A0F330018B9EA /* CGMManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManagerView.swift; sourceTree = "<group>"; };
 		A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerView.swift; sourceTree = "<group>"; };
+		A9641CF1264F48FE00189E3A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		A967D848261FB121009D9675 /* NavigationBarAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarAppearance.swift; sourceTree = "<group>"; };
 		A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingPlugin.h; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 				A923333F25C3786100D8CF69 /* TimeInterval.swift */,
 				A9A80D842639DC6100770DA7 /* TPrescription.swift */,
 				A911C20D264AEA3B00EF3B85 /* TProfile.swift */,
+				A9641CF1264F48FE00189E3A /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 				A93D2B112602606E0091FB65 /* AlertOnLongPressGesture.swift in Sources */,
 				A906344A26433B9300CAFED1 /* ServiceView.swift in Sources */,
 				A9A80D852639DC6100770DA7 /* TPrescription.swift in Sources */,
+				A9641CF2264F48FE00189E3A /* UIColor.swift in Sources */,
 				A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */,
 				A9502CB625FFEE8E00146AD3 /* OnboardingSectionPageView.swift in Sources */,
 				A99EAA9B25F7FCF700503A6D /* ADayInTheLifeViews.swift in Sources */,

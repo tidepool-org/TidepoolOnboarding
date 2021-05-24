@@ -371,7 +371,7 @@ fileprivate struct YourSettingsReviewYourSettingsView: View {
     }
 
     private var pumpView: some View {
-        deviceView(image: Image(frameworkImage: "dash").renderingMode(.template),
+        deviceView(image: Image(uiImage: onboardingViewModel.pumpManagerImage),
                    title: onboardingViewModel.pumpManagerTitle,
                    description: LocalizedString("Insulin Pump", comment: "Insulin pump label"))
             .onLongPressGesture(minimumDuration: 2, perform: selectPumpManager)                         // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
@@ -379,7 +379,7 @@ fileprivate struct YourSettingsReviewYourSettingsView: View {
     }
 
     private var cgmView: some View {
-        deviceView(image: Image(frameworkImage: "dexcom"),
+        deviceView(image: Image(uiImage: onboardingViewModel.cgmManagerImage),
                    title: onboardingViewModel.cgmManagerTitle,
                    description: LocalizedString("Continuous Glucose Monitor", comment: "CGM label"))
             .onLongPressGesture(minimumDuration: 2, perform: selectCGMManager)                          // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
@@ -393,7 +393,6 @@ fileprivate struct YourSettingsReviewYourSettingsView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 48)
                 .padding(.horizontal)
-                .foregroundColor(.accentColor)  // TODO: Remove once image is obtained directly from the device manager
             VStack(alignment: .leading) {
                 Text(title)
                 Text(description)

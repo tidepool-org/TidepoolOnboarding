@@ -26,12 +26,15 @@ class MockOnboardingProvider: OnboardingProvider {
 
     var activeCGMManager: CGMManager? = nil
     var availableCGMManagers: [CGMManagerDescriptor] = []
+    func imageForCGMManager(withIdentifier identifier: String) -> UIImage? { nil }
     func onboardCGMManager(withIdentifier identifier: String) -> Result<OnboardingResult<CGMManagerViewController, CGMManager>, Error> {
         .failure(MockError())
     }
 
     var activePumpManager: PumpManager? = nil
     var availablePumpManagers: [PumpManagerDescriptor] = []
+    func imageForPumpManager(withIdentifier identifier: String) -> UIImage? { nil }
+    func supportedIncrementsForPumpManager(withIdentifier identifier: String) -> PumpSupportedIncrements? { nil }
     func onboardPumpManager(withIdentifier identifier: String, initialSettings settings: PumpManagerSetupSettings) -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
         .failure(MockError())
     }

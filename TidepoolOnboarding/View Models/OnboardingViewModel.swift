@@ -371,7 +371,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         OnboardingSection.allCases.prefix(while: { $0 != section }).forEach { skipSection($0) }
     }
 
-    func skipSection(_ section: OnboardingSection) {
+    private func skipSection(_ section: OnboardingSection) {
         guard allowDebugFeatures else { return }
 
         if !sectionProgression.hasStartedSection(section) {
@@ -396,6 +396,10 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
                 if healthStoreAuthorization == nil || healthStoreAuthorization == .notDetermined {
                     self.healthStoreAuthorization = .determined
                     onboardingProvider.authorizeHealthStore { _ in }
+                }
+            } else if section == .getLooping {
+                if dosingEnabled == nil {
+                    self.dosingEnabled = true
                 }
             }
             sectionProgression.completeSection(section)

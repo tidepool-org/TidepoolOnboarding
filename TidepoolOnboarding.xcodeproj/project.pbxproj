@@ -62,7 +62,7 @@
 		A95D625D264A0F330018B9EA /* CGMManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D625C264A0F330018B9EA /* CGMManagerView.swift */; };
 		A95D6264264A0F3C0018B9EA /* PumpManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */; };
 		A9641CF2264F48FE00189E3A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9641CF1264F48FE00189E3A /* UIColor.swift */; };
-		A967D849261FB121009D9675 /* NavigationBarAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A967D848261FB121009D9675 /* NavigationBarAppearance.swift */; };
+		A967D849261FB121009D9675 /* NavigationViewWithAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A967D848261FB121009D9675 /* NavigationViewWithAppearance.swift */; };
 		A98AD2BE25830807001AAD6F /* TidepoolOnboardingPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A98AD2F225830851001AAD6F /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; };
 		A98AD2F925830851001AAD6F /* TidepoolOnboarding.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2EB25830851001AAD6F /* TidepoolOnboarding.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -171,7 +171,7 @@
 		A95D625C264A0F330018B9EA /* CGMManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManagerView.swift; sourceTree = "<group>"; };
 		A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerView.swift; sourceTree = "<group>"; };
 		A9641CF1264F48FE00189E3A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		A967D848261FB121009D9675 /* NavigationBarAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarAppearance.swift; sourceTree = "<group>"; };
+		A967D848261FB121009D9675 /* NavigationViewWithAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewWithAppearance.swift; sourceTree = "<group>"; };
 		A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingPlugin.h; sourceTree = "<group>"; };
 		A98AD2BD25830807001AAD6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -479,7 +479,7 @@
 			children = (
 				A93D2B102602606E0091FB65 /* AlertOnLongPressGesture.swift */,
 				A9EFBD312602D09B0070E9CC /* ModalPresentation.swift */,
-				A967D848261FB121009D9675 /* NavigationBarAppearance.swift */,
+				A967D848261FB121009D9675 /* NavigationViewWithAppearance.swift */,
 			);
 			path = "View Modifiers";
 			sourceTree = "<group>";
@@ -862,7 +862,7 @@
 				A9ABAE832607C3AE00E7CD4A /* CheckpointCheckmark.swift in Sources */,
 				A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */,
 				A95422D325CC9A74003F3080 /* Image.swift in Sources */,
-				A967D849261FB121009D9675 /* NavigationBarAppearance.swift in Sources */,
+				A967D849261FB121009D9675 /* NavigationViewWithAppearance.swift in Sources */,
 				A916AA5925F6F07100B7CEF2 /* DisplayGlucoseUnitObservable+Preview.swift in Sources */,
 				A9502CDA2600293200146AD3 /* BodyText.swift in Sources */,
 				A923334225C3786100D8CF69 /* Environment+Complete.swift in Sources */,

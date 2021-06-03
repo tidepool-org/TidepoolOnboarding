@@ -11,7 +11,7 @@ import LoopKitUI
 
 struct ADayInTheLifeNavigationButton: View {
     var body: some View {
-        OnboardingSectionNavigationButton(section: .aDayInTheLife, destination: NavigationViewWithNavigationBarAppearance { ADayInTheLifeView1() })
+        OnboardingSectionNavigationButton(section: .aDayInTheLife, destination: NavigationViewWithAppearance { ADayInTheLifeView1() })
             .accessibilityIdentifier("button_a_day_in_the_life")
     }
 }

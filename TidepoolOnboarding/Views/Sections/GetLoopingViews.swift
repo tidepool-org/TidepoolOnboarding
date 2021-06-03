@@ -11,7 +11,7 @@ import LoopKitUI
 
 struct GetLoopingNavigationButton: View {
     var body: some View {
-        OnboardingSectionNavigationButton(section: .getLooping, destination: NavigationViewWithNavigationBarAppearance { GetLoopingView1() })
+        OnboardingSectionNavigationButton(section: .getLooping, destination: NavigationViewWithAppearance { GetLoopingView1() })
             .accessibilityIdentifier("button_get_looping")
     }
 }

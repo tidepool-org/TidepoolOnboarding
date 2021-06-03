@@ -24,6 +24,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     private let nextButtonTitle: String?
     private let nextButtonAction: ((_ completion: @escaping (Bool) -> Void) -> Void)?
     private let nextButtonDisabled: Bool
+    private let homeBarBackgroundColor: UIColor?
     private let destination: Destination?
     private let isDestinationActive: Binding<Bool>
     private let content: Content
@@ -36,6 +37,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.nextButtonTitle = nil
         self.nextButtonAction = nil
         self.nextButtonDisabled = false
+        self.homeBarBackgroundColor = nil
         self.destination = destination
         self.isDestinationActive = isDestinationActive
         self.content = content()
@@ -49,6 +51,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.nextButtonTitle = nil
         self.nextButtonAction = nil
         self.nextButtonDisabled = false
+        self.homeBarBackgroundColor = nil
         self.destination = nil
         self.isDestinationActive = .constant(false)
         self.content = content()
@@ -73,6 +76,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         .editMode(editMode)
         .backButtonHidden(backButtonHidden)
         .closeButtonHidden(closeButtonHidden)
+        .homeBarBackgroundColor(homeBarBackgroundColor)
     }
 
     @ViewBuilder
@@ -123,7 +127,14 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
 }
 
 extension OnboardingSectionPageView {
-    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, closeButtonHidden: Bool? = nil, nextButtonTitle: String? = nil, nextButtonAction: ((@escaping (Bool) -> Void) -> Void)? = nil, nextButtonDisabled: Bool? = nil) {
+    init(_ other: Self,
+         editMode: Bool? = nil,
+         backButtonHidden: Bool? = nil,
+         closeButtonHidden: Bool? = nil,
+         nextButtonTitle: String? = nil,
+         nextButtonAction: ((@escaping (Bool) -> Void) -> Void)? = nil,
+         nextButtonDisabled: Bool? = nil,
+         homeBarBackgroundColor: UIColor? = nil) {
         self.section = other.section
         self.editMode = editMode ?? other.editMode
         self.backButtonHidden = backButtonHidden ?? other.backButtonHidden
@@ -131,6 +142,7 @@ extension OnboardingSectionPageView {
         self.nextButtonTitle = nextButtonTitle ?? other.nextButtonTitle
         self.nextButtonAction = nextButtonAction ?? other.nextButtonAction
         self.nextButtonDisabled = nextButtonDisabled ?? other.nextButtonDisabled
+        self.homeBarBackgroundColor = homeBarBackgroundColor ?? other.homeBarBackgroundColor
         self.destination = other.destination
         self.isDestinationActive = other.isDestinationActive
         self.content = other.content
@@ -147,4 +159,6 @@ extension OnboardingSectionPageView {
     func nextButtonAction(_ nextButtonAction: ((@escaping (Bool) -> Void) -> Void)?) -> Self { Self(self, nextButtonAction: nextButtonAction) }
 
     func nextButtonDisabled(_ nextButtonDisabled: Bool?) -> Self { Self(self, nextButtonDisabled: nextButtonDisabled) }
+
+    func homeBarBackgroundColor(_ homeBarBackgroundColor: UIColor?) -> Self { Self(self, homeBarBackgroundColor: homeBarBackgroundColor) }
 }

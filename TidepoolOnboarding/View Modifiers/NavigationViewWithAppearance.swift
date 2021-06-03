@@ -1,5 +1,5 @@
 //
-//  NavigationBarAppearance.swift
+//  NavigationViewWithAppearance.swift
 //  TidepoolOnboarding
 //
 //  Created by Darin Krauss on 4/8/21.
@@ -9,13 +9,16 @@
 import Combine
 import SwiftUI
 
-struct NavigationViewWithNavigationBarAppearance<Content: View>: View {
+// MARK: - NavigationViewWithAppearance
+
+struct NavigationViewWithAppearance<Content: View>: View {
     private let content: Content
-    private let navigationBarAppearance: NavigationBarAppearance
-    
+
+    @State private var navigationBarAppearance = NavigationBarAppearance()
+    @State private var homeBarAppearance = HomeBarAppearance()
+
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
-        self.navigationBarAppearance = NavigationBarAppearance()
     }
     
     var body: some View {
@@ -23,6 +26,7 @@ struct NavigationViewWithNavigationBarAppearance<Content: View>: View {
             content
         }
         .environmentObject(navigationBarAppearance)
+        .environmentObject(homeBarAppearance)
     }
 }
 
@@ -38,7 +42,13 @@ extension View {
     func navigationBarShadowColor(_ shadowColor: UIColor?) -> some View {
         modifier(NavigationBarShadowColor(shadowColor))
     }
+
+    func homeBarBackgroundColor(_ backgroundColor: UIColor?) -> some View {
+        modifier(HomeBarBackgroundColor(backgroundColor))
+    }
 }
+
+// MARK: - NavigationBarAppearance
 
 fileprivate class NavigationBarAppearance: ObservableObject {
     @Published var translucent: Bool = true
@@ -91,9 +101,33 @@ fileprivate struct NavigationBarShadowColor: ViewModifier {
     }
 }
 
+// MARK: - HomeBarAppearance
+
+fileprivate class HomeBarAppearance: ObservableObject {
+    @Published var backgroundColor: UIColor?
+}
+
+fileprivate struct HomeBarBackgroundColor: ViewModifier {
+    @EnvironmentObject var homeBarAppearance: HomeBarAppearance
+
+    private let backgroundColor: UIColor?
+
+    init(_ backgroundColor: UIColor?) {
+        self.backgroundColor = backgroundColor
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .onAppear { homeBarAppearance.backgroundColor = backgroundColor }
+    }
+}
+
+// MARK: - NavigationControllerView
+
 fileprivate struct NavigationControllerView<Content: View>: UIViewControllerRepresentable {
     @EnvironmentObject var navigationBarAppearance: NavigationBarAppearance
-    
+    @EnvironmentObject var homeBarAppearance: HomeBarAppearance
+
     private let content: Content
     
     init(@ViewBuilder content: () -> Content) {
@@ -101,22 +135,22 @@ fileprivate struct NavigationControllerView<Content: View>: UIViewControllerRepr
     }
     
     func makeUIViewController(context: Context) -> UINavigationController {
-        return NavigationController(content: content, navigationBarAppearance: navigationBarAppearance)
+        return NavigationController(content: content, navigationBarAppearance: navigationBarAppearance, homeBarAppearance: homeBarAppearance)
     }
     
     func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {}
 }
 
+// MARK: - NavigationController
+
 fileprivate class NavigationController<Content: View>: UINavigationController {
     private let content: Content
-    private let navigationBarAppearance: NavigationBarAppearance
-    
+
     private lazy var cancellables = Set<AnyCancellable>()
     
-    init(content: Content, navigationBarAppearance: NavigationBarAppearance) {
+    init(content: Content, navigationBarAppearance: NavigationBarAppearance, homeBarAppearance: HomeBarAppearance) {
         self.content = content
-        self.navigationBarAppearance = navigationBarAppearance
-        
+
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
         
         navigationBarAppearance.$translucent
@@ -127,6 +161,9 @@ fileprivate class NavigationController<Content: View>: UINavigationController {
             .store(in: &cancellables)
         navigationBarAppearance.$shadowColor
             .sink { [weak self] shadowColor in self?.navigationBar.shadowImage = shadowColor?.image() }
+            .store(in: &cancellables)
+        homeBarAppearance.$backgroundColor
+            .sink { [weak self] backgroundColor in self?.parent?.parent?.view.backgroundColor = backgroundColor }
             .store(in: &cancellables)
     }
     

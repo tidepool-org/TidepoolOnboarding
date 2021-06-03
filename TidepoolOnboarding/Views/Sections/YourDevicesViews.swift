@@ -13,7 +13,7 @@ struct YourDevicesNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     var body: some View {
-        OnboardingSectionNavigationButton(section: .yourDevices, destination: NavigationViewWithNavigationBarAppearance { destination })
+        OnboardingSectionNavigationButton(section: .yourDevices, destination: NavigationViewWithAppearance { destination })
             .accessibilityIdentifier("button_your_devices")
     }
 

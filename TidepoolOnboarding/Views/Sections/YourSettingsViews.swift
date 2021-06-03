@@ -13,7 +13,7 @@ struct YourSettingsNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     var body: some View {
-        OnboardingSectionNavigationButton(section: .yourSettings, destination: NavigationViewWithNavigationBarAppearance { destination })
+        OnboardingSectionNavigationButton(section: .yourSettings, destination: NavigationViewWithAppearance { destination })
             .accessibilityIdentifier("button_your_settings")
     }
 
@@ -510,6 +510,7 @@ fileprivate struct YourSettingsSuspendThresholdEditor: View {
             NavigationLink(destination: YourSettingsCorrectionRangeInformationView(), isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)
+        .homeBarBackgroundColor(.secondarySystemGroupedBackground)
     }
 }
 
@@ -539,6 +540,7 @@ fileprivate struct YourSettingsCorrectionRangeScheduleEditor: View {
         .backButtonHidden(true)
         .closeButtonHidden(true)
         .editMode(true)
+        .homeBarBackgroundColor(.secondarySystemGroupedBackground)
     }
 }
 
@@ -566,6 +568,7 @@ fileprivate struct YourSettingsPreMealCorrectionRangeOverridesEditor: View {
             NavigationLink(destination: YourSettingsWorkoutCorrectionRangeOverrideInformationView(), isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)
+        .homeBarBackgroundColor(.secondarySystemGroupedBackground)
     }
 }
 
@@ -593,6 +596,7 @@ fileprivate struct YourSettingsWorkoutCorrectionRangeOverridesEditor: View {
             NavigationLink(destination: YourSettingsCarbRatioInformationView(), isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)
+        .homeBarBackgroundColor(.secondarySystemGroupedBackground)
     }
 }
 
@@ -622,6 +626,7 @@ fileprivate struct YourSettingsCarbRatioScheduleEditor: View {
         .backButtonHidden(true)
         .closeButtonHidden(true)
         .editMode(true)
+        .homeBarBackgroundColor(.secondarySystemGroupedBackground)
     }
 }
 
@@ -651,6 +656,7 @@ fileprivate struct YourSettingsBasalRateScheduleEditor: View {
         .backButtonHidden(true)
         .closeButtonHidden(true)
         .editMode(true)
+        .homeBarBackgroundColor(.secondarySystemGroupedBackground)
     }
 }
 
@@ -678,6 +684,7 @@ fileprivate struct YourSettingsDeliveryLimitsEditor: View {
             NavigationLink(destination: YourSettingsInsulinModelInformationView(), isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)
+        .homeBarBackgroundColor(.secondarySystemGroupedBackground)
     }
 }
 
@@ -707,6 +714,7 @@ fileprivate struct YourSettingsInsulinModelSelection: View {
             NavigationLink(destination: YourSettingsInsulinSensitivityInformationView(), isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)
+        .homeBarBackgroundColor(.secondarySystemGroupedBackground)
     }
 }
 
@@ -736,6 +744,7 @@ fileprivate struct YourSettingsInsulinSensitivityScheduleEditor: View {
         .backButtonHidden(true)
         .closeButtonHidden(true)
         .editMode(true)
+        .homeBarBackgroundColor(.secondarySystemGroupedBackground)
     }
 }
 

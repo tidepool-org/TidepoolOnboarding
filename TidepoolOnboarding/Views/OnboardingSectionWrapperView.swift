@@ -18,6 +18,7 @@ struct OnboardingSectionWrapperView<Content: View>: View {
     private let editMode: Bool
     private let backButtonHidden: Bool
     private let closeButtonHidden: Bool
+    private let homeBarBackgroundColor: UIColor?
     private let content: Content
 
     @State private var isCloseAlertPresented = false
@@ -27,6 +28,7 @@ struct OnboardingSectionWrapperView<Content: View>: View {
         self.editMode = false
         self.backButtonHidden = false
         self.closeButtonHidden = false
+        self.homeBarBackgroundColor = nil
         self.content = content()
     }
 
@@ -53,6 +55,7 @@ struct OnboardingSectionWrapperView<Content: View>: View {
         .navigationBarTranslucent(false)
         .navigationBarBackgroundColor(backgroundColor)
         .navigationBarShadowColor(.clear)
+        .homeBarBackgroundColor(homeBarBackgroundColor ?? backgroundColor)
     }
 
     private var backButton: some View {
@@ -95,15 +98,16 @@ struct OnboardingSectionWrapperView<Content: View>: View {
               secondaryButton: .destructive(Text(LocalizedString("End", comment: "Alert button confirming close of an onboarding section wrapper view")), action: dismiss))
     }
 
-    private var backgroundColor: UIColor { editMode ? .secondarySystemBackground : .systemBackground }
+    private var backgroundColor: UIColor { editMode ? .systemGroupedBackground : .systemBackground }
 }
 
 extension OnboardingSectionWrapperView {
-    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, closeButtonHidden: Bool? = nil) {
+    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, closeButtonHidden: Bool? = nil, homeBarBackgroundColor: UIColor? = nil) {
         self.section = other.section
         self.editMode = editMode ?? other.editMode
         self.backButtonHidden = backButtonHidden ?? other.backButtonHidden
         self.closeButtonHidden = closeButtonHidden ?? other.closeButtonHidden
+        self.homeBarBackgroundColor = homeBarBackgroundColor ?? other.homeBarBackgroundColor
         self.content = other.content
     }
 
@@ -112,4 +116,6 @@ extension OnboardingSectionWrapperView {
     func backButtonHidden(_ backButtonHidden: Bool?) -> Self { Self(self, backButtonHidden: backButtonHidden) }
 
     func closeButtonHidden(_ closeButtonHidden: Bool?) -> Self { Self(self, closeButtonHidden: closeButtonHidden) }
+
+    func homeBarBackgroundColor(_ homeBarBackgroundColor: UIColor?) -> Self { Self(self, homeBarBackgroundColor: homeBarBackgroundColor) }
 }

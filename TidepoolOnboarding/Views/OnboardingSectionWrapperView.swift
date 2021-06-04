@@ -50,9 +50,6 @@ struct OnboardingSectionWrapperView<Content: View>: View {
         }
         .navigationBarTitle(Text(onboardingViewModel.titleForSection(section)), displayMode: .inline)
         .navigationBarBackButtonHidden(true)
-        .navigationBarTranslucent(false)
-        .navigationBarBackgroundColor(backgroundColor)
-        .navigationBarShadowColor(.clear)
     }
 
     private var backButton: some View {

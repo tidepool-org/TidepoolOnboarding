@@ -21,6 +21,8 @@ struct YourDevicesNavigationButton: View {
     private var destination: some View {
         if onboardingViewModel.notificationAuthorization == nil || onboardingViewModel.notificationAuthorization == .notDetermined {
             YourDevicesNotificationsView()
+        } else if onboardingViewModel.healthStoreAuthorization == nil || onboardingViewModel.healthStoreAuthorization == .notDetermined {
+            YourDevicesAppleHealthView()
         } else if !onboardingViewModel.isCGMManagerOnboarded || !onboardingViewModel.isPumpManagerOnboarded {
             YourDevicesPairingYourDevicesView()
         }
@@ -33,7 +35,7 @@ fileprivate struct YourDevicesNotificationsView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     var body: some View {
-        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesPairingYourDevicesView()) {
+        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesAppleHealthView()) {
             PageHeader(title: LocalizedString("Notifications", comment: "Onboarding, Your Devices section, Notifications view, title"))
             Paragraph(LocalizedString("To allow your CGM, pump, and Tidepool Loop app to alert you with important safety and maintenance notifications, you’ll next need to:", comment: "Onboarding, Your Devices section, Notifications view, paragraph 1"))
             NumberedBodyTextList(
@@ -56,7 +58,50 @@ fileprivate struct YourDevicesNotificationsView: View {
         onboardingViewModel.onboardingProvider.authorizeNotification { authorization in
             DispatchQueue.main.async {
                 onboardingViewModel.notificationAuthorization = authorization
-                completion(authorization != .notDetermined)
+                completion(false)
+            }
+        }
+    }
+}
+
+// MARK: - YourDevicesAppleHealthView
+
+fileprivate struct YourDevicesAppleHealthView: View {
+    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
+
+    var body: some View {
+        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesPairingYourDevicesView()) {
+            PageHeader(title: LocalizedString("Apple Health", comment: "Onboarding, Your Devices section, Apple Health view, title"))
+            HStack {
+                Spacer()
+                PresentableImage("YourDevices_AppleHealth_1")
+                    .frame(width: 85, height: 85, alignment: .center)
+                Spacer()
+            }
+            Paragraph(LocalizedString("Apple Health can be used to store blood glucose, insulin and carbohydrate data from Tidepool Loop.", comment: "Onboarding, Your Devices section, Apple Health view, paragraph 1"))
+            Paragraph(LocalizedString("If you’d like to allow this data to be stored in Apple Health, Turn All Categories On in the following screen.", comment: "Onboarding, Your Devices section, Apple Health view, paragraph 2"))
+            Paragraph(LocalizedString("If you prefer not to store this information in Apple Health, you can leave them toggled off and select Don’t Allow.", comment: "Onboarding, Your Devices section, Apple Health view, paragraph 3"))
+                .padding(.bottom)
+            NumberedBodyTextList(
+                LocalizedString("Tap “Turn all Categories On”.", comment: "Onboarding, Your Devices section, Apple Health view, list 1, item 1")
+            )
+            PresentableImage(decorative: "YourDevices_AppleHealth_2")
+            NumberedBodyTextList(
+                LocalizedString("Tap “Allow” to grant Tidepool Loop permission.", comment: "Onboarding, Your Devices section, Apple Health view, list 2, item 1")
+            )
+            .startingAt(2)
+            PresentableImage(decorative: "YourDevices_AppleHealth_3")
+        }
+        .backButtonHidden(true)
+        .nextButtonTitle(LocalizedString("Share With Apple Health", comment: "Onboarding, Your Devices section, Apple Health view, next button, title"))
+        .nextButtonAction(nextButtonAction)
+    }
+
+    private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
+        onboardingViewModel.onboardingProvider.authorizeHealthStore { authorization in
+            DispatchQueue.main.async {
+                onboardingViewModel.healthStoreAuthorization = authorization
+                completion(false)
             }
         }
     }

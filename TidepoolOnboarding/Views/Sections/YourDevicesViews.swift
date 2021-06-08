@@ -12,20 +12,29 @@ import LoopKitUI
 struct YourDevicesNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
+    @State var notificationAuthorized = false
+    @State var healthStoreAuthorized = false
+
     var body: some View {
-        OnboardingSectionNavigationButton(section: .yourDevices, destination: NavigationView { destination })
+        OnboardingSectionNavigationButton(section: .yourDevices, destination: NavigationView { destination }, action: action)
             .accessibilityIdentifier("button_your_devices")
     }
 
     @ViewBuilder
     private var destination: some View {
-        if onboardingViewModel.notificationAuthorization == nil || onboardingViewModel.notificationAuthorization == .notDetermined {
+        if !notificationAuthorized {
             YourDevicesNotificationsView()
-        } else if onboardingViewModel.healthStoreAuthorization == nil || onboardingViewModel.healthStoreAuthorization == .notDetermined {
+        } else if !healthStoreAuthorized {
             YourDevicesAppleHealthView()
         } else if !onboardingViewModel.isCGMManagerOnboarded || !onboardingViewModel.isPumpManagerOnboarded {
             YourDevicesPairingYourDevicesView()
         }
+    }
+
+    private func action() -> Bool {
+        self.notificationAuthorized = onboardingViewModel.notificationAuthorization != nil && onboardingViewModel.notificationAuthorization != .notDetermined
+        self.healthStoreAuthorized = onboardingViewModel.healthStoreAuthorization != nil && onboardingViewModel.healthStoreAuthorization != .notDetermined
+        return true
     }
 }
 
@@ -58,7 +67,7 @@ fileprivate struct YourDevicesNotificationsView: View {
         onboardingViewModel.onboardingProvider.authorizeNotification { authorization in
             DispatchQueue.main.async {
                 onboardingViewModel.notificationAuthorization = authorization
-                completion(false)
+                completion(authorization != .notDetermined)
             }
         }
     }
@@ -101,7 +110,7 @@ fileprivate struct YourDevicesAppleHealthView: View {
         onboardingViewModel.onboardingProvider.authorizeHealthStore { authorization in
             DispatchQueue.main.async {
                 onboardingViewModel.healthStoreAuthorization = authorization
-                completion(false)
+                completion(authorization != .notDetermined)
             }
         }
     }

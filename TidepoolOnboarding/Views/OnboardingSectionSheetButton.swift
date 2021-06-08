@@ -25,16 +25,18 @@ struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
 
     private let section: OnboardingSection
     private let destination: Destination
+    private let action: () -> Bool
     private let content: Content
 
-    init(section: OnboardingSection, destination: Destination, @ViewBuilder content: () -> Content) {
+    init(section: OnboardingSection, destination: Destination, action: @escaping () -> Bool = { true }, @ViewBuilder content: () -> Content) {
         self.section = section
         self.destination = destination
+        self.action = action
         self.content = content()
     }
 
     var body: some View {
-        Button(action: { isActive = true }) {
+        Button(action: { isActive = action() }) {
             content
         }
         .sheet(isPresented: $isActive) {

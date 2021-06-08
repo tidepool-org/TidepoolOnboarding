@@ -12,22 +12,29 @@ import LoopKitUI
 struct YourSettingsNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
+    @State var tidepoolServiceOnboarded = false
+    @State var prescriptionAccepted = false
+
     var body: some View {
-        OnboardingSectionNavigationButton(section: .yourSettings, destination: NavigationView { destination })
+        OnboardingSectionNavigationButton(section: .yourSettings, destination: NavigationView { destination }, action: action)
             .accessibilityIdentifier("button_your_settings")
     }
 
     @ViewBuilder
     private var destination: some View {
-        if onboardingViewModel.prescription == nil {
-            if onboardingViewModel.tidepoolService?.isOnboarded != true {
-                YourSettingsTidepoolServiceOnboardingView()
-            } else {
-                YourSettingsPrescriptionAccessCodeEntryView()
-            }
+        if !tidepoolServiceOnboarded {
+            YourSettingsTidepoolServiceOnboardingView()
+        } else if !prescriptionAccepted {
+            YourSettingsPrescriptionAccessCodeEntryView()
         } else {
             YourSettingsReviewYourSettingsView()
         }
+    }
+
+    private func action() -> Bool {
+        self.tidepoolServiceOnboarded = onboardingViewModel.tidepoolService?.isOnboarded ?? false
+        self.prescriptionAccepted = onboardingViewModel.prescription != nil
+        return true
     }
 }
 

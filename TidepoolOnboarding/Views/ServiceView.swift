@@ -11,7 +11,7 @@ import LoopKitUI
 
 struct ServiceView: UIViewControllerRepresentable {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismissAction) var dismiss
 
     private let serviceViewController: ServiceViewController
 

@@ -108,7 +108,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
     private var sheet: some View {
         ServiceView(serviceViewController!)
             .presentation(isModal: true)
-            .environment(\.dismiss, { isSheetPresented = false })
+            .environment(\.dismissAction, { isSheetPresented = false })
     }
 }
 

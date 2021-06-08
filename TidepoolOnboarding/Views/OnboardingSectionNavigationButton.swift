@@ -12,8 +12,15 @@ import LoopKitUI
 struct OnboardingSectionNavigationButton<Destination: View>: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
-    let section: OnboardingSection
-    let destination: Destination
+    private let section: OnboardingSection
+    private let destination: Destination
+    private let action: () -> Bool
+
+    init(section: OnboardingSection, destination: Destination, action: @escaping () -> Bool = { true }) {
+        self.section = section
+        self.destination = destination
+        self.action = action
+    }
 
     var body: some View {
         button
@@ -28,7 +35,7 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
         case .completed:
             content
         case .available:
-            OnboardingSectionSheetButton(section: section, destination: destination) {
+            OnboardingSectionSheetButton(section: section, destination: destination, action: action) {
                 content
             }
         case .unavailable:

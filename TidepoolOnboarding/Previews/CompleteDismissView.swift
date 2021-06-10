@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CompleteDismissView: View {
     @Environment(\.complete) var complete
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismissAction) var dismiss
 
     var body: some View {
         ScrollView {

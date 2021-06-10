@@ -12,7 +12,7 @@ struct OnboardingSectionWrapperView<Content: View>: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     @Environment(\.presentationMode) var presentationMode
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismissAction) var dismiss
 
     private let section: OnboardingSection
     private let editMode: Bool

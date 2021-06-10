@@ -235,7 +235,7 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     private var sheet: some View {
         managerView
             .presentation(isModal: true)
-            .environment(\.dismiss, { isSheetPresented = false })
+            .environment(\.dismissAction, { isSheetPresented = false })
     }
 
     @ViewBuilder

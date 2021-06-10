@@ -11,7 +11,7 @@ import LoopKitUI
 
 struct CGMManagerView: UIViewControllerRepresentable {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismissAction) var dismiss
 
     private let cgmManagerViewController: CGMManagerViewController
 

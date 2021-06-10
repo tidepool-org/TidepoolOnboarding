@@ -11,7 +11,7 @@ import LoopKitUI
 
 struct PumpManagerView: UIViewControllerRepresentable {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismissAction) var dismiss
 
     private let pumpManagerViewController: PumpManagerViewController
 

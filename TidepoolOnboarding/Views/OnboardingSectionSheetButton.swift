@@ -51,7 +51,7 @@ struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
                 .environment(\.loopStatusColorPalette, colorPalette.loopStatusColorPalette)
                 .environment(\.chartColorPalette, colorPalette.chartColorPalette)
                 .environment(\.appName, appName)
-                .environment(\.dismiss, {
+                .environment(\.dismissAction, {
                     isActive = false
                 })
                 .environment(\.complete, {

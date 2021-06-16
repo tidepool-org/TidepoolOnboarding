@@ -39,7 +39,7 @@ fileprivate class PreviewOnboardingProvider: OnboardingProvider {
     var availablePumpManagers: [PumpManagerDescriptor] = []
     func imageForPumpManager(withIdentifier identifier: String) -> UIImage? { nil }
     func supportedIncrementsForPumpManager(withIdentifier identifier: String) -> PumpSupportedIncrements? { nil }
-    func onboardPumpManager(withIdentifier identifier: String, initialSettings settings: PumpManagerSetupSettings) -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
+    func onboardPumpManager(withIdentifier identifier: String, basalSchedule: BasalRateSchedule) -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
         .failure(PreviewError())
     }
 

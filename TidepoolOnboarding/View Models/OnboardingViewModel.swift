@@ -337,21 +337,11 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     func onboardPumpManager() -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
-        guard let pumpManagerIdentifier = pumpManagerIdentifier else {
+        guard let pumpManagerIdentifier = pumpManagerIdentifier, let basalSchedule = therapySettings?.basalRateSchedule else {
             return .failure(OnboardingError.unexpectedState)
         }
         return onboardingProvider.onboardPumpManager(withIdentifier: pumpManagerIdentifier,
-                                                     initialSettings: pumpManagerInitialSettings)
-    }
-
-    private var pumpManagerInitialSettings: PumpManagerSetupSettings {
-        guard let therapySettings = therapySettings else {
-            preconditionFailure("Must have therapy settings to construct pump manager initial settings")
-        }
-
-        return PumpManagerSetupSettings(maxBasalRateUnitsPerHour: therapySettings.maximumBasalRatePerHour,
-                                        maxBolusUnits: therapySettings.maximumBolus,
-                                        basalSchedule: therapySettings.basalRateSchedule)
+                                                     basalSchedule: basalSchedule)
     }
 
     // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
@@ -422,8 +412,8 @@ extension OnboardingViewModel: PumpManagerOnboardingDelegate {
         pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManager)
     }
 
-    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI, withFinalSettings settings: PumpManagerSetupSettings) {
-        pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager, withFinalSettings: settings)
+    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI) {
+        pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager)
     }
 }
 

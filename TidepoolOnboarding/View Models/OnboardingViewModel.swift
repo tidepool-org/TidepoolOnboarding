@@ -337,11 +337,21 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     func onboardPumpManager() -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
-        guard let pumpManagerIdentifier = pumpManagerIdentifier, let basalSchedule = therapySettings?.basalRateSchedule else {
+        guard let pumpManagerIdentifier = pumpManagerIdentifier else {
             return .failure(OnboardingError.unexpectedState)
         }
         return onboardingProvider.onboardPumpManager(withIdentifier: pumpManagerIdentifier,
-                                                     basalSchedule: basalSchedule)
+                                                     initialSettings: pumpManagerInitialSettings)
+    }
+
+    private var pumpManagerInitialSettings: PumpManagerSetupSettings {
+        guard let therapySettings = therapySettings else {
+            preconditionFailure("Must have therapy settings to construct pump manager initial settings")
+        }
+
+        return PumpManagerSetupSettings(maxBasalRateUnitsPerHour: therapySettings.maximumBasalRatePerHour,
+                                        maxBolusUnits: therapySettings.maximumBolus,
+                                        basalSchedule: therapySettings.basalRateSchedule)
     }
 
     // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY

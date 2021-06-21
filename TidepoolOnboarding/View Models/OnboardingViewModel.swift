@@ -422,8 +422,8 @@ extension OnboardingViewModel: PumpManagerOnboardingDelegate {
         pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: pumpManager)
     }
 
-    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI, withFinalSettings settings: PumpManagerSetupSettings) {
-        pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager, withFinalSettings: settings)
+    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI) {
+        pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager)
     }
 }
 

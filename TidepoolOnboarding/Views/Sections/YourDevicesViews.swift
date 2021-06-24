@@ -46,18 +46,24 @@ fileprivate struct YourDevicesNotificationsView: View {
     var body: some View {
         OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesAppleHealthView()) {
             PageHeader(title: LocalizedString("Notifications", comment: "Onboarding, Your Devices section, Notifications view, title"))
+            PresentableImage("Notification_1")
             Paragraph(LocalizedString("To allow your CGM, pump, and Tidepool Loop app to alert you with important safety and maintenance notifications, you’ll next need to:", comment: "Onboarding, Your Devices section, Notifications view, paragraph 1"))
             NumberedBodyTextList(
-                LocalizedString("Enable Notifications in your iPhone or iPod Touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 1, item 1")
-            )
-            .padding(.vertical)
+                LocalizedString("Enable Notifications in your iPhone or iPod Touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 1, item 1"))
+                .padding(.vertical)
             Paragraph(LocalizedString("Notifications may be configured for each component you pair, and can alert you to rising and falling glucose, insulin pump maintenance tasks, or other situations where the app may need your attention.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 2"))
             NumberedBodyTextList(
-                LocalizedString("Enable Critical Alerts in your iPhone or iPod Touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 2, item 1")
-            )
-            .startingAt(2)
-            .padding(.vertical)
+                LocalizedString("Enable Critical Alerts in your iPhone or iPod Touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 2, item 1"))
+                .startingAt(2)
+                .padding(.top)
             Paragraph(LocalizedString("Critical Alerts may be configured to alert you to higher risk situations while using Tidepool Loop, such as urgent low glucose, insulin pump occlusions, or other serious system errors.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 3"))
+                .padding(.vertical)
+            Callout(title: LocalizedString("Notifications and Critical Alert permissions must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Notifications view, callout title"),
+                    warningIconColor: .red) {
+                Paragraph(LocalizedString("It is important that you always keep Notifications and Critical Alerts turned on in your phone’s settings to ensure that you receive Tidepool Loop notifications.", comment: "Onboarding, Your Devices section, Notifications view, callout body text"))
+            }
+            Paragraph(LocalizedString("Additional preferences can be set within the device manager screens of the Tidepool Loop app.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 4"))
+                .padding(.vertical)
         }
         .backButtonHidden(true)
         .nextButtonAction(nextButtonAction)

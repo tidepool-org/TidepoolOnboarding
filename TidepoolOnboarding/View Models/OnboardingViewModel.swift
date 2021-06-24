@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import DeviceCheck
 import UIKit
 import LoopKit
 import LoopKitUI
@@ -26,6 +27,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var lastAccessDate: Date
     @Published var sectionProgression: OnboardingSectionProgression
     @Published var tidepoolService: TidepoolService?
+    @Published var deviceValid: Bool?
     @Published var prescription: TPrescription? {
         didSet {
             self.therapySettings = prescription?.therapySettings
@@ -58,6 +60,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.lastAccessDate = onboarding.lastAccessDate
         self.sectionProgression = onboarding.sectionProgression
         self.tidepoolService = onboardingProvider.activeServices.first { $0.serviceIdentifier == TidepoolServiceIdentifier } as? TidepoolService
+        self.deviceValid = onboarding.deviceValid
         self.prescription = onboarding.prescription
         self.prescriberProfile = onboarding.prescriberProfile
         self.therapySettings = onboarding.therapySettings
@@ -74,6 +77,10 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         $sectionProgression
             .dropFirst()
             .sink { onboarding.sectionProgression = $0 }
+            .store(in: &cancellables)
+        $deviceValid
+            .dropFirst()
+            .sink { onboarding.deviceValid = $0 }
             .store(in: &cancellables)
         $prescription
             .dropFirst()
@@ -190,7 +197,54 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         return onboardingProvider.onboardService(withIdentifier: TidepoolServiceIdentifier)
     }
 
-    func claimPrescription(accessCode: String, birthday: Date, completion: @escaping (Error?) -> Void) {
+    func verifyDevice(completion: @escaping (OnboardingError?) -> Void) {
+        guard deviceValid == nil else {
+            completion(nil)
+            return
+        }
+        guard let tidepoolService = tidepoolService else {
+            completion(OnboardingError.unexpectedState)
+            return
+        }
+
+        // If the device does not require verification (i.e. simulator) or DeviceCheck is not supported, just mark as valid
+        guard deviceRequiresVerification, DCDevice.current.isSupported else {
+            self.deviceValid = true
+            completion(nil)
+            return
+        }
+
+        DCDevice.current.generateToken { token, error in
+            DispatchQueue.main.async {
+                guard error == nil, let token = token else {
+                    completion(OnboardingError.unexpectedError)
+                    return
+                }
+
+                tidepoolService.tapi.verifyDevice(deviceToken: token) { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .failure(let error):
+                            completion(error.onboardingError)
+                        case .success(let deviceValid):
+                            self.deviceValid = deviceValid
+                            completion(nil)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private var deviceRequiresVerification: Bool {
+        #if targetEnvironment(simulator)
+        return false
+        #else
+        return true
+        #endif
+    }
+
+    func claimPrescription(accessCode: String, birthday: Date, completion: @escaping (OnboardingError?) -> Void) {
         guard prescription == nil else {
             completion(nil)
             return
@@ -214,7 +268,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
     }
 
-    func getPrescriberProfile(completion: @escaping (Error?) -> Void) {
+    func getPrescriberProfile(completion: @escaping (OnboardingError?) -> Void) {
         guard prescriberProfile == nil else {
             completion(nil)
             return
@@ -379,6 +433,9 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
         if !sectionProgression.hasCompletedSection(section) {
             if section == .yourSettings {
+                if deviceValid == nil {
+                    self.deviceValid = true
+                }
                 if prescription == nil {
                     self.prescription = .mock
                 }

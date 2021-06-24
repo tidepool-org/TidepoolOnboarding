@@ -112,16 +112,16 @@ fileprivate struct IntroductionView4: View {
     }
     
     private var segment1: some View {
-        Segment(header: LocalizedString("Tidepool Loop’s Connection", comment: "Onboarding, Introduction section, view 4, segment 1, header")) {
-            PresentableImage(decorative: "Introduction_4_2")
-            Paragraph(LocalizedString("The app connects directly to your devices via a Bluetooth connection and does not require internet for automation.", comment: "Onboarding, Introduction section, view 4, segment 1, paragraph 1"))
-            Paragraph(LocalizedString("Tidepool Loop automates insulin dosing with or without an internet connection.", comment: "Onboarding, Introduction section, view 4, segment 1, paragraph 2"))
+        Segment(header: LocalizedString("Compatible Device Required", comment: "Onboarding, Introduction section, view 4, segment 1, header")) {
+            Paragraph(LocalizedString("In order for the Tidepool Loop app to work properly, it cannot run on a device with a modified operating system (jailbroken device).", comment: "Onboarding, Introduction section, view 4, segment 1, paragraph"))
         }
     }
     
     private var segment2: some View {
-        Segment(header: LocalizedString("Bluetooth Communication", comment: "Onboarding, Introduction section, view 4, segment 2, header")) {
-            Paragraph(LocalizedString("Your iPhone or iPod Touch must be on and within Bluetooth range of your pump in order for the app to send commands to the pump.", comment: "Onboarding, Introduction section, view 4, psegment 2, paragraph"))
+        Segment(header: LocalizedString("Tidepool Loop’s Connection", comment: "Onboarding, Introduction section, view 4, segment 2, header")) {
+            PresentableImage(decorative: "Introduction_4_2")
+            Paragraph(LocalizedString("The app connects directly to your devices via a Bluetooth connection and automates insulin dosing with or without an internet connection.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 1"))
+            Paragraph(LocalizedString("Your iPhone or iPod Touch must be on and within Bluetooth range of your pump in order for the app to send commands to the pump.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 2"))
         }
     }
     

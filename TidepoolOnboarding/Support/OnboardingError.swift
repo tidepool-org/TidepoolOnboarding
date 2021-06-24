@@ -7,6 +7,7 @@
 //
 
 enum OnboardingError: LocalizedError {
+    case unexpectedError
     case unexpectedState
     case networkFailure
     case authenticationFailure
@@ -14,6 +15,8 @@ enum OnboardingError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
+        case .unexpectedError:
+            return LocalizedString("An unexpected error occurred.", comment: "Error description for an unexpected error.")
         case .unexpectedState:
             return LocalizedString("An unexpected state occurred.", comment: "Error description for an unexpected state.")
         case .networkFailure:

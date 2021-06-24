@@ -18,6 +18,7 @@ class OnboardingViewModelTests: XCTestCase {
     override func setUp() {
         onboarding = TidepoolOnboarding()
         onboarding.sectionProgression.startSection(.welcome)
+        onboarding.deviceValid = true
         onboarding.prescription = .test
         onboarding.prescriberProfile = .test
         onboarding.therapySettings = .test
@@ -45,6 +46,15 @@ class OnboardingViewModelTests: XCTestCase {
     func testSectionProgressionForwarding() {
         onboardingViewModel.sectionProgression.completeSection(.welcome)
         XCTAssertEqual(onboarding.sectionProgression, onboardingViewModel.sectionProgression)
+    }
+
+    func testDeviceValidInitialization() {
+        XCTAssertEqual(onboardingViewModel.deviceValid, onboarding.deviceValid)
+    }
+
+    func testDeviceValidForwarding() {
+        onboardingViewModel.deviceValid = false
+        XCTAssertEqual(onboarding.deviceValid, onboardingViewModel.deviceValid)
     }
 
     func testPrescriptionInitialization() {

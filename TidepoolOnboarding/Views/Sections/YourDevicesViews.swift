@@ -58,13 +58,15 @@ fileprivate struct YourDevicesNotificationsView: View {
             )
             .startingAt(2)
             .padding(.top)
-            Paragraph(LocalizedString("Critical Alerts may be configured to alert you to higher risk situations while using Tidepool Loop, such as urgent low glucose, insulin pump occlusions, or other serious system errors.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 3"))
+            Paragraph(LocalizedString("Critical Alerts may be configured to alert you to higher risk situations while using Tidepool Loop, such as urgent low glucose, insulin pump occlusions, or other serious system errors.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 3")
+            )
             .padding(.vertical)
             Callout(title: LocalizedString("Notifications and Critical Alert permissions must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Notifications view, callout title"),
                     warningIconColor: .red) {
                 Paragraph(LocalizedString("It is important that you always keep Notifications and Critical Alerts turned on in your phone’s settings to ensure that you receive Tidepool Loop notifications.", comment: "Onboarding, Your Devices section, Notifications view, callout body text"))
             }
-            Paragraph(LocalizedString("Additional preferences can be set within the device manager screens of the Tidepool Loop app.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 4"))
+            Paragraph(LocalizedString("Additional preferences can be set within the device manager screens of the Tidepool Loop app.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 4")
+            )
             .padding(.vertical)
         }
         .backButtonHidden(true)

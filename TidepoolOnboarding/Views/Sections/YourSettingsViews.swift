@@ -13,6 +13,8 @@ struct YourSettingsNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     @State var tidepoolServiceOnboarded = false
+    @State var deviceValidated = false
+    @State var deviceValid = false
     @State var prescriptionAccepted = false
 
     var body: some View {
@@ -22,8 +24,12 @@ struct YourSettingsNavigationButton: View {
 
     @ViewBuilder
     private var destination: some View {
-        if !tidepoolServiceOnboarded {
+        if !tidepoolServiceOnboarded, !deviceValidated {
             YourSettingsTidepoolServiceOnboardingView()
+        } else if !deviceValidated {
+            YourSettingsDeviceCompatibilityCheckView()
+        } else if !deviceValid {
+            YourSettingsAppCannotBeUsedView()
         } else if !prescriptionAccepted {
             YourSettingsPrescriptionAccessCodeEntryView()
         } else {
@@ -33,6 +39,8 @@ struct YourSettingsNavigationButton: View {
 
     private func action() -> Bool {
         self.tidepoolServiceOnboarded = onboardingViewModel.tidepoolService?.isOnboarded ?? false
+        self.deviceValidated = onboardingViewModel.deviceValid != nil
+        self.deviceValid = onboardingViewModel.deviceValid ?? false
         self.prescriptionAccepted = onboardingViewModel.prescription != nil
         return true
     }
@@ -51,16 +59,22 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
     @State private var isSheetPresented = false
     @State private var onSheetDismiss: (() -> Void)?
 
+    @State private var deviceValid: Bool?
+    @State private var error: Error?
     @State private var skip = false
+    @State private var isNextButtonActing = false
+    @State private var isDestinationActive = false
 
     var body: some View {
-        OnboardingSectionPageView(section: .yourSettings, destination: destination, isDestinationActive: $skip) {
+        OnboardingSectionPageView(section: .yourSettings, destination: destination, isDestinationActive: $isDestinationActive) {
             PageHeader(title: LocalizedString("Your Tidepool Account", comment: "Onboarding, Your Settings section, Your Tidepool Account view, title"))
                 .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures,
                                          title: "Are you sure you want to skip setting up your Tidepool account and claiming a prescription?") {  // Not localized
+                    onboardingViewModel.deviceValid = true          // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                     onboardingViewModel.prescription = .mock        // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                     onboardingViewModel.prescriberProfile = .mock   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
-                    skip = true
+                    self.skip = true
+                    self.isDestinationActive = true
                 }
             Paragraph(LocalizedString("If you already have a Tidepool acccount you can Sign In.", comment: "Onboarding, Your Settings section, Your Tidepool Account view, paragraph"))
                 .alert(isPresented: $isAlertPresented) { alert }
@@ -68,12 +82,17 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
         .backButtonHidden(true)
         .nextButtonTitle(LocalizedString("Sign In", comment: "Onboarding, Your Settings section, Your Tidepool Account view, sign up button, title"))
         .nextButtonAction(nextButtonAction)
+        .nextButtonDisabled(isNextButtonActing)
         .sheet(isPresented: $isSheetPresented, onDismiss: onSheetDismiss) { sheet }
     }
 
     @ViewBuilder
     private var destination: some View {
-        if !skip {
+        if deviceValid == false {
+            YourSettingsAppCannotBeUsedView()
+        } else if let error = error {
+            YourSettingsDeviceCompatibilityCheckView(error: error)
+        } else if !skip {
             YourSettingsPrescriptionAccessCodeEntryView()
         } else {
             YourSettingsReviewYourSettingsView()
@@ -81,10 +100,18 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
     }
 
     private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
+        guard !isNextButtonActing else {
+            completion(false)
+            return
+        }
+
+        isNextButtonActing = true
         switch onboardingViewModel.onboardTidepoolService() {
         case .failure(let error):
             self.alertMessage = error.localizedDescription
             self.isAlertPresented = true
+            completion(false)
+            self.isNextButtonActing = false
         case .success(let success):
             switch success {
             case .userInteractionRequired(let viewController):
@@ -98,7 +125,19 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
     }
 
     private func onboardTidepoolServiceComplete(_ completion: @escaping (Bool) -> Void) {
-        completion(onboardingViewModel.tidepoolService?.isOnboarded == true)
+        guard onboardingViewModel.tidepoolService?.isOnboarded == true else {
+            completion(false)
+            self.isNextButtonActing = false
+            return
+        }
+
+        onboardingViewModel.verifyDevice { error in
+            self.deviceValid = onboardingViewModel.deviceValid
+            self.error = error
+            self.isDestinationActive = true
+            completion(false)
+            self.isNextButtonActing = false
+        }
     }
 
     private var alert: Alert {
@@ -109,6 +148,78 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
         ServiceView(serviceViewController!)
             .presentation(isModal: true)
             .environment(\.dismissAction, { isSheetPresented = false })
+    }
+}
+
+// MARK: - YourSettingsDeviceCompatibilityCheckView
+
+struct YourSettingsDeviceCompatibilityCheckView: View {
+    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
+
+    @State var error: Error?
+
+    @State private var deviceValid: Bool?
+    @State private var isNextButtonActing = false
+    @State private var isErrorAlertPresented = false
+
+    var body: some View {
+        OnboardingSectionPageView(section: .yourSettings, destination: destination) {
+            PageHeader(title: LocalizedString("Device Compatibility Check", comment: "Onboarding, Your Settings section, Device Compatibility Check view, title"))
+            Paragraph(LocalizedString("Tidepool Loop needs to confirm you are using a compatible device.", comment: "Onboarding, Your Settings section, Device Compatibility Check view, paragraph 1"))
+            Paragraph(LocalizedString("Tap “Continue” to proceed.", comment: "Onboarding, Your Settings section, Device Compatibility Check view, paragraph 2"))
+        }
+        .backButtonHidden(true)
+        .nextButtonAction(nextButtonAction)
+        .nextButtonDisabled(isNextButtonActing)
+        .alert(isPresented: $isErrorAlertPresented) { errorAlert }
+        .onAppear {
+            self.isErrorAlertPresented = (error != nil)
+        }
+    }
+
+    @ViewBuilder
+    private var destination: some View {
+        if deviceValid == false {
+            YourSettingsAppCannotBeUsedView()
+        } else {
+            YourSettingsPrescriptionAccessCodeEntryView()
+        }
+    }
+
+    private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
+        guard !isNextButtonActing else {
+            completion(false)
+            return
+        }
+
+        isNextButtonActing = true
+        onboardingViewModel.verifyDevice() { error in
+            self.deviceValid = onboardingViewModel.deviceValid
+            self.error = error
+            self.isErrorAlertPresented = (error != nil)
+            completion(error == nil)
+            self.isNextButtonActing = false
+        }
+    }
+
+    private var errorAlert: Alert {
+        Alert(title: Text(LocalizedString("Error", comment: "Title of general error alert")),
+              message: Text(error?.localizedDescription ?? LocalizedString("An unknown error occurred.", comment: "Message of an unknown error")))
+    }
+}
+
+// MARK: - YourSettingsAppCannotBeUsedView
+
+struct YourSettingsAppCannotBeUsedView: View {
+    var body: some View {
+        OnboardingSectionPageView(section: .yourSettings) {
+            PageHeader(title: LocalizedString("App Cannot Be Used", comment: "Onboarding, Your Settings section, App Cannot Be Used view, title"))
+            Paragraph(LocalizedString("In order for the Tidepool Loop app to work properly, it cannot run on a device with a modified operating system (jailbroken device).", comment: "Onboarding, Your Settings section, App Cannot Be Used view, paragraph 1"))
+            Paragraph(LocalizedString("Use a compatible mobile device that does not have a modified operating system.", comment: "Onboarding, Your Settings section, App Cannot Be Used view, paragraph 2"))
+            Paragraph(LocalizedString("If you have any questions, please contact Tidepool Support at support@tidepool.org.", comment: "Onboarding, Your Settings section, App Cannot Be Used view, paragraph 3"))
+        }
+        .backButtonHidden(true)
+        .nextButtonHidden(true)
     }
 }
 
@@ -285,13 +396,16 @@ struct YourSettingsPrescriptionAccessCodeEntryView: View {
     }
 
     private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
-        guard !isNextButtonActing else { return }
+        guard !isNextButtonActing else {
+            completion(false)
+            return
+        }
 
         dismissAccessories()
 
         isNextButtonActing = true
         onboardingViewModel.claimPrescription(accessCode: accessCode, birthday: birthday) { error in
-            if case .resourceNotFound = error as? OnboardingError {
+            if case .resourceNotFound = error {
                 self.error = ClaimPrescriptionError.invalidAccessCodeOrBirthday
             } else {
                 self.error = error
@@ -455,14 +569,15 @@ fileprivate struct YourSettingsReviewYourSettingsView: View {
     }
 
      private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
-        guard !isNextButtonActing else { return }
+        guard !isNextButtonActing else {
+            completion(false)
+            return
+        }
 
         isNextButtonActing = true
         onboardingViewModel.getPrescriberProfile() { error in
-            if let error = error {
-                self.error = error
-                self.isErrorAlertPresented = true
-            }
+            self.error = error
+            self.isErrorAlertPresented = (error != nil)
             completion(error == nil)
             isNextButtonActing = false
         }

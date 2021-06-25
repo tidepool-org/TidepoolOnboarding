@@ -21,6 +21,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     private let editMode: Bool
     private let backButtonHidden: Bool
     private let closeButtonHidden: Bool
+    private let nextButtonHidden: Bool
     private let nextButtonTitle: String?
     private let nextButtonAction: ((_ completion: @escaping (Bool) -> Void) -> Void)?
     private let nextButtonDisabled: Bool
@@ -33,6 +34,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.editMode = false
         self.backButtonHidden = false
         self.closeButtonHidden = false
+        self.nextButtonHidden = false
         self.nextButtonTitle = nil
         self.nextButtonAction = nil
         self.nextButtonDisabled = false
@@ -46,6 +48,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.editMode = false
         self.backButtonHidden = false
         self.closeButtonHidden = false
+        self.nextButtonHidden = false
         self.nextButtonTitle = nil
         self.nextButtonAction = nil
         self.nextButtonDisabled = false
@@ -63,7 +66,9 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
                             content
                         }
                         Spacer()
-                        nextButton
+                        if !nextButtonHidden {
+                            nextButton
+                        }
                     }
                     .padding()
                     .frame(minHeight: geometry.size.height)
@@ -123,11 +128,12 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
 }
 
 extension OnboardingSectionPageView {
-    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, closeButtonHidden: Bool? = nil, nextButtonTitle: String? = nil, nextButtonAction: ((@escaping (Bool) -> Void) -> Void)? = nil, nextButtonDisabled: Bool? = nil) {
+    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, closeButtonHidden: Bool? = nil, nextButtonHidden: Bool? = nil, nextButtonTitle: String? = nil, nextButtonAction: ((@escaping (Bool) -> Void) -> Void)? = nil, nextButtonDisabled: Bool? = nil) {
         self.section = other.section
         self.editMode = editMode ?? other.editMode
         self.backButtonHidden = backButtonHidden ?? other.backButtonHidden
         self.closeButtonHidden = closeButtonHidden ?? other.closeButtonHidden
+        self.nextButtonHidden = nextButtonHidden ?? other.nextButtonHidden
         self.nextButtonTitle = nextButtonTitle ?? other.nextButtonTitle
         self.nextButtonAction = nextButtonAction ?? other.nextButtonAction
         self.nextButtonDisabled = nextButtonDisabled ?? other.nextButtonDisabled
@@ -141,6 +147,8 @@ extension OnboardingSectionPageView {
     func backButtonHidden(_ backButtonHidden: Bool?) -> Self { Self(self, backButtonHidden: backButtonHidden) }
 
     func closeButtonHidden(_ closeButtonHidden: Bool?) -> Self { Self(self, closeButtonHidden: closeButtonHidden) }
+
+    func nextButtonHidden(_ nextButtonHidden: Bool?) -> Self { Self(self, nextButtonHidden: nextButtonHidden) }
 
     func nextButtonTitle(_ nextButtonTitle: String?) -> Self { Self(self, nextButtonTitle: nextButtonTitle) }
 

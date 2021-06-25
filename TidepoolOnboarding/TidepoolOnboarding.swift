@@ -36,6 +36,12 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         }
     }
 
+    var deviceValid: Bool? {
+        didSet {
+            notifyDidUpdateState()
+        }
+    }
+
     var prescription: TPrescription? {
         didSet {
             notifyDidUpdateState()
@@ -101,6 +107,7 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         self.lastAccessDate = lastAccessDate
         self.sectionProgression = sectionProgression
 
+        self.deviceValid = rawState["deviceValid"] as? Bool
         if let rawPrescription = rawState["prescription"] as? Data {
             self.prescription = try? Self.decoder.decode(TPrescription.self, from: rawPrescription)
         }
@@ -129,6 +136,7 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
             "sectionProgression": sectionProgression.rawValue
         ]
 
+        rawState["deviceValid"] = deviceValid
         if let prescription = prescription {
             rawState["prescription"] = try? Self.encoder.encode(prescription)
         }

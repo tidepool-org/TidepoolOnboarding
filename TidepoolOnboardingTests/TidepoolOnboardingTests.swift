@@ -127,6 +127,16 @@ class TidepoolOnboardingTests: XCTestCase {
         wait(for: [didUpdateStateExpectation!], timeout: 1)
     }
 
+    func testDeviceValidNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.deviceValid = true
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
     func testPrescriptionNotifiesDelegateOfUpdate() {
         didUpdateStateExpectation = expectation(description: "DidUpdateState")
 
@@ -172,6 +182,7 @@ class TidepoolOnboardingTests: XCTestCase {
         old.lastAccessDate = Date()
         old.sectionProgression.startSection(.welcome)
         old.sectionProgression.completeSection(.welcome)
+        old.deviceValid = true
         old.prescription = .test
         old.prescriberProfile = .test
         old.therapySettings = .test
@@ -180,6 +191,7 @@ class TidepoolOnboardingTests: XCTestCase {
         let rawState = old.rawState
         XCTAssertNotNil(rawState["lastAccessDate"])
         XCTAssertNotNil(rawState["sectionProgression"])
+        XCTAssertNotNil(rawState["deviceValid"])
         XCTAssertNotNil(rawState["prescription"])
         XCTAssertNotNil(rawState["prescriberProfile"])
         XCTAssertNotNil(rawState["therapySettings"])
@@ -190,6 +202,7 @@ class TidepoolOnboardingTests: XCTestCase {
         if let new = new {
             XCTAssertEqual(new.lastAccessDate, old.lastAccessDate)
             XCTAssertEqual(new.sectionProgression, old.sectionProgression)
+            XCTAssertEqual(new.deviceValid, old.deviceValid)
             XCTAssertEqual(new.prescription, old.prescription)
             XCTAssertEqual(new.prescriberProfile, old.prescriberProfile)
             XCTAssertEqual(new.therapySettings, old.therapySettings)

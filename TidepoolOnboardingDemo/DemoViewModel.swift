@@ -127,7 +127,7 @@ class DemoViewModel: ObservableObject, OnboardingProvider, OnboardingDelegate, C
     func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
         self.activePumpManager = pumpManager
     }
-    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI, withFinalSettings settings: PumpManagerSetupSettings) {}
+    func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI) {}
 
     // ServiceProvider
 

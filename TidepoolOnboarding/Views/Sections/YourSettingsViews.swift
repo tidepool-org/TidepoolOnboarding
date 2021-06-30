@@ -279,7 +279,7 @@ fileprivate struct YourSettingsPrescriptionAccessCodeEntryView: View {
 
     private var segment3: some View {
         Segment(header: LocalizedString("Enter your birthday", comment: "Onboarding, Your Settings section, Your Settings view, segment 3, header")) {
-            Paragraph(LocalizedString("In order for us to verify the prescription code, please enter the birthday associated with your Tidepool account.", comment: "Onboarding, Your Settings section, Your Settings view, segment 3, paragraph"))
+            Paragraph(LocalizedString("In order to verify the prescription code, please enter the birthday associated with the prescription.", comment: "Onboarding, Your Settings section, Your Settings view, segment 3, paragraph"))
             birthdayField
         }
         .headerFont(.headline)

@@ -153,7 +153,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
 
 // MARK: - YourSettingsDeviceCompatibilityCheckView
 
-struct YourSettingsDeviceCompatibilityCheckView: View {
+fileprivate struct YourSettingsDeviceCompatibilityCheckView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     @State var error: Error?
@@ -210,7 +210,7 @@ struct YourSettingsDeviceCompatibilityCheckView: View {
 
 // MARK: - YourSettingsAppCannotBeUsedView
 
-struct YourSettingsAppCannotBeUsedView: View {
+fileprivate struct YourSettingsAppCannotBeUsedView: View {
     var body: some View {
         OnboardingSectionPageView(section: .yourSettings) {
             PageHeader(title: LocalizedString("App Cannot Be Used", comment: "Onboarding, Your Settings section, App Cannot Be Used view, title"))
@@ -225,7 +225,7 @@ struct YourSettingsAppCannotBeUsedView: View {
 
 // MARK: - YourSettingsPrescriptionAccessCodeEntryView
 
-struct YourSettingsPrescriptionAccessCodeEntryView: View {
+fileprivate struct YourSettingsPrescriptionAccessCodeEntryView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     @State private var accessCode = ""
@@ -261,7 +261,7 @@ struct YourSettingsPrescriptionAccessCodeEntryView: View {
                 .padding(.bottom)
             NumberedBodyTextList(
                 LocalizedString("Prescription activation code", comment: "Onboarding, Your Settings section, Your Settings view, segment 1, list, item 1"),
-                LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Onboarding, Your Settings section, Your Settings view, segment 1, list, item 1")
+                LocalizedString("Configuration settings for glucose targets and insulin delivery from your healthcare provider", comment: "Onboarding, Your Settings section, Your Settings view, segment 1, list, item 2")
             )
         }
         .headerFont(.headline)

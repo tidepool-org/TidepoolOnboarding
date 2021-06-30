@@ -38,6 +38,8 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var prescriberProfile: TProfile?
     @Published var therapySettings: TherapySettings?
     @Published var notificationAuthorization: NotificationAuthorization?
+    @Published var criticalAlertAllowed: Bool?
+    @Published var notificationAllowed: Bool?
     @Published var healthStoreAuthorization: HealthStoreAuthorization?
     @Published var cgmManagerIdentifier: String?
     @Published var pumpManagerIdentifier: String? {
@@ -65,6 +67,8 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.prescriberProfile = onboarding.prescriberProfile
         self.therapySettings = onboarding.therapySettings
         self.notificationAuthorization = onboarding.notificationAuthorization
+        self.criticalAlertAllowed = onboarding.criticalAlertAllowed
+        self.notificationAllowed = onboarding.notificationAllowed
         self.healthStoreAuthorization = onboarding.healthStoreAuthorization
         self.cgmManagerIdentifier = onboarding.cgmManagerIdentifier
         self.pumpManagerIdentifier = onboarding.pumpManagerIdentifier
@@ -97,6 +101,14 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         $notificationAuthorization
             .dropFirst()
             .sink { onboarding.notificationAuthorization = $0 }
+            .store(in: &cancellables)
+        $criticalAlertAllowed
+            .dropFirst()
+            .sink { onboarding.criticalAlertAllowed = $0 }
+            .store(in: &cancellables)
+        $notificationAllowed
+            .dropFirst()
+            .sink { onboarding.notificationAllowed = $0 }
             .store(in: &cancellables)
         $healthStoreAuthorization
             .dropFirst()
@@ -335,6 +347,21 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         return pumpSupportedIncrements
     }
 
+    func updateNotificationSettings(_ completion: @escaping () -> Void) {
+        guard criticalAlertAllowed != true || notificationAllowed != true else {
+            completion()
+            return
+        }
+
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                self.criticalAlertAllowed = settings.criticalAlertSetting != .disabled
+                self.notificationAllowed = settings.alertSetting != .disabled
+                completion()
+            }
+        }
+    }
+
     var cgmManagerTitle: String {
         guard let cgmManagerIdentifier = cgmManagerIdentifier,
               let cgmManagerDescriptor = onboardingProvider.availableCGMManagers.first(where: { $0.identifier == cgmManagerIdentifier }) else {
@@ -433,9 +460,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
         if !sectionProgression.hasCompletedSection(section) {
             if section == .yourSettings {
-                if deviceValid == nil {
-                    self.deviceValid = true
-                }
+                self.deviceValid = true
                 if prescription == nil {
                     self.prescription = .mock
                 }
@@ -450,6 +475,8 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
                     self.notificationAuthorization = .authorized
                     onboardingProvider.authorizeNotification { _ in }
                 }
+                self.criticalAlertAllowed = true
+                self.notificationAllowed = true
                 if healthStoreAuthorization == nil || healthStoreAuthorization == .notDetermined {
                     self.healthStoreAuthorization = .determined
                     onboardingProvider.authorizeHealthStore { _ in }

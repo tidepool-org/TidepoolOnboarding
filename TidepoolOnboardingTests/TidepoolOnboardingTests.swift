@@ -167,6 +167,66 @@ class TidepoolOnboardingTests: XCTestCase {
         wait(for: [didUpdateStateExpectation!], timeout: 1)
     }
 
+    func testNotificationAuthorizationNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.notificationAuthorization = .authorized
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
+    func testCriticalAlertAllowedNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.criticalAlertAllowed = true
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
+    func testNotificationAllowedNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.notificationAllowed = true
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
+    func testHealthStoreAuthorizationNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.healthStoreAuthorization = .determined
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
+    func testCGMManagerIdentifierNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.cgmManagerIdentifier = "1234567890"
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
+    func testPumpManagerIdentifierNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.pumpManagerIdentifier = "abcdefghij"
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
     func testDosingEnabledNotifiesDelegateOfUpdate() {
         didUpdateStateExpectation = expectation(description: "DidUpdateState")
 
@@ -186,6 +246,12 @@ class TidepoolOnboardingTests: XCTestCase {
         old.prescription = .test
         old.prescriberProfile = .test
         old.therapySettings = .test
+        old.notificationAuthorization = .authorized
+        old.criticalAlertAllowed = true
+        old.notificationAllowed = true
+        old.healthStoreAuthorization = .determined
+        old.cgmManagerIdentifier = "1234567890"
+        old.pumpManagerIdentifier = "abcdefghij"
         old.dosingEnabled = true
 
         let rawState = old.rawState
@@ -195,6 +261,12 @@ class TidepoolOnboardingTests: XCTestCase {
         XCTAssertNotNil(rawState["prescription"])
         XCTAssertNotNil(rawState["prescriberProfile"])
         XCTAssertNotNil(rawState["therapySettings"])
+        XCTAssertNotNil(rawState["notificationAuthorization"])
+        XCTAssertNotNil(rawState["criticalAlertAllowed"])
+        XCTAssertNotNil(rawState["notificationAllowed"])
+        XCTAssertNotNil(rawState["healthStoreAuthorization"])
+        XCTAssertNotNil(rawState["cgmManagerIdentifier"])
+        XCTAssertNotNil(rawState["pumpManagerIdentifier"])
         XCTAssertNotNil(rawState["dosingEnabled"])
 
         let new = TidepoolOnboarding(rawState: rawState)
@@ -206,6 +278,12 @@ class TidepoolOnboardingTests: XCTestCase {
             XCTAssertEqual(new.prescription, old.prescription)
             XCTAssertEqual(new.prescriberProfile, old.prescriberProfile)
             XCTAssertEqual(new.therapySettings, old.therapySettings)
+            XCTAssertEqual(new.notificationAuthorization, old.notificationAuthorization)
+            XCTAssertEqual(new.criticalAlertAllowed, old.criticalAlertAllowed)
+            XCTAssertEqual(new.notificationAllowed, old.notificationAllowed)
+            XCTAssertEqual(new.healthStoreAuthorization, old.healthStoreAuthorization)
+            XCTAssertEqual(new.cgmManagerIdentifier, old.cgmManagerIdentifier)
+            XCTAssertEqual(new.pumpManagerIdentifier, old.pumpManagerIdentifier)
             XCTAssertEqual(new.dosingEnabled, old.dosingEnabled)
             XCTAssertFalse(new.isOnboarded)
         }

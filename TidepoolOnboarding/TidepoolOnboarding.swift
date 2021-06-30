@@ -66,6 +66,18 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         }
     }
 
+    var criticalAlertAllowed: Bool? {
+        didSet {
+            notifyDidUpdateState()
+        }
+    }
+
+    var notificationAllowed: Bool? {
+        didSet {
+            notifyDidUpdateState()
+        }
+    }
+
     var healthStoreAuthorization: HealthStoreAuthorization? {
         didSet {
             notifyDidUpdateState()
@@ -120,6 +132,8 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         if let rawNotificationAuthorization = rawState["notificationAuthorization"] as? Int {
             self.notificationAuthorization = NotificationAuthorization(rawValue: rawNotificationAuthorization)
         }
+        self.criticalAlertAllowed = rawState["criticalAlertAllowed"] as? Bool
+        self.notificationAllowed = rawState["notificationAllowed"] as? Bool
         if let rawHealthStoreAuthorization = rawState["healthStoreAuthorization"] as? Int {
             self.healthStoreAuthorization = HealthStoreAuthorization(rawValue: rawHealthStoreAuthorization)
         }
@@ -147,6 +161,8 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
             rawState["therapySettings"] = try? Self.encoder.encode(therapySettings)
         }
         rawState["notificationAuthorization"] = notificationAuthorization?.rawValue
+        rawState["criticalAlertAllowed"] = criticalAlertAllowed
+        rawState["notificationAllowed"] = notificationAllowed
         rawState["healthStoreAuthorization"] = healthStoreAuthorization?.rawValue
         rawState["cgmManagerIdentifier"] = cgmManagerIdentifier
         rawState["pumpManagerIdentifier"] = pumpManagerIdentifier

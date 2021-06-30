@@ -67,8 +67,8 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -80,8 +80,8 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
 
         onboardingViewModel.updateLastAccessedDate()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForegroundNotificationReceived(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackgroundNotificationReceived(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveNotificationReceived(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.willResignActiveNotificationReceived(_:)), name: UIApplication.willResignActiveNotification, object: nil)
     }
 
     private func setState(_ state: State, reset: Bool = false) {
@@ -117,11 +117,11 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
         setViewControllers([UIHostingController(rootView: rootView)], animated: animated)
     }
 
-    @objc private func willEnterForegroundNotificationReceived(_ notification: Notification) {
+    @objc private func didBecomeActiveNotificationReceived(_ notification: Notification) {
         onboardingViewModel.updateLastAccessedDate()
     }
 
-    @objc private func didEnterBackgroundNotificationReceived(_ notification: Notification) {
+    @objc private func willResignActiveNotificationReceived(_ notification: Notification) {
         onboardingViewModel.updateLastAccessedDate()
     }
 }

@@ -12,8 +12,10 @@ import LoopKitUI
 struct YourDevicesNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
-    @State var notificationAuthorized = false
-    @State var healthStoreAuthorized = false
+    @State private var notificationAuthorized = false
+    @State private var criticalAlertAllowed = false
+    @State private var notificationAllowed = false
+    @State private var healthStoreAuthorized = false
 
     var body: some View {
         OnboardingSectionNavigationButton(section: .yourDevices, destination: NavigationView { destination }, action: action)
@@ -24,6 +26,8 @@ struct YourDevicesNavigationButton: View {
     private var destination: some View {
         if !notificationAuthorized {
             YourDevicesNotificationsView()
+        } else if !criticalAlertAllowed || !notificationAllowed {
+            YourDevicesAlertPermissionsRequiredView(criticalAlertAllowed: criticalAlertAllowed, notificationAllowed: notificationAllowed)
         } else if !healthStoreAuthorized {
             YourDevicesAppleHealthView()
         } else if !onboardingViewModel.isCGMManagerOnboarded || !onboardingViewModel.isPumpManagerOnboarded {
@@ -33,6 +37,8 @@ struct YourDevicesNavigationButton: View {
 
     private func action() -> Bool {
         self.notificationAuthorized = onboardingViewModel.notificationAuthorization != nil && onboardingViewModel.notificationAuthorization != .notDetermined
+        self.criticalAlertAllowed = onboardingViewModel.criticalAlertAllowed ?? false
+        self.notificationAllowed = onboardingViewModel.notificationAllowed ?? false
         self.healthStoreAuthorized = onboardingViewModel.healthStoreAuthorization != nil && onboardingViewModel.healthStoreAuthorization != .notDetermined
         return true
     }
@@ -43,8 +49,11 @@ struct YourDevicesNavigationButton: View {
 fileprivate struct YourDevicesNotificationsView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
+    @State private var criticalAlertAllowed = false
+    @State private var notificationAllowed = false
+
     var body: some View {
-        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesAppleHealthView()) {
+        OnboardingSectionPageView(section: .yourDevices, destination: destination) {
             PageHeader(title: LocalizedString("Notifications", comment: "Onboarding, Your Devices section, Notifications view, title"))
             PresentableImage("YourDevices_Notifications")
             Paragraph(LocalizedString("To allow your CGM, pump, and Tidepool Loop app to alert you with important safety and maintenance notifications, you’ll next need to:", comment: "Onboarding, Your Devices section, Notifications view, paragraph 1"))
@@ -70,13 +79,74 @@ fileprivate struct YourDevicesNotificationsView: View {
         .nextButtonAction(nextButtonAction)
     }
 
+    @ViewBuilder
+    private var destination: some View {
+        if !criticalAlertAllowed || !notificationAllowed {
+            YourDevicesAlertPermissionsRequiredView(criticalAlertAllowed: criticalAlertAllowed, notificationAllowed: notificationAllowed)
+        } else {
+            YourDevicesAppleHealthView()
+        }
+    }
+
     private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
         onboardingViewModel.onboardingProvider.authorizeNotification { authorization in
-            DispatchQueue.main.async {
+            onboardingViewModel.updateNotificationSettings {
                 onboardingViewModel.notificationAuthorization = authorization
+                self.criticalAlertAllowed = onboardingViewModel.criticalAlertAllowed ?? false
+                self.notificationAllowed = onboardingViewModel.notificationAllowed ?? false
                 completion(authorization != .notDetermined)
             }
         }
+    }
+}
+
+// MARK: - YourDevicesAlertPermissionsRequiredView
+
+fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
+    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
+
+    @State var criticalAlertAllowed: Bool
+    @State var notificationAllowed: Bool
+
+    @State private var isDestinationActive = false
+
+    var body: some View {
+        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesAppleHealthView(), isDestinationActive: $isDestinationActive) {
+            PageHeader(title: LocalizedString("Alert Permissions Required", comment: "Onboarding, Your Devices section, Alert Permissions Required view, title"))
+            PresentableImage("YourDevices_AlertPermissionsRequired")
+            Paragraph(LocalizedString("You must allow Critical Alerts and Notifications on your smart device to continue using Tidepool Loop.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, paragraph"))
+            NumberedBodyTextList(
+                LocalizedString("Tap the button below to open Tidepool Loop settings.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 1"),
+                LocalizedString("Tap Notifications.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 2"),
+                LocalizedString("Allow Critical Alerts and Notifications.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 3"),
+                LocalizedString("Return to this app to continue.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 4")
+            )
+            if !criticalAlertAllowed {
+                Callout(title: LocalizedString("Critical Alerts must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 1, title"), warningIconColor: .red)
+            }
+            if !notificationAllowed {
+                Callout(title: LocalizedString("Notifications must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 2, title"), warningIconColor: .red)
+            }
+        }
+        .backButtonHidden(true)
+        .nextButtonTitle(LocalizedString("Go to Settings", comment: "Onboarding, Your Devices section, Alert Permissions Required view, go to settings button, title"))
+        .nextButtonAction(nextButtonAction)
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            onboardingViewModel.updateNotificationSettings {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0.5)) {   // Delay to allow time for app switch
+                    self.criticalAlertAllowed = onboardingViewModel.criticalAlertAllowed ?? false
+                    self.notificationAllowed = onboardingViewModel.notificationAllowed ?? false
+                    self.isDestinationActive = self.criticalAlertAllowed && self.notificationAllowed
+                }
+            }
+        }
+    }
+
+    private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
+        if let openSettingsURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(openSettingsURL) {
+            UIApplication.shared.open(openSettingsURL)
+        }
+        completion(false)
     }
 }
 

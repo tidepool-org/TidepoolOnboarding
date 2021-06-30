@@ -23,6 +23,8 @@ class OnboardingViewModelTests: XCTestCase {
         onboarding.prescriberProfile = .test
         onboarding.therapySettings = .test
         onboarding.notificationAuthorization = .notDetermined
+        onboarding.criticalAlertAllowed = false
+        onboarding.notificationAllowed = false
         onboarding.healthStoreAuthorization = .notDetermined
         onboarding.cgmManagerIdentifier = "CGM Manager Identifier"
         onboarding.pumpManagerIdentifier = "Pump Manager Identifier"
@@ -109,6 +111,24 @@ class OnboardingViewModelTests: XCTestCase {
     func testNotificationAuthorizationForwarding() {
         onboardingViewModel.notificationAuthorization = .authorized
         XCTAssertEqual(onboarding.notificationAuthorization, onboardingViewModel.notificationAuthorization)
+    }
+
+    func testCriticalAlertAllowedInitialization() {
+        XCTAssertEqual(onboardingViewModel.criticalAlertAllowed, onboarding.criticalAlertAllowed)
+    }
+
+    func testCriticalAlertAllowedForwarding() {
+        onboardingViewModel.criticalAlertAllowed = true
+        XCTAssertEqual(onboarding.criticalAlertAllowed, onboardingViewModel.criticalAlertAllowed)
+    }
+
+    func testNotificationAllowedInitialization() {
+        XCTAssertEqual(onboardingViewModel.notificationAllowed, onboarding.notificationAllowed)
+    }
+
+    func testNotificationAllowedForwarding() {
+        onboardingViewModel.notificationAllowed = true
+        XCTAssertEqual(onboarding.notificationAllowed, onboardingViewModel.notificationAllowed)
     }
 
     func testHealthStoreAuthorizationInitialization() {

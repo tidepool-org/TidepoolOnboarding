@@ -10,13 +10,19 @@ import SwiftUI
 
 struct Callout<Content: View>: View {
     private let title: String
-    private let content: Content
     private let warningIconColor: Color
+    private let content: Content?
 
     init(title: String, warningIconColor: Color = .orange, @ViewBuilder content: () -> Content) {
         self.title = title
         self.warningIconColor = warningIconColor
         self.content = content()
+    }
+
+    init(title: String, warningIconColor: Color = .orange) where Content == EmptyView {
+        self.title = title
+        self.warningIconColor = warningIconColor
+        self.content = nil
     }
 
     var body: some View {
@@ -32,9 +38,11 @@ struct Callout<Content: View>: View {
                         .layoutPriority(1)
                 }
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(.bottom)
-                Segment {
-                    content
+                if let content = content {
+                    Segment {
+                        content
+                    }
+                    .padding(.top)
                 }
             }
             .padding()

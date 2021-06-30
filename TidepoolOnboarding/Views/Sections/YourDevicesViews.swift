@@ -131,7 +131,7 @@ fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
         .backButtonHidden(true)
         .nextButtonTitle(LocalizedString("Go to Settings", comment: "Onboarding, Your Devices section, Alert Permissions Required view, go to settings button, title"))
         .nextButtonAction(nextButtonAction)
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             onboardingViewModel.updateNotificationSettings {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0.5)) {   // Delay to allow time for app switch
                     self.criticalAlertAllowed = onboardingViewModel.criticalAlertAllowed ?? false

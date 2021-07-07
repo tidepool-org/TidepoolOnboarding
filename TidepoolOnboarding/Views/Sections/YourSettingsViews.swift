@@ -318,6 +318,7 @@ fileprivate struct YourSettingsPrescriptionAccessCodeEntryView: View {
             if isBirthdayPickerVisible {
                 birthdayPicker
                     .frame(maxWidth: .infinity)
+                    .padding(-20)
             } else {
                 birthdayLabel
                     .padding(.horizontal, 10)

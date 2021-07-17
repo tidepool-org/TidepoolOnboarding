@@ -102,9 +102,18 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         }
     }
 
+    @Published public var isSuspended: Bool {
+        didSet {
+            notifyDidUpdateState()
+        }
+    }
+
+    @Published public var isOnboarded: Bool
+
     public init() {
         self.lastAccessDate = Date()
         self.sectionProgression = OnboardingSectionProgression()
+        self.isSuspended = false
 
         self.isOnboarded = false
     }
@@ -140,6 +149,7 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         self.cgmManagerIdentifier = rawState["cgmManagerIdentifier"] as? String
         self.pumpManagerIdentifier = rawState["pumpManagerIdentifier"] as? String
         self.dosingEnabled = rawState["dosingEnabled"] as? Bool
+        self.isSuspended = rawState["isSuspended"] as? Bool ?? false
 
         self.isOnboarded = sectionProgression.hasCompletedAllSections
     }
@@ -167,11 +177,10 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         rawState["cgmManagerIdentifier"] = cgmManagerIdentifier
         rawState["pumpManagerIdentifier"] = pumpManagerIdentifier
         rawState["dosingEnabled"] = dosingEnabled
+        rawState["isSuspended"] = isSuspended
 
         return rawState
     }
-
-    @Published public var isOnboarded: Bool
 
     public func onboardingViewController(onboardingProvider: OnboardingProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) -> OnboardingViewController {
         return OnboardingRootNavigationController(onboarding: self, onboardingProvider: onboardingProvider, displayGlucoseUnitObservable: displayGlucoseUnitObservable, colorPalette: colorPalette)
@@ -205,6 +214,7 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
     }
 
     public func reset() {
+        self.isSuspended = false
         self.dosingEnabled = nil
         self.pumpManagerIdentifier = nil
         self.cgmManagerIdentifier = nil

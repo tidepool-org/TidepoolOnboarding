@@ -52,6 +52,10 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
     }
     @Published var dosingEnabled: Bool?
+    @Published var isSuspended: Bool
+
+    @Published var isCGMManagerOnboarded: Bool = false
+    @Published var isPumpManagerOnboarded: Bool = false
 
     lazy var initialTherapySettingsViewModel: TherapySettingsViewModel = constructInitialTherapySettingsViewModel()
     lazy var currentTherapySettingsViewModel: TherapySettingsViewModel = constructCurrentTherapySettingsViewModel()
@@ -77,6 +81,10 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.cgmManagerIdentifier = onboarding.cgmManagerIdentifier
         self.pumpManagerIdentifier = onboarding.pumpManagerIdentifier
         self.dosingEnabled = onboarding.dosingEnabled
+        self.isSuspended = onboarding.isSuspended
+
+        self.isCGMManagerOnboarded = onboardingProvider.activeCGMManager?.isOnboarded ?? false
+        self.isPumpManagerOnboarded = onboardingProvider.activePumpManager?.isOnboarded ?? false
 
         $lastAccessDate
             .dropFirst()
@@ -129,6 +137,10 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         $dosingEnabled
             .dropFirst()
             .sink { onboarding.dosingEnabled = $0 }
+            .store(in: &cancellables)
+        $isSuspended
+            .dropFirst()
+            .sink { onboarding.isSuspended = $0 }
             .store(in: &cancellables)
     }
 
@@ -215,27 +227,27 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
     func verifyDevice(completion: @escaping (OnboardingError?) -> Void) {
         guard deviceValid == nil else {
-            log.info("%{public}@ device was already validated. deviceValid: %{public}@", #function, deviceValid! ? "Yes" : "No")
+            log.info("%{public}@ Device already validated [deviceValid=%{public}@]", #function, deviceValid == true ? "true" : "false")
             completion(nil)
             return
         }
 
         guard let tidepoolService = tidepoolService else {
-            log.info("%{public}@ tidepool service does not exist", #function)
+            log.info("%{public}@ TidepoolService is missing", #function)
             completion(OnboardingError.unexpectedState)
             return
         }
 
         // If the device does not require verification (i.e. simulator), mark as valid
         guard deviceRequiresVerification else {
-            log.info("%{public}@ device does not require verification", #function)
+            log.info("%{public}@ Device verification not required", #function)
             self.deviceValid = true
             completion(nil)
             return
         }
 
         guard !JailbrokenDeviceDetector.isJailbrokenDevice() else {
-            log.info("%{public}@ device is considered to be jailbroken", #function)
+            log.info("%{public}@ Device jailbroken", #function)
             self.deviceValid = false
             completion(nil)
             return
@@ -243,7 +255,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         // if the device does not support DCDevice API, mark as invalid
         guard DCDevice.current.isSupported else {
-            log.info("%{public}@ DCDevice API is not supported. Without this API, the device token cannot be generated and this device automatically fails validation", #function)
+            log.info("%{public}@ DCDevice API not supported, device token cannot be generated, validation failure", #function)
             self.deviceValid = false
             completion(nil)
             return
@@ -252,7 +264,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         DCDevice.current.generateToken { token, error in
             DispatchQueue.main.async {
                 guard error == nil, let token = token else {
-                    self.log.info("%{public}@ device token generation failed. error: %{public}@", #function, error.debugDescription)
+                    self.log.info("%{public}@ Device token generation failed [error=%{public}@]", #function, error.debugDescription)
                     completion(OnboardingError.unexpectedError)
                     return
                 }
@@ -398,19 +410,15 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         return cgmManagerImage
     }
 
-    var isCGMManagerOnboarded: Bool {
-        guard let activeCGMManager = onboardingProvider.activeCGMManager,
-              activeCGMManager.managerIdentifier == cgmManagerIdentifier else {
-            return false
-        }
-        return activeCGMManager.isOnboarded
-    }
-
     func onboardCGMManager() -> Result<OnboardingResult<CGMManagerViewController, CGMManager>, Error> {
         guard let cgmManagerIdentifier = cgmManagerIdentifier else {
             return .failure(OnboardingError.unexpectedState)
         }
-        return onboardingProvider.onboardCGMManager(withIdentifier: cgmManagerIdentifier)
+        let result = onboardingProvider.onboardCGMManager(withIdentifier: cgmManagerIdentifier)
+        if case .success(let success) = result, case .createdAndOnboarded = success {
+            self.isCGMManagerOnboarded = true
+        }
+        return result
     }
 
     var pumpManagerTitle: String {
@@ -429,20 +437,15 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         return pumpManagerImage
     }
 
-    var isPumpManagerOnboarded: Bool {
-        guard let activePumpManager = onboardingProvider.activePumpManager,
-              activePumpManager.managerIdentifier == pumpManagerIdentifier else {
-            return false
-        }
-        return activePumpManager.isOnboarded
-    }
-
     func onboardPumpManager() -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
         guard let pumpManagerIdentifier = pumpManagerIdentifier else {
             return .failure(OnboardingError.unexpectedState)
         }
-        return onboardingProvider.onboardPumpManager(withIdentifier: pumpManagerIdentifier,
-                                                     initialSettings: pumpManagerInitialSettings)
+        let result = onboardingProvider.onboardPumpManager(withIdentifier: pumpManagerIdentifier, initialSettings: pumpManagerInitialSettings)
+        if case .success(let success) = result, case .createdAndOnboarded = success {
+            self.isPumpManagerOnboarded = true
+        }
+        return result
     }
 
     private var pumpManagerInitialSettings: PumpManagerSetupSettings {
@@ -518,6 +521,7 @@ extension OnboardingViewModel: CGMManagerOnboardingDelegate {
 
     func cgmManagerOnboarding(didOnboardCGMManager cgmManager: CGMManagerUI) {
         cgmManagerOnboardingDelegate?.cgmManagerOnboarding(didOnboardCGMManager: cgmManager)
+        self.isCGMManagerOnboarded = true
     }
 }
 
@@ -528,6 +532,7 @@ extension OnboardingViewModel: PumpManagerOnboardingDelegate {
 
     func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI) {
         pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager)
+        self.isPumpManagerOnboarded = true
     }
 }
 

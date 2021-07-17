@@ -47,6 +47,13 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
 
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
 
+        onboarding.$isSuspended
+            .filter { $0 }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.completionDelegate?.completionNotifyingDidComplete(self)
+            }
+            .store(in: &cancellables)
         onboarding.$isOnboarded
             .filter { $0 }
             .sink { [weak self] _ in
@@ -77,6 +84,8 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        onboardingViewModel.isSuspended = false
 
         onboardingViewModel.updateLastAccessedDate()
 

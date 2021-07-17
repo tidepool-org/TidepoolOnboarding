@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct OnboardingSectionPageView<Destination: View, Content: View>: View {
-    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
-
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.complete) var complete
 
@@ -28,6 +26,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
     private let destination: Destination?
     private let isDestinationActive: Binding<Bool>
     private let content: Content
+    private let footer: AnyView?
 
     init(section: OnboardingSection, destination: Destination, isDestinationActive: Binding<Bool> = .constant(false), @ViewBuilder content: () -> Content) {
         self.section = section
@@ -41,6 +40,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.destination = destination
         self.isDestinationActive = isDestinationActive
         self.content = content()
+        self.footer = nil
     }
 
     init(section: OnboardingSection, @ViewBuilder content: () -> Content) where Destination == EmptyView {
@@ -55,6 +55,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
         self.destination = nil
         self.isDestinationActive = .constant(false)
         self.content = content()
+        self.footer = nil
     }
 
     var body: some View {
@@ -66,6 +67,9 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
                             content
                         }
                         Spacer()
+                        if let footer = footer {
+                            footer
+                        }
                         if !nextButtonHidden {
                             nextButton
                         }
@@ -128,7 +132,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View>: View {
 }
 
 extension OnboardingSectionPageView {
-    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, closeButtonHidden: Bool? = nil, nextButtonHidden: Bool? = nil, nextButtonTitle: String? = nil, nextButtonAction: ((@escaping (Bool) -> Void) -> Void)? = nil, nextButtonDisabled: Bool? = nil) {
+    init(_ other: Self, editMode: Bool? = nil, backButtonHidden: Bool? = nil, closeButtonHidden: Bool? = nil, nextButtonHidden: Bool? = nil, nextButtonTitle: String? = nil, nextButtonAction: ((@escaping (Bool) -> Void) -> Void)? = nil, nextButtonDisabled: Bool? = nil, footer: AnyView? = nil) {
         self.section = other.section
         self.editMode = editMode ?? other.editMode
         self.backButtonHidden = backButtonHidden ?? other.backButtonHidden
@@ -140,6 +144,7 @@ extension OnboardingSectionPageView {
         self.destination = other.destination
         self.isDestinationActive = other.isDestinationActive
         self.content = other.content
+        self.footer = footer ?? other.footer
     }
 
     func editMode(_ editMode: Bool?) -> Self { Self(self, editMode: editMode) }
@@ -155,4 +160,6 @@ extension OnboardingSectionPageView {
     func nextButtonAction(_ nextButtonAction: ((@escaping (Bool) -> Void) -> Void)?) -> Self { Self(self, nextButtonAction: nextButtonAction) }
 
     func nextButtonDisabled(_ nextButtonDisabled: Bool?) -> Self { Self(self, nextButtonDisabled: nextButtonDisabled) }
+
+    func footer(_ footer: AnyView?) -> Self { Self(self, footer: footer) }
 }

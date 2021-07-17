@@ -29,6 +29,7 @@ class OnboardingViewModelTests: XCTestCase {
         onboarding.cgmManagerIdentifier = "CGM Manager Identifier"
         onboarding.pumpManagerIdentifier = "Pump Manager Identifier"
         onboarding.dosingEnabled = false
+        onboarding.isSuspended = false
         onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: MockOnboardingProvider())
     }
 
@@ -165,6 +166,23 @@ class OnboardingViewModelTests: XCTestCase {
     func testDosingEnabledForwarding() {
         onboardingViewModel.dosingEnabled = true
         XCTAssertEqual(onboarding.dosingEnabled, onboardingViewModel.dosingEnabled)
+    }
+
+    func testIsSuspendedInitialization() {
+        XCTAssertEqual(onboardingViewModel.isSuspended, onboarding.isSuspended)
+    }
+
+    func testIsSuspendedForwarding() {
+        onboardingViewModel.isSuspended = true
+        XCTAssertEqual(onboarding.isSuspended, onboardingViewModel.isSuspended)
+    }
+
+    func testIsCGMManagerOnboardedInitializationIfNoActiveCGMManager() {
+        XCTAssertFalse(onboardingViewModel.isCGMManagerOnboarded)
+    }
+
+    func testIsPumpManagerOnboardedInitializationIfNoActivePumpManager() {
+        XCTAssertFalse(onboardingViewModel.isPumpManagerOnboarded)
     }
 
     func testUpdateLastAccessedDateUpdatesDate() {

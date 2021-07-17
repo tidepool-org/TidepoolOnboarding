@@ -237,6 +237,16 @@ class TidepoolOnboardingTests: XCTestCase {
         wait(for: [didUpdateStateExpectation!], timeout: 1)
     }
 
+    func testIsSuspendedNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.isSuspended = true
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
     func testRawState() {
         let old = TidepoolOnboarding()
         old.lastAccessDate = Date()
@@ -253,6 +263,7 @@ class TidepoolOnboardingTests: XCTestCase {
         old.cgmManagerIdentifier = "1234567890"
         old.pumpManagerIdentifier = "abcdefghij"
         old.dosingEnabled = true
+        old.isSuspended = true
 
         let rawState = old.rawState
         XCTAssertNotNil(rawState["lastAccessDate"])
@@ -268,6 +279,7 @@ class TidepoolOnboardingTests: XCTestCase {
         XCTAssertNotNil(rawState["cgmManagerIdentifier"])
         XCTAssertNotNil(rawState["pumpManagerIdentifier"])
         XCTAssertNotNil(rawState["dosingEnabled"])
+        XCTAssertNotNil(rawState["isSuspended"])
 
         let new = TidepoolOnboarding(rawState: rawState)
         XCTAssertNotNil(new)
@@ -285,6 +297,7 @@ class TidepoolOnboardingTests: XCTestCase {
             XCTAssertEqual(new.cgmManagerIdentifier, old.cgmManagerIdentifier)
             XCTAssertEqual(new.pumpManagerIdentifier, old.pumpManagerIdentifier)
             XCTAssertEqual(new.dosingEnabled, old.dosingEnabled)
+            XCTAssertEqual(new.isSuspended, old.isSuspended)
             XCTAssertFalse(new.isOnboarded)
         }
     }

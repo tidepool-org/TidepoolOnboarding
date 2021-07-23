@@ -100,7 +100,7 @@ class OnboardingViewModelTests: XCTestCase {
     }
 
     func testTherapySettingsForwarding() {
-        onboardingViewModel.therapySettings = TherapySettings(insulinModelSettings: .exponentialPreset(.fiasp))
+        onboardingViewModel.therapySettings = TherapySettings(defaultRapidActingModel: .exponentialPreset(.fiasp))
         XCTAssertEqual(onboarding.therapySettings, onboardingViewModel.therapySettings)
     }
 

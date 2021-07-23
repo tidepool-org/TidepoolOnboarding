@@ -37,7 +37,7 @@ extension TPrescription {
                                        insulinSensitivitySchedule: initialSettings.insulinSensitivitySchedule?.insulinSensitivitySchedule(in: bloodGlucoseUnits),
                                        carbRatioSchedule: initialSettings.carbohydrateRatioSchedule?.carbRatioSchedule,
                                        basalRateSchedule: initialSettings.basalRateSchedule?.basalRateSchedule,
-                                       insulinModelSettings: initialSettings.insulinModel?.insulinModelSettings)
+                                       defaultRapidActingModel: initialSettings.insulinModel?.defaultRapidActingModel)
     }
 }
 
@@ -194,17 +194,13 @@ fileprivate extension TPrescription.CarbohydrateRatioStart {
 }
 
 fileprivate extension TPrescription.InsulinModelType {
-    var insulinModelSettings: InsulinModelSettings? {
+    var defaultRapidActingModel: ExponentialInsulinModelPreset? {
         switch self {
-        case .fiasp:
-            return InsulinModelSettings(model: ExponentialInsulinModelPreset.fiasp)
-        case .other:
-            return nil
         case .rapidAdult:
-            return InsulinModelSettings(model: ExponentialInsulinModelPreset.humalogNovologAdult)
+            return ExponentialInsulinModelPreset.rapidActingAdult
         case .rapidChild:
-            return InsulinModelSettings(model: ExponentialInsulinModelPreset.humalogNovologChild)
-        case .walsh:
+            return ExponentialInsulinModelPreset.rapidActingChild
+        default:
             return nil
         }
     }

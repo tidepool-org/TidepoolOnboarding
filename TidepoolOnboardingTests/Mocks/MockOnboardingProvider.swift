@@ -44,6 +44,8 @@ class MockOnboardingProvider: OnboardingProvider {
     func onboardService(withIdentifier identifier: String) -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
         .failure(MockError())
     }
+    
+    var onboardingTherapySettings = TherapySettings()
 }
 
 fileprivate struct MockError: Error {}

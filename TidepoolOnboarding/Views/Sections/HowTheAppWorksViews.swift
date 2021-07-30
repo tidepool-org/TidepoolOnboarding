@@ -286,8 +286,7 @@ fileprivate struct HowTheAppWorksView11: View {
             PresentableImage(decorative: "HowTheAppWorks_11_1")
             Paragraph(LocalizedString("Most of the information you need about your glucose is visible from the home screen itself, but tapping the Glucose Chart allows you to see and do more:", comment: "Onboarding, How the App Works section, view 11, paragraph 1"))
             BulletedBodyTextList(
-                LocalizedString("Understand how Tidepool Loop makes its glucose predictions", comment: "Onboarding, How the App Works section, view 11, list, item 1"),
-                LocalizedString("Enter information about fingerstick glucose", comment: "Onboarding, How the App Works section, view 11, list, item 2")
+                LocalizedString("Understand how Tidepool Loop makes its glucose predictions", comment: "Onboarding, How the App Works section, view 11, list, item 1")
             )
             segment1
             segment2

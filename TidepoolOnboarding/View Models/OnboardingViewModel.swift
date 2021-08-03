@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import os.log
 import DeviceCheck
 import UIKit
 import LoopKit
@@ -18,6 +19,9 @@ import TidepoolServiceKit
 let TidepoolServiceIdentifier = "TidepoolService"
 
 class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding {
+
+    private let log = OSLog(category: "OnboardingViewModel")
+
     weak var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate?
     weak var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
     weak var serviceOnboardingDelegate: ServiceOnboardingDelegate?
@@ -221,6 +225,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         // If the device does not require verification (i.e. simulator) or DeviceCheck is not supported, just mark as valid
         guard deviceRequiresVerification, DCDevice.current.isSupported else {
+            log.debug("%{public}@ device requires verification: %{public}@; is device supported: %{public}@", #function, deviceRequiresVerification ? "Yes" : "No", DCDevice.current.isSupported ? "Yes" : "No")
             self.deviceValid = true
             completion(nil)
             return

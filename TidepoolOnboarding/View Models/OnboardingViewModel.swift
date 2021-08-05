@@ -323,7 +323,6 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         let prescription = OnboardingPrescription(datePrescribed: datePrescribed, providerName: providerName)
         return TherapySettingsViewModel(therapySettings: therapySettings,
-                                        supportedInsulinModelSettings: supportedInsulinModelSettings,
                                         pumpSupportedIncrements: getPumpSupportedIncrements,
                                         prescription: prescription)
     }
@@ -334,12 +333,9 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
 
         return TherapySettingsViewModel(therapySettings: therapySettings,
-                                        supportedInsulinModelSettings: supportedInsulinModelSettings,
                                         pumpSupportedIncrements: getPumpSupportedIncrements,
                                         didSave: { (_, therapySettings) in self.therapySettings = therapySettings })
     }
-
-    private let supportedInsulinModelSettings = SupportedInsulinModelSettings(fiaspModelEnabled: false, walshModelEnabled: false)
 
     private func getPumpSupportedIncrements() -> PumpSupportedIncrements? {
         guard pumpSupportedIncrements == nil else {

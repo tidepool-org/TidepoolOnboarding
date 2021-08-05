@@ -49,6 +49,10 @@ fileprivate class PreviewOnboardingProvider: OnboardingProvider {
     func onboardService(withIdentifier identifier: String) -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
         .failure(PreviewError())
     }
+    
+    var onboardingTherapySettings: TherapySettings {
+        return TherapySettings()
+    }
 }
 
 fileprivate struct PreviewError: Error {}

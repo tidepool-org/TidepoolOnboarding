@@ -215,10 +215,13 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
     func verifyDevice(completion: @escaping (OnboardingError?) -> Void) {
         guard deviceValid == nil else {
+            log.debug("%{public}@ device was already validated. deviceValid: %{public}@", #function, deviceValid! ? "Yes" : "No")
             completion(nil)
             return
         }
+
         guard let tidepoolService = tidepoolService else {
+            log.debug("%{public}@ tidepool service does not exist", #function)
             completion(OnboardingError.unexpectedState)
             return
         }
@@ -234,6 +237,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         DCDevice.current.generateToken { token, error in
             DispatchQueue.main.async {
                 guard error == nil, let token = token else {
+                    self.log.debug("%{public}@ device token generation failed. error: %{public}@", #function, error.debugDescription)
                     completion(OnboardingError.unexpectedError)
                     return
                 }

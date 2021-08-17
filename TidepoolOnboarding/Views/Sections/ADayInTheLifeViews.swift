@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import HealthKit
 import LoopKitUI
 
 struct ADayInTheLifeNavigationButton: View {
@@ -33,12 +34,15 @@ fileprivate struct ADayInTheLifeView1: View {
 }
 
 fileprivate struct ADayInTheLifeView2: View {
+    @EnvironmentObject private var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
+    private let glucoseValue120MGDL = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 120)
+
     var body: some View {
         OnboardingSectionPageView(section: .aDayInTheLife, destination: ADayInTheLifeView3()) {
             PageHeader(title: LocalizedString("Eating with Tidepool Loop", comment: "Onboarding, A Day In The Life section, view 2, title"))
             PresentableImage(decorative: "ADayInTheLife_2_1")
             Paragraph(LocalizedString("It’s lunch time and you’re thinking about a big sandwich and chips from your favorite local cafe around the corner from your office.", comment: "Onboarding, A Day In The Life section, view 2, paragraph 1"))
-            Paragraph(LocalizedString("Tidepool Loop shows that your glucose is 120 mg/dL.", comment: "Onboarding, A Day In The Life section, view 2, paragraph 2"))
+            Paragraph(String(format: LocalizedString("Tidepool Loop shows that your glucose is %1$@.", comment: "Onboarding, A Day In The Life section, view 2, paragraph 2 (1: glucose value equivalent to 120 mg/dL)"), glucoseValue120MGDL.stringForGlucoseUnit(displayGlucoseUnitObservable.displayGlucoseUnit)))
             PresentableImage(decorative: "ADayInTheLife_2_2")
             Paragraph(LocalizedString("Your charts show little insulin or carbs active in your body.", comment: "Onboarding, A Day In The Life section, view 2, paragraph 3"))
         }
@@ -161,12 +165,15 @@ fileprivate struct ADayInTheLifeView11: View {
 }
 
 fileprivate struct ADayInTheLifeView12: View {
+    @EnvironmentObject private var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
+    private let glucoseValue150MGDL = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 150)
+
     var body: some View {
         OnboardingSectionPageView(section: .aDayInTheLife, destination: ADayInTheLifeView13()) {
             PageHeader(title: LocalizedString("Exercising with Tidepool Loop", comment: "Onboarding, A Day In The Life section, view 12, title"))
             PresentableImage(decorative: "ADayInTheLife_12_1")
             Paragraph(LocalizedString("With Tidepool Loop, you have both information and automation to help you prepare for activity.", comment: "Onboarding, A Day In The Life section, view 12, paragraph 1"))
-            Paragraph(LocalizedString("You love to go for a 2-mile run in the mornings and have found that you like to keep your glucose around 150 mg/dL on your runs.", comment: "Onboarding, A Day In The Life section, view 12, paragraph 2"))
+            Paragraph(String(format: LocalizedString("You love to go for a 2-mile run in the mornings and have found that you like to keep your glucose around %1$@ on your runs.", comment: "Onboarding, A Day In The Life section, view 12, paragraph 2 (1: glucose value equivalent to 150 mg/dL"), glucoseValue150MGDL.stringForGlucoseUnit(displayGlucoseUnitObservable.displayGlucoseUnit)))
             PresentableImage(decorative: "ADayInTheLife_12_2")
             segment
         }
@@ -193,10 +200,13 @@ fileprivate struct ADayInTheLifeView13: View {
 }
 
 fileprivate struct ADayInTheLifeView14: View {
+    @EnvironmentObject private var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
+    private let workoutGoalRange: ClosedRange<HKQuantity> = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 150)...HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 160)
+
     var body: some View {
         OnboardingSectionPageView(section: .aDayInTheLife, destination: ADayInTheLifeView15()) {
             PageHeader(title: LocalizedString("Workout Preset", comment: "Onboarding, A Day In The Life section, view 14, title"))
-            Paragraph(LocalizedString("You’ve told Tidepool Loop in Settings that you like your glucose to stay a little higher during your workouts and have set this goal for 150-160 mg/dL.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 1"))
+            Paragraph(String(format: LocalizedString("You’ve told Tidepool Loop in Settings that you like your glucose to stay a little higher during your workouts and have set this goal for %1$@.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 1 (1: glucose range equivalent to 150-160 mg/dL"), workoutGoalRange.stringForGlucoseUnit(displayGlucoseUnitObservable.displayGlucoseUnit)))
             Paragraph(LocalizedString("You go ahead and tap the Workout Preset button from either your iPhone or Apple Watch to tell Tidepool Loop to adjust both your glucose target and your insulin delivery for the next two hours.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 2"))
             PresentableImage(decorative: "ADayInTheLife_14_1")
             Paragraph(LocalizedString("You decide how long before or after this change should remain in effect, as well as how long you expect your activity to last.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 3"))

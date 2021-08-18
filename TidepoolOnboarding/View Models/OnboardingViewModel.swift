@@ -228,8 +228,15 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         // If the device does not require verification (i.e. simulator), mark as valid
         guard deviceRequiresVerification else {
-            log.info("%{public}@ device does not require verification: %{public}@; is device supported: %{public}@", #function, deviceRequiresVerification ? "Yes" : "No", DCDevice.current.isSupported ? "Yes" : "No")
+            log.info("%{public}@ device does not require verification", #function)
             self.deviceValid = true
+            completion(nil)
+            return
+        }
+
+        guard !JailbrokenDeviceDetector.isJailbrokenDevice() else {
+            log.info("%{public}@ device is considered to be jailbroken", #function)
+            self.deviceValid = false
             completion(nil)
             return
         }
@@ -237,12 +244,6 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         // if the device does not support DCDevice API, mark as invalid
         guard DCDevice.current.isSupported else {
             log.info("%{public}@ DCDevice API is not supported. Without this API, the device token cannot be generated and this device automatically fails validation", #function)
-            self.deviceValid = false
-            completion(nil)
-            return
-        }
-
-        guard !ValidDeviceDetector.isJailbrokenDevice() else {
             self.deviceValid = false
             completion(nil)
             return

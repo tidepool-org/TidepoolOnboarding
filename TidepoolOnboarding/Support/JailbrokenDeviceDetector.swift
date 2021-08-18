@@ -1,5 +1,5 @@
 //
-//  ValidDeviceDetector.swift
+//  JailbrokenDeviceDetector.swift
 //  TidepoolOnboarding
 //
 //  Created by Nathaniel Hamming on 2021-08-13.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct ValidDeviceDetector {
+struct JailbrokenDeviceDetector {
     static public func isJailbrokenDevice() -> Bool {
         #if targetEnvironment(simulator)
         return false
@@ -17,6 +17,7 @@ struct ValidDeviceDetector {
         {
             return true
         }
+
 
         if FileManager.default.fileExists(atPath: "/Applications/Cydia.app") ||
             FileManager.default.fileExists(atPath: "/Library/MobileSubstrate/MobileSubstrate.dylib") ||

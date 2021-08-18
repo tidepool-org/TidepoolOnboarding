@@ -215,21 +215,36 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
     func verifyDevice(completion: @escaping (OnboardingError?) -> Void) {
         guard deviceValid == nil else {
-            log.debug("%{public}@ device was already validated. deviceValid: %{public}@", #function, deviceValid! ? "Yes" : "No")
+            log.info("%{public}@ device was already validated. deviceValid: %{public}@", #function, deviceValid! ? "Yes" : "No")
             completion(nil)
             return
         }
 
         guard let tidepoolService = tidepoolService else {
-            log.debug("%{public}@ tidepool service does not exist", #function)
+            log.info("%{public}@ tidepool service does not exist", #function)
             completion(OnboardingError.unexpectedState)
             return
         }
 
-        // If the device does not require verification (i.e. simulator) or DeviceCheck is not supported, just mark as valid
-        guard deviceRequiresVerification, DCDevice.current.isSupported else {
-            log.debug("%{public}@ device requires verification: %{public}@; is device supported: %{public}@", #function, deviceRequiresVerification ? "Yes" : "No", DCDevice.current.isSupported ? "Yes" : "No")
+        // If the device does not require verification (i.e. simulator), mark as valid
+        guard deviceRequiresVerification else {
+            log.info("%{public}@ device does not require verification", #function)
             self.deviceValid = true
+            completion(nil)
+            return
+        }
+
+        guard !JailbrokenDeviceDetector.isJailbrokenDevice() else {
+            log.info("%{public}@ device is considered to be jailbroken", #function)
+            self.deviceValid = false
+            completion(nil)
+            return
+        }
+
+        // if the device does not support DCDevice API, mark as invalid
+        guard DCDevice.current.isSupported else {
+            log.info("%{public}@ DCDevice API is not supported. Without this API, the device token cannot be generated and this device automatically fails validation", #function)
+            self.deviceValid = false
             completion(nil)
             return
         }
@@ -237,7 +252,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         DCDevice.current.generateToken { token, error in
             DispatchQueue.main.async {
                 guard error == nil, let token = token else {
-                    self.log.debug("%{public}@ device token generation failed. error: %{public}@", #function, error.debugDescription)
+                    self.log.info("%{public}@ device token generation failed. error: %{public}@", #function, error.debugDescription)
                     completion(OnboardingError.unexpectedError)
                     return
                 }

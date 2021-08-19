@@ -103,6 +103,7 @@
 		A9E56C32262E1C4600A10627 /* NumberedBodyTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E56C31262E1C4600A10627 /* NumberedBodyTextList.swift */; };
 		A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */; };
 		A9EFBD322602D09B0070E9CC /* ModalPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFBD312602D09B0070E9CC /* ModalPresentation.swift */; };
+		B483213E26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B483213D26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,6 +224,7 @@
 		A9E932A52605168200E28144 /* LoopUIColorPalette+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoopUIColorPalette+Demo.swift"; sourceTree = "<group>"; };
 		A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionSheetButton.swift; sourceTree = "<group>"; };
 		A9EFBD312602D09B0070E9CC /* ModalPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentation.swift; sourceTree = "<group>"; };
+		B483213D26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JailbrokenDeviceDetector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -534,6 +536,7 @@
 				A95D623F2649FF410018B9EA /* AttributedString.swift */,
 				A911C223264B0FB200EF3B85 /* OnboardingError.swift */,
 				A903C79725F1443200C88786 /* OnboardingSection.swift */,
+				B483213D26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -863,6 +866,7 @@
 				A9502CDA2600293200146AD3 /* BodyText.swift in Sources */,
 				A923334225C3786100D8CF69 /* Environment+Complete.swift in Sources */,
 				A916AA5125F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift in Sources */,
+				B483213E26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift in Sources */,
 				A93D2B112602606E0091FB65 /* AlertOnLongPressGesture.swift in Sources */,
 				A906344A26433B9300CAFED1 /* ServiceView.swift in Sources */,
 				A9A80D852639DC6100770DA7 /* TPrescription.swift in Sources */,

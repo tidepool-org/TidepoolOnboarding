@@ -113,7 +113,7 @@ fileprivate struct IntroductionView4: View {
     
     private var segment1: some View {
         Segment(header: LocalizedString("Compatible Device Required", comment: "Onboarding, Introduction section, view 4, segment 1, header")) {
-            Paragraph(LocalizedString("In order for the Tidepool Loop app to work properly, it cannot run on a device with a modified operating system (jailbroken device).", comment: "Onboarding, Introduction section, view 4, segment 1, paragraph"))
+            Paragraph(LocalizedString("In order for the Tidepool Loop app to work properly, it cannot run on a device with modified software or a modified operating system (jailbroken device).", comment: "Onboarding, Introduction section, view 4, segment 1, paragraph"))
         }
     }
     

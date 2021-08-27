@@ -16,6 +16,8 @@ struct YourDevicesNavigationButton: View {
     @State private var criticalAlertAllowed = false
     @State private var notificationAllowed = false
     @State private var healthStoreAuthorized = false
+    @State private var isCGMManagerOnboarded = false
+    @State private var isPumpManagerOnboarded = false
 
     var body: some View {
         OnboardingSectionNavigationButton(section: .yourDevices, destination: NavigationView { destination }, action: action)
@@ -30,7 +32,7 @@ struct YourDevicesNavigationButton: View {
             YourDevicesAlertPermissionsRequiredView(criticalAlertAllowed: criticalAlertAllowed, notificationAllowed: notificationAllowed)
         } else if !healthStoreAuthorized {
             YourDevicesAppleHealthView()
-        } else if !onboardingViewModel.isCGMManagerOnboarded || !onboardingViewModel.isPumpManagerOnboarded {
+        } else if !isCGMManagerOnboarded || !isPumpManagerOnboarded {
             YourDevicesPairingYourDevicesView()
         }
     }
@@ -40,6 +42,8 @@ struct YourDevicesNavigationButton: View {
         self.criticalAlertAllowed = onboardingViewModel.criticalAlertAllowed ?? false
         self.notificationAllowed = onboardingViewModel.notificationAllowed ?? false
         self.healthStoreAuthorized = onboardingViewModel.healthStoreAuthorization != nil && onboardingViewModel.healthStoreAuthorization != .notDetermined
+        self.isCGMManagerOnboarded = onboardingViewModel.isCGMManagerOnboarded
+        self.isPumpManagerOnboarded = onboardingViewModel.isPumpManagerOnboarded
         return true
     }
 }
@@ -201,11 +205,11 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     @State private var alertMessage: String?
     @State private var isAlertPresented = false
 
-    @State private var isCGMManagerOnboarded = false
     @State private var cgmManagerViewController: CGMManagerViewController?
-    @State private var isPumpManagerOnboarded = false
     @State private var pumpManagerViewController: PumpManagerViewController?
-    @State private var isSheetPresented = false
+    @State private var isCGMManagerSheetPresented = false
+    @State private var isPumpManagerSheetPresented = false
+    @State private var isPauseOnboardingSheetPresented = false
     @State private var onSheetDismiss: (() -> Void)?
 
     var body: some View {
@@ -215,22 +219,20 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
             Paragraph(LocalizedString("Before pairing your devices, make sure your smart device, on which you are reading this screen, is connected to the internet.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 2"))
             Paragraph(LocalizedString("You must have both CGM and Pump with you to proceed.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 3"))
                 .bold()
-            Paragraph(LocalizedString("If you do not yet have both devices, you should wait until you do to proceed.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 4"))
             VStack(alignment: .leading, spacing: 30) {
-                DeviceView(number: 1, attributed: cgmManagerText, checked: isCGMManagerOnboarded)
-                DeviceView(number: 2, attributed: pumpManagerText, checked: isPumpManagerOnboarded)
+                DeviceView(number: 1, attributed: cgmManagerText, checked: onboardingViewModel.isCGMManagerOnboarded)
+                    .sheet(isPresented: $isCGMManagerSheetPresented, onDismiss: onSheetDismiss) { onboardCGMManagerSheet }
+                DeviceView(number: 2, attributed: pumpManagerText, checked: onboardingViewModel.isPumpManagerOnboarded)
+                    .sheet(isPresented: $isPumpManagerSheetPresented, onDismiss: onSheetDismiss) { onboardPumpManagerSheet }
             }
             .padding(.vertical)
+            Paragraph(LocalizedString("If you do not yet have both devices, or you need to stop for any reason, you can pause and return to this point later.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 4"))
         }
         .backButtonHidden(true)
         .nextButtonTitle(nextButtonTitle)
         .nextButtonAction(nextButtonAction)
+        .footer(footer)
         .alert(isPresented: $isAlertPresented) { alert }
-        .sheet(isPresented: $isSheetPresented, onDismiss: onSheetDismiss) { sheet }
-        .onAppear {
-            isCGMManagerOnboarded = onboardingViewModel.isCGMManagerOnboarded
-            isPumpManagerOnboarded = onboardingViewModel.isPumpManagerOnboarded
-        }
     }
 
     private var cgmManagerText: String {
@@ -244,7 +246,7 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     }
 
     private var nextButtonTitle: String? {
-        if !isCGMManagerOnboarded {
+        if !onboardingViewModel.isCGMManagerOnboarded {
             return LocalizedString("Pair CGM", comment: "Onboarding, Your Devices section, Pairing Your Devices view, pair CGM button, title")
         } else {
             return LocalizedString("Pair Pump", comment: "Onboarding, Your Devices section, Pairing Your Devices view, pair pump button, title")
@@ -252,9 +254,9 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     }
 
     private func nextButtonAction(_ completion: @escaping (Bool) -> Void) {
-        if !isCGMManagerOnboarded {
+        if !onboardingViewModel.isCGMManagerOnboarded {
             onboardCGMManager(completion)
-        } else if !isPumpManagerOnboarded {
+        } else if !onboardingViewModel.isPumpManagerOnboarded {
             onboardPumpManager(completion)
         } else {
             completion(true)
@@ -270,16 +272,21 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
             switch success {
             case .userInteractionRequired(let viewController):
                 self.cgmManagerViewController = viewController
-                self.isSheetPresented = true
                 self.onSheetDismiss = { onboardCGMManagerComplete(completion) }
+                self.isCGMManagerSheetPresented = true
             case .createdAndOnboarded:
                 onboardCGMManagerComplete(completion)
             }
         }
     }
 
+    private var onboardCGMManagerSheet: some View {
+        CGMManagerView(cgmManagerViewController!)
+            .presentation(isModal: true)
+            .environment(\.dismissAction, { isCGMManagerSheetPresented = false })
+    }
+
     private func onboardCGMManagerComplete(_ completion: @escaping (Bool) -> Void) {
-        isCGMManagerOnboarded = onboardingViewModel.isCGMManagerOnboarded
         completion(false)
     }
 
@@ -292,36 +299,55 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
             switch success {
             case .userInteractionRequired(let viewController):
                 self.pumpManagerViewController = viewController
-                self.isSheetPresented = true
                 self.onSheetDismiss = { onboardPumpManagerComplete(completion) }
+                self.isPumpManagerSheetPresented = true
             case .createdAndOnboarded:
                 onboardPumpManagerComplete(completion)
             }
         }
     }
 
+    private var onboardPumpManagerSheet: some View {
+        PumpManagerView(pumpManagerViewController!)
+            .presentation(isModal: true)
+            .environment(\.dismissAction, { isPumpManagerSheetPresented = false })
+    }
+
     private func onboardPumpManagerComplete(_ completion: @escaping (Bool) -> Void) {
-        isPumpManagerOnboarded = onboardingViewModel.isPumpManagerOnboarded
-        completion(isCGMManagerOnboarded && isPumpManagerOnboarded)
+        completion(onboardingViewModel.isCGMManagerOnboarded && onboardingViewModel.isPumpManagerOnboarded)
+    }
+
+    private var footer: AnyView? {
+        if onboardingViewModel.isCGMManagerOnboarded {
+            return AnyView(pausingOnboardingButton.padding(.bottom))
+        } else {
+            return nil
+        }
+    }
+
+    private var pausingOnboardingButton: some View {
+        HStack {
+            Spacer()
+            Button(action: { isPauseOnboardingSheetPresented = true }) {
+                Text(LocalizedString("Pause Onboarding", comment: "Onboarding, Your Devices section, Pairing Your Devices view, button, pause onboarding"))
+                    .bold()
+            }
+            Spacer()
+        }
+        .sheet(isPresented: $isPauseOnboardingSheetPresented) { pauseOnboardingSheet }
+    }
+
+    private var pauseOnboardingSheet: some View {
+        NavigationView {
+            YourDevicesPauseOnboardingView()
+                .environmentObject(onboardingViewModel)
+                .environment(\.dismissAction, { isPauseOnboardingSheetPresented = false })
+        }
+        .presentation(isModal: true)
     }
 
     private var alert: Alert {
         Alert(title: Text(LocalizedString("Error", comment: "Title of general error alert")), message: Text(alertMessage!))
-    }
-
-    private var sheet: some View {
-        managerView
-            .presentation(isModal: true)
-            .environment(\.dismissAction, { isSheetPresented = false })
-    }
-
-    @ViewBuilder
-    private var managerView: some View {
-        if !isCGMManagerOnboarded {
-            CGMManagerView(cgmManagerViewController!)
-        } else {
-            PumpManagerView(pumpManagerViewController!)
-        }
     }
 
     fileprivate struct DeviceView: View {
@@ -340,6 +366,56 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
                     .opacity(checked ? 1.0: 0.0)
             }
         }
+    }
+}
+
+fileprivate struct YourDevicesPauseOnboardingView: View {
+    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
+    @Environment(\.dismissAction) var dismiss
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                Color(.systemBackground)
+                    .edgesIgnoringSafeArea(.all)
+                ScrollView {
+                    VStack(spacing: 10) {
+                        Segment {
+                            PageHeader(title: LocalizedString("Pause Onboarding", comment: "Onboarding, Your Devices section, Pause Onboarding view, title"))
+                            PresentableImage("YourDevices_PauseOnboarding")
+                            Paragraph(LocalizedString("You can use any of the Close buttons to exit out of onboarding screens or tap Pause Onboarding and return to this point later.", comment: "Onboarding, Your Devices section, Pause Onboarding view, paragraph 1"))
+                            Paragraph(LocalizedString("Later, when you are ready to continue, tap “Complete Setup” to return to this part of the onboarding.", comment: "Onboarding, Your Devices section, Pause Onboarding view, paragraph 2"))
+                        }
+                        Spacer()
+                        nextButton
+                    }
+                    .padding()
+                    .frame(minHeight: geometry.size.height)
+                }
+            }
+        }
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarItems(trailing: closeButton)
+    }
+
+    private var closeButton: some View {
+        Button(action: closeButtonAction) {
+            Text(LocalizedString("Close", comment: "Onboarding, Your Devices section, Pause Onboarding view, button, close"))
+                .fontWeight(.regular)
+        }
+    }
+
+    private func closeButtonAction() {
+        dismiss()
+    }
+
+    private var nextButton: some View {
+        ActionButton(title: LocalizedString("Pause Onboarding", comment: "Onboarding, Your Devices section, Pause Onboarding view, button, pause onboarding"), action: nextButtonAction)
+    }
+
+    private func nextButtonAction() {
+        onboardingViewModel.isSuspended = true
+        dismiss()
     }
 }
 

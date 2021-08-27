@@ -200,6 +200,10 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
         onboardingDelegate?.onboarding(self, hasNewDosingEnabled: dosingEnabled)
     }
 
+    public func notifyDidSuspend() {
+        onboardingDelegate?.onboardingDidSuspend(self)
+    }
+
     private func updateIsOnboarded() {
         self.isOnboarded = sectionProgression.hasCompletedAllSections
     }

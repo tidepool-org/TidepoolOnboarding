@@ -167,6 +167,14 @@ class OnboardingViewModelTests: XCTestCase {
         XCTAssertEqual(onboarding.dosingEnabled, onboardingViewModel.dosingEnabled)
     }
 
+    func testIsCGMManagerOnboardedInitializationIfNoActiveCGMManager() {
+        XCTAssertFalse(onboardingViewModel.isCGMManagerOnboarded)
+    }
+
+    func testIsPumpManagerOnboardedInitializationIfNoActivePumpManager() {
+        XCTAssertFalse(onboardingViewModel.isPumpManagerOnboarded)
+    }
+
     func testUpdateLastAccessedDateUpdatesDate() {
         let lastAccessDate = onboardingViewModel.lastAccessDate
         onboardingViewModel.updateLastAccessedDate()

@@ -16,6 +16,7 @@ class TidepoolOnboardingTests: XCTestCase {
     var didUpdateStateExpectation: XCTestExpectation?
     var hasNewTherapySettingsExpectation: XCTestExpectation?
     var hasNewDosingEnabledExpectation: XCTestExpectation?
+    var didSuspendExpectation: XCTestExpectation?
 
     func testCreateOnboarding() {
         XCTAssertNotNil(TidepoolOnboarding.createOnboarding())
@@ -301,6 +302,10 @@ extension TidepoolOnboardingTests: OnboardingDelegate {
 
     func onboarding(_ onboarding: OnboardingUI, hasNewDosingEnabled dosingEnabled: Bool) {
         hasNewDosingEnabledExpectation?.fulfill()
+    }
+
+    func onboardingDidSuspend(_ onboarding: OnboardingUI) {
+        didSuspendExpectation?.fulfill()
     }
 }
 

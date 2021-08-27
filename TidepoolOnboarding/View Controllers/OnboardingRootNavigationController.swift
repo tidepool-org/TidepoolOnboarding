@@ -64,6 +64,13 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
                 }
             }
             .store(in: &cancellables)
+        onboardingViewModel.$isSuspended
+            .filter { $0 }
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.completionDelegate?.completionNotifyingDidComplete(self)
+            }
+            .store(in: &cancellables)
     }
 
     deinit {

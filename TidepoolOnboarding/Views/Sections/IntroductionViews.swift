@@ -121,15 +121,15 @@ fileprivate struct IntroductionView4: View {
         Segment(header: LocalizedString("Tidepool Loop’s Connection", comment: "Onboarding, Introduction section, view 4, segment 2, header")) {
             PresentableImage(decorative: "Introduction_4_2")
             Paragraph(LocalizedString("The app connects directly to your devices via a Bluetooth connection and automates insulin dosing with or without an internet connection.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 1"))
-            Paragraph(LocalizedString("Caution: Your iPhone or iPod Touch must be on and within Bluetooth range of your pump in order for the app to send commands to the pump.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 2"))
+            Paragraph(attributed: LocalizedString("<b>Caution</b>: Your iPhone or iPod Touch must be on and within Bluetooth range of your pump in order for the app to send commands to the pump.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 2"))
         }
     }
     
     private var segment3: some View {
         Segment(header: LocalizedString("Interacting with the App", comment: "Onboarding, Introduction section, view 4, segment 3, header")) {
             Paragraph(LocalizedString("You will interact with the Tidepool Loop app to:", comment: "Onboarding, Introduction section, view 4, segment 3, paragraph"))
-            BulletedBodyTextList(
-                LocalizedString("Enter your personal diabetes settings (Caution: Users should work with their healthcare practitioners (HCPs) when first setting up their personal settings)", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 1"),
+            BulletedBodyTextList(attributed:
+                LocalizedString("Enter your personal diabetes settings (<b>Caution</b>: Users should work with their healthcare practitioners (HCPs) when first setting up their personal settings)", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 1"),
                 LocalizedString("Deliver bolus insulin for food and to bring down high glucose", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 2"),
                 LocalizedString("Make temporary glucose range adjustments", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 3"),
                 LocalizedString("View glucose history and insulin delivery history", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 4"),

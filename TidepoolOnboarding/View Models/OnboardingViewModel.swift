@@ -10,9 +10,11 @@ import Foundation
 import Combine
 import os.log
 import DeviceCheck
+import HealthKit
 import UIKit
 import LoopKit
 import LoopKitUI
+import MockKit
 import TidepoolKit
 import TidepoolServiceKit
 
@@ -459,58 +461,169 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
-
     var allowDebugFeatures: Bool { onboardingProvider.allowDebugFeatures }
 
-    func skipAllSections() {
-        OnboardingSection.allCases.forEach { skipSection($0) }
+    func skipAllSections(forceSimulators: Bool = false, completion: @escaping (() -> Void) = {}) {
+        skipSections(forceSimulators: forceSimulators, completion: completion)
     }
 
-    func skipThroughSection(_ section: OnboardingSection) {
-        skipUntilSection(section)
-        skipSection(section)
+    func skipThroughSection(_ section: OnboardingSection, forceSimulators: Bool = false, completion: @escaping (() -> Void) = {}) {
+        skipSections(untilSection: section.next, forceSimulators: forceSimulators, completion: completion)
     }
 
-    func skipUntilSection(_ section: OnboardingSection) {
-        OnboardingSection.allCases.prefix(while: { $0 != section }).forEach { skipSection($0) }
+    func skipUntilSection(_ section: OnboardingSection, forceSimulators: Bool = false, completion: @escaping (() -> Void) = {}) {
+        skipSections(untilSection: section, forceSimulators: forceSimulators, completion: completion)
     }
 
-    private func skipSection(_ section: OnboardingSection) {
-        guard allowDebugFeatures else { return }
+    private func skipSections(fromSection: OnboardingSection = .welcome, untilSection: OnboardingSection? = nil, forceSimulators: Bool, completion: @escaping () -> Void) {
+        dispatchPrecondition(condition: .onQueue(.main))
 
+        guard allowDebugFeatures else {
+            completion()
+            return
+        }
+
+        skipSection(fromSection, forceSimulators: forceSimulators) {
+            guard let nextSection = fromSection.next, nextSection != untilSection else {
+                completion()
+                return
+            }
+            self.skipSections(fromSection: nextSection, untilSection: untilSection, forceSimulators: forceSimulators, completion: completion)
+        }
+    }
+
+    private func skipSection(_ section: OnboardingSection, forceSimulators: Bool, completion: @escaping () -> Void) {
         if !sectionProgression.hasStartedSection(section) {
             sectionProgression.startSection(section)
         }
-        if !sectionProgression.hasCompletedSection(section) {
-            if section == .yourSettings {
-                self.deviceValid = true
-                if prescription == nil {
-                    self.prescription = .mock
-                }
-                if prescriberProfile == nil {
-                    self.prescriberProfile = .mock
-                }
-                if therapySettings == nil {
-                    self.therapySettings = prescription?.therapySettings
-                }
-            } else if section == .yourDevices {
-                if notificationAuthorization == nil || notificationAuthorization == .notDetermined {
-                    self.notificationAuthorization = .authorized
-                    onboardingProvider.authorizeNotification { _ in }
-                }
+
+        guard !sectionProgression.hasCompletedSection(section) else {
+            completion()
+            return
+        }
+
+        let completion = {
+            self.sectionProgression.completeSection(section)
+            completion()
+        }
+
+        switch section {
+        case .yourSettings:
+            skipCompleteYourSettings(completion: completion)
+        case .yourDevices:
+            skipCompleteYourDevices(forceSimulators: forceSimulators, completion: completion)
+        case .getLooping:
+            skipCompleteGetLooping(completion: completion)
+        default:
+            completion()
+        }
+    }
+
+    private func skipCompleteYourSettings(completion: @escaping () -> Void) {
+        self.deviceValid = true
+        if prescription == nil {
+            self.prescription = .mock
+        }
+        if prescriberProfile == nil {
+            self.prescriberProfile = .mock
+        }
+        if therapySettings == nil {
+            self.therapySettings = prescription?.therapySettings
+        }
+
+        completion()
+    }
+
+    private func skipCompleteYourDevices(forceSimulators: Bool, completion: @escaping () -> Void) {
+        self.skipCompleteYourDevicesNotification {
+            self.skipCompleteYourDevicesHealthStore {
+                self.skipCompleteYourDevicesDevices(forceSimulators: forceSimulators, completion: completion)
+            }
+        }
+    }
+
+    private func skipCompleteYourDevicesNotification(completion: @escaping () -> Void) {
+        guard notificationAuthorization == nil || notificationAuthorization == .notDetermined else {
+            completion()
+            return
+        }
+
+        onboardingProvider.authorizeNotification { _ in
+            DispatchQueue.main.async {
+                self.notificationAuthorization = .authorized
                 self.criticalAlertAllowed = true
                 self.notificationAllowed = true
-                if healthStoreAuthorization == nil || healthStoreAuthorization == .notDetermined {
-                    self.healthStoreAuthorization = .determined
-                    onboardingProvider.authorizeHealthStore { _ in }
-                }
-            } else if section == .getLooping {
-                if dosingEnabled == nil {
-                    self.dosingEnabled = true
-                }
+                completion()
             }
-            sectionProgression.completeSection(section)
         }
+    }
+
+    private func skipCompleteYourDevicesHealthStore(completion: @escaping () -> Void) {
+        guard healthStoreAuthorization == nil || healthStoreAuthorization == .notDetermined else {
+            completion()
+            return
+        }
+
+        onboardingProvider.authorizeHealthStore { _ in
+            DispatchQueue.main.async {
+                self.healthStoreAuthorization = .determined
+                completion()
+            }
+        }
+    }
+
+    private func skipCompleteYourDevicesDevices(forceSimulators: Bool, completion: @escaping () -> Void) {
+        guard forceSimulators else {
+            completion()
+            return
+        }
+
+        if onboardingProvider.activeCGMManager == nil {
+            self.cgmManagerIdentifier = MockCGMManager.managerIdentifier
+            switch onboardCGMManager() {
+            case .success(let result):
+                switch result {
+                case .userInteractionRequired(_):
+                    log.error("%{public}@ Unable to force CGM simulator onboarding when user interaction required", #function)
+                case .createdAndOnboarded(let cgmManager):
+                    if let cgmManager = cgmManager as? MockCGMManager {
+                        let parameters = MockCGMDataSource.Model.SineCurveParameters(baseGlucose: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 120),
+                                                                                     amplitude: HKQuantity(unit:.milligramsPerDeciliter, doubleValue: 40),
+                                                                                     period: .hours(6),
+                                                                                     referenceDate: Date())
+                        cgmManager.dataSource = MockCGMDataSource(model: .sineCurve(parameters: parameters))
+                        cgmManager.backfillData(datingBack: .hours(3))
+                    }
+                }
+            case .failure(let error):
+                log.error("%{public}@ Failure to force CGM simulator onboarding [error=%{public}@]", #function, String(describing: error))
+            }
+        }
+
+        if onboardingProvider.activePumpManager == nil {
+            self.pumpManagerIdentifier = MockPumpManager.managerIdentifier
+            switch onboardPumpManager() {
+            case .success(let result):
+                switch result {
+                case .userInteractionRequired(_):
+                    log.error("%{public}@ Unable to force pump simulator onboarding when user interaction required", #function)
+                case .createdAndOnboarded(_):
+                    break
+                }
+            case .failure(let error):
+                log.error("%{public}@ Failure to force pump simulator onboarding [error=%{public}@]", #function, String(describing: error))
+            }
+        }
+
+        completion()
+    }
+
+    private func skipCompleteGetLooping(completion: @escaping () -> Void) {
+        if dosingEnabled == nil {
+            self.dosingEnabled = true
+        }
+
+        completion()
     }
 }
 
@@ -547,6 +660,27 @@ extension OnboardingViewModel: ServiceOnboardingDelegate {
 
     func serviceOnboarding(didOnboardService service: Service) {
         serviceOnboardingDelegate?.serviceOnboarding(didOnboardService: service)
+    }
+}
+
+fileprivate extension OnboardingSection {
+    var next: OnboardingSection? {
+        switch self {
+        case .welcome:
+            return .introduction
+        case .introduction:
+            return .howTheAppWorks
+        case .howTheAppWorks:
+            return .aDayInTheLife
+        case .aDayInTheLife:
+            return .yourSettings
+        case .yourSettings:
+            return .yourDevices
+        case .yourDevices:
+            return .getLooping
+        case .getLooping:
+            return nil
+        }
     }
 }
 

@@ -44,6 +44,10 @@ struct WelcomeTabView: View {
         VStack(alignment: HorizontalAlignment(welcomeData[index].alignment), spacing: 20) {
             PresentableImage(welcomeData[index].image)
                 .accessibilityLabel(String(format: LocalizedString("Tidepool Loop Welcome, page %d of %d", comment: "Onboarding, Welcome section, image accessibility label"), index + 1, welcomeData.count))
+                .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures && index == 0,
+                                         title: "Are you sure you want to skip the rest of onboarding?") {  // Not localized
+                    onboardingViewModel.skipAllSections(forceSimulators: true)   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                }
             Text(welcomeData[index].title)
                 .font(.largeTitle)
                 .bold()

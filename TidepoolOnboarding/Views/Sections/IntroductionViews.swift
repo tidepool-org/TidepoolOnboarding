@@ -129,12 +129,13 @@ fileprivate struct IntroductionView4: View {
         Segment(header: LocalizedString("Interacting with the App", comment: "Onboarding, Introduction section, view 4, segment 3, header")) {
             Paragraph(LocalizedString("You will interact with the Tidepool Loop app to:", comment: "Onboarding, Introduction section, view 4, segment 3, paragraph"))
             BulletedBodyTextList(attributed:
-                LocalizedString("Enter your personal diabetes settings (<b>Caution</b>: Users should work with their healthcare practitioners (HCPs) when first setting up their personal settings)", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 1"),
-                LocalizedString("Deliver bolus insulin for food and to bring down high glucose", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 2"),
-                LocalizedString("Make temporary glucose range adjustments", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 3"),
-                LocalizedString("View glucose history and insulin delivery history", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 4"),
-                LocalizedString("Maintain your devices", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 5"),
-                LocalizedString("Troubleshoot and get support from Tidepool", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 6")
+                 (.filledCircle, LocalizedString("Enter your personal diabetes settings", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 1, part 1")),
+                 (.noBullet, LocalizedString("<b>Caution</b>: Users should work with their healthcare practitioners (HCPs) when first setting up their personal settings", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 1, part 2")),
+                 (.filledCircle, LocalizedString("Deliver bolus insulin for food and to bring down high glucose", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 2")),
+                 (.filledCircle, LocalizedString("Make temporary glucose range adjustments", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 3")),
+                 (.filledCircle, LocalizedString("View glucose history and insulin delivery history", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 4")),
+                 (.filledCircle, LocalizedString("Maintain your devices", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 5")),
+                 (.filledCircle, LocalizedString("Troubleshoot and get support from Tidepool", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 6"))
             )
         }
     }

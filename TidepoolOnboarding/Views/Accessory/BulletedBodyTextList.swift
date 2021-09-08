@@ -9,35 +9,58 @@
 import SwiftUI
 
 struct BulletedBodyTextList: View {
-    private let attributedStrings: [AttributedString]
+    enum BulletType {
+        case filledCircle
+        case noBullet
+    }
+    
+    private let bullets: [(BulletType, AttributedString)]
 
     init(_ attributedStrings: AttributedString...) {
-        self.attributedStrings = attributedStrings
+        self.init(attributedStrings.map { (.filledCircle, $0) })
     }
     
     init(_ strings: String...) {
-        self.attributedStrings = strings.map { AttributedString($0) }
+        self.init(strings.map { (.filledCircle, AttributedString($0)) })
     }
     
     init(attributed strings: String...) {
-        self.attributedStrings = strings.map { AttributedString(attributed: $0) }
+        self.init(strings.map { (.filledCircle, AttributedString(attributed: $0)) })
+    }
+    
+    init(_ bullets: [(BulletType, AttributedString)]) {
+        self.bullets = bullets
+    }
+
+    init(attributed bullets: (BulletType, String)...) {
+        self.bullets = bullets.map { ($0.0, AttributedString(attributed: $0.1)) }
     }
 
     var body: some View {
         VStack(alignment: .leading) {
-            ForEach(attributedStrings.indices) { index in
+            ForEach(bullets.indices) { index in
                 HStack(spacing: 10) {
-                    Bullet()
-                    BodyText(attributedStrings[index])
+                    bullet(bullets[index].0)
+                    BodyText(bullets[index].1)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
         .padding(.horizontal)
     }
+    
+    @ViewBuilder
+    private func bullet(_ type: BulletType) -> some View {
+        Group {
+            switch type {
+            case .filledCircle: FilledCircle()
+            case .noBullet: NoBullet()
+            }
+        }
+    }
 }
     
-struct Bullet: View {
+struct FilledCircle: View {
     @ScaledMetric var size: CGFloat = 8
 
     var body: some View {
@@ -45,6 +68,15 @@ struct Bullet: View {
             .frame(width: size, height: size)
             .opacity(0.5)
             .foregroundColor(.accentColor)
+    }
+}
+
+struct NoBullet: View {
+    @ScaledMetric var size: CGFloat = 8
+
+    var body: some View {
+        Spacer()
+            .frame(width: size, height: size)
     }
 }
 

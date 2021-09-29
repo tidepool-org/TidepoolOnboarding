@@ -121,7 +121,7 @@ fileprivate struct IntroductionView4: View {
         Segment(header: LocalizedString("Tidepool Loop’s Connection", comment: "Onboarding, Introduction section, view 4, segment 2, header")) {
             PresentableImage(decorative: "Introduction_4_2")
             Paragraph(LocalizedString("The app connects directly to your devices via a Bluetooth connection and automates insulin dosing with or without an internet connection.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 1"))
-            Paragraph(attributed: LocalizedString("<b>Caution</b>: Your iPhone or iPod Touch must be on and within Bluetooth range of your pump in order for the app to send commands to the pump.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 2"))
+            Paragraph(attributed: LocalizedString("<b>Caution</b>: Your iPhone or iPod touch must be on and within Bluetooth range of your pump in order for the app to send commands to the pump.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 2"))
         }
     }
     

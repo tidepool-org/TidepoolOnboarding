@@ -62,12 +62,12 @@ fileprivate struct YourDevicesNotificationsView: View {
             PresentableImage("YourDevices_Notifications")
             Paragraph(LocalizedString("To allow your CGM, pump, and Tidepool Loop app to alert you with important safety and maintenance notifications, you’ll next need to:", comment: "Onboarding, Your Devices section, Notifications view, paragraph 1"))
             NumberedBodyTextList(
-                LocalizedString("Enable Notifications in your iPhone or iPod Touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 1, item 1")
+                LocalizedString("Enable Notifications in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 1, item 1")
             )
             .padding(.vertical)
             Paragraph(LocalizedString("Notifications may be configured for each component you pair, and can alert you to rising and falling glucose, insulin pump maintenance tasks, or other situations where the app may need your attention.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 2"))
             NumberedBodyTextList(
-                LocalizedString("Enable Critical Alerts in your iPhone or iPod Touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 2, item 1")
+                LocalizedString("Enable Critical Alerts in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 2, item 1")
             )
             .startingAt(2)
             .padding(.top)

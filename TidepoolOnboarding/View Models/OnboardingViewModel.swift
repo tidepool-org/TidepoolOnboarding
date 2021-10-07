@@ -347,6 +347,31 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
     }
 
+    private class InitialTherapySettingsViewModelDelegate: TherapySettingsViewModelDelegate {
+        weak var viewModel: OnboardingViewModel?
+        init(_ viewModel: OnboardingViewModel) {
+            self.viewModel = viewModel
+        }
+        func syncBasalRateSchedule(items: [RepeatingScheduleValue<Double>], completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
+            // ???
+            completion(.success(BasalRateSchedule(dailyItems: items, timeZone: nil)!))
+        }
+        
+        func syncDeliveryLimits(deliveryLimits: DeliveryLimits, completion: @escaping (Result<DeliveryLimits, Error>) -> Void) {
+            // ???
+            completion(.success(deliveryLimits))
+        }
+        
+        func saveCompletion(for therapySetting: TherapySetting, therapySettings: TherapySettings) {
+            //noop
+        }
+        
+        func pumpSupportedIncrements() -> PumpSupportedIncrements? {
+            return viewModel?.getPumpSupportedIncrements()
+        }
+    }
+    private var initialTherapySettingsViewModelDelegate: InitialTherapySettingsViewModelDelegate?
+
     private func constructInitialTherapySettingsViewModel() -> TherapySettingsViewModel {
         guard let datePrescribed = prescription?.modifiedTime ?? prescription?.createdTime,   // TODO: https://tidepool.atlassian.net/browse/LOOP-3476
               let providerName = prescriberProfile?.fullName,
@@ -355,19 +380,24 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
 
         let prescription = OnboardingPrescription(datePrescribed: datePrescribed, providerName: providerName)
+        initialTherapySettingsViewModelDelegate = InitialTherapySettingsViewModelDelegate(self)
         return TherapySettingsViewModel(therapySettings: therapySettings,
-                                        pumpSupportedIncrements: getPumpSupportedIncrements,
-                                        prescription: prescription)
+                                        prescription: prescription,
+                                        delegate: initialTherapySettingsViewModelDelegate)
     }
 
+    private class CurrentTherapySettingsViewModelDelegate: InitialTherapySettingsViewModelDelegate {
+        override func saveCompletion(for therapySetting: TherapySetting, therapySettings: TherapySettings) {
+            viewModel?.therapySettings = therapySettings
+        }
+    }
+    private var currentTherapySettingsViewModelDelegate: CurrentTherapySettingsViewModelDelegate?
     private func constructCurrentTherapySettingsViewModel() -> TherapySettingsViewModel {
         guard let therapySettings = therapySettings else {
             preconditionFailure("Must have therapy settings to construct therapy settings view model")
         }
-
-        return TherapySettingsViewModel(therapySettings: therapySettings,
-                                        pumpSupportedIncrements: getPumpSupportedIncrements,
-                                        didSave: { (_, therapySettings) in self.therapySettings = therapySettings })
+        currentTherapySettingsViewModelDelegate = CurrentTherapySettingsViewModelDelegate(self)
+        return TherapySettingsViewModel(therapySettings: therapySettings, delegate: currentTherapySettingsViewModelDelegate)
     }
 
     private func getPumpSupportedIncrements() -> PumpSupportedIncrements? {

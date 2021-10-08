@@ -47,7 +47,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var cgmManagerIdentifier: String?
     @Published var pumpManagerIdentifier: String? {
         didSet {
-            self.pumpSupportedIncrements = nil
+            self._pumpSupportedIncrements = nil
         }
     }
     @Published var dosingEnabled: Bool?
@@ -59,7 +59,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     lazy var initialTherapySettingsViewModel: TherapySettingsViewModel = constructInitialTherapySettingsViewModel()
     lazy var currentTherapySettingsViewModel: TherapySettingsViewModel = constructCurrentTherapySettingsViewModel()
 
-    private var pumpSupportedIncrements: PumpSupportedIncrements?
+    private var _pumpSupportedIncrements: PumpSupportedIncrements?
 
     private let log = OSLog(category: "OnboardingViewModel")
 
@@ -347,29 +347,6 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
     }
 
-    private class InitialTherapySettingsViewModelDelegate: TherapySettingsViewModelDelegate {
-        weak var viewModel: OnboardingViewModel?
-        init(_ viewModel: OnboardingViewModel) {
-            self.viewModel = viewModel
-        }
-        func syncBasalRateSchedule(items: [RepeatingScheduleValue<Double>], completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
-            //noop
-        }
-        
-        func syncDeliveryLimits(deliveryLimits: DeliveryLimits, completion: @escaping (Result<DeliveryLimits, Error>) -> Void) {
-            //noop
-        }
-        
-        func saveCompletion(for therapySetting: TherapySetting, therapySettings: TherapySettings) {
-            //noop
-        }
-        
-        func pumpSupportedIncrements() -> PumpSupportedIncrements? {
-            return viewModel?.getPumpSupportedIncrements()
-        }
-    }
-    private var initialTherapySettingsViewModelDelegate: InitialTherapySettingsViewModelDelegate?
-
     private func constructInitialTherapySettingsViewModel() -> TherapySettingsViewModel {
         guard let datePrescribed = prescription?.modifiedTime ?? prescription?.createdTime,   // TODO: https://tidepool.atlassian.net/browse/LOOP-3476
               let providerName = prescriberProfile?.fullName,
@@ -378,35 +355,27 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
 
         let prescription = OnboardingPrescription(datePrescribed: datePrescribed, providerName: providerName)
-        initialTherapySettingsViewModelDelegate = InitialTherapySettingsViewModelDelegate(self)
         return TherapySettingsViewModel(therapySettings: therapySettings,
                                         prescription: prescription,
-                                        delegate: initialTherapySettingsViewModelDelegate)
+                                        delegate: self)
     }
 
-    private class CurrentTherapySettingsViewModelDelegate: InitialTherapySettingsViewModelDelegate {
-        override func saveCompletion(for therapySetting: TherapySetting, therapySettings: TherapySettings) {
-            viewModel?.therapySettings = therapySettings
-        }
-    }
-    private var currentTherapySettingsViewModelDelegate: CurrentTherapySettingsViewModelDelegate?
     private func constructCurrentTherapySettingsViewModel() -> TherapySettingsViewModel {
         guard let therapySettings = therapySettings else {
             preconditionFailure("Must have therapy settings to construct therapy settings view model")
         }
-        currentTherapySettingsViewModelDelegate = CurrentTherapySettingsViewModelDelegate(self)
-        return TherapySettingsViewModel(therapySettings: therapySettings, delegate: currentTherapySettingsViewModelDelegate)
+        return TherapySettingsViewModel(therapySettings: therapySettings, delegate: self)
     }
 
     private func getPumpSupportedIncrements() -> PumpSupportedIncrements? {
-        guard pumpSupportedIncrements == nil else {
-            return pumpSupportedIncrements
+        guard _pumpSupportedIncrements == nil else {
+            return _pumpSupportedIncrements
         }
         guard let pumpManagerIdentifier = pumpManagerIdentifier else {
             return nil
         }
-        self.pumpSupportedIncrements = onboardingProvider.supportedIncrementsForPumpManager(withIdentifier: pumpManagerIdentifier)
-        return pumpSupportedIncrements
+        self._pumpSupportedIncrements = onboardingProvider.supportedIncrementsForPumpManager(withIdentifier: pumpManagerIdentifier)
+        return _pumpSupportedIncrements
     }
 
     func updateNotificationSettings(_ completion: @escaping () -> Void) {
@@ -690,6 +659,27 @@ extension OnboardingViewModel: ServiceOnboardingDelegate {
         serviceOnboardingDelegate?.serviceOnboarding(didOnboardService: service)
     }
 }
+
+extension OnboardingViewModel: TherapySettingsViewModelDelegate {
+    func syncBasalRateSchedule(items: [RepeatingScheduleValue<Double>], completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
+        //noop
+    }
+    
+    func syncDeliveryLimits(deliveryLimits: DeliveryLimits, completion: @escaping (Result<DeliveryLimits, Error>) -> Void) {
+        //noop
+    }
+    
+    func saveCompletion(for therapySetting: TherapySetting, therapySettings: TherapySettings) {
+        // Note: the expectation is that this would only be called by the _current_ TherapySettingsView, so it should
+        // be okay to just save it here.
+        self.therapySettings = therapySettings
+    }
+    
+    func pumpSupportedIncrements() -> PumpSupportedIncrements? {
+        return getPumpSupportedIncrements()
+    }
+}
+
 
 fileprivate extension OnboardingSection {
     var next: OnboardingSection? {

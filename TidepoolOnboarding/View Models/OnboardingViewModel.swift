@@ -353,13 +353,11 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             self.viewModel = viewModel
         }
         func syncBasalRateSchedule(items: [RepeatingScheduleValue<Double>], completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
-            // ???
-            completion(.success(BasalRateSchedule(dailyItems: items, timeZone: nil)!))
+            //noop
         }
         
         func syncDeliveryLimits(deliveryLimits: DeliveryLimits, completion: @escaping (Result<DeliveryLimits, Error>) -> Void) {
-            // ???
-            completion(.success(deliveryLimits))
+            //noop
         }
         
         func saveCompletion(for therapySetting: TherapySetting, therapySettings: TherapySettings) {

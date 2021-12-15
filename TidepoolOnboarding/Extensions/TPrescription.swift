@@ -43,35 +43,35 @@ extension TPrescription {
 
 extension TPrescription {
     static var mock: TPrescription {
-        let initialSettings = TPrescription.InitialSettings(bloodGlucoseUnits: .milligramsPerDeciliter,
-                                                            basalRateSchedule: [
-                                                                TPrescription.BasalRateStart(start: .hours(0), rate: 1.0),
-                                                                TPrescription.BasalRateStart(start: .hours(6), rate: 1.5),
-                                                                TPrescription.BasalRateStart(start: .hours(18), rate: 1.25)
-                                                            ],
-                                                            bloodGlucoseTargetPhysicalActivity: TPrescription.BloodGlucoseTarget(low: 150, high: 160),
-                                                            bloodGlucoseTargetPreprandial: TPrescription.BloodGlucoseTarget(low: 80, high: 90),
-                                                            bloodGlucoseTargetSchedule: [
-                                                                TPrescription.BloodGlucoseStartTarget(start: .hours(0), low: 105, high: 115),
-                                                                TPrescription.BloodGlucoseStartTarget(start: .hours(6), low: 100, high: 110),
-                                                                TPrescription.BloodGlucoseStartTarget(start: .hours(22), low: 105, high: 115),
-                                                            ],
-                                                            carbohydrateRatioSchedule: [
-                                                                TPrescription.CarbohydrateRatioStart(start: .hours(0), amount: 15),
-                                                                TPrescription.CarbohydrateRatioStart(start: .hours(6), amount: 12),
-                                                                TPrescription.CarbohydrateRatioStart(start: .hours(12), amount: 15)
-                                                            ],
-                                                            glucoseSafetyLimit: 80,
-                                                            insulinModel: .rapidChild,
-                                                            insulinSensitivitySchedule: [
-                                                                TPrescription.InsulinSensitivityStart(start: .hours(0), amount: 55.0),
-                                                                TPrescription.InsulinSensitivityStart(start: .hours(6), amount: 45.0),
-                                                                TPrescription.InsulinSensitivityStart(start: .hours(22), amount: 55.0),
-                                                            ],
-                                                            basalRateMaximum: TPrescription.BasalRateMaximum(4.5, .unitsPerHour),
-                                                            bolusAmountMaximum: TPrescription.BolusAmountMaximum(10, .units),
-                                                            pumpId: "6678c377-928c-49b3-84c1-19e2dafaff8d",
-                                                            cgmId: "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245")
+        let initialSettings = TPrescription.Attributes.InitialSettings(bloodGlucoseUnits: .milligramsPerDeciliter,
+                                                                       basalRateSchedule: [
+                                                                        TPrescription.Attributes.InitialSettings.BasalRateStart(start: .hours(0), rate: 1.0),
+                                                                        TPrescription.Attributes.InitialSettings.BasalRateStart(start: .hours(6), rate: 1.5),
+                                                                        TPrescription.Attributes.InitialSettings.BasalRateStart(start: .hours(18), rate: 1.25)
+                                                                       ],
+                                                                       bloodGlucoseTargetPhysicalActivity: TPrescription.Attributes.InitialSettings.BloodGlucoseTarget(low: 150, high: 160),
+                                                                       bloodGlucoseTargetPreprandial: TPrescription.Attributes.InitialSettings.BloodGlucoseTarget(low: 80, high: 90),
+                                                                       bloodGlucoseTargetSchedule: [
+                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(0), low: 105, high: 115),
+                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(6), low: 100, high: 110),
+                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(22), low: 105, high: 115),
+                                                                       ],
+                                                                       carbohydrateRatioSchedule: [
+                                                                        TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart(start: .hours(0), amount: 15),
+                                                                        TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart(start: .hours(6), amount: 12),
+                                                                        TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart(start: .hours(12), amount: 15)
+                                                                       ],
+                                                                       glucoseSafetyLimit: 80,
+                                                                       insulinModel: .rapidChild,
+                                                                       insulinSensitivitySchedule: [
+                                                                        TPrescription.Attributes.InitialSettings.InsulinSensitivityStart(start: .hours(0), amount: 55.0),
+                                                                        TPrescription.Attributes.InitialSettings.InsulinSensitivityStart(start: .hours(6), amount: 45.0),
+                                                                        TPrescription.Attributes.InitialSettings.InsulinSensitivityStart(start: .hours(22), amount: 55.0),
+                                                                       ],
+                                                                       basalRateMaximum: TPrescription.Attributes.InitialSettings.BasalRateMaximum(4.5, .unitsPerHour),
+                                                                       bolusAmountMaximum: TPrescription.Attributes.InitialSettings.BolusAmountMaximum(10, .units),
+                                                                       pumpId: "6678c377-928c-49b3-84c1-19e2dafaff8d",
+                                                                       cgmId: "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245")
         let attributes = TPrescription.Attributes(accountType: .caregiver,
                                                   caregiverFirstName: "Parent",
                                                   caregiverLastName: "Doe",
@@ -81,9 +81,9 @@ extension TPrescription {
                                                   mrn: "1234567890",
                                                   email: "parent.doe@email.com",
                                                   sex: .undisclosed,
-                                                  weight: TPrescription.Weight(value: 65, units: .kg),
+                                                  weight: TPrescription.Attributes.Weight(value: 65, units: .kg),
                                                   yearOfDiagnosis: 2010,
-                                                  phoneNumber: TPrescription.PhoneNumber(countryCode: 1, number: "555-1212"),
+                                                  phoneNumber: TPrescription.Attributes.PhoneNumber(countryCode: 1, number: "555-1212"),
                                                   initialSettings: initialSettings,
                                                   training: .inModule,
                                                   therapySettings: .initial,
@@ -120,7 +120,7 @@ fileprivate extension TBloodGlucose.Units {
     }
 }
 
-fileprivate extension Array where Element == TPrescription.BasalRateStart {
+fileprivate extension Array where Element == TPrescription.Attributes.InitialSettings.BasalRateStart {
     var basalRateSchedule: BasalRateSchedule? {
         let dailyItems = compactMap { $0.repeatingScheduleValue }
         guard !dailyItems.isEmpty else {
@@ -131,7 +131,7 @@ fileprivate extension Array where Element == TPrescription.BasalRateStart {
     }
 }
 
-fileprivate extension TPrescription.BasalRateStart {
+fileprivate extension TPrescription.Attributes.InitialSettings.BasalRateStart {
     var repeatingScheduleValue: RepeatingScheduleValue<Double>? {
         guard let start = start, let rate = rate else {
             return nil
@@ -141,7 +141,7 @@ fileprivate extension TPrescription.BasalRateStart {
     }
 }
 
-fileprivate extension TPrescription.BloodGlucoseTarget {
+fileprivate extension TPrescription.Attributes.InitialSettings.BloodGlucoseTarget {
     var doubleRange: DoubleRange? {
         guard let low = low, let high = high, target == nil, range == nil else {
             return nil
@@ -151,7 +151,7 @@ fileprivate extension TPrescription.BloodGlucoseTarget {
     }
 }
 
-fileprivate extension Array where Element == TPrescription.BloodGlucoseStartTarget {
+fileprivate extension Array where Element == TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget {
     func glucoseTargetRangeSchedule(in unit: HKUnit) -> GlucoseRangeSchedule? {
         let dailyItems = compactMap { $0.repeatingScheduleValue }
         guard !dailyItems.isEmpty else {
@@ -162,7 +162,7 @@ fileprivate extension Array where Element == TPrescription.BloodGlucoseStartTarg
     }
 }
 
-fileprivate extension TPrescription.BloodGlucoseStartTarget {
+fileprivate extension TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget {
     var repeatingScheduleValue: RepeatingScheduleValue<DoubleRange>? {
         guard let start = start, let low = low, let high = high, target == nil, range == nil else {
             return nil
@@ -172,7 +172,7 @@ fileprivate extension TPrescription.BloodGlucoseStartTarget {
     }
 }
 
-fileprivate extension Array where Element == TPrescription.CarbohydrateRatioStart {
+fileprivate extension Array where Element == TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart {
     var carbRatioSchedule: CarbRatioSchedule? {
         let dailyItems = compactMap { $0.repeatingScheduleValue }
         guard !dailyItems.isEmpty else {
@@ -183,7 +183,7 @@ fileprivate extension Array where Element == TPrescription.CarbohydrateRatioStar
     }
 }
 
-fileprivate extension TPrescription.CarbohydrateRatioStart {
+fileprivate extension TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart {
     var repeatingScheduleValue: RepeatingScheduleValue<Double>? {
         guard let start = start, let amount = amount else {
             return nil
@@ -193,7 +193,7 @@ fileprivate extension TPrescription.CarbohydrateRatioStart {
     }
 }
 
-fileprivate extension TPrescription.InsulinModelType {
+fileprivate extension TPrescription.Attributes.InitialSettings.InsulinModelType {
     var defaultRapidActingModel: ExponentialInsulinModelPreset? {
         switch self {
         case .rapidAdult:
@@ -206,7 +206,7 @@ fileprivate extension TPrescription.InsulinModelType {
     }
 }
 
-fileprivate extension Array where Element == TPrescription.InsulinSensitivityStart {
+fileprivate extension Array where Element == TPrescription.Attributes.InitialSettings.InsulinSensitivityStart {
     func insulinSensitivitySchedule(in unit: HKUnit) -> InsulinSensitivitySchedule? {
         let dailyItems = compactMap { $0.repeatingScheduleValue }
         guard !dailyItems.isEmpty else {
@@ -217,7 +217,7 @@ fileprivate extension Array where Element == TPrescription.InsulinSensitivitySta
     }
 }
 
-fileprivate extension TPrescription.InsulinSensitivityStart {
+fileprivate extension TPrescription.Attributes.InitialSettings.InsulinSensitivityStart {
     var repeatingScheduleValue: RepeatingScheduleValue<Double>? {
         guard let start = start, let amount = amount else {
             return nil
@@ -227,10 +227,10 @@ fileprivate extension TPrescription.InsulinSensitivityStart {
     }
 }
 
-fileprivate extension TPrescription.BasalRateMaximum {
+fileprivate extension TPrescription.Attributes.InitialSettings.BasalRateMaximum {
     var maximumBasalRatePerHour: Double? { value }
 }
 
-fileprivate extension TPrescription.BolusAmountMaximum {
+fileprivate extension TPrescription.Attributes.InitialSettings.BolusAmountMaximum {
     var maximumBolus: Double? { value }
 }

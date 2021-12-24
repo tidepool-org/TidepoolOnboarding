@@ -733,7 +733,7 @@ fileprivate extension TPrescription {
     var pumpManagerIdentifier: String? {
         switch latestRevision?.attributes?.initialSettings?.pumpId {
         case "6678c377-928c-49b3-84c1-19e2dafaff8d":    // Hard-coded Tidepool backend device identifier
-            return "OmnipodDash"
+            return "Omnipod"
         default:
             return nil
         }

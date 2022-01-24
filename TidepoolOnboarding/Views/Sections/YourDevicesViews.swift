@@ -15,6 +15,7 @@ struct YourDevicesNavigationButton: View {
     @State private var notificationAuthorized = false
     @State private var criticalAlertAllowed = false
     @State private var notificationAllowed = false
+    @State private var timeSensitiveNotificationAllowed = false
     @State private var healthStoreAuthorized = false
     @State private var isCGMManagerOnboarded = false
     @State private var isPumpManagerOnboarded = false
@@ -28,10 +29,10 @@ struct YourDevicesNavigationButton: View {
     private var destination: some View {
         if !notificationAuthorized {
             YourDevicesNotificationsView()
-        } else if !criticalAlertAllowed || !notificationAllowed {
-            YourDevicesAlertPermissionsRequiredView(criticalAlertAllowed: criticalAlertAllowed, notificationAllowed: notificationAllowed)
+        } else if !criticalAlertAllowed || !notificationAllowed || !timeSensitiveNotificationAllowed {
+            YourDevicesAlertPermissionsRequiredView(criticalAlertAllowed: criticalAlertAllowed, notificationAllowed: notificationAllowed, timeSensitiveNotificationAllowed: timeSensitiveNotificationAllowed)
         } else if !healthStoreAuthorized {
-            YourDevicesAppleHealthView()
+            YourDevicesFocusModesView()
         } else if !isCGMManagerOnboarded || !isPumpManagerOnboarded {
             YourDevicesPairingYourDevicesView()
         }
@@ -41,6 +42,7 @@ struct YourDevicesNavigationButton: View {
         self.notificationAuthorized = onboardingViewModel.notificationAuthorization != nil && onboardingViewModel.notificationAuthorization != .notDetermined
         self.criticalAlertAllowed = onboardingViewModel.criticalAlertAllowed ?? false
         self.notificationAllowed = onboardingViewModel.notificationAllowed ?? false
+        self.timeSensitiveNotificationAllowed = onboardingViewModel.timeSensitiveNotificationAllowed ?? false
         self.healthStoreAuthorized = onboardingViewModel.healthStoreAuthorization != nil && onboardingViewModel.healthStoreAuthorization != .notDetermined
         self.isCGMManagerOnboarded = onboardingViewModel.isCGMManagerOnboarded
         self.isPumpManagerOnboarded = onboardingViewModel.isPumpManagerOnboarded
@@ -55,40 +57,64 @@ fileprivate struct YourDevicesNotificationsView: View {
 
     @State private var criticalAlertAllowed = false
     @State private var notificationAllowed = false
+    @State private var timeSensitiveNotificationAllowed = false
 
     var body: some View {
         OnboardingSectionPageView(section: .yourDevices, destination: destination) {
             PageHeader(title: LocalizedString("Notifications", comment: "Onboarding, Your Devices section, Notifications view, title"))
             PresentableImage("YourDevices_Notifications")
             Paragraph(LocalizedString("To allow your CGM, pump, and Tidepool Loop app to alert you with important safety and maintenance notifications, you’ll next need to:", comment: "Onboarding, Your Devices section, Notifications view, paragraph 1"))
-            NumberedBodyTextList(
-                LocalizedString("Enable Notifications in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 1, item 1")
-            )
-            .padding(.vertical)
-            Paragraph(LocalizedString("Notifications may be configured for each component you pair, and can alert you to rising and falling glucose, insulin pump maintenance tasks, or other situations where the app may need your attention.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 2"))
-            NumberedBodyTextList(
-                LocalizedString("Enable Critical Alerts in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, list 2, item 1")
-            )
-            .startingAt(2)
-            .padding(.top)
-            Paragraph(LocalizedString("Critical Alerts may be configured to alert you to higher risk situations while using Tidepool Loop, such as urgent low glucose, insulin pump occlusions, or other serious system errors.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 3"))
-                .padding(.vertical)
-            Callout(title: LocalizedString("Notifications and Critical Alert permissions must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Notifications view, callout title"), warningIconColor: .red) {
-                Paragraph(LocalizedString("It is important that you always keep Notifications and Critical Alerts turned on in your phone’s settings to ensure that you receive Tidepool Loop notifications.", comment: "Onboarding, Your Devices section, Notifications view, callout body text"))
-            }
-            Paragraph(LocalizedString("Additional preferences can be set within the device manager screens of the Tidepool Loop app.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 4"))
-                .padding(.vertical)
+            segment1
+            segment2
+            segment3
+            Paragraph(LocalizedString("Additional preferences can be set within the device manager screens of the Tidepool Loop app.", comment: "Onboarding, Your Devices section, Notifications view, paragraph 2"))
+                .padding(.top)
         }
         .backButtonHidden(true)
         .nextButtonAction(nextButtonAction)
     }
 
+    private var segment1: some View {
+        Segment {
+            NumberedBodyTextList(
+                LocalizedString("Enable Notifications in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, segment 1, list 1, item 1")
+            )
+            .padding(.vertical)
+            Paragraph(LocalizedString("Notifications may be configured for each device you pair and can alert you to rising and falling glucose, insulin pump maintenance tasks, or other situations where the app may need your attention.", comment: "Onboarding, Your Devices section, Notifications view, segment 1, paragraph 1"))
+            Paragraph(LocalizedString("To avoid delay in receiving notifications from Tidepool Loop, we recommend notification delivery be set to Immediate Delivery.", comment: "Onboarding, Your Devices section, Notifications view, segment 1, paragraph 2"))
+        }
+    }
+
+    private var segment2: some View {
+        Segment {
+            NumberedBodyTextList(
+                LocalizedString("Enable Critical Alerts in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, segment 2, list 1, item 1")
+            )
+            .startingAt(2)
+            .padding(.vertical)
+            Paragraph(LocalizedString("Critical Alerts may be configured to alert you to higher risk situations while using Tidepool Loop such as urgent low glucose, insulin pump occlusions, or other serious system errors.", comment: "Onboarding, Your Devices section, Notifications view, segment 2, paragraph 1"))
+        }
+    }
+
+    private var segment3: some View {
+        Segment {
+            NumberedBodyTextList(
+                LocalizedString("Ensure Time Sensitive Notifications are turned on in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, segment 3, list 1, item 1")
+            )
+            .startingAt(3)
+            .padding(.vertical)
+            Callout(title: LocalizedString("These permissions must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Notifications view, segment 3, callout title"), warningIconColor: .red) {
+                Paragraph(LocalizedString("It is important that you always keep Notifications, Critical Alerts, and Time Sensitive Notifications turned ON in your phone’s settings to ensure that you receive Tidepool Loop notifications.", comment: "Onboarding, Your Devices section, Notifications view, segment 3, callout body text"))
+            }
+        }
+    }
+
     @ViewBuilder
     private var destination: some View {
-        if !criticalAlertAllowed || !notificationAllowed {
-            YourDevicesAlertPermissionsRequiredView(criticalAlertAllowed: criticalAlertAllowed, notificationAllowed: notificationAllowed)
+        if !criticalAlertAllowed || !notificationAllowed || !timeSensitiveNotificationAllowed {
+            YourDevicesAlertPermissionsRequiredView(criticalAlertAllowed: criticalAlertAllowed, notificationAllowed: notificationAllowed, timeSensitiveNotificationAllowed: timeSensitiveNotificationAllowed)
         } else {
-            YourDevicesAppleHealthView()
+            YourDevicesFocusModesView()
         }
     }
 
@@ -98,6 +124,7 @@ fileprivate struct YourDevicesNotificationsView: View {
                 onboardingViewModel.notificationAuthorization = authorization
                 self.criticalAlertAllowed = onboardingViewModel.criticalAlertAllowed ?? false
                 self.notificationAllowed = onboardingViewModel.notificationAllowed ?? false
+                self.timeSensitiveNotificationAllowed = onboardingViewModel.timeSensitiveNotificationAllowed ?? false
                 completion(authorization != .notDetermined)
             }
         }
@@ -111,18 +138,19 @@ fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
 
     @State var criticalAlertAllowed: Bool
     @State var notificationAllowed: Bool
+    @State var timeSensitiveNotificationAllowed: Bool
 
     @State private var isDestinationActive = false
 
     var body: some View {
-        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesAppleHealthView(), isDestinationActive: $isDestinationActive) {
+        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesFocusModesView(), isDestinationActive: $isDestinationActive) {
             PageHeader(title: LocalizedString("Alert Permissions Required", comment: "Onboarding, Your Devices section, Alert Permissions Required view, title"))
             PresentableImage("YourDevices_AlertPermissionsRequired")
-            Paragraph(LocalizedString("You must allow Critical Alerts and Notifications on your smart device to continue using Tidepool Loop.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, paragraph"))
+            Paragraph(LocalizedString("You must allow Critical Alerts, Notifications, and Time Sensitive Notifications on your smart device to continue using Tidepool Loop.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, paragraph"))
             NumberedBodyTextList(
                 LocalizedString("Tap the button below to open Tidepool Loop settings.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 1"),
                 LocalizedString("Tap Notifications.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 2"),
-                LocalizedString("Allow Critical Alerts and Notifications.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 3"),
+                LocalizedString("Allow Critical Alerts, Notifications, and Time Sensitive Notifications.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 3"),
                 LocalizedString("Return to this app to continue.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 4")
             )
             if !criticalAlertAllowed {
@@ -130,6 +158,9 @@ fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
             }
             if !notificationAllowed {
                 Callout(title: LocalizedString("Notifications must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 2, title"), warningIconColor: .red)
+            }
+            if notificationAllowed && !timeSensitiveNotificationAllowed {
+                Callout(title: LocalizedString("Time Sensitive Notifications must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 3, title"), warningIconColor: .red)
             }
         }
         .backButtonHidden(true)
@@ -140,7 +171,8 @@ fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(0.5)) {   // Delay to allow time for app switch
                     self.criticalAlertAllowed = onboardingViewModel.criticalAlertAllowed ?? false
                     self.notificationAllowed = onboardingViewModel.notificationAllowed ?? false
-                    self.isDestinationActive = self.criticalAlertAllowed && self.notificationAllowed
+                    self.timeSensitiveNotificationAllowed = onboardingViewModel.timeSensitiveNotificationAllowed ?? false
+                    self.isDestinationActive = self.criticalAlertAllowed && self.notificationAllowed && self.timeSensitiveNotificationAllowed
                 }
             }
         }
@@ -151,6 +183,30 @@ fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
             UIApplication.shared.open(openSettingsURL)
         }
         completion(false)
+    }
+}
+
+// MARK: - YourDevicesFocusModesView
+
+fileprivate struct YourDevicesFocusModesView: View {
+    var body: some View {
+        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesAppleHealthView()) {
+            PageHeader(title: LocalizedString("Warning: iOS 15 Focus Modes", comment: "Onboarding, Your Devices section, Focus Modes view, title"))
+            Paragraph(LocalizedString("iOS 15 has added features such as “Focus Mode” that enable you to have more control over when apps can send you notifications.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 1"))
+            Paragraph(LocalizedString("If you wish to continue receiving important notifications from Tidepool Loop while in a Focus Mode, you must add Tidepool Loop as an “Allowed App” for each Focus Mode.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2"))
+            PresentableImage("YourDevices_FocusModes")
+            Segment(header: LocalizedString("How to Add Tidepool Loop as an Allowed App", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, header")) {
+                Callout(title: LocalizedString("Note: You’ll need to complete the steps below for each Focus Mode you have enabled or plan to enable.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, callout, title"))
+                NumberedBodyTextList(
+                    LocalizedString("Go to Settings > Focus.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 1"),
+                    LocalizedString("Tap a provided Focus option — like Do Not Disturb, Personal, or Sleep.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 2"),
+                    LocalizedString("Under Allowed Notifications, tap “Apps”.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 3"),
+                    LocalizedString("Tap “Add App” and add Tidepool Loop.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 4"),
+                    LocalizedString("Ensure that “Time Sensitive” is toggled ON.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 5")
+                )
+            }
+        }
+        .backButtonHidden(true)
     }
 }
 
@@ -182,7 +238,6 @@ fileprivate struct YourDevicesAppleHealthView: View {
             .startingAt(2)
             PresentableImage(decorative: "YourDevices_AppleHealth_3")
         }
-        .backButtonHidden(true)
         .nextButtonTitle(LocalizedString("Share With Apple Health", comment: "Onboarding, Your Devices section, Apple Health view, next button, title"))
         .nextButtonAction(nextButtonAction)
     }

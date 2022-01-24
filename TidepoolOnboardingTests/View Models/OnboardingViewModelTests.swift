@@ -25,6 +25,7 @@ class OnboardingViewModelTests: XCTestCase {
         onboarding.notificationAuthorization = .notDetermined
         onboarding.criticalAlertAllowed = false
         onboarding.notificationAllowed = false
+        onboarding.timeSensitiveNotificationAllowed = false
         onboarding.healthStoreAuthorization = .notDetermined
         onboarding.cgmManagerIdentifier = "CGM Manager Identifier"
         onboarding.pumpManagerIdentifier = "Pump Manager Identifier"
@@ -129,6 +130,15 @@ class OnboardingViewModelTests: XCTestCase {
     func testNotificationAllowedForwarding() {
         onboardingViewModel.notificationAllowed = true
         XCTAssertEqual(onboarding.notificationAllowed, onboardingViewModel.notificationAllowed)
+    }
+
+    func testTimeSensitiveNotificationAllowedInitialization() {
+        XCTAssertEqual(onboardingViewModel.timeSensitiveNotificationAllowed, onboarding.timeSensitiveNotificationAllowed)
+    }
+
+    func testTimeSensitiveNotificationAllowedForwarding() {
+        onboardingViewModel.timeSensitiveNotificationAllowed = true
+        XCTAssertEqual(onboarding.timeSensitiveNotificationAllowed, onboardingViewModel.timeSensitiveNotificationAllowed)
     }
 
     func testHealthStoreAuthorizationInitialization() {

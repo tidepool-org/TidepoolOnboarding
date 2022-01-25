@@ -43,6 +43,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var notificationAuthorization: NotificationAuthorization?
     @Published var criticalAlertAllowed: Bool?
     @Published var notificationAllowed: Bool?
+    @Published var timeSensitiveNotificationAllowed: Bool?
     @Published var healthStoreAuthorization: HealthStoreAuthorization?
     @Published var cgmManagerIdentifier: String?
     @Published var pumpManagerIdentifier: String? {
@@ -78,6 +79,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.notificationAuthorization = onboarding.notificationAuthorization
         self.criticalAlertAllowed = onboarding.criticalAlertAllowed
         self.notificationAllowed = onboarding.notificationAllowed
+        self.timeSensitiveNotificationAllowed = onboarding.timeSensitiveNotificationAllowed
         self.healthStoreAuthorization = onboarding.healthStoreAuthorization
         self.cgmManagerIdentifier = onboarding.cgmManagerIdentifier
         self.pumpManagerIdentifier = onboarding.pumpManagerIdentifier
@@ -122,6 +124,10 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         $notificationAllowed
             .dropFirst()
             .sink { onboarding.notificationAllowed = $0 }
+            .store(in: &cancellables)
+        $timeSensitiveNotificationAllowed
+            .dropFirst()
+            .sink { onboarding.timeSensitiveNotificationAllowed = $0 }
             .store(in: &cancellables)
         $healthStoreAuthorization
             .dropFirst()
@@ -379,7 +385,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     func updateNotificationSettings(_ completion: @escaping () -> Void) {
-        guard criticalAlertAllowed != true || notificationAllowed != true else {
+        guard criticalAlertAllowed != true || notificationAllowed != true || timeSensitiveNotificationAllowed != true else {
             completion()
             return
         }
@@ -388,6 +394,11 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             DispatchQueue.main.async {
                 self.criticalAlertAllowed = settings.criticalAlertSetting != .disabled
                 self.notificationAllowed = settings.alertSetting != .disabled
+                if #available(iOS 15.0, *) {
+                    self.timeSensitiveNotificationAllowed = settings.timeSensitiveSetting != .disabled
+                } else {
+                    self.timeSensitiveNotificationAllowed = true
+                }
                 completion()
             }
         }
@@ -550,6 +561,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
                 self.notificationAuthorization = .authorized
                 self.criticalAlertAllowed = true
                 self.notificationAllowed = true
+                self.timeSensitiveNotificationAllowed = true
                 completion()
             }
         }

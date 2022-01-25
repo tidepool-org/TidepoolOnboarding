@@ -198,6 +198,16 @@ class TidepoolOnboardingTests: XCTestCase {
         wait(for: [didUpdateStateExpectation!], timeout: 1)
     }
 
+    func testTimeSensitiveNotificationAllowedNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.timeSensitiveNotificationAllowed = true
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
     func testHealthStoreAuthorizationNotifiesDelegateOfUpdate() {
         didUpdateStateExpectation = expectation(description: "DidUpdateState")
 
@@ -250,6 +260,7 @@ class TidepoolOnboardingTests: XCTestCase {
         old.notificationAuthorization = .authorized
         old.criticalAlertAllowed = true
         old.notificationAllowed = true
+        old.timeSensitiveNotificationAllowed = true
         old.healthStoreAuthorization = .determined
         old.cgmManagerIdentifier = "1234567890"
         old.pumpManagerIdentifier = "abcdefghij"
@@ -265,6 +276,7 @@ class TidepoolOnboardingTests: XCTestCase {
         XCTAssertNotNil(rawState["notificationAuthorization"])
         XCTAssertNotNil(rawState["criticalAlertAllowed"])
         XCTAssertNotNil(rawState["notificationAllowed"])
+        XCTAssertNotNil(rawState["timeSensitiveNotificationAllowed"])
         XCTAssertNotNil(rawState["healthStoreAuthorization"])
         XCTAssertNotNil(rawState["cgmManagerIdentifier"])
         XCTAssertNotNil(rawState["pumpManagerIdentifier"])
@@ -282,6 +294,7 @@ class TidepoolOnboardingTests: XCTestCase {
             XCTAssertEqual(new.notificationAuthorization, old.notificationAuthorization)
             XCTAssertEqual(new.criticalAlertAllowed, old.criticalAlertAllowed)
             XCTAssertEqual(new.notificationAllowed, old.notificationAllowed)
+            XCTAssertEqual(new.timeSensitiveNotificationAllowed, old.timeSensitiveNotificationAllowed)
             XCTAssertEqual(new.healthStoreAuthorization, old.healthStoreAuthorization)
             XCTAssertEqual(new.cgmManagerIdentifier, old.cgmManagerIdentifier)
             XCTAssertEqual(new.pumpManagerIdentifier, old.pumpManagerIdentifier)

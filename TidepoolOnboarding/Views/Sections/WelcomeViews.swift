@@ -46,12 +46,17 @@ struct WelcomeTabView: View {
                 .accessibilityLabel(String(format: LocalizedString("Tidepool Loop Welcome, page %d of %d", comment: "Onboarding, Welcome section, image accessibility label"), index + 1, welcomeData.count))
                 .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures && index == 0,
                                          title: "Are you sure you want to skip the rest of onboarding?") {  // Not localized
-                    onboardingViewModel.skipAllSections(forceSimulators: true)   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                    onboardingViewModel.skipAllSections(forceSimulators: false)   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                 }
             Text(welcomeData[index].title)
                 .font(.largeTitle)
                 .bold()
                 .multilineTextAlignment(welcomeData[index].alignment)
+                .accessibilityLabel(welcomeData[index].title.replacingOccurrences(of: "\n", with: " "))
+                .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures && index == 0,
+                                         title: "Are you sure you want to skip the rest of onboarding (and use simulators)?") {  // Not localized
+                    onboardingViewModel.skipAllSections(forceSimulators: true)   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                }
             if let description = welcomeData[index].description {
                 Paragraph(description)
             } else {

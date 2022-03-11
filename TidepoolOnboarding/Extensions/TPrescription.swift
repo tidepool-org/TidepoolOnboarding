@@ -88,13 +88,15 @@ extension TPrescription {
                                                   training: .inModule,
                                                   therapySettings: .initial,
                                                   prescriberTermsAccepted: true,
-                                                  state: .submitted,
-                                                  createdTime: dateFormatter.date(from: "2021-04-28T20:19:30.841Z"),
-                                                  createdUserId: "42cb2e2f-b0e7-4168-a30f-a2738777027a")
+                                                  state: .submitted)
+        let revision = TPrescription.Revision(revisionId: 0,
+                                              attributes: attributes,
+                                              createdTime: dateFormatter.date(from: "2021-04-28T20:19:30.841Z"),
+                                              createdUserId: "42cb2e2f-b0e7-4168-a30f-a2738777027a")
         return TPrescription(id: "6089c35220398b38a71f2103",
                              patientUserId: "dd8373e3-992e-4801-a17e-08b49b4f3ade",
                              state: .claimed,
-                             latestRevision: TPrescription.Revision(revisionId: 0, attributes: attributes),
+                             latestRevision: revision,
                              prescriberUserId: "42cb2e2f-b0e7-4168-a30f-a2738777027a",
                              createdTime: dateFormatter.date(from: "2021-04-28T20:19:30.841Z"),
                              createdUserId: "42cb2e2f-b0e7-4168-a30f-a2738777027a",

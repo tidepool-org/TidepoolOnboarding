@@ -337,14 +337,8 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         tidepoolService.tapi.getProfile(userId: prescription.prescriberUserId) { result in
             DispatchQueue.main.async {
                 switch result {
-                case .failure:
-                    // completion(error.onboardingError)
-                    // TODO: https://tidepool.atlassian.net/browse/LOOP-3475
-                    // The backend does not *yet* automatically create a sharing connection between the prescriber account
-                    // and the prescription account. This API call will fail unless the two accounts had a previous
-                    // sharing connection. To allow onboarding to function, create a placeholder prescriber profile.
-                    self.prescriberProfile = TProfile(fullName: "Unknown Prescriber")
-                    completion(nil)
+                case .failure(let error):
+                    completion(error.onboardingError)
                 case .success(let profile):
                     self.prescriberProfile = profile
                     completion(nil)
@@ -354,7 +348,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     private func constructInitialTherapySettingsViewModel() -> TherapySettingsViewModel {
-        guard let datePrescribed = prescription?.modifiedTime ?? prescription?.createdTime,   // TODO: https://tidepool.atlassian.net/browse/LOOP-3476
+        guard let datePrescribed = prescription?.submittedTime ?? prescription?.modifiedTime ?? prescription?.createdTime,
               let providerName = prescriberProfile?.fullName,
               let therapySettings = prescription?.therapySettings else {
             preconditionFailure("Must have prescription and prescriber profile to construct therapy settings view model")

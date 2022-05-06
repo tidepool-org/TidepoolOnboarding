@@ -574,7 +574,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             }
         }
     }
-
+    
     private func skipCompleteYourDevicesDevices(forceSimulators: Bool, completion: @escaping () -> Void) {
         guard forceSimulators else {
             completion()
@@ -582,45 +582,53 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
 
         if onboardingProvider.activeCGMManager == nil {
-            self.cgmManagerIdentifier = MockCGMManager.managerIdentifier
-            switch onboardCGMManager() {
-            case .success(let result):
-                switch result {
-                case .userInteractionRequired(_):
-                    log.error("%{public}@ Unable to force CGM simulator onboarding when user interaction required", #function)
-                case .createdAndOnboarded(let cgmManager):
-                    if let cgmManager = cgmManager as? MockCGMManager {
-                        let parameters = MockCGMDataSource.Model.SineCurveParameters(baseGlucose: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 120),
-                                                                                     amplitude: HKQuantity(unit:.milligramsPerDeciliter, doubleValue: 40),
-                                                                                     period: .hours(6),
-                                                                                     referenceDate: Date())
-                        cgmManager.dataSource = MockCGMDataSource(model: .sineCurve(parameters: parameters))
-                        cgmManager.backfillData(datingBack: .hours(3))
-                    }
-                }
-            case .failure(let error):
-                log.error("%{public}@ Failure to force CGM simulator onboarding [error=%{public}@]", #function, String(describing: error))
-            }
+            skipCompleteYourDevicesCGMManager()
         }
-
         if onboardingProvider.activePumpManager == nil {
-            self.pumpManagerIdentifier = MockPumpManager.managerIdentifier
-            switch onboardPumpManager() {
-            case .success(let result):
-                switch result {
-                case .userInteractionRequired(_):
-                    log.error("%{public}@ Unable to force pump simulator onboarding when user interaction required", #function)
-                case .createdAndOnboarded(_):
-                    break
-                }
-            case .failure(let error):
-                log.error("%{public}@ Failure to force pump simulator onboarding [error=%{public}@]", #function, String(describing: error))
-            }
+            skipCompleteYourDevicesPumpManager()
         }
-
         completion()
     }
 
+    func skipCompleteYourDevicesCGMManager() {
+        cgmManagerIdentifier = MockCGMManager.managerIdentifier
+        switch onboardCGMManager() {
+        case .success(let result):
+            switch result {
+            case .userInteractionRequired(_):
+                log.error("%{public}@ Unable to force CGM simulator onboarding when user interaction required", #function)
+            case .createdAndOnboarded(let cgmManager):
+                if let cgmManager = cgmManager as? MockCGMManager {
+                    let parameters = MockCGMDataSource.Model.SineCurveParameters(baseGlucose: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 120),
+                                                                                 amplitude: HKQuantity(unit:.milligramsPerDeciliter, doubleValue: 40),
+                                                                                 period: .hours(6),
+                                                                                 referenceDate: Date())
+                    cgmManager.dataSource = MockCGMDataSource(model: .sineCurve(parameters: parameters))
+                    cgmManager.backfillData(datingBack: .hours(3))
+                }
+                isCGMManagerOnboarded = true
+            }
+        case .failure(let error):
+            log.error("%{public}@ Failure to force CGM simulator onboarding [error=%{public}@]", #function, String(describing: error))
+        }
+    }
+    
+    func skipCompleteYourDevicesPumpManager() {
+        self.pumpManagerIdentifier = MockPumpManager.managerIdentifier
+        switch onboardPumpManager() {
+        case .success(let result):
+            switch result {
+            case .userInteractionRequired(_):
+                log.error("%{public}@ Unable to force pump simulator onboarding when user interaction required", #function)
+            case .createdAndOnboarded(_):
+                isPumpManagerOnboarded = true
+                break
+            }
+        case .failure(let error):
+            log.error("%{public}@ Failure to force pump simulator onboarding [error=%{public}@]", #function, String(describing: error))
+        }
+    }
+    
     private func skipCompleteGetLooping(completion: @escaping () -> Void) {
         if dosingEnabled == nil {
             self.dosingEnabled = true
@@ -739,7 +747,7 @@ fileprivate extension TPrescription {
     var pumpManagerIdentifier: String? {
         switch latestRevision?.attributes?.initialSettings?.pumpId {
         case "6678c377-928c-49b3-84c1-19e2dafaff8d":    // Hard-coded Tidepool backend device identifier
-            return "Omnipod"
+            return "AccuChekSolo"
         default:
             return nil
         }

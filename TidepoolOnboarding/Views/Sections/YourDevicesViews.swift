@@ -258,6 +258,7 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     @State private var alertMessage: String?
+    @State private var alertAction: (() -> Void)?
     @State private var isAlertPresented = false
 
     @State private var cgmManagerViewController: CGMManagerViewController?
@@ -277,8 +278,26 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
             VStack(alignment: .leading, spacing: 30) {
                 DeviceView(number: 1, attributed: cgmManagerText, checked: onboardingViewModel.isCGMManagerOnboarded)
                     .sheet(isPresented: $isCGMManagerSheetPresented, onDismiss: onSheetDismiss) { onboardCGMManagerSheet }
+                    // Can't use `.alertOnLongPressGesture` because we already have an .alert below :(
+                    .onLongPressGesture(minimumDuration: 2) {
+                        if onboardingViewModel.allowDebugFeatures { // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                            UINotificationFeedbackGenerator().notificationOccurred(.warning)
+                            alertMessage = "Are you sure you want to skip pairing a CGM and use the CGM simulator?" // Not localized
+                            alertAction = onboardingViewModel.skipCompleteYourDevicesCGMManager
+                            isAlertPresented = true
+                        }
+                    }
                 DeviceView(number: 2, attributed: pumpManagerText, checked: onboardingViewModel.isPumpManagerOnboarded)
                     .sheet(isPresented: $isPumpManagerSheetPresented, onDismiss: onSheetDismiss) { onboardPumpManagerSheet }
+                    // Can't use `.alertOnLongPressGesture` because we already have an .alert below :(
+                    .onLongPressGesture(minimumDuration: 2) {
+                        if onboardingViewModel.allowDebugFeatures { // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                            UINotificationFeedbackGenerator().notificationOccurred(.warning)
+                            alertMessage = "Are you sure you want to skip pairing a Pump and use the Pump simulator?" // Not localized
+                            alertAction = onboardingViewModel.skipCompleteYourDevicesPumpManager
+                            isAlertPresented = true
+                        }
+                    }
             }
             .padding(.vertical)
             Paragraph(LocalizedString("If you do not yet have both devices, or you need to stop for any reason, you can pause and return to this point later.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 4"))
@@ -402,7 +421,13 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     }
 
     private var alert: Alert {
-        Alert(title: Text(LocalizedString("Error", comment: "Title of general error alert")), message: Text(alertMessage!))
+        if let action = alertAction {
+            return Alert(title: Text(alertMessage!),
+                         primaryButton: .cancel(),
+                         secondaryButton: .destructive(Text("Yes"), action: action))
+        } else {
+            return Alert(title: Text(LocalizedString("Error", comment: "Title of general error alert")), message: Text(alertMessage!))
+        }
     }
 
     fileprivate struct DeviceView: View {

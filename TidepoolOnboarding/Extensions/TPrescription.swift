@@ -70,7 +70,7 @@ extension TPrescription {
                                                                        ],
                                                                        basalRateMaximum: TPrescription.Attributes.InitialSettings.BasalRateMaximum(4.5, .unitsPerHour),
                                                                        bolusAmountMaximum: TPrescription.Attributes.InitialSettings.BolusAmountMaximum(10, .units),
-                                                                       pumpId: "6678c377-928c-49b3-84c1-19e2dafaff8d",
+                                                                       pumpId: "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f",
                                                                        cgmId: "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245")
         let attributes = TPrescription.Attributes(accountType: .caregiver,
                                                   caregiverFirstName: "Parent",

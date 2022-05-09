@@ -315,7 +315,7 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     }
 
     private var pumpManagerText: String {
-        return String(format: LocalizedString("Connect your Pump: <b>%1$@</b>", comment: "Onboarding, Your Devices section, Pairing Your Devices view, list, pump (1: pump title)"),
+        return String(format: LocalizedString("Pair your Pump: <b>%1$@</b>", comment: "Onboarding, Your Devices section, Pairing Your Devices view, list, pump (1: pump title)"),
                       onboardingViewModel.pumpManagerTitle)
     }
 
@@ -323,7 +323,7 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
         if !onboardingViewModel.isCGMManagerOnboarded {
             return LocalizedString("Pair CGM", comment: "Onboarding, Your Devices section, Pairing Your Devices view, pair CGM button, title")
         } else {
-            return LocalizedString("Connect Pump", comment: "Onboarding, Your Devices section, Pairing Your Devices view, connect pump button, title")
+            return LocalizedString("Pair Pump", comment: "Onboarding, Your Devices section, Pairing Your Devices view, pair pump button, title")
         }
     }
 

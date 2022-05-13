@@ -43,6 +43,9 @@ extension TPrescription {
 
 extension TPrescription {
     static var mock: TPrescription {
+        let omnipod = "6678c377-928c-49b3-84c1-19e2dafaff8d"    // Hard-coded Tidepool backend device identifier
+        let coastal = "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f"    // Hard-coded Tidepool backend device identifier
+        let dexcom = "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245"    // Hard-coded Tidepool backend device identifier
         let initialSettings = TPrescription.Attributes.InitialSettings(bloodGlucoseUnits: .milligramsPerDeciliter,
                                                                        basalRateSchedule: [
                                                                         TPrescription.Attributes.InitialSettings.BasalRateStart(start: .hours(0), rate: 1.0),
@@ -70,8 +73,8 @@ extension TPrescription {
                                                                        ],
                                                                        basalRateMaximum: TPrescription.Attributes.InitialSettings.BasalRateMaximum(4.5, .unitsPerHour),
                                                                        bolusAmountMaximum: TPrescription.Attributes.InitialSettings.BolusAmountMaximum(10, .units),
-                                                                       pumpId: "6678c377-928c-49b3-84c1-19e2dafaff8d",
-                                                                       cgmId: "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245")
+                                                                       pumpId: coastal,
+                                                                       cgmId: dexcom)
         let attributes = TPrescription.Attributes(accountType: .caregiver,
                                                   caregiverFirstName: "Parent",
                                                   caregiverLastName: "Doe",

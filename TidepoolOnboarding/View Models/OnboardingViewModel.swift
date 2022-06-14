@@ -453,13 +453,17 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     private var pumpManagerInitialSettings: PumpManagerSetupSettings {
-        guard let therapySettings = therapySettings else {
+        guard let therapySettings = therapySettings,
+              let maximumBasalRatePerHour = therapySettings.maximumBasalRatePerHour,
+              let maximumBolus = therapySettings.maximumBolus,
+              let basalRateSchedule = therapySettings.basalRateSchedule
+        else {
             preconditionFailure("Must have therapy settings to construct pump manager initial settings")
         }
 
-        return PumpManagerSetupSettings(maxBasalRateUnitsPerHour: therapySettings.maximumBasalRatePerHour,
-                                        maxBolusUnits: therapySettings.maximumBolus,
-                                        basalSchedule: therapySettings.basalRateSchedule)
+        return PumpManagerSetupSettings(maxBasalRateUnitsPerHour: maximumBasalRatePerHour,
+                                        maxBolusUnits: maximumBolus,
+                                        basalSchedule: basalRateSchedule)
     }
 
     // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY

@@ -49,29 +49,25 @@ extension TPrescription {
         let initialSettings = TPrescription.Attributes.InitialSettings(bloodGlucoseUnits: .milligramsPerDeciliter,
                                                                        basalRateSchedule: [
                                                                         TPrescription.Attributes.InitialSettings.BasalRateStart(start: .hours(0), rate: 1.0),
-                                                                        TPrescription.Attributes.InitialSettings.BasalRateStart(start: .hours(6), rate: 1.5),
-                                                                        TPrescription.Attributes.InitialSettings.BasalRateStart(start: .hours(18), rate: 1.25)
+                                                                        TPrescription.Attributes.InitialSettings.BasalRateStart(start: .hours(15), rate: 0.85),
                                                                        ],
-                                                                       bloodGlucoseTargetPhysicalActivity: TPrescription.Attributes.InitialSettings.BloodGlucoseTarget(low: 150, high: 160),
+                                                                       bloodGlucoseTargetPhysicalActivity: TPrescription.Attributes.InitialSettings.BloodGlucoseTarget(low: 140, high: 160),
                                                                        bloodGlucoseTargetPreprandial: TPrescription.Attributes.InitialSettings.BloodGlucoseTarget(low: 80, high: 90),
                                                                        bloodGlucoseTargetSchedule: [
-                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(0), low: 105, high: 115),
-                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(6), low: 100, high: 110),
-                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(22), low: 105, high: 115),
+                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(0), low: 100, high: 110),
+                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(8), low: 105, high: 115),
+                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(21), low: 100, high: 110),
                                                                        ],
                                                                        carbohydrateRatioSchedule: [
-                                                                        TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart(start: .hours(0), amount: 15),
-                                                                        TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart(start: .hours(6), amount: 12),
-                                                                        TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart(start: .hours(12), amount: 15)
+                                                                        TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart(start: .hours(0), amount: 10)
                                                                        ],
-                                                                       glucoseSafetyLimit: 80,
-                                                                       insulinModel: .rapidChild,
+                                                                       glucoseSafetyLimit: 75,
+                                                                       insulinModel: .rapidAdult,
                                                                        insulinSensitivitySchedule: [
-                                                                        TPrescription.Attributes.InitialSettings.InsulinSensitivityStart(start: .hours(0), amount: 55.0),
-                                                                        TPrescription.Attributes.InitialSettings.InsulinSensitivityStart(start: .hours(6), amount: 45.0),
-                                                                        TPrescription.Attributes.InitialSettings.InsulinSensitivityStart(start: .hours(22), amount: 55.0),
+                                                                        TPrescription.Attributes.InitialSettings.InsulinSensitivityStart(start: .hours(0), amount: 45.0),
+                                                                        TPrescription.Attributes.InitialSettings.InsulinSensitivityStart(start: .hours(9), amount: 55.0),
                                                                        ],
-                                                                       basalRateMaximum: TPrescription.Attributes.InitialSettings.BasalRateMaximum(4.5, .unitsPerHour),
+                                                                       basalRateMaximum: TPrescription.Attributes.InitialSettings.BasalRateMaximum(5, .unitsPerHour),
                                                                        bolusAmountMaximum: TPrescription.Attributes.InitialSettings.BolusAmountMaximum(10, .units),
                                                                        pumpId: coastal,
                                                                        cgmId: dexcom)

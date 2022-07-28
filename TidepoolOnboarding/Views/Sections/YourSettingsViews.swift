@@ -740,7 +740,7 @@ fileprivate struct YourSettingsCarbRatioScheduleEditor: View {
             CarbRatioScheduleEditor(mode: .acceptanceFlow,
                                     therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
                                     didSave: { isDestinationActive = true })
-            NavigationLink(destination: YourSettingsBasalRatesInformationView(), isActive: $isDestinationActive) { EmptyView() }
+            NavigationLink(destination: YourSettingsBasalRatesInformationView(maximumBasalScheduleEntryCount: onboardingViewModel.currentTherapySettingsViewModel.maximumBasalScheduleEntryCount), isActive: $isDestinationActive) { EmptyView() }
         }
         .backButtonHidden(true)
         .closeButtonHidden(true)
@@ -750,10 +750,11 @@ fileprivate struct YourSettingsCarbRatioScheduleEditor: View {
 
 fileprivate struct YourSettingsBasalRatesInformationView: View {
     @State private var isDestinationActive = false
+    let maximumBasalScheduleEntryCount: Int?
 
     var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
-            BasalRatesInformationView(onExit: { isDestinationActive = true })
+            BasalRatesInformationView(onExit: { isDestinationActive = true }, maximumScheduleEntryCount: maximumBasalScheduleEntryCount)
             NavigationLink(destination: YourSettingsBasalRateScheduleEditor(), isActive: $isDestinationActive) { EmptyView() }
         }
     }

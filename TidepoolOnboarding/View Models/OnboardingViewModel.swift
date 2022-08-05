@@ -687,7 +687,7 @@ extension OnboardingViewModel: TherapySettingsViewModelDelegate {
         //noop
     }
     
-    func saveCompletion(for therapySetting: TherapySetting, therapySettings: TherapySettings) {
+    func saveCompletion(therapySettings: TherapySettings) {
         // Note: the expectation is that this would only be called by the _current_ TherapySettingsView, so it should
         // be okay to just save it here.
         self.therapySettings = therapySettings

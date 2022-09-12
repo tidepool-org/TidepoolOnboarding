@@ -77,7 +77,7 @@ fileprivate struct YourDevicesNotificationsView: View {
     private var segment1: some View {
         Segment {
             NumberedBodyTextList(
-                LocalizedString("Enable Notifications in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, segment 1, list 1, item 1")
+                LocalizedString("Enable Notifications in your iPhone or iPod touch Settings.", comment: "Onboarding, Your Devices section, Notifications view, segment 1, list 1, item 1")
             )
             .padding(.vertical)
             Paragraph(LocalizedString("Notifications may be configured for each device you pair and can alert you to rising and falling glucose, insulin pump maintenance tasks, or other situations where the app may need your attention.", comment: "Onboarding, Your Devices section, Notifications view, segment 1, paragraph 1"))
@@ -88,7 +88,7 @@ fileprivate struct YourDevicesNotificationsView: View {
     private var segment2: some View {
         Segment {
             NumberedBodyTextList(
-                LocalizedString("Enable Critical Alerts in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, segment 2, list 1, item 1")
+                LocalizedString("Enable Critical Alerts in your iPhone or iPod touch Settings.", comment: "Onboarding, Your Devices section, Notifications view, segment 2, list 1, item 1")
             )
             .startingAt(2)
             .padding(.vertical)
@@ -99,7 +99,7 @@ fileprivate struct YourDevicesNotificationsView: View {
     private var segment3: some View {
         Segment {
             NumberedBodyTextList(
-                LocalizedString("Ensure Time Sensitive Notifications are turned on in your iPhone or iPod touch Settings", comment: "Onboarding, Your Devices section, Notifications view, segment 3, list 1, item 1")
+                LocalizedString("Ensure Time Sensitive Notifications are turned on in your iPhone or iPod touch Settings.", comment: "Onboarding, Your Devices section, Notifications view, segment 3, list 1, item 1")
             )
             .startingAt(3)
             .padding(.vertical)
@@ -146,18 +146,18 @@ fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
         OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesFocusModesView(), isDestinationActive: $isDestinationActive) {
             PageHeader(title: LocalizedString("Alert Permissions Required", comment: "Onboarding, Your Devices section, Alert Permissions Required view, title"))
             PresentableImage("YourDevices_AlertPermissionsRequired")
-            Paragraph(LocalizedString("You must allow Critical Alerts, Notifications, and Time Sensitive Notifications on your smart device to continue using Tidepool Loop.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, paragraph"))
+            Paragraph(LocalizedString("You must allow Notifications, Critical Alerts, and Time Sensitive Notifications on your smart device to continue using Tidepool Loop.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, paragraph"))
             NumberedBodyTextList(
                 LocalizedString("Tap the button below to open Tidepool Loop settings.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 1"),
                 LocalizedString("Tap Notifications.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 2"),
-                LocalizedString("Allow Critical Alerts, Notifications, and Time Sensitive Notifications.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 3"),
+                LocalizedString("Allow Notifications, Critical Alerts, and Time Sensitive Notifications.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 3"),
                 LocalizedString("Return to this app to continue.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 4")
             )
-            if !criticalAlertAllowed {
-                Callout(title: LocalizedString("Critical Alerts must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 1, title"), warningIconColor: .red)
-            }
             if !notificationAllowed {
                 Callout(title: LocalizedString("Notifications must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 2, title"), warningIconColor: .red)
+            }
+            if !criticalAlertAllowed {
+                Callout(title: LocalizedString("Critical Alerts must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 1, title"), warningIconColor: .red)
             }
             if notificationAllowed && !timeSensitiveNotificationAllowed {
                 Callout(title: LocalizedString("Time Sensitive Notifications must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 3, title"), warningIconColor: .red)

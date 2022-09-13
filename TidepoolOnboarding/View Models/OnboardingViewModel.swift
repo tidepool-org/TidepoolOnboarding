@@ -27,6 +27,9 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
     let onboardingProvider: OnboardingProvider
 
+    var presentModal: ((UIViewController) -> Void)?
+    var dismissCurrentModal: (() -> Void)?
+
     @Published var lastAccessDate: Date
     @Published var sectionProgression: OnboardingSectionProgression
     @Published var tidepoolService: TidepoolService?
@@ -414,15 +417,38 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         return cgmManagerImage
     }
 
-    func onboardCGMManager() -> Result<OnboardingResult<CGMManagerViewController, CGMManager>, Error> {
+
+    func onboardCGMManager(_ completion: @escaping (Error?) -> Void) {
         guard let cgmManagerIdentifier = cgmManagerIdentifier else {
-            return .failure(OnboardingError.unexpectedState)
+            completion(OnboardingError.unexpectedState)
+            return
         }
         let result = onboardingProvider.onboardCGMManager(withIdentifier: cgmManagerIdentifier)
-        if case .success(let success) = result, case .createdAndOnboarded = success {
-            self.isCGMManagerOnboarded = true
+        switch result {
+        case .success(let setupUIResult):
+            switch setupUIResult {
+            case .createdAndOnboarded(let cgmManager):
+                if let cgmManager = cgmManager as? MockCGMManager {
+                    let parameters = MockCGMDataSource.Model.SineCurveParameters(baseGlucose: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 120),
+                                                                                 amplitude: HKQuantity(unit:.milligramsPerDeciliter, doubleValue: 40),
+                                                                                 period: .hours(6),
+                                                                                 referenceDate: Date())
+                    cgmManager.dataSource = MockCGMDataSource(model: .sineCurve(parameters: parameters))
+                    cgmManager.backfillData(datingBack: .hours(3))
+                }
+                isCGMManagerOnboarded = true
+
+                self.isCGMManagerOnboarded = true
+                completion(nil)
+            case .userInteractionRequired(var setupVC):
+                deviceManagerOnboardingCompletion = completion
+                setupVC.cgmManagerOnboardingDelegate = self
+                setupVC.completionDelegate = self
+                presentModal?(setupVC)
+            }
+        case .failure(let error):
+            completion(error)
         }
-        return result
     }
 
     var pumpManagerTitle: String {
@@ -441,15 +467,29 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         return pumpManagerImage
     }
 
-    func onboardPumpManager() -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
+    var deviceManagerOnboardingCompletion: ((Error?) -> Void)?
+
+    func onboardPumpManager(_ completion: @escaping (Error?) -> Void) {
         guard let pumpManagerIdentifier = pumpManagerIdentifier else {
-            return .failure(OnboardingError.unexpectedState)
+            completion(OnboardingError.unexpectedState)
+            return
         }
         let result = onboardingProvider.onboardPumpManager(withIdentifier: pumpManagerIdentifier, initialSettings: pumpManagerInitialSettings)
-        if case .success(let success) = result, case .createdAndOnboarded = success {
-            self.isPumpManagerOnboarded = true
+        switch result {
+        case .success(let setupUIResult):
+            switch setupUIResult {
+            case .createdAndOnboarded:
+                self.isPumpManagerOnboarded = true
+                completion(nil)
+            case .userInteractionRequired(var setupVC):
+                deviceManagerOnboardingCompletion = completion
+                setupVC.pumpManagerOnboardingDelegate = self
+                setupVC.completionDelegate = self
+                presentModal?(setupVC)
+            }
+        case .failure(let error):
+            completion(error)
         }
-        return result
     }
 
     private var pumpManagerInitialSettings: PumpManagerSetupSettings {
@@ -596,40 +636,23 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
     func skipCompleteYourDevicesCGMManager() {
         cgmManagerIdentifier = MockCGMManager.managerIdentifier
-        switch onboardCGMManager() {
-        case .success(let result):
-            switch result {
-            case .userInteractionRequired(_):
-                log.error("%{public}@ Unable to force CGM simulator onboarding when user interaction required", #function)
-            case .createdAndOnboarded(let cgmManager):
-                if let cgmManager = cgmManager as? MockCGMManager {
-                    let parameters = MockCGMDataSource.Model.SineCurveParameters(baseGlucose: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 120),
-                                                                                 amplitude: HKQuantity(unit:.milligramsPerDeciliter, doubleValue: 40),
-                                                                                 period: .hours(6),
-                                                                                 referenceDate: Date())
-                    cgmManager.dataSource = MockCGMDataSource(model: .sineCurve(parameters: parameters))
-                    cgmManager.backfillData(datingBack: .hours(3))
-                }
-                isCGMManagerOnboarded = true
+        onboardCGMManager { error in
+            if let error = error {
+                self.log.error("%{public}@ Failure to force CGM simulator onboarding [error=%{public}@]", #function, String(describing: error))
+            } else {
+                self.isCGMManagerOnboarded = true
             }
-        case .failure(let error):
-            log.error("%{public}@ Failure to force CGM simulator onboarding [error=%{public}@]", #function, String(describing: error))
         }
     }
     
     func skipCompleteYourDevicesPumpManager() {
         self.pumpManagerIdentifier = MockPumpManager.managerIdentifier
-        switch onboardPumpManager() {
-        case .success(let result):
-            switch result {
-            case .userInteractionRequired(_):
-                log.error("%{public}@ Unable to force pump simulator onboarding when user interaction required", #function)
-            case .createdAndOnboarded(_):
-                isPumpManagerOnboarded = true
-                break
+        onboardPumpManager { error in
+            if let error = error {
+                self.log.error("%{public}@ Failure to force pump simulator onboarding [error=%{public}@]", #function, String(describing: error))
+            } else {
+                self.isPumpManagerOnboarded = true
             }
-        case .failure(let error):
-            log.error("%{public}@ Failure to force pump simulator onboarding [error=%{public}@]", #function, String(describing: error))
         }
     }
     
@@ -639,6 +662,16 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
 
         completion()
+    }
+}
+
+extension OnboardingViewModel: CompletionDelegate {
+    func completionNotifyingDidComplete(_ object: CompletionNotifying) {
+        if object as? PumpManagerViewController != nil || object as? CGMManagerViewController != nil {
+            dismissCurrentModal?()
+            deviceManagerOnboardingCompletion?(nil)
+            deviceManagerOnboardingCompletion = nil
+        }
     }
 }
 

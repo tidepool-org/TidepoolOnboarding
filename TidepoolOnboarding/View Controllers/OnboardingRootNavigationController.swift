@@ -82,10 +82,20 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        onboardingViewModel.presentModal = { [weak self] vc in
+            self?.show(vc, sender: nil)
+        }
+        onboardingViewModel.dismissCurrentModal = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         onboardingViewModel.updateLastAccessedDate()
+
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.didBecomeActiveNotificationReceived(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.willResignActiveNotificationReceived(_:)), name: UIApplication.willResignActiveNotification, object: nil)

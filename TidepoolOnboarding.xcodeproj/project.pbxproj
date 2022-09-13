@@ -45,8 +45,6 @@
 		A95BB9122603230B00E9FD17 /* Callout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95BB9112603230B00E9FD17 /* Callout.swift */; };
 		A95D62402649FF410018B9EA /* AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D623F2649FF410018B9EA /* AttributedString.swift */; };
 		A95D624C264A006D0018B9EA /* Text+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D624B264A006C0018B9EA /* Text+AttributedString.swift */; };
-		A95D625D264A0F330018B9EA /* CGMManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D625C264A0F330018B9EA /* CGMManagerView.swift */; };
-		A95D6264264A0F3C0018B9EA /* PumpManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */; };
 		A9641CF2264F48FE00189E3A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9641CF1264F48FE00189E3A /* UIColor.swift */; };
 		A98AD2BE25830807001AAD6F /* TidepoolOnboardingPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A98AD2F225830851001AAD6F /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; };
@@ -177,8 +175,6 @@
 		A95BB9112603230B00E9FD17 /* Callout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callout.swift; sourceTree = "<group>"; };
 		A95D623F2649FF410018B9EA /* AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedString.swift; sourceTree = "<group>"; };
 		A95D624B264A006C0018B9EA /* Text+AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+AttributedString.swift"; sourceTree = "<group>"; };
-		A95D625C264A0F330018B9EA /* CGMManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMManagerView.swift; sourceTree = "<group>"; };
-		A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerView.swift; sourceTree = "<group>"; };
 		A9641CF1264F48FE00189E3A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		A98AD2B925830807001AAD6F /* TidepoolOnboardingPlugin.loopplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TidepoolOnboardingPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		A98AD2BC25830807001AAD6F /* TidepoolOnboardingPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TidepoolOnboardingPlugin.h; sourceTree = "<group>"; };
@@ -518,13 +514,11 @@
 		A9BEF0352588359600860217 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A95D625C264A0F330018B9EA /* CGMManagerView.swift */,
 				A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */,
 				A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */,
 				A9502CB525FFEE8E00146AD3 /* OnboardingSectionPageView.swift */,
 				A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */,
 				A90634552643426900CAFED1 /* OnboardingSectionWrapperView.swift */,
-				A95D6263264A0F3C0018B9EA /* PumpManagerView.swift */,
 				A906344926433B9300CAFED1 /* ServiceView.swift */,
 				A923335325C3789700D8CF69 /* Accessory */,
 				A9B6733A25F158AF00D27872 /* Sections */,
@@ -764,7 +758,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A95D6264264A0F3C0018B9EA /* PumpManagerView.swift in Sources */,
 				A933F31D260925EA00DB84B9 /* LoopIcon.swift in Sources */,
 				A99EAAA325F7FD1F00503A6D /* YourSettingsViews.swift in Sources */,
 				A933F3142608EFF500DB84B9 /* Segment.swift in Sources */,
@@ -794,7 +787,6 @@
 				A90634562643426900CAFED1 /* OnboardingSectionWrapperView.swift in Sources */,
 				A95D62402649FF410018B9EA /* AttributedString.swift in Sources */,
 				A9502CBE25FFEF7B00146AD3 /* PageHeader.swift in Sources */,
-				A95D625D264A0F330018B9EA /* CGMManagerView.swift in Sources */,
 				A911C20E264AEA3B00EF3B85 /* TProfile.swift in Sources */,
 				A9A5739F2603AA080084592C /* WarningIcon.swift in Sources */,
 				A98AD30E25830879001AAD6F /* LocalizedString.swift in Sources */,

@@ -263,8 +263,6 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
 
     @State private var cgmManagerViewController: CGMManagerViewController?
     @State private var pumpManagerViewController: PumpManagerViewController?
-    @State private var isCGMManagerSheetPresented = false
-    @State private var isPumpManagerSheetPresented = false
     @State private var isPauseOnboardingSheetPresented = false
     @State private var onSheetDismiss: (() -> Void)?
 
@@ -277,7 +275,6 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
                 .bold()
             VStack(alignment: .leading, spacing: 30) {
                 DeviceView(number: 1, attributed: cgmManagerText, checked: onboardingViewModel.isCGMManagerOnboarded)
-                    .sheet(isPresented: $isCGMManagerSheetPresented, onDismiss: onSheetDismiss) { onboardCGMManagerSheet }
                     // Can't use `.alertOnLongPressGesture` because we already have an .alert below :(
                     .onLongPressGesture(minimumDuration: 2) {
                         if onboardingViewModel.allowDebugFeatures { // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
@@ -288,7 +285,6 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
                         }
                     }
                 DeviceView(number: 2, attributed: pumpManagerText, checked: onboardingViewModel.isPumpManagerOnboarded)
-                    .sheet(isPresented: $isPumpManagerSheetPresented, onDismiss: onSheetDismiss) { onboardPumpManagerSheet }
                     // Can't use `.alertOnLongPressGesture` because we already have an .alert below :(
                     .onLongPressGesture(minimumDuration: 2) {
                         if onboardingViewModel.allowDebugFeatures { // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
@@ -338,57 +334,25 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     }
 
     private func onboardCGMManager(_ completion: @escaping (Bool) -> Void) {
-        switch onboardingViewModel.onboardCGMManager() {
-        case .failure(let error):
-            self.alertMessage = error.localizedDescription
-            self.isAlertPresented = true
-        case .success(let success):
-            switch success {
-            case .userInteractionRequired(let viewController):
-                self.cgmManagerViewController = viewController
-                self.onSheetDismiss = { onboardCGMManagerComplete(completion) }
-                self.isCGMManagerSheetPresented = true
-            case .createdAndOnboarded:
-                onboardCGMManagerComplete(completion)
+        onboardingViewModel.onboardCGMManager({ error in
+            if let error = error {
+                self.alertMessage = error.localizedDescription
+                self.isAlertPresented = true
+            } else {
+                completion(onboardingViewModel.isCGMManagerOnboarded && onboardingViewModel.isPumpManagerOnboarded)
             }
-        }
-    }
-
-    private var onboardCGMManagerSheet: some View {
-        CGMManagerView(cgmManagerViewController!)
-            .presentation(isModal: true)
-            .environment(\.dismissAction, { isCGMManagerSheetPresented = false })
-    }
-
-    private func onboardCGMManagerComplete(_ completion: @escaping (Bool) -> Void) {
-        completion(false)
+        })
     }
 
     private func onboardPumpManager(_ completion: @escaping (Bool) -> Void) {
-        switch onboardingViewModel.onboardPumpManager() {
-        case .failure(let error):
-            self.alertMessage = error.localizedDescription
-            self.isAlertPresented = true
-        case .success(let success):
-            switch success {
-            case .userInteractionRequired(let viewController):
-                self.pumpManagerViewController = viewController
-                self.onSheetDismiss = { onboardPumpManagerComplete(completion) }
-                self.isPumpManagerSheetPresented = true
-            case .createdAndOnboarded:
-                onboardPumpManagerComplete(completion)
+        onboardingViewModel.onboardPumpManager({ error in
+            if let error = error {
+                self.alertMessage = error.localizedDescription
+                self.isAlertPresented = true
+            } else {
+                completion(onboardingViewModel.isCGMManagerOnboarded && onboardingViewModel.isPumpManagerOnboarded)
             }
-        }
-    }
-
-    private var onboardPumpManagerSheet: some View {
-        PumpManagerView(pumpManagerViewController!)
-            .presentation(isModal: true)
-            .environment(\.dismissAction, { isPumpManagerSheetPresented = false })
-    }
-
-    private func onboardPumpManagerComplete(_ completion: @escaping (Bool) -> Void) {
-        completion(onboardingViewModel.isCGMManagerOnboarded && onboardingViewModel.isPumpManagerOnboarded)
+        })
     }
 
     private var footer: AnyView? {

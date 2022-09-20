@@ -409,7 +409,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     var cgmManagerImage: UIImage {
         guard let cgmManagerIdentifier = cgmManagerIdentifier,
               let cgmManagerImage = onboardingProvider.imageForCGMManager(withIdentifier: cgmManagerIdentifier) else {
-            return UIColor.clear.image()
+            return UIImage(frameworkImage: "ace-pump") ?? UIColor.clear.image()
         }
         return cgmManagerImage
     }
@@ -428,7 +428,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     var pumpManagerTitle: String {
         guard let pumpManagerIdentifier = pumpManagerIdentifier,
               let pumpManagerDescriptor = onboardingProvider.availablePumpManagers.first(where: { $0.identifier == pumpManagerIdentifier }) else {
-            return LocalizedString("Unknown Pump", comment: "Unknown pump manager title")
+            return LocalizedString("ACE Pump", comment: "Unknown pump manager title")
         }
         return pumpManagerDescriptor.localizedTitle
     }

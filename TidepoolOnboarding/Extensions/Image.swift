@@ -21,3 +21,9 @@ extension Image {
         }
     }
 }
+
+extension UIImage {
+    convenience init?(frameworkImage name: String) {
+        self.init(named: name, in: FrameworkBundle.main, with: nil)
+    }
+}

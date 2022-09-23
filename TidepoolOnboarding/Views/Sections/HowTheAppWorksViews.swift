@@ -196,7 +196,7 @@ fileprivate struct HowTheAppWorksView7: View {
             PresentableImage(decorative: "HowTheAppWorks_7_1")
             Paragraph(LocalizedString("The Insulin Pump Status icon allows you to see how much insulin remains in your pump’s reservoir or cartridge.", comment: "Onboarding, How the App Works section, view 7, paragraph 1"))
             PresentableImage(decorative: "HowTheAppWorks_7_2")
-            Paragraph(LocalizedString("A progress bar will appear below these icons to let you know that scheduled maintenance – like a pod change or a site change – is coming up.", comment: "Onboarding, How the App Works section, view 7, paragraph 2"))
+            Paragraph(LocalizedString("A progress bar will appear below these icons to let you know that scheduled maintenance – like a reservoir change or a site change – is coming up.", comment: "Onboarding, How the App Works section, view 7, paragraph 2"))
             Paragraph(LocalizedString("You can tap the icon or your insulin charts for more details.", comment: "Onboarding, How the App Works section, view 7, paragraph 3"))
         }
     }

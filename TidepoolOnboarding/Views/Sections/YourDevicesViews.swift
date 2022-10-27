@@ -302,8 +302,6 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
 
     @State private var cgmManagerViewController: CGMManagerViewController?
     @State private var pumpManagerViewController: PumpManagerViewController?
-    @State private var isPauseOnboardingSheetPresented = false
-    @State private var onSheetDismiss: (() -> Void)?
 
     var body: some View {
         OnboardingSectionPageView(section: .yourDevices) {
@@ -405,22 +403,12 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     private var pausingOnboardingButton: some View {
         HStack {
             Spacer()
-            Button(action: { isPauseOnboardingSheetPresented = true }) {
+            Button(action: { onboardingViewModel.isSuspended = true }) {
                 Text(LocalizedString("Pause Onboarding", comment: "Onboarding, Your Devices section, Pairing Your Devices view, button, pause onboarding"))
                     .bold()
             }
             Spacer()
         }
-        .sheet(isPresented: $isPauseOnboardingSheetPresented) { pauseOnboardingSheet }
-    }
-
-    private var pauseOnboardingSheet: some View {
-        NavigationView {
-            YourDevicesPauseOnboardingView()
-                .environmentObject(onboardingViewModel)
-                .environment(\.dismissAction, { isPauseOnboardingSheetPresented = false })
-        }
-        .presentation(isModal: true)
     }
 
     private var alert: Alert {
@@ -452,55 +440,6 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     }
 }
 
-fileprivate struct YourDevicesPauseOnboardingView: View {
-    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
-    @Environment(\.dismissAction) var dismiss
-
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                Color(.systemBackground)
-                    .edgesIgnoringSafeArea(.all)
-                ScrollView {
-                    VStack(spacing: 10) {
-                        Segment {
-                            PageHeader(title: LocalizedString("Pause Onboarding", comment: "Onboarding, Your Devices section, Pause Onboarding view, title"))
-                            PresentableImage("YourDevices_PauseOnboarding")
-                            Paragraph(LocalizedString("You can use any of the Close buttons to exit out of onboarding screens or tap Pause Onboarding and return to this point later.", comment: "Onboarding, Your Devices section, Pause Onboarding view, paragraph 1"))
-                            Paragraph(LocalizedString("Later, when you are ready to continue, tap “Complete Setup” to return to this part of the onboarding.", comment: "Onboarding, Your Devices section, Pause Onboarding view, paragraph 2"))
-                        }
-                        Spacer()
-                        nextButton
-                    }
-                    .padding()
-                    .frame(minHeight: geometry.size.height)
-                }
-            }
-        }
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationBarItems(trailing: closeButton)
-    }
-
-    private var closeButton: some View {
-        Button(action: closeButtonAction) {
-            Text(LocalizedString("Close", comment: "Onboarding, Your Devices section, Pause Onboarding view, button, close"))
-                .fontWeight(.regular)
-        }
-    }
-
-    private func closeButtonAction() {
-        dismiss()
-    }
-
-    private var nextButton: some View {
-        ActionButton(title: LocalizedString("Pause Onboarding", comment: "Onboarding, Your Devices section, Pause Onboarding view, button, pause onboarding"), action: nextButtonAction)
-    }
-
-    private func nextButtonAction() {
-        onboardingViewModel.isSuspended = true
-        dismiss()
-    }
-}
 
 struct YourDevicesViews_Previews: PreviewProvider {
     static var onboardingViewModel: OnboardingViewModel = {

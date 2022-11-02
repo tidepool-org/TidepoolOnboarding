@@ -333,7 +333,7 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
                     }
             }
             .padding(.vertical)
-            Paragraph(LocalizedString("If you do not yet have both devices, or you need to stop for any reason, you can pause and return to this point later.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 4"))
+            Paragraph(LocalizedString("If you need to stop for any reason, you can tap Pause Onboarding or any of the Close buttons to exit. You may return to this point later by tapping “Complete Setup” on Tidepool Loop’s home screen.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 4"))
         }
         .backButtonHidden(true)
         .nextButtonTitle(nextButtonTitle)

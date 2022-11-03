@@ -695,6 +695,10 @@ extension OnboardingViewModel: PumpManagerOnboardingDelegate {
         pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager)
         self.isPumpManagerOnboarded = true
     }
+
+    func pumpManagerOnboarding(didPauseOnboarding pumpManager: PumpManagerUI) {
+        self.isSuspended = true
+    }
 }
 
 extension OnboardingViewModel: ServiceOnboardingDelegate {

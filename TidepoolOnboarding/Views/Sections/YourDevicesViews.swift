@@ -258,11 +258,11 @@ fileprivate struct YourDevicesManageAutomaticUpdates: View {
     var body: some View {
         OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesRestartingTidepoolLoop()) {
             PageHeader(title: LocalizedString("Manage Automatic Updates", comment: "Onboarding, Your Devices section, Manage Automatic Updates, title"))
-            Paragraph(LocalizedString("In the case that your iOS software is updated, your device will need to restart to successfully complete the update.", comment: "Onboarding, Your Devices section, Manage Automatic Updates, paragraph 1"))
+            Paragraph(LocalizedString("In the case that your iOS software is updated, your device will restart to successfully complete the update. During the restart, Tidepool Loop will not be able to adjust insulin delivery.", comment: "Onboarding, Your Devices section, Manage Automatic Updates, paragraph 1"))
             Paragraph(LocalizedString("To ensure any updates to your iOS do not happen overnight, you must turn off ‘Automatic Updates’ before using Tidepool Loop.", comment: "Onboarding, Your Devices section, Manage Automatic Updates, paragraph 2"))
             PresentableImage("YourDevices_ManageAutomaticUpdates")
             Segment(header: LocalizedString("How to turn off Automatic Updates", comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, header")) {
-                Callout(title: LocalizedString("Note: When the device restarts following an iOS update, you will need to manually restart Tidepool Loop.", comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, callout, title"))
+                Callout(title: LocalizedString("Note: When the device restarts following an iOS update, you will need to manually start Tidepool Loop.", comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, callout, title"))
                 NumberedBodyTextList(
                     LocalizedString("Go to Settings > General > Software Updates.", comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, list, item 1"),
                     LocalizedString("Tap Automatic Updates.", comment: "Onboarding, Your Devices section, Manage Auomatic Updates, segment 1, list, item 2"),
@@ -285,7 +285,8 @@ fileprivate struct YourDevicesRestartingTidepoolLoop: View {
             BulletedBodyTextList(
                 LocalizedString("Restarting your device", comment: "Onboarding, Your Devices section, Restarting Tidepool Loop view, list, item 1"),
                 LocalizedString("Force quitting the Tidepool Loop app", comment: "Onboarding, Your Devices section, Restarting Tidepool Loop view, list, item 2"),
-                LocalizedString("Tidepool Loop has crashed", comment: "Onboarding, Your Devices section, Restarting Tidepool Loop view, list, item 3")
+                LocalizedString("Tidepool Loop has crashed", comment: "Onboarding, Your Devices section, Restarting Tidepool Loop view, list, item 3"),
+                LocalizedString("iOS updates", comment: "Onboarding, Your Devices section, Restarting Tidepool Loop view, list, item 4")
             )
         }
     }

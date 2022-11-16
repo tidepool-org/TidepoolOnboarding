@@ -122,6 +122,7 @@ fileprivate struct IntroductionView4: View {
             PresentableImage(decorative: "Introduction_4_2")
             Paragraph(LocalizedString("The app connects directly to your devices via a Bluetooth connection and automates insulin dosing with or without an internet connection.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 1"))
             Paragraph(attributed: LocalizedString("<b>Caution</b>: Your iPhone or iPod touch must be on and within Bluetooth range of your pump in order for the app to send commands to the pump.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 2"))
+            Paragraph(attributed: LocalizedString("Bluetooth devices can communicate at ranges of up to 30 feet. However, communication range will vary depending on obstacles (person, metal, wall, etc.) or your environment.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 3"))
         }
     }
     

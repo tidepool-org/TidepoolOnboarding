@@ -9,17 +9,19 @@
 import SwiftUI
 
 struct Callout<Content: View>: View {
+    @Environment(\.guidanceColors) private var guidanceColors
+
     private let title: String
-    private let warningIconColor: Color
+    private let warningIconColor: Color?
     private let content: Content?
 
-    init(title: String, warningIconColor: Color = .orange, @ViewBuilder content: () -> Content) {
+    init(title: String, warningIconColor: Color? = nil, @ViewBuilder content: () -> Content) {
         self.title = title
         self.warningIconColor = warningIconColor
         self.content = content()
     }
 
-    init(title: String, warningIconColor: Color = .orange) where Content == EmptyView {
+    init(title: String, warningIconColor: Color? = nil) where Content == EmptyView {
         self.title = title
         self.warningIconColor = warningIconColor
         self.content = nil
@@ -30,7 +32,7 @@ struct Callout<Content: View>: View {
             VStack(alignment: .leading) {
                 HStack {
                     WarningIcon(radius: 20)
-                        .foregroundColor(warningIconColor)
+                        .foregroundColor(warningIconColor ?? guidanceColors.warning)
                     Text(title)
                         .font(.headline)
                         .bold()

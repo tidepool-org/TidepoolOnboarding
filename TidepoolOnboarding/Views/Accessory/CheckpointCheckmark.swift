@@ -16,6 +16,7 @@ struct CheckpointCheckmark: View {
                 .resizable()
                 .frame(width: 113, height: 113)
                 .foregroundColor(.accentColor)
+                .accessibilityHidden(true)
             Spacer()
         }
     }

@@ -44,6 +44,7 @@ struct CheckmarkCircle: View {
             .resizable()
             .foregroundColor(.accentColor)
             .frame(width: size, height: size)
+            .accessibilityHidden(true)
     }
 }
 

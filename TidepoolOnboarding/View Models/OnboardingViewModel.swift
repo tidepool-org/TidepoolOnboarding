@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import os.log
 import DeviceCheck
+import CryptoKit
 import HealthKit
 import UIKit
 import LoopKit
@@ -34,6 +35,8 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var sectionProgression: OnboardingSectionProgression
     @Published var tidepoolService: TidepoolService?
     @Published var deviceValid: Bool?
+    @Published var appValid: Bool?
+    @Published var attestationKeyID: String?
     @Published var prescription: TPrescription? {
         didSet {
             self.therapySettings = prescription?.therapySettings
@@ -76,6 +79,8 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.sectionProgression = onboarding.sectionProgression
         self.tidepoolService = onboardingProvider.activeServices.first { $0.serviceIdentifier == TidepoolServiceIdentifier } as? TidepoolService
         self.deviceValid = onboarding.deviceValid
+        self.deviceValid = onboarding.appValid
+        self.attestationKeyID = onboarding.attestationKeyID
         self.prescription = onboarding.prescription
         self.prescriberProfile = onboarding.prescriberProfile
         self.therapySettings = onboarding.therapySettings
@@ -103,6 +108,14 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         $deviceValid
             .dropFirst()
             .sink { onboarding.deviceValid = $0 }
+            .store(in: &cancellables)
+        $appValid
+            .dropFirst()
+            .sink { onboarding.appValid = $0 }
+            .store(in: &cancellables)
+        $attestationKeyID
+            .dropFirst()
+            .sink { onboarding.attestationKeyID = $0 }
             .store(in: &cancellables)
         $prescription
             .dropFirst()
@@ -296,6 +309,95 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     private var deviceRequiresVerification: Bool {
+        #if targetEnvironment(simulator)
+        return false
+        #else
+        return true
+        #endif
+    }
+
+    func verifyApp(completion: @escaping (OnboardingError?) -> Void) {
+        guard appValid == nil else {
+            log.info("%{public}@ App already validated [appValid=%{public}@]", #function, appValid == true ? "true" : "false")
+            completion(nil)
+            return
+        }
+
+        guard let tidepoolService = tidepoolService else {
+            log.info("%{public}@ TidepoolService is missing", #function)
+            completion(OnboardingError.unexpectedState)
+            return
+        }
+
+        //TODO add unit tests for app attestation (if possible)
+
+        // if the device does not support DCAppAttestService API, mark as invalid
+        let appAttestService = DCAppAttestService.shared
+        guard appAttestService.isSupported else {
+            log.info("%{public}@ DCAppAttestService API not supported, app key ID cannot be generated, validation failure", #function)
+            self.appValid = false
+            completion(nil)
+            return
+        }
+
+        generateAttestationKeyID() { [weak self] result in
+            switch result {
+            case .success(let attestationKeyID):
+                tidepoolService.tapi.getAttestationChallenge(keyID: attestationKeyID) { result in
+                    switch result {
+                    case .failure(let error):
+                        self?.log.info("%{public}@ Could not get the attestation challenge [error=%{public}@]", #function, String(describing: error.errorDescription))
+                        DispatchQueue.main.async { completion(error.onboardingError) }
+                    case .success(let challenge):
+                        let hash = Data(SHA256.hash(data: Array(challenge.utf8)))
+                        appAttestService.attestKey(attestationKeyID, clientDataHash: hash) { attestation, error in
+                            guard error == nil, let attestation = attestation else {
+                                self?.log.info("%{public}@ Attestation generation failed [error=%{public}@]", #function, error.debugDescription)
+                                completion(OnboardingError.unexpectedError)
+                                return
+                            }
+
+                            tidepoolService.tapi.verifyAttestation(keyID: attestationKeyID, challenge: challenge, attestation: attestation.base64EncodedString()) { result  in
+
+                                DispatchQueue.main.async {
+                                    switch result {
+                                    case .failure(let error):
+                                        self?.appValid = false
+                                        self?.attestationKeyID = nil
+                                        completion(error.onboardingError)
+                                    case .success(let appValid):
+                                        self?.appValid = appValid
+                                        self?.attestationKeyID = attestationKeyID
+                                        completion(nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { completion(error) }
+            }
+        }
+    }
+
+    private func generateAttestationKeyID(completion: @escaping (Result<String, OnboardingError>) -> Void) {
+        guard let attestationKeyID = attestationKeyID else {
+            let appAttestService = DCAppAttestService.shared
+            appAttestService.generateKey() { [weak self] keyID, error in
+                guard error == nil, let keyID = keyID else {
+                    self?.log.info("%{public}@ Attestation key ID generation failed [error=%{public}@]", #function, error.debugDescription)
+                    completion(.failure(OnboardingError.unexpectedError))
+                    return
+                }
+                completion(.success(keyID))
+            }
+            return
+        }
+        completion(.success(attestationKeyID))
+    }
+
+    private var appRequiresVerification: Bool {
         #if targetEnvironment(simulator)
         return false
         #else

@@ -79,7 +79,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.sectionProgression = onboarding.sectionProgression
         self.tidepoolService = onboardingProvider.activeServices.first { $0.serviceIdentifier == TidepoolServiceIdentifier } as? TidepoolService
         self.deviceValid = onboarding.deviceValid
-        self.deviceValid = onboarding.appValid
+        self.appValid = onboarding.appValid
         self.attestationKeyID = onboarding.attestationKeyID
         self.prescription = onboarding.prescription
         self.prescriberProfile = onboarding.prescriberProfile
@@ -329,7 +329,13 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             return
         }
 
-        //TODO add unit tests for app attestation (if possible)
+        // If the app does not require verification (i.e. simulator), mark as valid
+        guard appRequiresVerification else {
+            log.info("%{public}@ App verification not required", #function)
+            self.appValid = true
+            completion(nil)
+            return
+        }
 
         // if the device does not support DCAppAttestService API, mark as invalid
         let appAttestService = DCAppAttestService.shared
@@ -345,9 +351,6 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             case .success(let attestationKeyID):
                 tidepoolService.tapi.getAttestationChallenge(keyID: attestationKeyID) { result in
                     switch result {
-                    case .failure(let error):
-                        self?.log.info("%{public}@ Could not get the attestation challenge [error=%{public}@]", #function, String(describing: error.errorDescription))
-                        DispatchQueue.main.async { completion(error.onboardingError) }
                     case .success(let challenge):
                         let hash = Data(SHA256.hash(data: Array(challenge.utf8)))
                         appAttestService.attestKey(attestationKeyID, clientDataHash: hash) { attestation, error in
@@ -361,18 +364,21 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
                                 DispatchQueue.main.async {
                                     switch result {
-                                    case .failure(let error):
-                                        self?.appValid = false
-                                        self?.attestationKeyID = nil
-                                        completion(error.onboardingError)
                                     case .success(let appValid):
                                         self?.appValid = appValid
                                         self?.attestationKeyID = attestationKeyID
                                         completion(nil)
+                                    case .failure(let error):
+                                        self?.appValid = false
+                                        self?.attestationKeyID = nil
+                                        completion(error.onboardingError)
                                     }
                                 }
                             }
                         }
+                    case .failure(let error):
+                        self?.log.info("%{public}@ Could not get the attestation challenge [error=%{public}@]", #function, String(describing: error.errorDescription))
+                        DispatchQueue.main.async { completion(error.onboardingError) }
                     }
                 }
             case .failure(let error):

@@ -138,6 +138,16 @@ class TidepoolOnboardingTests: XCTestCase {
         wait(for: [didUpdateStateExpectation!], timeout: 1)
     }
 
+    func testAppValidNotifiesDelegateOfUpdate() {
+        didUpdateStateExpectation = expectation(description: "DidUpdateState")
+
+        let onboarding = TidepoolOnboarding()
+        onboarding.onboardingDelegate = self
+        onboarding.appValid = true
+
+        wait(for: [didUpdateStateExpectation!], timeout: 1)
+    }
+
     func testPrescriptionNotifiesDelegateOfUpdate() {
         didUpdateStateExpectation = expectation(description: "DidUpdateState")
 
@@ -254,6 +264,8 @@ class TidepoolOnboardingTests: XCTestCase {
         old.sectionProgression.startSection(.welcome)
         old.sectionProgression.completeSection(.welcome)
         old.deviceValid = true
+        old.appValid = true
+        old.attestationKeyID = "testKeyID"
         old.prescription = .test
         old.prescriberProfile = .test
         old.therapySettings = .test
@@ -270,6 +282,8 @@ class TidepoolOnboardingTests: XCTestCase {
         XCTAssertNotNil(rawState["lastAccessDate"])
         XCTAssertNotNil(rawState["sectionProgression"])
         XCTAssertNotNil(rawState["deviceValid"])
+        XCTAssertNotNil(rawState["appValid"])
+        XCTAssertNotNil(rawState["attestationKeyID"])
         XCTAssertNotNil(rawState["prescription"])
         XCTAssertNotNil(rawState["prescriberProfile"])
         XCTAssertNotNil(rawState["therapySettings"])
@@ -288,6 +302,8 @@ class TidepoolOnboardingTests: XCTestCase {
             XCTAssertEqual(new.lastAccessDate, old.lastAccessDate)
             XCTAssertEqual(new.sectionProgression, old.sectionProgression)
             XCTAssertEqual(new.deviceValid, old.deviceValid)
+            XCTAssertEqual(new.appValid, old.appValid)
+            XCTAssertEqual(new.attestationKeyID, old.attestationKeyID)
             XCTAssertEqual(new.prescription, old.prescription)
             XCTAssertEqual(new.prescriberProfile, old.prescriberProfile)
             XCTAssertEqual(new.therapySettings, old.therapySettings)

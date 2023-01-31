@@ -19,6 +19,8 @@ class OnboardingViewModelTests: XCTestCase {
         onboarding = TidepoolOnboarding()
         onboarding.sectionProgression.startSection(.welcome)
         onboarding.deviceValid = true
+        onboarding.appValid = true
+        onboarding.attestationKeyID = "testKeyID"
         onboarding.prescription = .test
         onboarding.prescriberProfile = .test
         onboarding.therapySettings = .test
@@ -58,6 +60,24 @@ class OnboardingViewModelTests: XCTestCase {
     func testDeviceValidForwarding() {
         onboardingViewModel.deviceValid = false
         XCTAssertEqual(onboarding.deviceValid, onboardingViewModel.deviceValid)
+    }
+
+    func testAppValidInitialization() {
+        XCTAssertEqual(onboardingViewModel.appValid, onboarding.appValid)
+    }
+
+    func testAppValidForwarding() {
+        onboardingViewModel.appValid = false
+        XCTAssertEqual(onboarding.appValid, onboardingViewModel.appValid)
+    }
+
+    func testAttestationKeyIDInitialization() {
+        XCTAssertEqual(onboardingViewModel.attestationKeyID, onboarding.attestationKeyID)
+    }
+
+    func testAttestationKeyIDForwarding() {
+        onboardingViewModel.attestationKeyID = nil
+        XCTAssertEqual(onboarding.attestationKeyID, onboardingViewModel.attestationKeyID)
     }
 
     func testPrescriptionInitialization() {

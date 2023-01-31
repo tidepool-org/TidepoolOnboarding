@@ -14,7 +14,9 @@ struct YourSettingsNavigationButton: View {
 
     @State var tidepoolServiceOnboarded = false
     @State var deviceValidated = false
+    @State var appValidated = false
     @State var deviceValid = false
+    @State var appValid = false
     @State var prescriptionAccepted = false
 
     var body: some View {
@@ -24,11 +26,12 @@ struct YourSettingsNavigationButton: View {
 
     @ViewBuilder
     private var destination: some View {
-        if !tidepoolServiceOnboarded, !deviceValidated {
+        if !tidepoolServiceOnboarded, !deviceValidated, !appValidated {
             YourSettingsTidepoolServiceOnboardingView()
         } else if !deviceValidated {
             YourSettingsDeviceCompatibilityCheckView()
-        } else if !deviceValid {
+        } else if !deviceValid || !appValid {
+            //TODO Need a specific warning that app attestation failed
             YourSettingsAppCannotBeUsedView()
         } else if !prescriptionAccepted {
             YourSettingsPrescriptionAccessCodeEntryView()
@@ -40,7 +43,9 @@ struct YourSettingsNavigationButton: View {
     private func action() -> Bool {
         self.tidepoolServiceOnboarded = onboardingViewModel.tidepoolService?.isOnboarded ?? false
         self.deviceValidated = onboardingViewModel.deviceValid != nil
+        self.appValidated = onboardingViewModel.appValid != nil
         self.deviceValid = onboardingViewModel.deviceValid ?? false
+        self.appValid = onboardingViewModel.appValid ?? false
         self.prescriptionAccepted = onboardingViewModel.prescription != nil
         return true
     }
@@ -60,6 +65,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
     @State private var onSheetDismiss: (() -> Void)?
 
     @State private var deviceValid: Bool?
+    @State private var appValid: Bool?
     @State private var error: Error?
     @State private var skip = false
     @State private var isNextButtonActing = false
@@ -71,6 +77,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
                 .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures,
                                          title: "Are you sure you want to skip setting up your Tidepool account and claiming a prescription?") {  // Not localized
                     onboardingViewModel.deviceValid = true          // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                    onboardingViewModel.appValid = true             // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                     onboardingViewModel.prescription = .mock        // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                     onboardingViewModel.prescriberProfile = .mock   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                     self.skip = true
@@ -88,7 +95,8 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
 
     @ViewBuilder
     private var destination: some View {
-        if deviceValid == false {
+        if deviceValid == false || appValid == false {
+            //TODO Need a specific warning that app attestation failed
             YourSettingsAppCannotBeUsedView()
         } else if let error = error {
             YourSettingsDeviceCompatibilityCheckView(error: error)
@@ -131,8 +139,19 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
             return
         }
 
-        onboardingViewModel.verifyDevice { error in
+        onboardingViewModel.verifyDevice() { error in
             self.deviceValid = onboardingViewModel.deviceValid
+            guard let error = error else {
+                onboardingViewModel.verifyApp() { error in
+                    self.appValid = onboardingViewModel.appValid
+                    self.error = error
+                    self.isDestinationActive = true
+                    completion(false)
+                    self.isNextButtonActing = false
+                }
+                return
+            }
+
             self.error = error
             self.isDestinationActive = true
             completion(false)
@@ -159,6 +178,7 @@ fileprivate struct YourSettingsDeviceCompatibilityCheckView: View {
     @State var error: Error?
 
     @State private var deviceValid: Bool?
+    @State private var appValid: Bool?
     @State private var isNextButtonActing = false
     @State private var isErrorAlertPresented = false
 
@@ -179,7 +199,8 @@ fileprivate struct YourSettingsDeviceCompatibilityCheckView: View {
 
     @ViewBuilder
     private var destination: some View {
-        if deviceValid == false {
+        if deviceValid == false || appValid == false {
+            //TODO Need a specific warning that app attestation failed
             YourSettingsAppCannotBeUsedView()
         } else {
             YourSettingsPrescriptionAccessCodeEntryView()
@@ -193,8 +214,20 @@ fileprivate struct YourSettingsDeviceCompatibilityCheckView: View {
         }
 
         isNextButtonActing = true
+
         onboardingViewModel.verifyDevice() { error in
             self.deviceValid = onboardingViewModel.deviceValid
+            guard let error = error else {
+                onboardingViewModel.verifyApp() { error in
+                    self.appValid = onboardingViewModel.appValid
+                    self.error = error
+                    self.isErrorAlertPresented = (error != nil)
+                    completion(error == nil)
+                    self.isNextButtonActing = false
+                }
+                return
+            }
+
             self.error = error
             self.isErrorAlertPresented = (error != nil)
             completion(error == nil)

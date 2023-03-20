@@ -245,7 +245,7 @@ fileprivate struct YourDevicesMuteAlerts: View {
                         Paragraph(LocalizedString("iOS Focus Mode", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, sub-header 2"))
                             .bold()
                     }
-                    Paragraph(LocalizedString("If iOS Focus Mode is ON and Mute Alerts is OFF, Critical Alerts will still be delivered, but non-Critical Alerts will be silenced.", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, paragraph 3"))
+                    Paragraph(LocalizedString("If iOS Focus Mode is ON and Mute Alerts is OFF, Critical Alerts will still be delivered, but non-Critical Alerts will be silenced until Tidepool Loop is added to each Focus mode as an Allowed App.", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, paragraph 3"))
                 }
                 .padding(.horizontal)
             }
@@ -258,7 +258,7 @@ fileprivate struct YourDevicesMuteAlerts: View {
                 )
             }
         }
-        .backButtonHidden(true)
+        .backButtonHidden(false)
     }
 }
 

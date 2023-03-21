@@ -206,7 +206,7 @@ fileprivate struct YourDevicesFocusModesView: View {
                 )
             }
         }
-        .backButtonHidden(true)
+        .backButtonHidden(false)
     }
 }
 

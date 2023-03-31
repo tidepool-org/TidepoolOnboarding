@@ -10,6 +10,63 @@ import HealthKit
 import LoopKit
 import TidepoolKit
 
+struct TDevices {
+    enum Pump: Identifiable {
+        case coastal
+        case coastalDemo
+        
+        var id: String {
+            switch self {
+            case .coastal:
+                return "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f"
+            case .coastalDemo:
+                return "89cc2977-bbc3-4f46-86e5-06bae8176b52"
+            }
+        }
+    }
+    
+    enum CGM: Identifiable {
+        case dexcomG6
+        case dexcomG6Demo
+        
+        var id: String {
+            switch self {
+            case .dexcomG6:
+                return "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245"
+            case .dexcomG6Demo:
+                return "15137627-e9ba-4bab-a36d-7c2f0a5ef368"
+            }
+        }
+    }
+    
+    let pump: Pump
+    let cgm: CGM
+    
+    init(
+        pump: Pump,
+        cgm: CGM
+    ) {
+        self.pump = pump
+        self.cgm = cgm
+    }
+    
+    static var simulatorSpecific: TDevices {
+        #if targetEnvironment(simulator)
+        TDevices(pump: .coastalDemo, cgm: .dexcomG6Demo)
+        #else
+        TDevices(pump: .coastal, cgm: .dexcomG6)
+        #endif
+    }
+    
+    static var studyProduct1: TDevices {
+        TDevices(pump: .coastal, cgm: .dexcomG6Demo)
+    }
+    
+    static var studyProduct2: TDevices {
+        TDevices(pump: .coastalDemo, cgm: .dexcomG6Demo)
+    }
+}
+
 extension TPrescription {
     var therapySettings: LoopKit.TherapySettings? {
         guard let initialSettings = latestRevision?.attributes?.initialSettings,
@@ -42,10 +99,7 @@ extension TPrescription {
 }
 
 extension TPrescription {
-    static var mock: TPrescription {
-        let omnipod = "6678c377-928c-49b3-84c1-19e2dafaff8d"    // Hard-coded Tidepool backend device identifier
-        let coastal = "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f"    // Hard-coded Tidepool backend device identifier
-        let dexcom = "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245"    // Hard-coded Tidepool backend device identifier
+    static func mock(_ devices: TDevices = .simulatorSpecific) -> TPrescription {
         let initialSettings = TPrescription.Attributes.InitialSettings(bloodGlucoseUnits: .milligramsPerDeciliter,
                                                                        basalRateSchedule: [
                                                                         TPrescription.Attributes.InitialSettings.BasalRateStart(start: .hours(0), rate: 1.0),
@@ -69,8 +123,8 @@ extension TPrescription {
                                                                        ],
                                                                        basalRateMaximum: TPrescription.Attributes.InitialSettings.BasalRateMaximum(5, .unitsPerHour),
                                                                        bolusAmountMaximum: TPrescription.Attributes.InitialSettings.BolusAmountMaximum(10, .units),
-                                                                       pumpId: coastal,
-                                                                       cgmId: dexcom)
+                                                                       pumpId: devices.pump.id,
+                                                                       cgmId: devices.cgm.id)
         let attributes = TPrescription.Attributes(accountType: .caregiver,
                                                   caregiverFirstName: "Parent",
                                                   caregiverLastName: "Doe",

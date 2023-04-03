@@ -22,7 +22,7 @@ import TidepoolServiceKit
 
 let TidepoolServiceIdentifier = "TidepoolService"
 
-class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding {
+class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding, StudyProductProvider {
     weak var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate?
     weak var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
     weak var serviceOnboardingDelegate: ServiceOnboardingDelegate?
@@ -168,7 +168,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             .sink { _ in onboarding.notifyDidSuspend() }
             .store(in: &cancellables)
         
-        switch onboardingProvider.studyProduct {
+        switch studyProductSelection {
         case .studyProduct1:
             deviceValid = true
             appValid = true
@@ -859,6 +859,12 @@ extension OnboardingViewModel: TherapySettingsViewModelDelegate {
     
     func pumpSupportedIncrements() -> PumpSupportedIncrements? {
         return getPumpSupportedIncrements()
+    }
+}
+
+extension OnboardingViewModel {
+    var studyProductSelection: StudyProduct {
+        StudyProduct(rawValue: UserDefaults.appGroup?.studyProductSelection ?? "none") ?? .none
     }
 }
 

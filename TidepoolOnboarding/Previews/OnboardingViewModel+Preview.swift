@@ -16,6 +16,7 @@ extension OnboardingViewModel {
 fileprivate class PreviewOnboardingProvider: OnboardingProvider {
     
     var allowDebugFeatures: Bool = true
+    var studyProduct: StudyProduct = .none
 
     func getNotificationAuthorization(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
     func authorizeNotification(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
@@ -32,7 +33,7 @@ fileprivate class PreviewOnboardingProvider: OnboardingProvider {
     var activeCGMManager: CGMManager? = nil
     var availableCGMManagers: [CGMManagerDescriptor] = []
     func imageForCGMManager(withIdentifier identifier: String) -> UIImage? { nil }
-    func onboardCGMManager(withIdentifier identifier: String) -> Result<OnboardingResult<CGMManagerViewController, CGMManager>, Error> {
+    func onboardCGMManager(withIdentifier identifier: String, prefersToSkipUserInteraction: Bool) -> Result<OnboardingResult<CGMManagerViewController, CGMManager>, Error> {
         .failure(PreviewError())
     }
 
@@ -40,7 +41,7 @@ fileprivate class PreviewOnboardingProvider: OnboardingProvider {
     var availablePumpManagers: [PumpManagerDescriptor] = []
     func imageForPumpManager(withIdentifier identifier: String) -> UIImage? { nil }
     func supportedIncrementsForPumpManager(withIdentifier identifier: String) -> PumpSupportedIncrements? { nil }
-    func onboardPumpManager(withIdentifier identifier: String, initialSettings settings: PumpManagerSetupSettings) -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
+    func onboardPumpManager(withIdentifier identifier: String, initialSettings settings: PumpManagerSetupSettings, prefersToSkipUserInteraction: Bool) -> Result<OnboardingResult<PumpManagerViewController, PumpManager>, Error> {
         .failure(PreviewError())
     }
 

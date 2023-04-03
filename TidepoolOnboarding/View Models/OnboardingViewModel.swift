@@ -13,6 +13,7 @@ import DeviceCheck
 import CryptoKit
 import HealthKit
 import UIKit
+import LoopTestingKit
 import LoopKit
 import LoopKitUI
 import MockKit
@@ -21,7 +22,7 @@ import TidepoolServiceKit
 
 let TidepoolServiceIdentifier = "TidepoolService"
 
-class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding {
+class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding, StudyProductProvider {
     weak var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate?
     weak var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
     weak var serviceOnboardingDelegate: ServiceOnboardingDelegate?
@@ -166,6 +167,24 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             .filter { $0 }
             .sink { _ in onboarding.notifyDidSuspend() }
             .store(in: &cancellables)
+        
+        switch studyProductSelection {
+        case .studyProduct1:
+            deviceValid = true
+            appValid = true
+            prescription = .mock(.studyProduct1)
+            prescriberProfile = .mock
+        case .studyProduct2:
+            deviceValid = true
+            appValid = true
+            prescription = .mock(.studyProduct2)
+            prescriberProfile = .mock
+            onboardPumpManager(prefersToSkipUserInteraction: true) { _ in }
+            onboardCGMManager(prefersToSkipUserInteraction: true) { _ in }
+            skipThroughSection(.getLooping)
+        default:
+            break
+        }
     }
 
     func titleForSection(_ section: OnboardingSection) -> String {
@@ -526,12 +545,12 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
 
-    func onboardCGMManager(_ completion: @escaping (Error?) -> Void) {
+    func onboardCGMManager(prefersToSkipUserInteraction: Bool = false, _ completion: @escaping (Error?) -> Void) {
         guard let cgmManagerIdentifier = cgmManagerIdentifier else {
             completion(OnboardingError.unexpectedState)
             return
         }
-        let result = onboardingProvider.onboardCGMManager(withIdentifier: cgmManagerIdentifier)
+        let result = onboardingProvider.onboardCGMManager(withIdentifier: cgmManagerIdentifier, prefersToSkipUserInteraction: prefersToSkipUserInteraction)
         switch result {
         case .success(let setupUIResult):
             switch setupUIResult {
@@ -577,12 +596,12 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
     var deviceManagerOnboardingCompletion: ((Error?) -> Void)?
 
-    func onboardPumpManager(_ completion: @escaping (Error?) -> Void) {
+    func onboardPumpManager(prefersToSkipUserInteraction: Bool = false, _ completion: @escaping (Error?) -> Void) {
         guard let pumpManagerIdentifier = pumpManagerIdentifier else {
             completion(OnboardingError.unexpectedState)
             return
         }
-        let result = onboardingProvider.onboardPumpManager(withIdentifier: pumpManagerIdentifier, initialSettings: pumpManagerInitialSettings)
+        let result = onboardingProvider.onboardPumpManager(withIdentifier: pumpManagerIdentifier, initialSettings: pumpManagerInitialSettings, prefersToSkipUserInteraction: prefersToSkipUserInteraction)
         switch result {
         case .success(let setupUIResult):
             switch setupUIResult {
@@ -676,7 +695,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     private func skipCompleteYourSettings(completion: @escaping () -> Void) {
         self.deviceValid = true
         if prescription == nil {
-            self.prescription = .mock
+            self.prescription = .mock()
         }
         if prescriberProfile == nil {
             self.prescriberProfile = .mock
@@ -843,6 +862,12 @@ extension OnboardingViewModel: TherapySettingsViewModelDelegate {
     }
 }
 
+extension OnboardingViewModel {
+    var studyProductSelection: StudyProduct {
+        StudyProduct(rawValue: UserDefaults.appGroup?.studyProductSelection ?? "none") ?? .none
+    }
+}
+
 
 fileprivate extension OnboardingSection {
     var next: OnboardingSection? {
@@ -888,6 +913,8 @@ fileprivate extension TPrescription {
         switch latestRevision?.attributes?.initialSettings?.cgmId {
         case "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245":    // Hard-coded Tidepool backend device identifier
             return "DexcomCGM"
+        case "15137627-e9ba-4bab-a36d-7c2f0a5ef368":    // Hard-coded Tidepool backend device identifier
+            return "DemoDexcomCGMManager"
         default:
             return nil
         }
@@ -896,13 +923,9 @@ fileprivate extension TPrescription {
     var pumpManagerIdentifier: String? {
         switch latestRevision?.attributes?.initialSettings?.pumpId {
         case "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f":    // Hard-coded Tidepool backend device identifier
-            #if targetEnvironment(simulator)
-            return "CoastalDemo"
-            #else
             return "CoastalPump"
-            #endif
-        case "6678c377-928c-49b3-84c1-19e2dafaff8d":    // Hard-coded Tidepool backend device identifier
-            return "Omnipod"
+        case "89cc2977-bbc3-4f46-86e5-06bae8176b52":    // Hard-coded Tidepool backend device identifier
+            return "CoastalDemo"
         default:
             return nil
         }

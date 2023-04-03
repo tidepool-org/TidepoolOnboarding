@@ -13,6 +13,7 @@ struct YourSettingsNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     @State var tidepoolServiceOnboarded = false
+    @State var skipTidepoolService = false
     @State var deviceValidated = false
     @State var appValidated = false
     @State var deviceValid = false
@@ -26,7 +27,7 @@ struct YourSettingsNavigationButton: View {
 
     @ViewBuilder
     private var destination: some View {
-        if !tidepoolServiceOnboarded, !deviceValidated, !appValidated {
+        if !tidepoolServiceOnboarded, !deviceValidated, !appValidated, !skipTidepoolService {
             YourSettingsTidepoolServiceOnboardingView()
         } else if !deviceValidated {
             YourSettingsDeviceCompatibilityCheckView()
@@ -42,6 +43,7 @@ struct YourSettingsNavigationButton: View {
 
     private func action() -> Bool {
         self.tidepoolServiceOnboarded = onboardingViewModel.tidepoolService?.isOnboarded ?? false
+        self.skipTidepoolService = onboardingViewModel.studyProductSelection == .studyProduct1
         self.deviceValidated = onboardingViewModel.deviceValid != nil
         self.appValidated = onboardingViewModel.appValid != nil
         self.deviceValid = onboardingViewModel.deviceValid ?? false
@@ -78,7 +80,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
                                          title: "Are you sure you want to skip setting up your Tidepool account and claiming a prescription?") {  // Not localized
                     onboardingViewModel.deviceValid = true          // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                     onboardingViewModel.appValid = true             // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
-                    onboardingViewModel.prescription = .mock        // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                    onboardingViewModel.prescription = .mock()      // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                     onboardingViewModel.prescriberProfile = .mock   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
                     self.skip = true
                     self.isDestinationActive = true

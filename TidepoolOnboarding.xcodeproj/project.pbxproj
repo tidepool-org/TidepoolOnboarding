@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7EF4D02429DB42B600084174 /* StudyProductProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF4D02329DB42B600084174 /* StudyProductProvider.swift */; };
 		A903C79825F1443200C88786 /* OnboardingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79725F1443200C88786 /* OnboardingSection.swift */; };
 		A903C7A025F1444300C88786 /* OnboardingSectionNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */; };
 		A903C7A825F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */; };
@@ -137,7 +136,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7EF4D02329DB42B600084174 /* StudyProductProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyProductProvider.swift; sourceTree = "<group>"; };
 		A903C79725F1443200C88786 /* OnboardingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSection.swift; sourceTree = "<group>"; };
 		A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionNavigationButton.swift; sourceTree = "<group>"; };
 		A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GettingToKnowTidepoolLoopView.swift; sourceTree = "<group>"; };
@@ -277,14 +275,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7EF4D02229DB427800084174 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				7EF4D02329DB42B600084174 /* StudyProductProvider.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		A911C234264B283500EF3B85 /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,7 +398,6 @@
 				A98AD30A2583085C001AAD6F /* Common */,
 				A923333E25C3786100D8CF69 /* Extensions */,
 				A926402D2605048A006B1BB9 /* Previews */,
-				7EF4D02229DB427800084174 /* Protocols */,
 				A9D0401B25E43BDD00200E4E /* Support */,
 				A9BEF0342588358C00860217 /* View Controllers */,
 				A9BEF0362588359C00860217 /* View Models */,
@@ -783,7 +772,6 @@
 				A9A80D852639DC6100770DA7 /* TPrescription.swift in Sources */,
 				A9641CF2264F48FE00189E3A /* UIColor.swift in Sources */,
 				A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */,
-				7EF4D02429DB42B600084174 /* StudyProductProvider.swift in Sources */,
 				A9502CB625FFEE8E00146AD3 /* OnboardingSectionPageView.swift in Sources */,
 				A99EAA9B25F7FCF700503A6D /* ADayInTheLifeViews.swift in Sources */,
 				A9A09A12260D238800046528 /* HKUnit.swift in Sources */,

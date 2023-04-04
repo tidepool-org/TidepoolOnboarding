@@ -153,7 +153,7 @@ class TidepoolOnboardingTests: XCTestCase {
 
         let onboarding = TidepoolOnboarding()
         onboarding.onboardingDelegate = self
-        onboarding.prescription = .mock
+        onboarding.prescription = .mock()
 
         wait(for: [didUpdateStateExpectation!], timeout: 1)
     }
@@ -343,7 +343,7 @@ fileprivate extension TherapySettings {
 }
 
 fileprivate extension TPrescription {
-    static var test: Self { .mock }
+    static var test: Self { .mock() }
 }
 
 fileprivate extension TProfile {

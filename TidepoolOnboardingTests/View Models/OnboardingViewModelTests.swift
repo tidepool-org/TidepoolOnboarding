@@ -91,19 +91,19 @@ class OnboardingViewModelTests: XCTestCase {
 
     func testPrescriptionSetsTherapySettings() {
         onboarding.therapySettings = nil
-        onboardingViewModel.prescription = .mock
+        onboardingViewModel.prescription = .mock()
         XCTAssertNotNil(onboarding.therapySettings)
     }
 
     func testPrescriptionSetsCGMManagerIdentifier() {
         onboarding.cgmManagerIdentifier = nil
-        onboardingViewModel.prescription = .mock
+        onboardingViewModel.prescription = .mock()
         XCTAssertNotNil(onboarding.cgmManagerIdentifier)
     }
 
     func testPrescriptionSetsPumpManagerIdentifier() {
         onboarding.pumpManagerIdentifier = nil
-        onboardingViewModel.prescription = .mock
+        onboardingViewModel.prescription = .mock()
         XCTAssertNotNil(onboarding.pumpManagerIdentifier)
     }
 
@@ -240,7 +240,7 @@ fileprivate extension TherapySettings {
 }
 
 fileprivate extension TPrescription {
-    static var test: Self { .mock }
+    static var test: Self { .mock() }
 }
 
 fileprivate extension TProfile {

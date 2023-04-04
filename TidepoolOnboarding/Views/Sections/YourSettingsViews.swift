@@ -43,7 +43,7 @@ struct YourSettingsNavigationButton: View {
 
     private func action() -> Bool {
         self.tidepoolServiceOnboarded = onboardingViewModel.tidepoolService?.isOnboarded ?? false
-        self.skipTidepoolService = onboardingViewModel.studyProductSelection == .studyProduct1
+        self.skipTidepoolService = onboardingViewModel.onboardingProvider.studyProductSelection == .studyProduct1
         self.deviceValidated = onboardingViewModel.deviceValid != nil
         self.appValidated = onboardingViewModel.appValid != nil
         self.deviceValid = onboardingViewModel.deviceValid ?? false

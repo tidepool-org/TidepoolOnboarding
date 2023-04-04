@@ -11,6 +11,7 @@ import LoopKitUI
 
 class MockOnboardingProvider: OnboardingProvider {
     var allowDebugFeatures: Bool = true
+    var studyProductSelection: StudyProduct = .none
 
     func getNotificationAuthorization(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
     func authorizeNotification(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }

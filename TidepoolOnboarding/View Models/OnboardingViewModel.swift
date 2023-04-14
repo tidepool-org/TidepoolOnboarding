@@ -168,7 +168,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             .sink { _ in onboarding.notifyDidSuspend() }
             .store(in: &cancellables)
         
-        switch onboardingProvider.studyProductSelection {
+        switch studyProduct {
         case .studyProduct1:
             deviceValid = true
             appValid = true
@@ -859,6 +859,18 @@ extension OnboardingViewModel: TherapySettingsViewModelDelegate {
     
     func pumpSupportedIncrements() -> PumpSupportedIncrements? {
         return getPumpSupportedIncrements()
+    }
+}
+
+extension OnboardingViewModel {
+    public enum StudyProduct: String {
+        case none
+        case studyProduct1
+        case studyProduct2
+    }
+    
+    public var studyProduct: StudyProduct {
+        StudyProduct(rawValue: UserDefaults.appGroup?.studyProductSelection ?? "none") ?? .none
     }
 }
 

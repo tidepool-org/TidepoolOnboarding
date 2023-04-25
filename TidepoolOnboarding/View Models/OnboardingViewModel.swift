@@ -870,7 +870,7 @@ extension OnboardingViewModel {
     }
     
     public var studyProduct: StudyProduct {
-        StudyProduct(rawValue: UserDefaults.appGroup?.studyProductSelection ?? "none") ?? .none
+        StudyProduct(rawValue: onboardingProvider.availableSupports.first?.studyProductSelection ?? "none") ?? .none
     }
 }
 

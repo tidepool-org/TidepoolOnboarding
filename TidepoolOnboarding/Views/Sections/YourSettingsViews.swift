@@ -231,8 +231,8 @@ fileprivate struct YourSettingsDeviceCompatibilityCheckView: View {
             }
 
             self.error = error
-            self.isErrorAlertPresented = (error != nil)
-            completion(error == nil)
+            self.isErrorAlertPresented = true
+            completion(false)
             self.isNextButtonActing = false
         }
     }

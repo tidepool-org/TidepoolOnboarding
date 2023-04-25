@@ -50,6 +50,8 @@ fileprivate class PreviewOnboardingProvider: OnboardingProvider {
         .failure(PreviewError())
     }
     
+    var availableSupports: [SupportUI] = []
+    
     var onboardingTherapySettings: TherapySettings {
         return TherapySettings()
     }

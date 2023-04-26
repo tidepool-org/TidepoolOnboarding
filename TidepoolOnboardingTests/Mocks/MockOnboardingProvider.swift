@@ -45,6 +45,8 @@ class MockOnboardingProvider: OnboardingProvider {
         .failure(MockError())
     }
     
+    var availableSupports: [SupportUI] = []
+    
     var onboardingTherapySettings = TherapySettings()
 }
 

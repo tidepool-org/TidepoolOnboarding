@@ -16,7 +16,6 @@ extension OnboardingViewModel {
 fileprivate class PreviewOnboardingProvider: OnboardingProvider {
     
     var allowDebugFeatures: Bool = true
-    var studyProductSelection: StudyProduct = .none
 
     func getNotificationAuthorization(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
     func authorizeNotification(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
@@ -50,6 +49,8 @@ fileprivate class PreviewOnboardingProvider: OnboardingProvider {
     func onboardService(withIdentifier identifier: String) -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
         .failure(PreviewError())
     }
+    
+    var availableSupports: [SupportUI] = []
     
     var onboardingTherapySettings: TherapySettings {
         return TherapySettings()

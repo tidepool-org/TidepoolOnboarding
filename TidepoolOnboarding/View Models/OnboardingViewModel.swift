@@ -305,23 +305,19 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
 
         DCDevice.current.generateToken { token, error in
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 guard error == nil, let token = token else {
                     self.log.info("%{public}@ Device token generation failed [error=%{public}@]", #function, error.debugDescription)
                     completion(OnboardingError.unexpectedError)
                     return
                 }
 
-                tidepoolService.tapi.verifyDevice(deviceToken: token) { result in
-                    DispatchQueue.main.async {
-                        switch result {
-                        case .failure(let error):
-                            completion(error.onboardingError)
-                        case .success(let deviceValid):
-                            self.deviceValid = deviceValid
-                            completion(nil)
-                        }
-                    }
+                do {
+                    let deviceValid = try await tidepoolService.tapi.verifyDevice(deviceToken: token)
+                    self.deviceValid = deviceValid
+                    completion(nil)
+                } catch {
+                    completion((error as! TError).onboardingError)
                 }
             }
         }
@@ -365,61 +361,33 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             return
         }
 
-        generateAttestationKeyID() { [weak self] result in
-            switch result {
-            case .success(let attestationKeyID):
-                tidepoolService.tapi.getAttestationChallenge(keyID: attestationKeyID) { result in
-                    switch result {
-                    case .success(let challenge):
-                        let hash = Data(SHA256.hash(data: Array(challenge.utf8)))
-                        appAttestService.attestKey(attestationKeyID, clientDataHash: hash) { attestation, error in
-                            guard error == nil, let attestation = attestation else {
-                                self?.log.info("%{public}@ Attestation generation failed [error=%{public}@]", #function, error.debugDescription)
-                                completion(OnboardingError.unexpectedError)
-                                return
-                            }
-
-                            tidepoolService.tapi.verifyAttestation(keyID: attestationKeyID, challenge: challenge, attestation: attestation.base64EncodedString()) { result  in
-
-                                DispatchQueue.main.async {
-                                    switch result {
-                                    case .success(let appValid):
-                                        self?.appValid = appValid
-                                        self?.attestationKeyID = attestationKeyID
-                                        completion(nil)
-                                    case .failure(let error):
-                                        self?.appValid = false
-                                        self?.attestationKeyID = nil
-                                        completion(error.onboardingError)
-                                    }
-                                }
-                            }
-                        }
-                    case .failure(let error):
-                        self?.log.info("%{public}@ Could not get the attestation challenge [error=%{public}@]", #function, String(describing: error.errorDescription))
-                        DispatchQueue.main.async { completion(error.onboardingError) }
-                    }
+        Task { @MainActor in
+            do {
+                let attestationKeyID: String
+                if self.attestationKeyID != nil {
+                    attestationKeyID = self.attestationKeyID!
+                } else {
+                    attestationKeyID = try await appAttestService.generateKey()
                 }
-            case .failure(let error):
-                DispatchQueue.main.async { completion(error) }
+
+                let challenge = try await tidepoolService.tapi.getAttestationChallenge(keyID: attestationKeyID)
+
+                let hash = Data(SHA256.hash(data: Array(challenge.utf8)))
+
+                let attestation = try await appAttestService.attestKey(attestationKeyID, clientDataHash: hash)
+
+                let appValid = try await tidepoolService.tapi.verifyAttestation(keyID: attestationKeyID, challenge: challenge, attestation: attestation.base64EncodedString())
+
+                self.appValid = appValid
+                self.attestationKeyID = attestationKeyID
+                completion(nil)
+            } catch {
+                self.log.info("%{public}@ App attestation verification failed [error=%{public}@]", #function, String(describing: error.localizedDescription))
+                self.appValid = false
+                self.attestationKeyID = nil
+                completion((error as! TError).onboardingError)
             }
         }
-    }
-
-    private func generateAttestationKeyID(completion: @escaping (Result<String, OnboardingError>) -> Void) {
-        guard let attestationKeyID = attestationKeyID else {
-            let appAttestService = DCAppAttestService.shared
-            appAttestService.generateKey() { [weak self] keyID, error in
-                guard error == nil, let keyID = keyID else {
-                    self?.log.info("%{public}@ Attestation key ID generation failed [error=%{public}@]", #function, error.debugDescription)
-                    completion(.failure(OnboardingError.unexpectedError))
-                    return
-                }
-                completion(.success(keyID))
-            }
-            return
-        }
-        completion(.success(attestationKeyID))
     }
 
     private var appRequiresVerification: Bool {
@@ -441,15 +409,14 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
 
         let prescriptionClaim = TPrescriptionClaim(accessCode: accessCode, birthday: birthday)
-        tidepoolService.tapi.claimPrescription(prescriptionClaim: prescriptionClaim) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    completion(error.onboardingError)
-                case .success(let prescription):
-                    self.prescription = prescription
-                    completion(nil)
-                }
+
+        Task { @MainActor in
+            do {
+                let prescription = try await tidepoolService.tapi.claimPrescription(prescriptionClaim: prescriptionClaim)
+                self.prescription = prescription
+                completion(nil)
+            } catch {
+                completion((error as! TError).onboardingError)
             }
         }
     }
@@ -464,15 +431,13 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             return
         }
 
-        tidepoolService.tapi.getProfile(userId: prescription.prescriberUserId) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    completion(error.onboardingError)
-                case .success(let profile):
-                    self.prescriberProfile = profile
-                    completion(nil)
-                }
+        Task { @MainActor in
+            do {
+                let profile = try await tidepoolService.tapi.getProfile(userId: prescription.prescriberUserId)
+                self.prescriberProfile = profile
+                completion(nil)
+            } catch {
+                completion((error as! TError).onboardingError)
             }
         }
     }

@@ -835,7 +835,15 @@ extension OnboardingViewModel {
     }
     
     public var studyProduct: StudyProduct {
-        StudyProduct(rawValue: onboardingProvider.availableSupports.first?.studyProductSelection ?? "none") ?? .none
+        guard
+            let tidepoolSupport = onboardingProvider.availableSupports.first(where: { $0.identifier == "TidepoolSupport" }),
+            let studyProductSelection = tidepoolSupport.rawState["studyProductSelection"] as? String,
+            let studyProduct = StudyProduct(rawValue: studyProductSelection)
+        else {
+            return .none
+        }
+        
+        return studyProduct
     }
 }
 

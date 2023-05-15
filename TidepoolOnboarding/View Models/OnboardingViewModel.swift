@@ -19,6 +19,7 @@ import LoopKitUI
 import MockKit
 import TidepoolKit
 import TidepoolServiceKit
+import TidepoolSupport
 
 let TidepoolServiceIdentifier = "TidepoolService"
 
@@ -828,22 +829,12 @@ extension OnboardingViewModel: TherapySettingsViewModelDelegate {
 }
 
 extension OnboardingViewModel {
-    public enum StudyProduct: String {
-        case none
-        case studyProduct1
-        case studyProduct2
-    }
-    
-    public var studyProduct: StudyProduct {
-        guard
-            let tidepoolSupport = onboardingProvider.availableSupports.first(where: { $0.identifier == "TidepoolSupport" }),
-            let studyProductSelection = tidepoolSupport.rawState["studyProductSelection"] as? String,
-            let studyProduct = StudyProduct(rawValue: studyProductSelection)
-        else {
+    public var studyProduct: TidepoolSupport.StudyProduct {
+        guard let tidepoolSupport = onboardingProvider.availableSupports.first(where: { $0 is TidepoolSupport }) as? TidepoolSupport else {
             return .none
         }
         
-        return studyProduct
+        return tidepoolSupport.studyProduct
     }
 }
 

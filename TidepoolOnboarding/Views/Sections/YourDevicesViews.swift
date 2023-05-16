@@ -429,7 +429,7 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
                 self.alertMessage = error.localizedDescription
                 self.isAlertPresented = true
             } else {
-                completion(onboardingViewModel.isCGMManagerOnboarded && onboardingViewModel.isPumpManagerOnboarded)
+                completion(hasOnboardedAllDevices)
             }
         })
     }
@@ -440,9 +440,13 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
                 self.alertMessage = error.localizedDescription
                 self.isAlertPresented = true
             } else {
-                completion(onboardingViewModel.isCGMManagerOnboarded && onboardingViewModel.isPumpManagerOnboarded)
+                completion(hasOnboardedAllDevices)
             }
         })
+    }
+    
+    private var hasOnboardedAllDevices: Bool {
+        onboardingViewModel.isCGMManagerOnboarded && onboardingViewModel.isPumpManagerOnboarded
     }
 
     private var footer: AnyView? {

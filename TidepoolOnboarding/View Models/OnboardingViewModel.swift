@@ -530,8 +530,6 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
                     cgmManager.backfillData(datingBack: .hours(3))
                 }
                 isCGMManagerOnboarded = true
-
-                self.isCGMManagerOnboarded = true
                 completion(nil)
             case .userInteractionRequired(var setupVC):
                 deviceManagerOnboardingCompletion = completion
@@ -761,7 +759,13 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 extension OnboardingViewModel: CompletionDelegate {
     func completionNotifyingDidComplete(_ object: CompletionNotifying) {
         if object as? PumpManagerViewController != nil || object as? CGMManagerViewController != nil {
-            dismissCurrentModal?()
+            if let vc = object as? CGMManagerViewController {
+                // only dismiss the CGMManagerViewController
+                vc.dismiss(animated: true)
+            } else {
+                // dismiss out to the root view
+                dismissCurrentModal?()
+            }
             deviceManagerOnboardingCompletion?(nil)
             deviceManagerOnboardingCompletion = nil
         }

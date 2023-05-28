@@ -33,16 +33,16 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
     weak var completionDelegate: CompletionDelegate?
 
     private let onboardingViewModel: OnboardingViewModel
-    private let displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
+    private let displayGlucosePreference: DisplayGlucosePreference
     private let colorPalette: LoopUIColorPalette
 
     private var state: State?
 
     private lazy var cancellables = Set<AnyCancellable>()
 
-    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) {
+    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, displayGlucosePreference: DisplayGlucosePreference, colorPalette: LoopUIColorPalette) {
         self.onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: onboardingProvider)
-        self.displayGlucoseUnitObservable = displayGlucoseUnitObservable
+        self.displayGlucosePreference = displayGlucosePreference
         self.colorPalette = colorPalette
 
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
@@ -121,7 +121,7 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
 
         let rootView = rootView
             .environmentObject(onboardingViewModel)
-            .environmentObject(displayGlucoseUnitObservable)
+            .environmentObject(displayGlucosePreference)
             .environment(\.colorPalette, colorPalette)
             .environment(\.guidanceColors, colorPalette.guidanceColors)
             .environment(\.carbTintColor, colorPalette.carbTintColor)

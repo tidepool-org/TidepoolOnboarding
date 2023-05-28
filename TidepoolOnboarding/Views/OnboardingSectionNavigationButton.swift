@@ -104,8 +104,8 @@ struct OnboardingSectionNavigationButton_Previews: PreviewProvider {
         return onboardingViewModel
     }()
 
-    static var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable = {
-        return DisplayGlucoseUnitObservable.preview
+    static var displayGlucosePreference: DisplayGlucosePreference = {
+        return DisplayGlucosePreference.preview
     }()
 
     static var previews: some View {
@@ -113,13 +113,13 @@ struct OnboardingSectionNavigationButton_Previews: PreviewProvider {
             VStack(alignment: .leading) {
                 OnboardingSectionNavigationButton(section: .introduction, destination: CompleteDismissView())
                     .environmentObject(onboardingViewModel)
-                    .environmentObject(displayGlucoseUnitObservable)
+                    .environmentObject(displayGlucosePreference)
                 OnboardingSectionNavigationButton(section: .howTheAppWorks, destination: CompleteDismissView())
                     .environmentObject(onboardingViewModel)
-                    .environmentObject(displayGlucoseUnitObservable)
+                    .environmentObject(displayGlucosePreference)
                 OnboardingSectionNavigationButton(section: .aDayInTheLife, destination: CompleteDismissView())
                     .environmentObject(onboardingViewModel)
-                    .environmentObject(displayGlucoseUnitObservable)
+                    .environmentObject(displayGlucosePreference)
             }
         }
     }

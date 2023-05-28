@@ -11,7 +11,7 @@ import LoopKitUI
 
 struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
-    @EnvironmentObject var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable
+    @EnvironmentObject var displayGlucosePreference: DisplayGlucosePreference
     @Environment(\.colorPalette) var colorPalette: LoopUIColorPalette
     @Environment(\.guidanceColors) var guidanceColors: GuidanceColors
     @Environment(\.carbTintColor) var carbTintColor: Color
@@ -42,7 +42,7 @@ struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
         .sheet(isPresented: $isActive) {
             destination
                 .environmentObject(onboardingViewModel)
-                .environmentObject(displayGlucoseUnitObservable)
+                .environmentObject(displayGlucosePreference)
                 .environment(\.colorPalette, colorPalette)
                 .environment(\.guidanceColors, colorPalette.guidanceColors)
                 .environment(\.carbTintColor, colorPalette.carbTintColor)
@@ -77,7 +77,7 @@ struct OnboardingSectionSheetButton_Previews: PreviewProvider {
             }
             .buttonStyle(ActionButtonStyle())
             .environmentObject(OnboardingViewModel.preview)
-            .environmentObject(DisplayGlucoseUnitObservable.preview)
+            .environmentObject(DisplayGlucosePreference.preview)
         }
     }
 }

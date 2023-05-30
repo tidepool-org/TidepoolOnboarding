@@ -1,5 +1,5 @@
 //
-//  DisplayGlucoseUnitObservable+Preview.swift
+//  DisplayGlucosePreference+Preview.swift
 //  TidepoolOnboarding
 //
 //  Created by Darin Krauss on 3/8/21.
@@ -8,6 +8,6 @@
 
 import LoopKitUI
 
-extension DisplayGlucoseUnitObservable {
-    static var preview: DisplayGlucoseUnitObservable { DisplayGlucoseUnitObservable(displayGlucoseUnit: .milligramsPerDeciliter) }
+extension DisplayGlucosePreference {
+    static var preview: DisplayGlucosePreference { DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter) }
 }

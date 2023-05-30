@@ -16,7 +16,7 @@ struct DemoOnboardingView: UIViewControllerRepresentable {
         OrientationLock.deviceOrientationController = viewModel
         
         var onboardingViewController = viewModel.onboarding.onboardingViewController(onboardingProvider: viewModel,
-                                                                                     displayGlucoseUnitObservable: DisplayGlucoseUnitObservable.demo,
+                                                                                     displayGlucosePreference: DisplayGlucosePreference.demo,
                                                                                      colorPalette: LoopUIColorPalette.demo)
         onboardingViewController.cgmManagerOnboardingDelegate = viewModel
         onboardingViewController.pumpManagerOnboardingDelegate = viewModel

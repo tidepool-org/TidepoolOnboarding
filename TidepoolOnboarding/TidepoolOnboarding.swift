@@ -193,8 +193,8 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
 
     @Published public var isOnboarded: Bool
 
-    public func onboardingViewController(onboardingProvider: OnboardingProvider, displayGlucoseUnitObservable: DisplayGlucoseUnitObservable, colorPalette: LoopUIColorPalette) -> OnboardingViewController {
-        return OnboardingRootNavigationController(onboarding: self, onboardingProvider: onboardingProvider, displayGlucoseUnitObservable: displayGlucoseUnitObservable, colorPalette: colorPalette)
+    public func onboardingViewController(onboardingProvider: OnboardingProvider, displayGlucosePreference: DisplayGlucosePreference, colorPalette: LoopUIColorPalette) -> OnboardingViewController {
+        return OnboardingRootNavigationController(onboarding: self, onboardingProvider: onboardingProvider, displayGlucosePreference: displayGlucosePreference, colorPalette: colorPalette)
     }
 
     private func notifyDidUpdateState() {

@@ -213,15 +213,15 @@ struct IntroductionViews_Previews: PreviewProvider {
         return onboardingViewModel
     }()
     
-    static var displayGlucoseUnitObservable: DisplayGlucoseUnitObservable = {
-        return DisplayGlucoseUnitObservable.preview
+    static var displayGlucosePreference: DisplayGlucosePreference = {
+        return DisplayGlucosePreference.preview
     }()
     
     static var previews: some View {
         ContentPreviewWithBackground {
             IntroductionNavigationButton()
                 .environmentObject(onboardingViewModel)
-                .environmentObject(displayGlucoseUnitObservable)
+                .environmentObject(displayGlucosePreference)
         }
     }
 }

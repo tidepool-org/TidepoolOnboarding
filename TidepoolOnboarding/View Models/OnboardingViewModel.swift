@@ -169,7 +169,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             .sink { _ in onboarding.notifyDidSuspend() }
             .store(in: &cancellables)
         
-        switch studyProduct {
+        switch selectedProduct {
         case .studyProduct1:
             deviceValid = true
             appValid = true
@@ -183,6 +183,9 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             onboardPumpManager(prefersToSkipUserInteraction: true) { _ in }
             onboardCGMManager(prefersToSkipUserInteraction: true) { _ in }
             skipThroughSection(.getLooping)
+        case .marketingDemo:
+            // TODO
+            break
         default:
             break
         }
@@ -833,12 +836,12 @@ extension OnboardingViewModel: TherapySettingsViewModelDelegate {
 }
 
 extension OnboardingViewModel {
-    public var studyProduct: TidepoolSupport.StudyProduct {
+    public var selectedProduct: TidepoolSupport.Product {
         guard let tidepoolSupport = onboardingProvider.availableSupports.first(where: { $0 is TidepoolSupport }) as? TidepoolSupport else {
             return .none
         }
         
-        return tidepoolSupport.studyProduct
+        return tidepoolSupport.selectedProduct
     }
 }
 

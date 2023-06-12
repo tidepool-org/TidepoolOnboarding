@@ -9,11 +9,13 @@
 import HealthKit
 import LoopKit
 import TidepoolKit
+import TidepoolSupport
 
 struct TDevices {
     enum Pump: Identifiable {
         case coastal
         case coastalDemo
+        case simulator
         
         var id: String {
             switch self {
@@ -21,6 +23,8 @@ struct TDevices {
                 return "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f"
             case .coastalDemo:
                 return "89cc2977-bbc3-4f46-86e5-06bae8176b52"
+            case .simulator:
+                return "14c97adb-5b1e-48ea-ac79-f684412058b7"
             }
         }
     }
@@ -28,6 +32,7 @@ struct TDevices {
     enum CGM: Identifiable {
         case dexcomG6
         case dexcomG6Demo
+        case simulator
         
         var id: String {
             switch self {
@@ -35,6 +40,8 @@ struct TDevices {
                 return "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245"
             case .dexcomG6Demo:
                 return "15137627-e9ba-4bab-a36d-7c2f0a5ef368"
+            case .simulator:
+                return "c97bd194-5e5e-44c1-9629-4cb87be1a4c9"
             }
         }
     }
@@ -58,12 +65,13 @@ struct TDevices {
         #endif
     }
     
-    static var studyProduct1: TDevices {
-        TDevices(pump: .coastal, cgm: .dexcomG6Demo)
-    }
-    
-    static var studyProduct2: TDevices {
-        TDevices(pump: .coastalDemo, cgm: .dexcomG6Demo)
+    static func `for`(_ product: TidepoolSupport.Product) -> Self? {
+        switch product {
+        case .none: return nil
+        case .studyProduct1: return TDevices(pump: .coastal, cgm: .dexcomG6Demo)
+        case .studyProduct2: return TDevices(pump: .coastalDemo, cgm: .dexcomG6Demo)
+        case .marketingDemo: return TDevices(pump: .simulator, cgm: .simulator)
+        }
     }
 }
 

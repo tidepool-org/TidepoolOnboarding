@@ -169,25 +169,23 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             .sink { _ in onboarding.notifyDidSuspend() }
             .store(in: &cancellables)
         
-        switch selectedProduct {
-        case .studyProduct1:
-            deviceValid = true
-            appValid = true
-            prescription = .mock(.studyProduct1)
-            prescriberProfile = .mock
-        case .studyProduct2:
-            deviceValid = true
-            appValid = true
-            prescription = .mock(.studyProduct2)
-            prescriberProfile = .mock
+        setupProduct(selectedProduct)
+    }
+    
+    func setupProduct(_ product: TidepoolSupport.Product) {
+        guard product != .none, let devices = TDevices.for(product) else {
+            return
+        }
+        
+        deviceValid = true
+        appValid = true
+        prescription = .mock(devices)
+        prescriberProfile = .mock
+        
+        if product.skipsOnboarding {
             onboardPumpManager(prefersToSkipUserInteraction: true) { _ in }
             onboardCGMManager(prefersToSkipUserInteraction: true) { _ in }
             skipThroughSection(.getLooping)
-        case .marketingDemo:
-            // TODO
-            break
-        default:
-            break
         }
     }
 
@@ -891,6 +889,8 @@ fileprivate extension TPrescription {
             return "DexcomCGM"
         case "15137627-e9ba-4bab-a36d-7c2f0a5ef368":    // Hard-coded Tidepool backend device identifier
             return "DemoDexcomCGMManager"
+        case "c97bd194-5e5e-44c1-9629-4cb87be1a4c9":
+            return "MockCGMManager"
         default:
             return nil
         }
@@ -902,6 +902,8 @@ fileprivate extension TPrescription {
             return "AccuChekSolo"
         case "89cc2977-bbc3-4f46-86e5-06bae8176b52":    // Hard-coded Tidepool backend device identifier
             return "SoloDemo"
+        case "14c97adb-5b1e-48ea-ac79-f684412058b7":
+            return "MockPumpManager"
         default:
             return nil
         }

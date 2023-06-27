@@ -523,12 +523,18 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             switch setupUIResult {
             case .createdAndOnboarded(let cgmManager):
                 if let cgmManager = cgmManager as? MockCGMManager {
-                    let parameters = MockCGMDataSource.Model.SineCurveParameters(baseGlucose: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 120),
-                                                                                 amplitude: HKQuantity(unit:.milligramsPerDeciliter, doubleValue: 40),
-                                                                                 period: .hours(6),
-                                                                                 referenceDate: Date())
-                    cgmManager.dataSource = MockCGMDataSource(model: .sineCurve(parameters: parameters))
-                    cgmManager.backfillData(datingBack: .hours(3))
+                    switch selectedProduct {
+                    case .marketingDemo:
+                        let scenario = TestingScenarioInstance.thirteenHourTrace
+                        cgmManager.injectGlucoseSamples(scenario.pastGlucoseSamples, futureSamples: scenario.futureGlucoseSamples)
+                    default:
+                        let parameters = MockCGMDataSource.Model.SineCurveParameters(baseGlucose: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 120),
+                                                                                     amplitude: HKQuantity(unit:.milligramsPerDeciliter, doubleValue: 40),
+                                                                                     period: .hours(6),
+                                                                                     referenceDate: Date())
+                        cgmManager.dataSource = MockCGMDataSource(model: .sineCurve(parameters: parameters))
+                        cgmManager.backfillData(datingBack: .hours(3))
+                    }
                 }
                 isCGMManagerOnboarded = true
                 completion(nil)

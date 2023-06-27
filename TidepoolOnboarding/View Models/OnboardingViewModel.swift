@@ -928,3 +928,13 @@ fileprivate extension TError {
         }
     }
 }
+
+fileprivate extension TestingScenarioInstance {
+    static var thirteenHourTrace: TestingScenarioInstance {
+        guard let scenarioURLs = try? FileManager.default.contentsOfDirectory(at: Bundle.main.bundleURL.appendingPathComponent("Scenarios"), includingPropertiesForKeys: nil).filter({ $0.pathExtension == "json" }), let url = scenarioURLs.first(where: { $0.lastPathComponent.contains("13-hour-BG-trace") }), let scenario = try? TestingScenario(source: url).instantiate() else {
+            return TestingScenarioInstance(pastGlucoseSamples: [], futureGlucoseSamples: [], pumpEvents: [], carbEntries: [], deviceActions: [])
+        }
+        
+        return scenario
+    }
+}

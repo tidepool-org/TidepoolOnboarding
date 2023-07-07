@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -55,7 +55,6 @@
 		A98AD33225830909001AAD6F /* TidepoolOnboardingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD33125830909001AAD6F /* TidepoolOnboardingPlugin.swift */; };
 		A98AD3A12583214B001AAD6F /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3972583214B001AAD6F /* LoopKit.framework */; };
 		A98AD3A32583214B001AAD6F /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3982583214B001AAD6F /* LoopKitUI.framework */; };
-		A98AD3A52583214B001AAD6F /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3992583214B001AAD6F /* TidepoolKit.framework */; };
 		A98AD3A92583214B001AAD6F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD39B2583214B001AAD6F /* TidepoolServiceKit.framework */; };
 		A98AD3AB2583214B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD39C2583214B001AAD6F /* TidepoolServiceKitUI.framework */; };
 		A98AD3C32583227B001AAD6F /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3C22583227B001AAD6F /* LoopKit.framework */; };
@@ -254,7 +253,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A98AD3AB2583214B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */,
-				A98AD3A52583214B001AAD6F /* TidepoolKit.framework in Frameworks */,
 				A98AD3A92583214B001AAD6F /* TidepoolServiceKit.framework in Frameworks */,
 				A98AD3A12583214B001AAD6F /* LoopKit.framework in Frameworks */,
 				7E69CFF72A129BFC00203CBD /* TidepoolSupport.framework in Frameworks */,

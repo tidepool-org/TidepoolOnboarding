@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -59,7 +59,6 @@
 		A98AD3AB2583214B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD39C2583214B001AAD6F /* TidepoolServiceKitUI.framework */; };
 		A98AD3C32583227B001AAD6F /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3C22583227B001AAD6F /* LoopKit.framework */; };
 		A98AD3C52583227B001AAD6F /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3C42583227B001AAD6F /* LoopKitUI.framework */; };
-		A98AD3C72583227B001AAD6F /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3C62583227B001AAD6F /* TidepoolKit.framework */; };
 		A98AD3CB2583227B001AAD6F /* TidepoolServiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3CA2583227B001AAD6F /* TidepoolServiceKit.framework */; };
 		A98AD3CD2583227B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD3CC2583227B001AAD6F /* TidepoolServiceKitUI.framework */; };
 		A99D0E0525FC8F6F00CFFEA3 /* OnboardingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99D0E0425FC8F6F00CFFEA3 /* OnboardingViewModelTests.swift */; };
@@ -266,7 +265,6 @@
 			files = (
 				A98AD3C32583227B001AAD6F /* LoopKit.framework in Frameworks */,
 				A98AD3C52583227B001AAD6F /* LoopKitUI.framework in Frameworks */,
-				A98AD3C72583227B001AAD6F /* TidepoolKit.framework in Frameworks */,
 				A98AD3CB2583227B001AAD6F /* TidepoolServiceKit.framework in Frameworks */,
 				A98AD3CD2583227B001AAD6F /* TidepoolServiceKitUI.framework in Frameworks */,
 				A98AD2F225830851001AAD6F /* TidepoolOnboarding.framework in Frameworks */,

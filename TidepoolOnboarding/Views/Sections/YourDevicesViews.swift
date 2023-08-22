@@ -357,41 +357,44 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
     @State private var pumpManagerViewController: PumpManagerViewController?
 
     var body: some View {
-        OnboardingSectionPageView(section: .yourDevices) {
-            PageHeader(title: LocalizedString("Pairing Your Devices", comment: "Onboarding, Your Devices section, Pairing Your Devices view, title"))
-            Paragraph(LocalizedString("Use your product instructions along with this app to help you pair your devices.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 1"))
-            Paragraph(LocalizedString("Before pairing your devices, make sure your smart device, on which you are reading this screen, is connected to the internet.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 2"))
-            Paragraph(LocalizedString("You must have both CGM and Pump with you to proceed.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 3"))
-                .bold()
-            VStack(alignment: .leading, spacing: 30) {
-                DeviceView(number: 1, attributed: cgmManagerText, checked: onboardingViewModel.isCGMManagerOnboarded)
-                    // Can't use `.alertOnLongPressGesture` because we already have an .alert below :(
-                    .onLongPressGesture(minimumDuration: 2) {
-                        if onboardingViewModel.allowDebugFeatures { // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
-                            UINotificationFeedbackGenerator().notificationOccurred(.warning)
-                            alertMessage = "Are you sure you want to skip pairing a CGM and use the CGM simulator?" // Not localized
-                            alertAction = onboardingViewModel.skipCompleteYourDevicesCGMManager
-                            isAlertPresented = true
+        OnboardingSectionPageView(
+            section: .yourDevices,
+            content: {
+                PageHeader(title: LocalizedString("Pairing Your Devices", comment: "Onboarding, Your Devices section, Pairing Your Devices view, title"))
+                Paragraph(LocalizedString("Use your product instructions along with this app to help you pair your devices.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 1"))
+                Paragraph(LocalizedString("Before pairing your devices, make sure your smart device, on which you are reading this screen, is connected to the internet.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 2"))
+                Paragraph(LocalizedString("You must have both CGM and Pump with you to proceed.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 3"))
+                    .bold()
+                VStack(alignment: .leading, spacing: 30) {
+                    DeviceView(number: 1, attributed: cgmManagerText, checked: onboardingViewModel.isCGMManagerOnboarded)
+                        // Can't use `.alertOnLongPressGesture` because we already have an .alert below :(
+                        .onLongPressGesture(minimumDuration: 2) {
+                            if onboardingViewModel.allowDebugFeatures { // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                                UINotificationFeedbackGenerator().notificationOccurred(.warning)
+                                alertMessage = "Are you sure you want to skip pairing a CGM and use the CGM simulator?" // Not localized
+                                alertAction = onboardingViewModel.skipCompleteYourDevicesCGMManager
+                                isAlertPresented = true
+                            }
                         }
-                    }
-                DeviceView(number: 2, attributed: pumpManagerText, checked: onboardingViewModel.isPumpManagerOnboarded)
-                    // Can't use `.alertOnLongPressGesture` because we already have an .alert below :(
-                    .onLongPressGesture(minimumDuration: 2) {
-                        if onboardingViewModel.allowDebugFeatures { // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
-                            UINotificationFeedbackGenerator().notificationOccurred(.warning)
-                            alertMessage = "Are you sure you want to skip pairing a Pump and use the Pump simulator?" // Not localized
-                            alertAction = onboardingViewModel.skipCompleteYourDevicesPumpManager
-                            isAlertPresented = true
+                    DeviceView(number: 2, attributed: pumpManagerText, checked: onboardingViewModel.isPumpManagerOnboarded)
+                        // Can't use `.alertOnLongPressGesture` because we already have an .alert below :(
+                        .onLongPressGesture(minimumDuration: 2) {
+                            if onboardingViewModel.allowDebugFeatures { // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                                UINotificationFeedbackGenerator().notificationOccurred(.warning)
+                                alertMessage = "Are you sure you want to skip pairing a Pump and use the Pump simulator?" // Not localized
+                                alertAction = onboardingViewModel.skipCompleteYourDevicesPumpManager
+                                isAlertPresented = true
+                            }
                         }
-                    }
-            }
-            .padding(.vertical)
-            Paragraph(LocalizedString("If you need to stop for any reason, you can tap Pause Onboarding or any of the Close buttons to exit. You may return to this point later by tapping “Complete Setup” on Tidepool Loop’s home screen.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 4"))
-        }
+                }
+                .padding(.vertical)
+                Paragraph(LocalizedString("If you need to stop for any reason, you can tap Pause Onboarding or any of the Close buttons to exit. You may return to this point later by tapping “Complete Setup” on Tidepool Loop’s home screen.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 4"))
+            }, 
+            footer: footer
+        )
         .backButtonHidden(true)
         .nextButtonTitle(nextButtonTitle)
         .nextButtonAction(nextButtonAction)
-        .footer(footer)
         .alert(isPresented: $isAlertPresented) { alert }
     }
 
@@ -449,11 +452,10 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
         onboardingViewModel.isCGMManagerOnboarded && onboardingViewModel.isPumpManagerOnboarded
     }
 
-    private var footer: AnyView? {
+    @ViewBuilder
+    private var footer: some View {
         if onboardingViewModel.isCGMManagerOnboarded {
-            return AnyView(pausingOnboardingButton.padding(.bottom))
-        } else {
-            return nil
+            pausingOnboardingButton.padding(.bottom)
         }
     }
 

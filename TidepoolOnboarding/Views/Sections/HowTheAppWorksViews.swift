@@ -110,6 +110,7 @@ fileprivate struct HowTheAppWorksView5: View {
             HStack(alignment: .top, spacing: 10) {
                 LoopIcon(automation: .closed, freshness: .fresh)
                 Paragraph(LocalizedString("Loop is closed and green. Automation is ON. Your last loop was successful within the last 5 minutes.", comment: "Onboarding, How the App Works section, view 5, segment 2, list, item, paragraph"))
+                    .font(.subheadline)
             }
         }
     }
@@ -119,6 +120,7 @@ fileprivate struct HowTheAppWorksView5: View {
             HStack(alignment: .top, spacing: 10) {
                 LoopIcon(automation: .open, freshness: .fresh)
                 Paragraph(LocalizedString("Loop is open. Automation is OFF. Your pump and CGM will continue operating, but your basal insulin will not adjust automatically.", comment: "Onboarding, How the App Works section, view 5, segment 3, list, item, paragraph"))
+                    .font(.subheadline)
             }
         }
     }
@@ -132,6 +134,7 @@ fileprivate struct HowTheAppWorksView5: View {
                         Paragraph(LocalizedString("Loop is orange. Automation is ON, but it has been 5-15 minutes since your last loop.", comment: "Onboarding, How the App Works section, view 5, segment 4, list, item 1, paragraph 1"))
                         Paragraph(LocalizedString("Tap for additional information and watch for potential communication issues with your pump and CGM.", comment: "Onboarding, How the App Works section, view 5, segment 4, list, item 1, paragraph 2"))
                     }
+                    .font(.subheadline)
                 }
                 HStack(alignment: .top, spacing: 10) {
                     LoopIcon(automation: .closed, freshness: .stale)
@@ -139,6 +142,7 @@ fileprivate struct HowTheAppWorksView5: View {
                         Paragraph(LocalizedString("Loop is red. Automation is ON, but it has been more than 15 minutes since your last loop.", comment: "Onboarding, How the App Works section, view 5, segment 4, list, item 2, paragraph 1"))
                         Paragraph(LocalizedString("Tap for additional information and check for communication issues with your pump and CGM.", comment: "Onboarding, How the App Works section, view 5, segment 4, list, item 2, paragraph 2"))
                     }
+                    .font(.subheadline)
                 }
             }
         }
@@ -163,6 +167,7 @@ fileprivate struct HowTheAppWorksView6: View {
             HStack(spacing: 10) {
                 AccessibleImage("HowTheAppWorks_6_ScheduledBasal")
                 Paragraph(LocalizedString("A flat line indicates that your basal is delivering at your scheduled basal rate for this time of day.", comment: "Onboarding, How the App Works section, view 6, segment 1, list, item, paragraph"))
+                    .font(.subheadline)
             }
             Paragraph(LocalizedString("A value of 0.0 U indicates that your basal is delivering without any changes to your scheduled rate. It does not mean your basal rate is 0 U per hour.", comment: "Onboarding, How the App Works section, view 6, segment 1, paragraph"))
         }
@@ -173,6 +178,7 @@ fileprivate struct HowTheAppWorksView6: View {
             HStack(spacing: 10) {
                 AccessibleImage("HowTheAppWorks_6_DecreasedBasal")
                 Paragraph(LocalizedString("A dropped icon indicates that your scheduled basal is reduced by the value shown.", comment: "Onboarding, How the App Works section, view 6, segment 2, list, item, paragraph"))
+                    .font(.subheadline)
             }
             Paragraph(LocalizedString("A reduced basal rate will always be indicated with a negative value, i.e. -1.0 U basal means your basal is currently 1.0 U per hour less than your scheduled basal rate for this time of day.", comment: "Onboarding, How the App Works section, view 6, segment 2, paragraph"))
         }
@@ -183,6 +189,7 @@ fileprivate struct HowTheAppWorksView6: View {
             HStack(spacing: 10) {
                 AccessibleImage("HowTheAppWorks_6_IncreasedBasal")
                 Paragraph(LocalizedString("A raised icon indicates that your scheduled basal is increased by the value shown.", comment: "Onboarding, How the App Works section, view 6, segment 3, list, item, paragraph"))
+                    .font(.subheadline)
             }
             Paragraph(LocalizedString("An increased basal rate will always be indicated with a positive value. +3.0 U basal means your basal is currently 3.0 U per hour more than your scheduled basal rate for this time of day.", comment: "Onboarding, How the App Works section, view 6, segment 3, paragraph"))
         }
@@ -212,6 +219,7 @@ fileprivate struct HowTheAppWorksView8: View {
             HStack(spacing: 10) {
                 AccessibleImage("HowTheAppWorks_8_InProgress", width: 25)
                 Paragraph(LocalizedString("To stop a bolus in progress", comment: "Onboarding, How the App Works section, view 8, paragraph 3"))
+                    .font(.subheadline)
             }
             .padding(.horizontal)
             BulletedBodyTextList(
@@ -510,14 +518,17 @@ fileprivate struct HowTheAppWorksView19: View {
                 HStack(spacing: 10) {
                     AccessibleImage("HowTheAppWorks_19_Fast")
                     Paragraph(LocalizedString("Fast carb effect: 30 minutes", comment: "Onboarding, How the App Works section, view 19, segment 1, list 1, item 1, paragraph"))
+                        .font(.subheadline)
                 }
                 HStack(spacing: 10) {
                     AccessibleImage("HowTheAppWorks_19_Medium")
                     Paragraph(LocalizedString("Medium carb effect: 3 Hours", comment: "Onboarding, How the App Works section, view 19, segment 1, list 1, item 2, paragraph"))
+                        .font(.subheadline)
                 }
                 HStack(spacing: 10) {
                     AccessibleImage("HowTheAppWorks_19_Slow")
                     Paragraph(LocalizedString("Slow carb effect: 5 hours", comment: "Onboarding, How the App Works section, view 19, segment 1, list 1, item 3, paragraph"))
+                        .font(.subheadline)
                 }
             }
             Segment {

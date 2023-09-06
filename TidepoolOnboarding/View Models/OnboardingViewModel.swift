@@ -9,7 +9,6 @@
 import Foundation
 import Combine
 import os.log
-import DeviceCheck
 import CryptoKit
 import HealthKit
 import UIKit
@@ -18,6 +17,7 @@ import LoopKit
 import LoopKitUI
 import MockKit
 import TidepoolKit
+import TidepoolSecurity
 import TidepoolServiceKit
 import TidepoolSupport
 
@@ -36,6 +36,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var lastAccessDate: Date
     @Published var sectionProgression: OnboardingSectionProgression
     @Published var tidepoolService: TidepoolService?
+    @Published var tidepoolSecurity: TidepoolSecurity?
     @Published var deviceValid: Bool?
     @Published var appValid: Bool?
     @Published var attestationKeyID: String?
@@ -80,6 +81,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.lastAccessDate = onboarding.lastAccessDate
         self.sectionProgression = onboarding.sectionProgression
         self.tidepoolService = onboardingProvider.activeServices.first { $0.serviceIdentifier == TidepoolServiceIdentifier } as? TidepoolService
+        self.tidepoolSecurity = onboardingProvider.security(withIdentifier: TidepoolSecurity.identifier) as? TidepoolSecurity
         self.deviceValid = onboarding.deviceValid
         self.appValid = onboarding.appValid
         self.attestationKeyID = onboarding.attestationKeyID
@@ -277,127 +279,45 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             return
         }
 
-        guard let tidepoolService = tidepoolService else {
-            log.info("%{public}@ TidepoolService is missing", #function)
+        guard let tidepoolSecurity = tidepoolSecurity else {
+            log.info("%{public}@ TidepoolSecurity is missing", #function)
             completion(OnboardingError.unexpectedState)
             return
         }
 
-        // If the device does not require verification (i.e. simulator), mark as valid
-        guard deviceRequiresVerification else {
-            log.info("%{public}@ Device verification not required", #function)
-            self.deviceValid = true
-            completion(nil)
-            return
-        }
-
-        guard !JailbrokenDeviceDetector.isJailbrokenDevice() else {
-            log.info("%{public}@ Device jailbroken", #function)
-            self.deviceValid = false
-            completion(nil)
-            return
-        }
-
-        // if the device does not support DCDevice API, mark as invalid
-        guard DCDevice.current.isSupported else {
-            log.info("%{public}@ DCDevice API not supported, device token cannot be generated, validation failure", #function)
-            self.deviceValid = false
-            completion(nil)
-            return
-        }
-
-        DCDevice.current.generateToken { token, error in
-            Task { @MainActor in
-                guard error == nil, let token = token else {
-                    self.log.info("%{public}@ Device token generation failed [error=%{public}@]", #function, error.debugDescription)
-                    completion(OnboardingError.unexpectedError)
-                    return
-                }
-
-                do {
-                    let deviceValid = try await tidepoolService.tapi.verifyDevice(deviceToken: token)
-                    self.deviceValid = deviceValid
-                    completion(nil)
-                } catch {
-                    completion((error as! TError).onboardingError)
-                }
+        tidepoolSecurity.verifyDevice() { [weak self] result in
+            switch result {
+            case .success(let valid):
+                self?.deviceValid = valid
+                completion(nil)
+            case .failure(let error):
+                completion(error.onboardingError)
             }
         }
     }
-
-    private var deviceRequiresVerification: Bool {
-        #if targetEnvironment(simulator)
-        return false
-        #else
-        return true
-        #endif
-    }
-
+    
     func verifyApp(completion: @escaping (OnboardingError?) -> Void) {
         guard appValid == nil else {
             log.info("%{public}@ App already validated [appValid=%{public}@]", #function, appValid == true ? "true" : "false")
             completion(nil)
             return
         }
-
-        guard let tidepoolService = tidepoolService else {
-            log.info("%{public}@ TidepoolService is missing", #function)
+        
+        guard let tidepoolSecurity = tidepoolSecurity else {
+            log.info("%{public}@ TidepoolSecurity is missing", #function)
             completion(OnboardingError.unexpectedState)
             return
         }
 
-        // If the app does not require verification (i.e. simulator), mark as valid
-        guard appRequiresVerification else {
-            log.info("%{public}@ App verification not required", #function)
-            self.appValid = true
-            completion(nil)
-            return
-        }
-
-        // if the device does not support DCAppAttestService API, mark as invalid
-        let appAttestService = DCAppAttestService.shared
-        guard appAttestService.isSupported else {
-            log.info("%{public}@ DCAppAttestService API not supported, app key ID cannot be generated, validation failure", #function)
-            self.appValid = false
-            completion(nil)
-            return
-        }
-
-        Task { @MainActor in
-            do {
-                let attestationKeyID: String
-                if self.attestationKeyID != nil {
-                    attestationKeyID = self.attestationKeyID!
-                } else {
-                    attestationKeyID = try await appAttestService.generateKey()
-                }
-
-                let challenge = try await tidepoolService.tapi.getAttestationChallenge(keyID: attestationKeyID)
-
-                let hash = Data(SHA256.hash(data: Array(challenge.utf8)))
-
-                let attestation = try await appAttestService.attestKey(attestationKeyID, clientDataHash: hash)
-
-                let appValid = try await tidepoolService.tapi.verifyAttestation(keyID: attestationKeyID, challenge: challenge, attestation: attestation.base64EncodedString())
-
-                self.appValid = appValid
-                self.attestationKeyID = attestationKeyID
+        tidepoolSecurity.verifyApp() { [weak self] result in
+            switch result {
+            case .success(let valid):
+                self?.appValid = valid
                 completion(nil)
-            } catch {
-                self.log.info("%{public}@ App attestation verification failed [error=%{public}@]", #function, String(describing: error.localizedDescription))
-                self.appValid = false
-                self.attestationKeyID = nil
-                completion((error as! TError).onboardingError)
+            case .failure(let error):
+                completion(error.onboardingError)
             }
         }
-    }
-
-    private var appRequiresVerification: Bool {
-        #if targetEnvironment(simulator)
-        return false
-        #else
-        return true
-        #endif
     }
 
     func claimPrescription(accessCode: String, birthday: Date, completion: @escaping (OnboardingError?) -> Void) {
@@ -809,8 +729,12 @@ extension OnboardingViewModel: ServiceOnboardingDelegate {
     func serviceOnboarding(didCreateService service: Service) {
         serviceOnboardingDelegate?.serviceOnboarding(didCreateService: service)
 
-        if service.serviceIdentifier == TidepoolServiceIdentifier {
-            self.tidepoolService = service as? TidepoolService
+        if service.serviceIdentifier == TidepoolServiceIdentifier,
+           let service = service as? TidepoolService
+        {
+            tidepoolService = service
+            // TidepoolSecurity uses the TidepoolService
+            tidepoolSecurity?.initializationComplete(for: [service])
         }
     }
 
@@ -925,6 +849,18 @@ fileprivate extension TError {
             return .resourceNotFound
         default:
             return .networkFailure
+        }
+    }
+}
+
+fileprivate extension SecurityError {
+    var onboardingError: OnboardingError {
+        switch self {
+        case .authenticationFailure: return .authenticationFailure
+        case .networkFailure: return .networkFailure
+        case .resourceNotFound: return .resourceNotFound
+        case .unexpectedError: return .unexpectedError
+        case .unexpectedState: return .unexpectedState
         }
     }
 }

@@ -10,6 +10,7 @@ import LoopKit
 import LoopKitUI
 
 class MockOnboardingProvider: OnboardingProvider {
+    
     var allowDebugFeatures: Bool = true
 
     func getNotificationAuthorization(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
@@ -45,6 +46,10 @@ class MockOnboardingProvider: OnboardingProvider {
         .failure(MockError())
     }
     
+    func security(withIdentifier identifier: String) -> LoopKit.Security? {
+        nil
+    }
+
     var availableSupports: [SupportUI] = []
     
     var onboardingTherapySettings = TherapySettings()

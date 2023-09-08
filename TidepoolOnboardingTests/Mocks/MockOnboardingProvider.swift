@@ -46,7 +46,7 @@ class MockOnboardingProvider: OnboardingProvider {
         .failure(MockError())
     }
     
-    func security(withIdentifier identifier: String) -> LoopKit.Security? {
+    func statefulPlugin(withIdentifier identifier: String) -> StatefulPluggable? {
         nil
     }
 

@@ -21,8 +21,6 @@ import TidepoolSecurity
 import TidepoolServiceKit
 import TidepoolSupport
 
-let TidepoolServiceIdentifier = "TidepoolService"
-
 class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding {
     weak var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate?
     weak var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
@@ -80,8 +78,8 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         self.lastAccessDate = onboarding.lastAccessDate
         self.sectionProgression = onboarding.sectionProgression
-        self.tidepoolService = onboardingProvider.activeServices.first { $0.serviceIdentifier == TidepoolServiceIdentifier } as? TidepoolService
-        self.tidepoolSecurity = onboardingProvider.security(withIdentifier: TidepoolSecurity.identifier) as? TidepoolSecurity
+        self.tidepoolService = onboardingProvider.activeServices.first { $0.pluginIdentifier == TidepoolService.pluginIdentifier } as? TidepoolService
+        self.tidepoolSecurity = onboardingProvider.statefulPlugin(withIdentifier: TidepoolSecurity.pluginIdentifier) as? TidepoolSecurity
         self.deviceValid = onboarding.deviceValid
         self.appValid = onboarding.appValid
         self.attestationKeyID = onboarding.attestationKeyID
@@ -269,7 +267,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     func onboardTidepoolService() -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
-        return onboardingProvider.onboardService(withIdentifier: TidepoolServiceIdentifier)
+        return onboardingProvider.onboardService(withIdentifier: TidepoolService.pluginIdentifier)
     }
 
     func verifyDevice(completion: @escaping (OnboardingError?) -> Void) {
@@ -285,12 +283,15 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             return
         }
 
-        tidepoolSecurity.verifyDevice() { [weak self] result in
+        tidepoolSecurity.verifyiOSDevice(){ [weak self] result in
             switch result {
             case .success(let valid):
                 self?.deviceValid = valid
                 completion(nil)
             case .failure(let error):
+                guard let error = error as? SecurityError else { completion(.unexpectedError)
+                    return
+                }
                 completion(error.onboardingError)
             }
         }
@@ -309,13 +310,16 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             return
         }
 
-        tidepoolSecurity.verifyApp() { [weak self] result in
-            switch result {
-            case .success(let valid):
-                self?.appValid = valid
+        Task { @MainActor in
+            do {
+                appValid = try await tidepoolSecurity.verifyApp()
                 completion(nil)
-            case .failure(let error):
+            } catch let error as SecurityError {
+                log.error("Could not verify app %{public}@", error.localizedDescription.debugDescription)
                 completion(error.onboardingError)
+            } catch let error {
+                log.error("Could not verify app %{public}@", error.localizedDescription.debugDescription)
+                completion(.unexpectedState)
             }
         }
     }
@@ -653,7 +657,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     func skipCompleteYourDevicesCGMManager() {
-        cgmManagerIdentifier = MockCGMManager.managerIdentifier
+        cgmManagerIdentifier = MockCGMManager.pluginIdentifier
         onboardCGMManager { error in
             if let error = error {
                 self.log.error("%{public}@ Failure to force CGM simulator onboarding [error=%{public}@]", #function, String(describing: error))
@@ -664,7 +668,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
     
     func skipCompleteYourDevicesPumpManager() {
-        self.pumpManagerIdentifier = MockPumpManager.managerIdentifier
+        self.pumpManagerIdentifier = MockPumpManager.pluginIdentifier
         onboardPumpManager { error in
             if let error = error {
                 self.log.error("%{public}@ Failure to force pump simulator onboarding [error=%{public}@]", #function, String(describing: error))
@@ -729,7 +733,7 @@ extension OnboardingViewModel: ServiceOnboardingDelegate {
     func serviceOnboarding(didCreateService service: Service) {
         serviceOnboardingDelegate?.serviceOnboarding(didCreateService: service)
 
-        if service.serviceIdentifier == TidepoolServiceIdentifier,
+        if service.pluginIdentifier == TidepoolService.pluginIdentifier,
            let service = service as? TidepoolService
         {
             tidepoolService = service

@@ -52,6 +52,8 @@ fileprivate class PreviewOnboardingProvider: OnboardingProvider {
     
     var availableSupports: [SupportUI] = []
     
+    func statefulPlugin(withIdentifier identifier: String) -> StatefulPluggable? { return nil }
+    
     var onboardingTherapySettings: TherapySettings {
         return TherapySettings()
     }

@@ -415,10 +415,12 @@ fileprivate struct HowTheAppWorksView14: View {
                     AccessibleImage("HowTheAppWorks_14_Bolus", width: 20)
                         .padding(.horizontal, 6 * scalingFactor)
                     Paragraph(LocalizedString("Boluses of insulin are presented as blue triangles.", comment: "Onboarding, How the App Works section, view 14, segment, list, item 1, paragraph"))
+                        .font(.subheadline)
                 }
                 HStack(spacing: 10) {
                     AccessibleImage("HowTheAppWorks_14_Basal", width: 33)
                     Paragraph(LocalizedString("Basal insulin is presented as a series of blue bars that correspond to each change of the insulin delivery status icon.", comment: "Onboarding, How the App Works section, view 14, segment, list, item 2, paragraph"))
+                        .font(.subheadline)
                 }
             }
             .padding(.horizontal)

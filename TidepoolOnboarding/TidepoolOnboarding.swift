@@ -19,8 +19,8 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
 
     public weak var onboardingDelegate: OnboardingDelegate?
 
-    public let onboardingIdentifier = "TidepoolOnboarding"
-
+    static public var pluginIdentifier: String = "TidepoolOnboarding"
+    
     var lastAccessDate: Date {
         didSet {
             notifyDidUpdateState()

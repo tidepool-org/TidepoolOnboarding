@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -84,8 +84,8 @@
 		A9E56C32262E1C4600A10627 /* NumberedBodyTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E56C31262E1C4600A10627 /* NumberedBodyTextList.swift */; };
 		A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */; };
 		A9EFBD322602D09B0070E9CC /* ModalPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFBD312602D09B0070E9CC /* ModalPresentation.swift */; };
-		B483213E26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B483213D26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift */; };
-		C12E4BC3288F235D009C98A2 /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; platformFilter = ios; };
+		B4D9043C2AA872F900CBD826 /* TidepoolSecurity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4D9043B2AA872F900CBD826 /* TidepoolSecurity.framework */; };
+		C12E4BC3288F235D009C98A2 /* TidepoolOnboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; };
 		C12E4BC4288F235D009C98A2 /* TidepoolOnboarding.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A98AD2E925830851001AAD6F /* TidepoolOnboarding.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -105,13 +105,6 @@
 			remoteInfo = TidepoolOnboarding;
 		};
 		A98AD3D2258322E1001AAD6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A98AD2B025830807001AAD6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A98AD2E825830851001AAD6F;
-			remoteInfo = TidepoolOnboarding;
-		};
-		C12E4BC5288F235D009C98A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A98AD2B025830807001AAD6F /* Project object */;
 			proxyType = 1;
@@ -227,7 +220,7 @@
 		A9E932A52605168200E28144 /* LoopUIColorPalette+Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoopUIColorPalette+Demo.swift"; sourceTree = "<group>"; };
 		A9EBBD3C25F984560064804A /* OnboardingSectionSheetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionSheetButton.swift; sourceTree = "<group>"; };
 		A9EFBD312602D09B0070E9CC /* ModalPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentation.swift; sourceTree = "<group>"; };
-		B483213D26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JailbrokenDeviceDetector.swift; sourceTree = "<group>"; };
+		B4D9043B2AA872F900CBD826 /* TidepoolSecurity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolSecurity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +249,7 @@
 				A98AD3A12583214B001AAD6F /* LoopKit.framework in Frameworks */,
 				7E69CFF72A129BFC00203CBD /* TidepoolSupport.framework in Frameworks */,
 				A98AD3A32583214B001AAD6F /* LoopKitUI.framework in Frameworks */,
+				B4D9043C2AA872F900CBD826 /* TidepoolSecurity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +423,7 @@
 		A98AD38C25832125001AAD6F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B4D9043B2AA872F900CBD826 /* TidepoolSecurity.framework */,
 				7E69CFF62A129BFC00203CBD /* TidepoolSupport.framework */,
 				A98AD3C22583227B001AAD6F /* LoopKit.framework */,
 				A98AD3C42583227B001AAD6F /* LoopKitUI.framework */,
@@ -536,7 +531,6 @@
 				A95D623F2649FF410018B9EA /* AttributedString.swift */,
 				A911C223264B0FB200EF3B85 /* OnboardingError.swift */,
 				A903C79725F1443200C88786 /* OnboardingSection.swift */,
-				B483213D26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -595,7 +589,6 @@
 			);
 			dependencies = (
 				A98AD3D3258322E1001AAD6F /* PBXTargetDependency */,
-				C12E4BC6288F235D009C98A2 /* PBXTargetDependency */,
 			);
 			name = TidepoolOnboardingPlugin;
 			productName = TidepoolOnboardingPlugin;
@@ -766,7 +759,6 @@
 				A9502CDA2600293200146AD3 /* BodyText.swift in Sources */,
 				A923334225C3786100D8CF69 /* Environment+Complete.swift in Sources */,
 				A916AA5125F6F05600B7CEF2 /* OnboardingViewModel+Preview.swift in Sources */,
-				B483213E26C6C20B00E5F7D3 /* JailbrokenDeviceDetector.swift in Sources */,
 				A93D2B112602606E0091FB65 /* AlertOnLongPressGesture.swift in Sources */,
 				A906344A26433B9300CAFED1 /* ServiceView.swift in Sources */,
 				A9A80D852639DC6100770DA7 /* TPrescription.swift in Sources */,
@@ -836,12 +828,6 @@
 			isa = PBXTargetDependency;
 			target = A98AD2E825830851001AAD6F /* TidepoolOnboarding */;
 			targetProxy = A98AD3D2258322E1001AAD6F /* PBXContainerItemProxy */;
-		};
-		C12E4BC6288F235D009C98A2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = A98AD2E825830851001AAD6F /* TidepoolOnboarding */;
-			targetProxy = C12E4BC5288F235D009C98A2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

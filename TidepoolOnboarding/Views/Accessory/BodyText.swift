@@ -14,17 +14,17 @@ struct BodyText: View {
 
     init(_ attributedString: AttributedString) {
         self.attributedString = attributedString
-        self.foregroundColor = .black
+        self.foregroundColor = .primary
     }
 
     init(_ string: String) {
         self.attributedString = AttributedString(string)
-        self.foregroundColor = .black
+        self.foregroundColor = .primary
     }
 
     init(attributed string: String) {
         self.attributedString = AttributedString(attributed: string)
-        self.foregroundColor = .black
+        self.foregroundColor = .primary
     }
 
     var body: some View {

@@ -19,7 +19,7 @@ public final class TidepoolOnboarding: ObservableObject, OnboardingUI {
 
     public weak var onboardingDelegate: OnboardingDelegate?
 
-    static public var pluginIdentifier: String = "TidepoolOnboarding"
+    public var pluginIdentifier: String { "TidepoolOnboarding" }
     
     var lastAccessDate: Date {
         didSet {

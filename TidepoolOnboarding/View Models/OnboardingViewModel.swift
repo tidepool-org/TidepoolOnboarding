@@ -78,8 +78,8 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         self.lastAccessDate = onboarding.lastAccessDate
         self.sectionProgression = onboarding.sectionProgression
-        self.tidepoolService = onboardingProvider.activeServices.first { $0.pluginIdentifier == TidepoolService.pluginIdentifier } as? TidepoolService
-        self.tidepoolSecurity = onboardingProvider.statefulPlugin(withIdentifier: TidepoolSecurity.pluginIdentifier) as? TidepoolSecurity
+        self.tidepoolService = onboardingProvider.activeServices.first { $0.pluginIdentifier == TidepoolService.serviceIdentifier } as? TidepoolService
+        self.tidepoolSecurity = onboardingProvider.statefulPlugin(withIdentifier: TidepoolSecurity.securityIdentifier) as? TidepoolSecurity
         self.deviceValid = onboarding.deviceValid
         self.appValid = onboarding.appValid
         self.attestationKeyID = onboarding.attestationKeyID
@@ -267,7 +267,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     func onboardTidepoolService() -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
-        return onboardingProvider.onboardService(withIdentifier: TidepoolService.pluginIdentifier)
+        return onboardingProvider.onboardService(withIdentifier: TidepoolService.serviceIdentifier)
     }
 
     func verifyDevice(completion: @escaping (OnboardingError?) -> Void) {
@@ -657,7 +657,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
 
     func skipCompleteYourDevicesCGMManager() {
-        cgmManagerIdentifier = MockCGMManager.pluginIdentifier
+        cgmManagerIdentifier = MockCGMManager.managerIdentifier
         onboardCGMManager { error in
             if let error = error {
                 self.log.error("%{public}@ Failure to force CGM simulator onboarding [error=%{public}@]", #function, String(describing: error))
@@ -668,7 +668,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     }
     
     func skipCompleteYourDevicesPumpManager() {
-        self.pumpManagerIdentifier = MockPumpManager.pluginIdentifier
+        self.pumpManagerIdentifier = MockPumpManager.managerIdentifier
         onboardPumpManager { error in
             if let error = error {
                 self.log.error("%{public}@ Failure to force pump simulator onboarding [error=%{public}@]", #function, String(describing: error))
@@ -733,7 +733,7 @@ extension OnboardingViewModel: ServiceOnboardingDelegate {
     func serviceOnboarding(didCreateService service: Service) {
         serviceOnboardingDelegate?.serviceOnboarding(didCreateService: service)
 
-        if service.pluginIdentifier == TidepoolService.pluginIdentifier,
+        if service.pluginIdentifier == TidepoolService.serviceIdentifier,
            let service = service as? TidepoolService
         {
             tidepoolService = service

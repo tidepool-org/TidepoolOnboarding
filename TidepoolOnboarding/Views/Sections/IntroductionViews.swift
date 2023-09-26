@@ -131,13 +131,15 @@ fileprivate struct IntroductionView4: View {
             Paragraph(LocalizedString("You will interact with the Tidepool Loop app to:", comment: "Onboarding, Introduction section, view 4, segment 3, paragraph"))
             BulletedBodyTextList(attributed:
                  (.filledCircle, LocalizedString("Enter your personal diabetes settings", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 1, part 1")),
-                 (.noBullet, LocalizedString("<b>Caution</b>: Users should work with their healthcare practitioners (HCPs) when first setting up their personal settings", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 1, part 2")),
                  (.filledCircle, LocalizedString("Deliver bolus insulin for food and to bring down high glucose", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 2")),
                  (.filledCircle, LocalizedString("Make temporary glucose range adjustments", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 3")),
                  (.filledCircle, LocalizedString("View glucose history and insulin delivery history", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 4")),
                  (.filledCircle, LocalizedString("Maintain your devices", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 5")),
                  (.filledCircle, LocalizedString("Troubleshoot and get support from Tidepool", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 6"))
             )
+            Callout(title: NSLocalizedString("Note: Align on initial settings with your practitioner", comment: "Onboarding Introduction callout title")) {
+                CalloutText(NSLocalizedString("Work with your healthcare practitioner when first configuring your personal settings.", comment: "Onboarding Introduction callout body"))
+            }
         }
     }
 }
@@ -200,8 +202,12 @@ fileprivate struct IntroductionView7: View {
                 LocalizedString("Apple Watch", comment: "Onboarding, Introduction section, view 7, list, item 8"),
                 LocalizedString("Automation", comment: "Onboarding, Introduction section, view 7, list, item 9")
             )
+            
+            Callout(title: LocalizedString("Note: Consult the list of supported devices", comment: "Introduction callout title")) {
+                CalloutText(LocalizedString("Before moving forward, be sure to consult tidepool.org/loop for a list of Tidepool Loop compatible devices.", comment: "Introduction callout body"))
+            }
+            
             Paragraph(LocalizedString("If there is a concept you’d like to review, consult the Tidepool Loop User Guide for more details.", comment: "Onboarding, Introduction section, view 7, paragraph 2"))
-            Paragraph(LocalizedString("A complete list of insulin pumps and CGMs that can be used with the Tidepool Loop app is provided in the Tidepool Loop User Guide.", comment: "Onboarding, Introduction section, view 7, paragraph 3"))
         }
     }
 }

@@ -19,7 +19,6 @@ struct CalloutText: View {
         Text(string)
             .font(.callout)
             .accentColor(.secondary)
-            .foregroundColor(.accentColor)
     }
 }
 

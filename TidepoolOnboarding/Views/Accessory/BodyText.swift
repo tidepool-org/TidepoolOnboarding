@@ -9,26 +9,31 @@
 import SwiftUI
 
 struct BodyText: View {
-    private let attributedString: AttributedString
+    private let text: Text
     private let foregroundColor: Color
 
     init(_ attributedString: AttributedString) {
-        self.attributedString = attributedString
+        self.text = Text(attributedString)
         self.foregroundColor = .primary
     }
 
     init(_ string: String) {
-        self.attributedString = AttributedString(string)
+        self.text = Text(AttributedString(string))
+        self.foregroundColor = .primary
+    }
+    
+    init(_ text: Text) {
+        self.text = text
         self.foregroundColor = .primary
     }
 
     init(attributed string: String) {
-        self.attributedString = AttributedString(attributed: string)
+        self.text = Text(AttributedString(attributed: string))
         self.foregroundColor = .primary
     }
 
     var body: some View {
-        Text(attributedString)
+        text
             .font(.body)
             .accentColor(.secondary)
             .foregroundColor(foregroundColor)
@@ -37,15 +42,15 @@ struct BodyText: View {
 
 extension BodyText {
     init(_ other: Self, isBold: Bool? = nil, isItalic: Bool? = nil, foregroundColor: Color? = nil) {
-        var attributedString = other.attributedString
+        var text = other.text
         if isBold == true {
-            attributedString = attributedString.bold()
+            text = text.bold()
         }
         if isItalic == true {
-            attributedString = attributedString.italic()
+            text = text.italic()
         }
 
-        self.attributedString = attributedString
+        self.text = text
         self.foregroundColor = foregroundColor ?? other.foregroundColor
     }
 

@@ -1,18 +1,9 @@
 {
   "images" : [
     {
+      "filename" : "HowTheAppWorks_21_Preset.svg",
       "idiom" : "universal",
-      "scale" : "1x"
     },
-    {
-      "filename" : "HowTheAppWorks_21_Preset@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
-    }
   ],
   "info" : {
     "author" : "xcode",

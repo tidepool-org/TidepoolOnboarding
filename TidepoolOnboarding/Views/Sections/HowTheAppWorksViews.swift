@@ -645,6 +645,7 @@ fileprivate struct HowTheAppWorksView21: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView22()) {
             PageHeader(title: LocalizedString("Temporary Presets", comment: "Onboarding, How the App Works section, view 21, title"))
+            PresentableImage(decorative: "HowTheAppWorks_21_1")
             Paragraph(LocalizedString("If you would like to let the system know about events that may impact your diabetes management such as exercising, sickness or hormonal changes, you can use temporary presets.", comment: "Onboarding, How the App Works section, view 21, paragraph 1"))
             Paragraph(LocalizedString("Temporary presets are an optional feature that can enhance and personalize how the Tidepool Loop system works for you while automation is on.", comment: "Onboarding, How the App Works section, view 21, paragraph 2"))
             Paragraph(Text(LocalizedString("Your provider included two temporary preset recommendations with your therapy settings order: ", comment: "Onboarding, How the App Works section, view 21, paragraph 3"))
@@ -653,17 +654,16 @@ fileprivate struct HowTheAppWorksView21: View {
                     + Text("Workout Preset").bold()
                     + Text("."))
             Paragraph(LocalizedString("You can use Pre-Meal Preset and Workout Preset once you complete onboarding. If you’d like to create your own presets, additional instructional content will be available to help guide you through this process in the app.", comment: "Onboarding, How the App Works section, view 21, paragraph 4"))
-            HStack(spacing: 10) {
+            HStack(alignment: .top, spacing: 10) {
                 AccessibleImage("HowTheAppWorks_21_Pre_Meal", width: 33)
                 Paragraph(LocalizedString("To access Pre-Meal Preset, you can tap the Pre-Meal Button on the Tidepool Loop toolbar.", comment: "Onboarding, How the App Works section, view 21, list, item 1, paragraph"))
                     .font(.subheadline)
             }
-            HStack(spacing: 10) {
+            HStack(alignment: .top, spacing: 10) {
                 AccessibleImage("HowTheAppWorks_21_Preset", width: 33)
                 Paragraph(LocalizedString("To access temporary presets and temporary presets training, you can tap the Preset Button on the Tidepool Loop toolbar once you complete onboarding.", comment: "Onboarding, How the App Works section, view 21, list, item 2, paragraph"))
                     .font(.subheadline)
             }
-            PresentableImage(decorative: "HowTheAppWorks_21_1")
         }
     }
 }
@@ -721,7 +721,7 @@ fileprivate struct HowTheAppWorksView25: View {
     
     private var segment: some View {
         Segment(header: LocalizedString("Here are the Key Differences", comment: "Onboarding, How the App Works section, view 25, segment, header")) {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 24) {
                 HStack(alignment: .top, spacing: 10) {
                     AccessibleImage("HowTheAppWorks_25_Closed_Loop", width: 33)
                     VStack(alignment: .leading, spacing: 4) {
@@ -734,7 +734,7 @@ fileprivate struct HowTheAppWorksView25: View {
                 }
                 HStack(alignment: .top, spacing: 10) {
                     AccessibleImage("HowTheAppWorks_25_Open_Loop", width: 33)
-                    Paragraph(LocalizedString("A manual temp basal causes the Tidepool Loop system to turn off automation and enter into Closed Loop OFF mode. ", comment: "Onboarding, How the App Works section, view 25, list, item 2, paragraph"))
+                    Paragraph(LocalizedString("Manual temp basal causes the Tidepool Loop system to turn off automation and enter into Closed Loop OFF mode.", comment: "Onboarding, How the App Works section, view 25, list, item 2, paragraph"))
                         .font(.subheadline)
                 }
                 HStack(alignment: .top, spacing: 10) {

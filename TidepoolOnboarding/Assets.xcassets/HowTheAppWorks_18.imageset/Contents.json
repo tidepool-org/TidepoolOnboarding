@@ -5,11 +5,11 @@
       "scale" : "1x"
     },
     {
-      "filename" : "HowTheAppWorks_18@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "HowTheAppWorks_18.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

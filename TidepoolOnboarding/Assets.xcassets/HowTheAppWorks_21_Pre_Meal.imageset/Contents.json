@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "HowTheAppWorks_21_Pre_Meal.svg",
+      "idiom" : "universal",
+    },
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

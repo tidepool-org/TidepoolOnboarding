@@ -21,6 +21,7 @@ import TidepoolSecurity
 import TidepoolServiceKit
 import TidepoolSupport
 
+@MainActor
 class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding {
     weak var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate?
     weak var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?

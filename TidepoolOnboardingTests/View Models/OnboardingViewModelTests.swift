@@ -11,6 +11,7 @@ import TidepoolKit
 import LoopKit
 @testable import TidepoolOnboarding
 
+@MainActor
 class OnboardingViewModelTests: XCTestCase {
     var onboarding: TidepoolOnboarding!
     var onboardingViewModel: OnboardingViewModel!

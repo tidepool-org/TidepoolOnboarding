@@ -21,6 +21,7 @@ import TidepoolSecurity
 import TidepoolServiceKit
 import TidepoolSupport
 
+@MainActor
 class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOnboarding, ServiceOnboarding {
     weak var cgmManagerOnboardingDelegate: CGMManagerOnboardingDelegate?
     weak var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
@@ -748,14 +749,15 @@ extension OnboardingViewModel: ServiceOnboardingDelegate {
 }
 
 extension OnboardingViewModel: TherapySettingsViewModelDelegate {
+
     func syncBasalRateSchedule(items: [RepeatingScheduleValue<Double>], completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
         //noop
     }
-    
-    func syncDeliveryLimits(deliveryLimits: DeliveryLimits, completion: @escaping (Result<DeliveryLimits, Error>) -> Void) {
-        //noop
+
+    func syncDeliveryLimits(deliveryLimits: DeliveryLimits) async throws -> DeliveryLimits {
+        return deliveryLimits
     }
-    
+
     func saveCompletion(therapySettings: TherapySettings) {
         // Note: the expectation is that this would only be called by the _current_ TherapySettingsView, so it should
         // be okay to just save it here.

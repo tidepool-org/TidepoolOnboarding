@@ -47,9 +47,19 @@ fileprivate struct GetLoopingView1: View {
                 LocalizedString("When you don’t have an active sensor session", comment: "Onboarding, Get Looping section, view 1, segment 2, list, item 1"),
                 LocalizedString("In circumstances where you may want to take full manual control of your insulin dosing decisions", comment: "Onboarding, Get Looping section, view 1, segment 2, list, item 2")
             )
-            Callout(title: LocalizedString("Note: Some features unavailable", comment: "Onboarding, Get Looping section, view 1, segment 2, callout, title")) {
-                Paragraph(LocalizedString("Please note that some features of the app may work differently or be unavailable when Closed Loop is OFF. See your User Guide for more details.", comment: "Onboarding, Get Looping section, view 1, segment 2, callout, paragraph"))
-            }
+            
+            Callout(
+                .note,
+                title: Text(
+                    "Some features unavailable",
+                    comment: "Onboarding, Get Looping section, view 1, segment 2, callout, title"
+                ),
+                message: Text(
+                    "Please note that some features of the app may work differently or be unavailable when Closed Loop is OFF. See your User Guide for more details.",
+                    comment: "Onboarding, Get Looping section, view 1, segment 2, callout, paragraph"
+                )
+            )
+            .padding(.horizontal, -16)
         }
     }
 }

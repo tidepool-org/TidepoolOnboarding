@@ -103,9 +103,13 @@ fileprivate struct YourDevicesNotificationsView: View {
             )
             .startingAt(3)
             .padding(.vertical)
-            Callout(title: LocalizedString("These permissions must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Notifications view, segment 3, callout title"), warningIconColor: .red) {
-                Paragraph(LocalizedString("It is important that you always keep Notifications, Critical Alerts, and Time Sensitive Notifications turned ON in your phone’s settings to ensure that you receive Tidepool Loop notifications.", comment: "Onboarding, Your Devices section, Notifications view, segment 3, callout body text"))
-            }
+            
+            Callout(
+                .warning,
+                title: Text("These permissions must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Notifications view, segment 3, callout title"),
+                message: Text("It is important that you always keep Notifications, Critical Alerts, and Time Sensitive Notifications turned ON in your phone’s settings to ensure that you receive Tidepool Loop notifications.", comment: "Onboarding, Your Devices section, Notifications view, segment 3, callout body text")
+            )
+            .padding(.horizontal, -16)
         }
     }
 
@@ -154,13 +158,35 @@ fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
                 LocalizedString("Return to this app to continue.", comment: "Onboarding, Your Devices section, Alert Permissions Required view, list, item 4")
             )
             if !notificationAllowed {
-                Callout(title: LocalizedString("Notifications must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 2, title"), warningIconColor: .red)
+                
+                Callout(
+                    .warning,
+                    title: Text(
+                        "Notifications must be allowed to continue using the app",
+                        comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 2, title"
+                    )
+                )
+                .padding(.horizontal, -16)
             }
             if !criticalAlertAllowed {
-                Callout(title: LocalizedString("Critical Alerts must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 1, title"), warningIconColor: .red)
+                Callout(
+                    .warning,
+                    title: Text(
+                        "Critical Alerts must be allowed to continue using the app",
+                        comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 1, title"
+                    )
+                )
+                .padding(.horizontal, -16)
             }
             if notificationAllowed && !timeSensitiveNotificationAllowed {
-                Callout(title: LocalizedString("Time Sensitive Notifications must be allowed to continue using the app", comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 3, title"), warningIconColor: .red)
+                Callout(
+                    .warning,
+                    title: Text(
+                        "Time Sensitive Notifications must be allowed to continue using the app",
+                        comment: "Onboarding, Your Devices section, Alert Permissions Required view, callout 3, title"
+                    )
+                )
+                .padding(.horizontal, -16)
             }
         }
         .backButtonHidden(true)
@@ -196,7 +222,14 @@ fileprivate struct YourDevicesFocusModesView: View {
             Paragraph(LocalizedString("If you wish to continue receiving important notifications from Tidepool Loop while in a Focus Mode, you must add Tidepool Loop as an “Allowed App” for each Focus Mode.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2"))
             PresentableImage("YourDevices_FocusModes")
             Segment(header: LocalizedString("How to Add Tidepool Loop as an Allowed App", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, header")) {
-                Callout(title: LocalizedString("Note: You’ll need to complete the steps below for each Focus Mode you have enabled or plan to enable.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, callout, title"))
+                Callout(
+                    .note,
+                    title: Text(
+                        "You’ll need to complete the steps below for each Focus Mode you have enabled or plan to enable.",
+                        comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, callout, title"
+                    )
+                )
+                .padding(.horizontal, -16)
                 NumberedBodyTextList(
                     LocalizedString("Go to Settings > Focus.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 1"),
                     LocalizedString("Tap a provided Focus option — like Do Not Disturb, Personal, or Sleep.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 2"),
@@ -220,7 +253,14 @@ fileprivate struct YourDevicesMuteAlerts: View {
             PageHeader(title: LocalizedString("Mute Alerts", comment: "Onboarding, Your Devices section, Mute Alerts view, title"))
             Paragraph(LocalizedString("Tidepool Loop has its own silencing feature called ‘Mute Alerts’ that allows you to temporarily silence your alerts and alarms.", comment: "Onboarding, Your Devices section, Mute Alerts view, paragraph 1"))
             Paragraph(LocalizedString("For safety, keep iOS haptics enabled, so alerts will still vibrate to keep you informed of important updates regarding your delivery.", comment: "Onboarding, Your Devices section, Mute Alerts view, paragraph 2"))
-            Callout(title: LocalizedString("Mute Alerts allows you to mute Notifications and Critical Alerts for a specified period of time, rather than turning off Critical Alerts, which disables Critical Alerts indefinitely.", comment: "Onboarding, Your Devices section, Mute Alerts Modes view, segment 1, callout, title"))
+            Callout(
+                .note,
+                title: Text(
+                    "Mute Alerts allows you to mute Notifications and Critical Alerts for a specified period of time, rather than turning off Critical Alerts, which disables Critical Alerts indefinitely.",
+                    comment: "Onboarding, Your Devices section, Mute Alerts Modes view, segment 1, callout, title"
+                )
+            )
+            .padding(.horizontal, -16)
             Segment(header: LocalizedString("Mute Alerts and Focus Mode", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, header")) {
                 Paragraph(LocalizedString("When using Mute Alerts, also consider the impact of using iOS Focus Modes.", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, paragraph 1"))
                 VStack(alignment: .leading, spacing: 10) {
@@ -314,7 +354,14 @@ fileprivate struct YourDevicesManageAutomaticUpdates: View {
             Paragraph(LocalizedString("To ensure any updates to your iOS do not happen overnight, you must turn off ‘Automatic Updates’ before using Tidepool Loop.", comment: "Onboarding, Your Devices section, Manage Automatic Updates, paragraph 2"))
             PresentableImage("YourDevices_ManageAutomaticUpdates")
             Segment(header: LocalizedString("How to turn off Automatic Updates", comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, header")) {
-                Callout(title: LocalizedString("Note: When the device restarts following an iOS update, you will need to manually start Tidepool Loop.", comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, callout, title"))
+                Callout(
+                    .note,
+                    title: Text(
+                        "When the device restarts following an iOS update, you will need to manually start Tidepool Loop.",
+                        comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, callout, title"
+                    )
+                )
+                .padding(.horizontal, -16)
                 NumberedBodyTextList(
                     LocalizedString("Go to Settings > General > Software Updates.", comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, list, item 1"),
                     LocalizedString("Tap Automatic Updates.", comment: "Onboarding, Your Devices section, Manage Auomatic Updates, segment 1, list, item 2"),

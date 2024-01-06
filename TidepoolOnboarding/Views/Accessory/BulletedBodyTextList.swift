@@ -14,6 +14,8 @@ struct BulletedBodyTextList: View {
         case noBullet
     }
     
+    @Environment(\.font) private var font
+    
     private let bullets: [(BulletType, AttributedString)]
 
     init(_ attributedStrings: AttributedString...) {
@@ -42,6 +44,7 @@ struct BulletedBodyTextList: View {
                 HStack(spacing: 10) {
                     bullet(bullets[index].0)
                     BodyText(bullets[index].1)
+                        .font(font)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }

@@ -43,7 +43,6 @@
 		A9502CF02600298300146AD3 /* BulletedBodyTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CEF2600298300146AD3 /* BulletedBodyTextList.swift */; };
 		A9502CF8260029A000146AD3 /* CheckmarkedBodyTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */; };
 		A95422D325CC9A74003F3080 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95422D225CC9A74003F3080 /* Image.swift */; };
-		A95BB9122603230B00E9FD17 /* Callout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95BB9112603230B00E9FD17 /* Callout.swift */; };
 		A95D62402649FF410018B9EA /* AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D623F2649FF410018B9EA /* AttributedString.swift */; };
 		A95D624C264A006D0018B9EA /* Text+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95D624B264A006C0018B9EA /* Text+AttributedString.swift */; };
 		A9641CF2264F48FE00189E3A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9641CF1264F48FE00189E3A /* UIColor.swift */; };
@@ -163,7 +162,6 @@
 		A9502CEF2600298300146AD3 /* BulletedBodyTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletedBodyTextList.swift; sourceTree = "<group>"; };
 		A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkedBodyTextList.swift; sourceTree = "<group>"; };
 		A95422D225CC9A74003F3080 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		A95BB9112603230B00E9FD17 /* Callout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Callout.swift; sourceTree = "<group>"; };
 		A95D623F2649FF410018B9EA /* AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedString.swift; sourceTree = "<group>"; };
 		A95D624B264A006C0018B9EA /* Text+AttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+AttributedString.swift"; sourceTree = "<group>"; };
 		A9641CF1264F48FE00189E3A /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -321,7 +319,6 @@
 				A923335525C3789800D8CF69 /* ActionButton.swift */,
 				A9502CD92600293200146AD3 /* BodyText.swift */,
 				A9502CEF2600298300146AD3 /* BulletedBodyTextList.swift */,
-				A95BB9112603230B00E9FD17 /* Callout.swift */,
 				A9E2829126012D1C00C86C6B /* CalloutText.swift */,
 				A9502CF7260029A000146AD3 /* CheckmarkedBodyTextList.swift */,
 				A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */,
@@ -750,7 +747,6 @@
 				A933F31D260925EA00DB84B9 /* LoopIcon.swift in Sources */,
 				A99EAAA325F7FD1F00503A6D /* YourSettingsViews.swift in Sources */,
 				A933F3142608EFF500DB84B9 /* Segment.swift in Sources */,
-				A95BB9122603230B00E9FD17 /* Callout.swift in Sources */,
 				A903C7A025F1444300C88786 /* OnboardingSectionNavigationButton.swift in Sources */,
 				A9ABAE832607C3AE00E7CD4A /* CheckpointCheckmark.swift in Sources */,
 				A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */,

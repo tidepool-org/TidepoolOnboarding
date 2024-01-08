@@ -137,9 +137,18 @@ fileprivate struct IntroductionView4: View {
                  (.filledCircle, LocalizedString("Maintain your devices", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 5")),
                  (.filledCircle, LocalizedString("Troubleshoot and get support from Tidepool", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 6"))
             )
-            Callout(title: NSLocalizedString("Note: Align on initial settings with your practitioner", comment: "Onboarding Introduction callout title")) {
-                CalloutText(NSLocalizedString("Work with your healthcare practitioner when first configuring your personal settings.", comment: "Onboarding Introduction callout body"))
-            }
+            Callout(
+                .note,
+                title: Text(
+                    "Align on initial settings with your practitioner",
+                    comment: "Onboarding Introduction callout title"
+                ),
+                message: Text(
+                    "Work with your healthcare practitioner when first configuring your personal settings.",
+                    comment: "Onboarding Introduction callout body"
+                )
+            )
+            .padding(.horizontal, -16)
         }
     }
 }
@@ -203,9 +212,18 @@ fileprivate struct IntroductionView7: View {
                 LocalizedString("Automation", comment: "Onboarding, Introduction section, view 7, list, item 9")
             )
             
-            Callout(title: LocalizedString("Note: Consult the list of supported devices", comment: "Introduction callout title")) {
-                CalloutText(LocalizedString("Before moving forward, be sure to consult tidepool.org/loop for a list of Tidepool Loop compatible devices.", comment: "Introduction callout body"))
-            }
+            Callout(
+                .note,
+                title: Text(
+                    "Consult the list of supported devices",
+                    comment: "Introduction callout title"
+                ),
+                message: Text(
+                    "Before moving forward, be sure to consult tidepool.org/loop for a list of Tidepool Loop compatible devices.",
+                    comment: "Introduction callout body"
+                )
+            )
+            .padding(.horizontal, -16)
             
             Paragraph(LocalizedString("If there is a concept you’d like to review, consult the Tidepool Loop User Guide for more details.", comment: "Onboarding, Introduction section, view 7, paragraph 2"))
         }

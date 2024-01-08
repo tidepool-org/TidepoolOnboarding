@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct BodyText: View {
+    @Environment(\.font) private var font
+    
     private let text: Text
     private let foregroundColor: Color
 
@@ -34,7 +36,7 @@ struct BodyText: View {
 
     var body: some View {
         text
-            .font(.body)
+            .font(font ?? .body)
             .accentColor(.secondary)
             .foregroundColor(foregroundColor)
     }

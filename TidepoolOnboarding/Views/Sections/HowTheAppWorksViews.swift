@@ -783,13 +783,11 @@ fileprivate struct HowTheAppWorksView25: View {
                             .bold()
                             .font(.subheadline)
                         Paragraph(LocalizedString("Temporary presets work when the system is in Closed Loop ON mode and automation is running.", comment: "Onboarding, How the App Works section, view 25, list, item 1, paragraph"))
-                            .font(.subheadline)
                     }
                 }
                 HStack(alignment: .top, spacing: 10) {
                     AccessibleImage("HowTheAppWorks_25_Open_Loop", width: 33)
                     Paragraph(LocalizedString("Manual temp basal causes the Tidepool Loop system to turn off automation and enter into Closed Loop OFF mode.", comment: "Onboarding, How the App Works section, view 25, list, item 2, paragraph"))
-                        .font(.subheadline)
                 }
                 HStack(alignment: .top, spacing: 10) {
                     AccessibleImage("HowTheAppWorks_25_Durations", width: 33)
@@ -799,10 +797,8 @@ fileprivate struct HowTheAppWorksView25: View {
                                 .bold()
                                 .font(.subheadline)
                             Paragraph(LocalizedString("Temporary presets allow you to choose a duration that lasts for multiple days to indefinitely (until turned off).", comment: "Onboarding, How the App Works section, view 25, list, item 3, paragraph 1"))
-                                .font(.subheadline)
                         }
                         Paragraph(LocalizedString("A manual temp basal only allows you to select a basal rate for a duration for up to 12 hours.", comment: "Onboarding, How the App Works section, view 25, list, item 3, paragraph 2"))
-                            .font(.subheadline)
                     }
                 }
                 HStack(alignment: .top, spacing: 10) {
@@ -813,10 +809,8 @@ fileprivate struct HowTheAppWorksView25: View {
                                 .bold()
                                 .font(.subheadline)
                             Paragraph(LocalizedString("Temporary presets must be used when your phone and diabetes devices are in Bluetooth range.", comment: "Onboarding, How the App Works section, view 25, list, item 4, paragraph 1"))
-                                .font(.subheadline)
                         }
                         Paragraph(LocalizedString("If you leave Bluetooth range from your devices, the manual temp basal rate set in the last completed Loop cycle will continue for 30 minutes, then your pump will resume your scheduled basal rate delivery until your devices are within range.", comment: "Onboarding, How the App Works section, view 25, list, item 4, paragraph 2"))
-                            .font(.subheadline)
                         Paragraph(LocalizedString("A manual temp basal does not require your phone to stay within Bluetooth range of your Diabetes devices such as your CGM and insulin pump.", comment: "Onboarding, How the App Works section, view 25, list, item 4, paragraph 3"))
                     }
                 }

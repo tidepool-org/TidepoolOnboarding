@@ -217,13 +217,13 @@ fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
 fileprivate struct YourDevicesFocusModesView: View {
     var body: some View {
         OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesMuteAlerts()) {
-            PageHeader(title: LocalizedString("Warning: iOS 15 Focus Modes", comment: "Onboarding, Your Devices section, Focus Modes view, title"))
+            PageHeader(title: LocalizedString("iOS 15 Focus Modes", comment: "Onboarding, Your Devices section, Focus Modes view, title"))
             Paragraph(LocalizedString("iOS 15 has added features such as “Focus Mode” that enable you to have more control over when apps can send you notifications.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 1"))
             Paragraph(LocalizedString("If you wish to continue receiving important notifications from Tidepool Loop while in a Focus Mode, you must add Tidepool Loop as an “Allowed App” for each Focus Mode.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2"))
             PresentableImage("YourDevices_FocusModes")
             Segment(header: LocalizedString("How to Add Tidepool Loop as an Allowed App", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, header")) {
                 Callout(
-                    .note,
+                    .caution,
                     title: Text(
                         "You’ll need to complete the steps below for each Focus Mode you have enabled or plan to enable.",
                         comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, callout, title"
@@ -256,8 +256,12 @@ fileprivate struct YourDevicesMuteAlerts: View {
             Callout(
                 .note,
                 title: Text(
-                    "Mute Alerts allows you to mute Notifications and Critical Alerts for a specified period of time, rather than turning off Critical Alerts, which disables Critical Alerts indefinitely.",
+                    "Mute Alerts vs Critical Alerts",
                     comment: "Onboarding, Your Devices section, Mute Alerts Modes view, segment 1, callout, title"
+                ),
+                message: Text(
+                    "Mute alerts allows you to mute Notifications and Critical Alerts for a specified period of time, rather than turning off Critical Alerts, which disables Critical Alerts indefinitely.",
+                    comment: "Onboarding, Your Devices section, Mute Alerts Modes view, segment 1, callout, message"
                 )
             )
             .padding(.horizontal, -16)
@@ -357,8 +361,12 @@ fileprivate struct YourDevicesManageAutomaticUpdates: View {
                 Callout(
                     .note,
                     title: Text(
-                        "When the device restarts following an iOS update, you will need to manually start Tidepool Loop.",
+                        "Managing iOS Updates",
                         comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, callout, title"
+                    ),
+                    message: Text(
+                        "When the device restarts following an iOS update, you will need to manually restart Tidepool Loop",
+                        comment: "Onboarding, Your Devices section, Manage Automatic Updates, segment 1, callout, message"
                     )
                 )
                 .padding(.horizontal, -16)

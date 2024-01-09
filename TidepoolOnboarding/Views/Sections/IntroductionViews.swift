@@ -121,7 +121,18 @@ fileprivate struct IntroductionView4: View {
         Segment(header: LocalizedString("Tidepool Loop’s Connection", comment: "Onboarding, Introduction section, view 4, segment 2, header")) {
             PresentableImage(decorative: "Introduction_4_2")
             Paragraph(LocalizedString("The app connects directly to your devices via a Bluetooth connection and automates insulin dosing with or without an internet connection.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 1"))
-            Paragraph(attributed: LocalizedString("<b>Caution</b>: Your iPhone or iPod touch must be on and within Bluetooth range of your pump in order for the app to send commands to the pump.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 2"))
+            Callout(
+                .caution,
+                title: Text(
+                    "Device and components must be within Bluetooth range",
+                    comment: "Onboarding, Introduction section, view 4, segment 2, callout title"
+                ),
+                message: Text(
+                    "Your iPhone or iPod touch must be on and within Bluetooth Range of your pump in order for the app to send commands to the pump.",
+                    comment: "Onboarding, Introduction section, view 4, segment 2, callout body"
+                )
+            )
+            .padding(.horizontal, -16)
             Paragraph(attributed: LocalizedString("Bluetooth devices can communicate at ranges of up to 30 feet. However, communication range will vary depending on obstacles (person, metal, wall, etc.) or your environment.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 3"))
         }
     }
@@ -138,7 +149,7 @@ fileprivate struct IntroductionView4: View {
                  (.filledCircle, LocalizedString("Troubleshoot and get support from Tidepool", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 6"))
             )
             Callout(
-                .note,
+                .caution,
                 title: Text(
                     "Align on initial settings with your practitioner",
                     comment: "Onboarding Introduction callout title"

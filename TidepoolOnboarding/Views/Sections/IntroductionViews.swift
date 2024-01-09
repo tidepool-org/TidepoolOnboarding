@@ -229,10 +229,10 @@ fileprivate struct IntroductionView7: View {
                     "Consult the list of supported devices",
                     comment: "Introduction callout title"
                 ),
-                message: Text(
-                    "Before moving forward, be sure to consult tidepool.org/loop for a list of Tidepool Loop compatible devices.",
-                    comment: "Introduction callout body"
-                )
+                message: 
+                    Text("Before moving forward, be sure to consult ", comment: "Introduction callout body, part 1") +
+                    Text(.init("[tidepool.org/loop](https://tidepool.org/loop)"), comment: "Introduction callout link").fontWeight(.medium) +
+                    Text(" for a list of Tidepool Loop compatible devices.", comment: "Introduction callout body, part 2")
             )
             .padding(.horizontal, -16)
             

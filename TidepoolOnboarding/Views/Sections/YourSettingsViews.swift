@@ -510,7 +510,13 @@ fileprivate struct YourSettingsReviewYourSettingsView: View {
             PageHeader(title: LocalizedString("Review Your Settings", comment: "Onboarding, Your Settings section, Review Your Settings view, title"))
             Paragraph(LocalizedString("Since your provider included your recommended settings with your prescription, you’ll have a chance to review and confirm each of these settings now.", comment: "Onboarding, Your Settings section, Review Your Settings view, paragraph 1"))
             Paragraph(LocalizedString("Your prescription contains recommended settings for the devices listed below.", comment: "Onboarding, Your Settings section, Review Your Settings view, paragraph 2"))
-            Callout(.note, title: Text("")) {
+            Callout(
+                .note,
+                title: Text(
+                    "Your Settings",
+                    comment: "Onboarding, Your Settings section, Review Your Settings view, callout, title"
+                )
+            ) {
                 Text(LocalizedString("Tidepool Loop does NOT automatically adjust or recommend changes to your settings.", comment: "Onboarding, Your Settings section, Review Your Settings view, callout, paragraph 1"))
                 Text(LocalizedString("Work with your healthcare provider to find the right settings for you.", comment: "Onboarding, Your Settings section, Review Your Settings view, callout, paragraph 2"))
             }

@@ -756,9 +756,7 @@ fileprivate struct HowTheAppWorksView24: View {
             PageHeader(title: LocalizedString("Manual Temp Basal", comment: "Onboarding, How the App Works section, view 24, title"))
             Paragraph(LocalizedString("In addition to using temporary presets, you can temporarily adjust your insulin delivery by setting a manual temp basal.", comment: "Onboarding, How the App Works section, view 24, paragraph 1"))
             Paragraph(LocalizedString("A manual temp basal allows you to specify a basal rate for up to 12 hours. Tidepool Loop will not automate insulin adjustments while a manual temp basal is running. At the end of the set duration or when canceled, Tidepool Loop will restore automated adjustments to your insulin delivery.", comment: "Onboarding, How the App Works section, view 24, paragraph 2"))
-            Paragraph(LocalizedString("A manual temp basal is a backup feature that is useful when you do not have sensor glucose readings or are in a situation where you remove your pump and do not want to forget to resume insulin after reattaching it.", comment: "Onboarding, How the App Works section, view 24, paragraph 3"))
-                .bold()
-            Paragraph(LocalizedString("You can access manual temp basal under Activity in your insulin pump settings.", comment: "Onboarding, How the App Works section, view 24, paragraph 4"))
+            Paragraph(LocalizedString("You can access manual temp basal under Activity in your insulin pump settings.", comment: "Onboarding, How the App Works section, view 24, paragraph 3"))
             PresentableImage(decorative: "HowTheAppWorks_24_1")
         }
     }
@@ -796,7 +794,7 @@ fileprivate struct HowTheAppWorksView25: View {
                             Paragraph(LocalizedString("Durations", comment: "Onboarding, How the App Works section, view 25, list, item 3, title"))
                                 .bold()
                                 .font(.subheadline)
-                            Paragraph(LocalizedString("Temporary presets allow you to choose a duration that lasts for multiple days to indefinitely (until turned off).", comment: "Onboarding, How the App Works section, view 25, list, item 3, paragraph 1"))
+                            Paragraph(LocalizedString("Temporary presets allow you to choose a duration that lasts for multiple hours to indefinitely (until turned off).", comment: "Onboarding, How the App Works section, view 25, list, item 3, paragraph 1"))
                         }
                         Paragraph(LocalizedString("A manual temp basal only allows you to select a basal rate for a duration for up to 12 hours.", comment: "Onboarding, How the App Works section, view 25, list, item 3, paragraph 2"))
                     }

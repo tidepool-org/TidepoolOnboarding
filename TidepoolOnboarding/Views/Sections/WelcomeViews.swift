@@ -53,6 +53,7 @@ struct WelcomeTabView: View {
                 .bold()
                 .multilineTextAlignment(welcomeData[index].alignment)
                 .accessibilityLabel(welcomeData[index].title.replacingOccurrences(of: "\n", with: " "))
+                .accessibilityIdentifier("welcome data \(index)")
                 .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures && index == 0,
                                          title: "Are you sure you want to skip the rest of onboarding (and use simulators)?") {  // Not localized
                     onboardingViewModel.skipAllSections(forceSimulators: true)   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY

@@ -417,7 +417,18 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
             content: {
                 PageHeader(title: LocalizedString("Pairing Your Devices", comment: "Onboarding, Your Devices section, Pairing Your Devices view, title"))
                 Paragraph(LocalizedString("Use your product instructions along with this app to help you pair your devices.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 1"))
-                Paragraph(LocalizedString("Your phone will need to be connected to the internet to complete pairing.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 2"))
+                Callout(
+                    .note,
+                    title: Text(
+                        "Internet Required",
+                        comment: "Title of internet required highlight"
+                    ),
+                    message: Text(
+                        "Your phone will need to be connected to the internet to complete pairing.",
+                        comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 2"
+                    )
+                )
+                .padding(.horizontal, -16)
                 Paragraph(LocalizedString("You must have both CGM and Pump with you to proceed.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 3"))
                     .bold()
                 VStack(alignment: .leading, spacing: 30) {
@@ -442,7 +453,6 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
                             }
                         }
                 }
-                .padding(.vertical)
                 Paragraph(LocalizedString("If you need to stop for any reason, you can tap Pause Onboarding or any of the Close buttons to exit. You may return to this point later by tapping “Complete Setup” on Tidepool Loop’s home screen.", comment: "Onboarding, Your Devices section, Pairing Your Devices view, paragraph 4"))
             }, 
             footer: footer

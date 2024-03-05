@@ -10,6 +10,7 @@ import HealthKit
 import LoopKit
 import TidepoolKit
 import TidepoolSupport
+import LoopAlgorithm
 
 struct TDevices {
     enum Pump: Identifiable {

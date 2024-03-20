@@ -16,6 +16,7 @@ struct TDevices {
     enum Pump: Identifiable {
         case coastal
         case coastalDemo
+        case palmtree
         case simulator
         
         var id: String {
@@ -24,6 +25,8 @@ struct TDevices {
                 return "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f"
             case .coastalDemo:
                 return "89cc2977-bbc3-4f46-86e5-06bae8176b52"
+            case .palmtree:
+                return "0db8cd70-d5c8-4e3d-9ac6-6eb27fd0f36d"
             case .simulator:
                 return "14c97adb-5b1e-48ea-ac79-f684412058b7"
             }
@@ -71,6 +74,7 @@ struct TDevices {
         case .none: return nil
         case .studyProduct1: return TDevices(pump: .coastal, cgm: .dexcomG6Demo)
         case .studyProduct2: return TDevices(pump: .coastalDemo, cgm: .dexcomG6Demo)
+        case .palmtree: return TDevices(pump: .palmtree, cgm: .dexcomG6Demo)
         case .marketingDemo: return TDevices(pump: .simulator, cgm: .simulator)
         }
     }

@@ -72,8 +72,6 @@ struct TDevices {
     static func `for`(_ product: TidepoolSupport.Product) -> Self? {
         switch product {
         case .none: return nil
-        case .studyProduct1: return TDevices(pump: .coastal, cgm: .dexcomG6Demo)
-        case .studyProduct2: return TDevices(pump: .coastalDemo, cgm: .dexcomG6Demo)
         case .palmtree: return TDevices(pump: .palmtree, cgm: .dexcomG6Demo)
         case .marketingDemo: return TDevices(pump: .simulator, cgm: .simulator)
         }

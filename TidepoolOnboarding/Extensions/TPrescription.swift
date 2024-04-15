@@ -14,19 +14,16 @@ import LoopAlgorithm
 
 struct TDevices {
     enum Pump: Identifiable {
-        case coastal
-        case coastalDemo
         case palmtree
+        case palmtreeDemo
         case simulator
         
         var id: String {
             switch self {
-            case .coastal:
-                return "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f"
-            case .coastalDemo:
-                return "89cc2977-bbc3-4f46-86e5-06bae8176b52"
             case .palmtree:
                 return "0db8cd70-d5c8-4e3d-9ac6-6eb27fd0f36d"
+            case .palmtreeDemo:
+                return "7b835f64-0cc7-4eb8-b140-5eb5843131c0"
             case .simulator:
                 return "14c97adb-5b1e-48ea-ac79-f684412058b7"
             }
@@ -63,16 +60,17 @@ struct TDevices {
     
     static var simulatorSpecific: TDevices {
         #if targetEnvironment(simulator)
-        TDevices(pump: .coastalDemo, cgm: .dexcomG6Demo)
+        TDevices(pump: .palmtreeDemo, cgm: .dexcomG6Demo)
         #else
-        TDevices(pump: .coastal, cgm: .dexcomG6)
+        TDevices(pump: .palmtree, cgm: .dexcomG6)
         #endif
     }
     
     static func `for`(_ product: TidepoolSupport.Product) -> Self? {
         switch product {
         case .none: return nil
-        case .palmtree: return TDevices(pump: .palmtree, cgm: .dexcomG6Demo)
+        case .palmtree1: return TDevices(pump: .palmtree, cgm: .dexcomG6Demo)
+        case .palmtree2: return TDevices(pump: .palmtreeDemo, cgm: .dexcomG6Demo)
         case .marketingDemo: return TDevices(pump: .simulator, cgm: .simulator)
         }
     }

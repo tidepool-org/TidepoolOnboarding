@@ -840,6 +840,10 @@ fileprivate extension TPrescription {
             return "SoloDemo"
         case "14c97adb-5b1e-48ea-ac79-f684412058b7":
             return "MockPumpManager"
+        case "0db8cd70-d5c8-4e3d-9ac6-6eb27fd0f36d":
+            return "ZodiacPump"
+        case "7b835f64-0cc7-4eb8-b140-5eb5843131c0":
+            return "ZodiacDemo"
         default:
             return nil
         }

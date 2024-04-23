@@ -19,7 +19,7 @@ struct WelcomeTabView: View {
                 .edgesIgnoringSafeArea(.all)
             GeometryReader { geometry in
                 TabView(selection: $selectedIndex) {
-                    ForEach(welcomeData.indices) { viewIndex in
+                    ForEach(welcomeData.indices, id: \.self) { viewIndex in
                         ScrollView {
                             VStack {
                                 welcome(for: viewIndex)

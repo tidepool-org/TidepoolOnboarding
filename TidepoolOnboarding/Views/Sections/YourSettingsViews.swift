@@ -102,7 +102,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
             YourSettingsAppCannotBeUsedView()
         } else if let error = error {
             YourSettingsDeviceCompatibilityCheckView(error: error)
-        } else if !skip {
+        } else if !skip, !onboardingViewModel.hasPrescription {
             YourSettingsPrescriptionAccessCodeEntryView()
         } else {
             YourSettingsReviewYourSettingsView()
@@ -205,7 +205,11 @@ fileprivate struct YourSettingsDeviceCompatibilityCheckView: View {
             //TODO Need a specific warning that app attestation failed
             YourSettingsAppCannotBeUsedView()
         } else {
-            YourSettingsPrescriptionAccessCodeEntryView()
+            if !onboardingViewModel.hasPrescription {
+                YourSettingsPrescriptionAccessCodeEntryView()
+            } else {
+                YourSettingsReviewYourSettingsView()
+            }
         }
     }
 

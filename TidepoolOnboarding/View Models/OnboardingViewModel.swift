@@ -64,6 +64,10 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var isSuspended: Bool
     @Published var isCGMManagerOnboarded: Bool
     @Published var isPumpManagerOnboarded: Bool
+    
+    var hasPrescription: Bool {
+        prescription != nil
+    }
 
     lazy var initialTherapySettingsViewModel: TherapySettingsViewModel = constructInitialTherapySettingsViewModel()
     lazy var currentTherapySettingsViewModel: TherapySettingsViewModel = constructCurrentTherapySettingsViewModel()

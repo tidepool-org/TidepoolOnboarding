@@ -178,8 +178,9 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
             return
         }
         
-        deviceValid = true
-        appValid = true
+        deviceValid = product.skipTidepoolService ? true : nil
+        appValid = product.skipTidepoolService ? true : nil
+        
         prescription = .mock(devices)
         prescriberProfile = .mock
         

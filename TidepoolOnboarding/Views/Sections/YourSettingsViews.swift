@@ -85,7 +85,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
                     self.skip = true
                     self.isDestinationActive = true
                 }
-            Paragraph(LocalizedString("If you already have a Tidepool acccount you can Sign In.", comment: "Onboarding, Your Settings section, Your Tidepool Account view, paragraph"))
+            Paragraph(LocalizedString("If you already have a Tidepool account you can Sign In.", comment: "Onboarding, Your Settings section, Your Tidepool Account view, paragraph"))
                 .alert(isPresented: $isAlertPresented) { alert }
         }
         .backButtonHidden(true)

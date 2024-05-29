@@ -219,25 +219,33 @@ fileprivate struct YourDevicesFocusModesView: View {
         OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesMuteAlerts()) {
             PageHeader(title: LocalizedString("iOS 15 Focus Modes", comment: "Onboarding, Your Devices section, Focus Modes view, title"))
             Paragraph(LocalizedString("iOS 15 has added features such as “Focus Mode” that enable you to have more control over when apps can send you notifications.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 1"))
-            Paragraph(LocalizedString("If you wish to continue receiving important notifications from Tidepool Loop while in a Focus Mode, you must add Tidepool Loop as an “Allowed App” for each Focus Mode.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2"))
-            PresentableImage("YourDevices_FocusModes")
-            Segment(header: LocalizedString("How to Add Tidepool Loop as an Allowed App", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, header")) {
-                Callout(
-                    .caution,
-                    title: Text(
-                        "You’ll need to complete the steps below for each Focus Mode you have enabled or plan to enable.",
-                        comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, callout, title"
-                    )
+            Paragraph(Text("If you wish to continue receiving important notifications from Tidepool Loop while in a Focus Mode, ", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2") + Text("you must ensure that notifications are allowed and NOT silenced from Tidepool Loop").bold() + Text(" for each Focus Mode.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2"))
+            NumberedBodyTextList(
+                LocalizedString("Go to Settings > Focus.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 1"),
+                LocalizedString("Tap a provided Focus option — like Do Not Disturb, Personal, or Sleep.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 2"),
+                LocalizedString("Tap “Apps”.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 3"),
+                LocalizedString("Ensure that notifications are allowed and NOT silenced from Tidepool Loop.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 4")
+            )
+            PresentableImage("YourDevices_FocusModes_1")
+            Paragraph(
+                Text("Example: Allow Notifications from Tidepool Loop", comment: "Onboarding, Your Devices section, Focus Modes view, image 1 description")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            ).padding(.top, -16)
+            PresentableImage("YourDevices_FocusModes_2")
+            Paragraph(
+                Text("Example: Silence Notifications from other apps", comment: "Onboarding, Your Devices section, Focus Modes view, image 2 description")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            ).padding(.top, -16)
+            Callout(
+                .caution,
+                title: Text(
+                    "You’ll need to ensure these settings for each Focus Mode you have enabled or plan to enable.",
+                    comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, callout, title"
                 )
-                .padding(.horizontal, -16)
-                NumberedBodyTextList(
-                    LocalizedString("Go to Settings > Focus.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 1"),
-                    LocalizedString("Tap a provided Focus option — like Do Not Disturb, Personal, or Sleep.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 2"),
-                    LocalizedString("Under Allowed Notifications, tap “Apps”.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 3"),
-                    LocalizedString("Tap “Add App” and add Tidepool Loop.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 4"),
-                    LocalizedString("Ensure that “Time Sensitive” is toggled ON.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 5")
-                )
-            }
+            )
+            .padding(.horizontal, -16)
         }
         .backButtonHidden(false)
     }

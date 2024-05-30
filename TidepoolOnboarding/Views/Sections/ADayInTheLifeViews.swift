@@ -197,11 +197,11 @@ fileprivate struct ADayInTheLifeView14: View {
         OnboardingSectionPageView(section: .aDayInTheLife, destination: ADayInTheLifeView15()) {
             PageHeader(title: LocalizedString("Workout Preset", comment: "Onboarding, A Day In The Life section, view 14, title"))
             Paragraph(LocalizedString("You’ve told Tidepool Loop in Settings that you like your glucose to stay a little higher during your workouts and have set this goal for 150-160 mg/dL.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 1"))
-            Paragraph(LocalizedString("You can go ahead and open Temporary Presets from either your iPhone or Apple Watch using the Preset Button on the Tidepool Loop toolbar. Then select “Workout Preset” to tell Tidepool Loop to adjust your glucose target.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 2"))
+            Paragraph(LocalizedString("You go ahead and tap the Workout Preset button from either your iPhone or Apple Watch to tell Tidepool Loop to adjust both your glucose target and your insulin delivery for the next two hours.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 2"))
             PresentableImage(decorative: "ADayInTheLife_14_1")
             Paragraph(LocalizedString("You decide how long before or after this change should remain in effect, as well as how long you expect your activity to last.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 3"))
             Paragraph(LocalizedString("Work with your healthcare provider to find the optimal timing and settings for your individual exercise routine. You may find you want to extend your workout settings for longer before or after certain activities.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 4"))
-            Paragraph(LocalizedString("When your Workout Preset is active, you’ll see a blue shaded correction range on your Glucose Chart.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 5"))
+            Paragraph(LocalizedString("When your Workout Preset is active, you’ll see a darker purple shaded correction range on your Glucose Chart.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 5"))
             PresentableImage(decorative: "ADayInTheLife_14_2")
             Paragraph(LocalizedString("You can also see that your changes are active by the inverted button colors in the toolbar, as shown below.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 6"))
             PresentableImage(decorative: "ADayInTheLife_14_3")

@@ -216,7 +216,7 @@ fileprivate struct YourDevicesAlertPermissionsRequiredView: View {
 
 fileprivate struct YourDevicesFocusModesView: View {
     var body: some View {
-        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesMuteAlerts()) {
+        OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesMuteAppSounds()) {
             PageHeader(title: LocalizedString("iOS 15 Focus Modes", comment: "Onboarding, Your Devices section, Focus Modes view, title"))
             Paragraph(LocalizedString("iOS 15 has added features such as “Focus Mode” that enable you to have more control over when apps can send you notifications.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 1"))
             Paragraph(Text("If you wish to continue receiving important notifications from Tidepool Loop while in a Focus Mode, ", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2") + Text("you must ensure that notifications are allowed and NOT silenced from Tidepool Loop").bold() + Text(" for each Focus Mode.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2"))
@@ -253,60 +253,58 @@ fileprivate struct YourDevicesFocusModesView: View {
 
 // MARK: - Mute Alerts
 
-fileprivate struct YourDevicesMuteAlerts: View {
+fileprivate struct YourDevicesMuteAppSounds: View {
     @Environment(\.guidanceColors) private var guidanceColors
 
     var body: some View {
         OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesAppleHealthView()) {
-            PageHeader(title: LocalizedString("Mute Alerts", comment: "Onboarding, Your Devices section, Mute Alerts view, title"))
-            Paragraph(LocalizedString("Tidepool Loop has its own silencing feature called ‘Mute Alerts’ that allows you to temporarily silence your alerts and alarms.", comment: "Onboarding, Your Devices section, Mute Alerts view, paragraph 1"))
-            Paragraph(LocalizedString("For safety, keep iOS haptics enabled, so alerts will still vibrate to keep you informed of important updates regarding your delivery.", comment: "Onboarding, Your Devices section, Mute Alerts view, paragraph 2"))
+            PageHeader(title: LocalizedString("Mute App Sounds", comment: "Onboarding, Your Devices section, Mute App Sounds view, title"))
+            Paragraph(LocalizedString("Tidepool Loop has its own silencing feature called ‘Mute App Sounds’ that allows you to temporarily silence all sounds from the app.", comment: "Onboarding, Your Devices section, Mute App Sounds view, paragraph 1"))
+            Paragraph(LocalizedString("For safety, keep iOS haptics enabled, so that alerts will still vibrate to keep you informed of important safety updates.", comment: "Onboarding, Your Devices section, Mute App Sounds view, paragraph 2"))
             Callout(
                 .note,
                 title: Text(
-                    "Mute Alerts vs Critical Alerts",
-                    comment: "Onboarding, Your Devices section, Mute Alerts Modes view, segment 1, callout, title"
+                    "Mute App Sounds vs Critical Alerts",
+                    comment: "Onboarding, Your Devices section, Mute  App Sounds Modes view, segment 1, callout, title"
                 ),
                 message: Text(
-                    "Mute alerts allows you to mute Notifications and Critical Alerts for a specified period of time, rather than turning off Critical Alerts, which disables Critical Alerts indefinitely.",
-                    comment: "Onboarding, Your Devices section, Mute Alerts Modes view, segment 1, callout, message"
+                    "\nMute App Sounds allows you to mute notifications and Critical Alerts for a specified period of time.\n\nWe recommend using this feature rather than turning off Critical Alerts completely, which would disable important alerts indefinitely.",
+                    comment: "Onboarding, Your Devices section, Mute App Sounds Modes view, segment 1, callout, message"
                 )
             )
             .padding(.horizontal, -16)
-            Segment(header: LocalizedString("Mute Alerts and Focus Mode", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, header")) {
-                Paragraph(LocalizedString("When using Mute Alerts, also consider the impact of using iOS Focus Modes.", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, paragraph 1"))
+            Segment(header: LocalizedString("Mute App Sounds and Focus Modes", comment: "Onboarding, Your Devices section, Mute App Sounds view, segment 1, header")) {
+                Paragraph(LocalizedString("When using Mute App Sounds, also consider the impact of using iOS Focus Modes.", comment: "Onboarding, Your Devices section, Mute App Sounds view, segment 1, paragraph 1"))
                 VStack(alignment: .leading, spacing: 10) {
-                    HStack(spacing: 10) {
+                    HStack() {
                         Image(systemName: "speaker.slash.fill")
                             .foregroundColor(.white)
                             .padding(5)
                             .background(guidanceColors.warning)
                             .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
 
-                        Paragraph(LocalizedString("Tidepool Loop Mute Alerts", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, sub-header 1"))
+                        Paragraph(LocalizedString("Tidepool Loop App Sounds", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, sub-header 1"))
                             .bold()
                     }
-                    Paragraph(LocalizedString("All Tidepool Loop alerts, including Critical Alerts, will be silenced for up to 4 hours.", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, paragraph 1"))
-                    Paragraph(LocalizedString("After the mute period ends, your alert sounds will resume.", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, paragraph 2"))
+                    Paragraph(LocalizedString("All Tidepool Loop notifications, including Critical Alerts, will be silenced for up to 4 hours. Your insulin pump and CGM hardware may still sound. After the mute period ends, your app sounds will resume.", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, paragraph 1"))
                         .padding(.vertical)
 
-                    HStack(spacing: 10) {
+                    HStack() {
                         Image(systemName: "moon.fill")
                             .foregroundColor(.accentColor)
 
-                        Paragraph(LocalizedString("iOS Focus Mode", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, sub-header 2"))
+                        Paragraph(LocalizedString("iOS Focus Mode", comment: "Onboarding, Your Devices section, Mute App Sounds view, segment 1, sub-header 2"))
                             .bold()
                     }
-                    Paragraph(LocalizedString("If iOS Focus Mode is ON and Mute Alerts is OFF, Critical Alerts will still be delivered, but non-Critical Alerts will be silenced until Tidepool Loop is added to each Focus mode as an Allowed App.", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, paragraph 3"))
+                    Paragraph(LocalizedString("If iOS Focus Mode is ON and Mute App Sounds is OFF, Critical Alerts will still be delivered, but non-Critical Alerts will be silenced.", comment: "Onboarding, Your Devices section, Mute App Sounds view, segment 1, paragraph 3"))
                 }
-                .padding(.horizontal)
             }
-            Segment(header: LocalizedString("How to Mute Alerts", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 2, header")) {
-                PresentableImage("YourDevices_MuteAlerts")
+            Segment(header: LocalizedString("How to Mute Sounds", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 2, header")) {
+                PresentableImage("YourDevices_MuteSounds")
                 NumberedBodyTextList(
                     LocalizedString("Go to Tidepool Loop Settings > Alert Management", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 2, list, item 1"),
-                    LocalizedString("Tap Mute All Alerts", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 2, list, item 2"),
-                    LocalizedString("Set mute duration for up to 4 hours", comment: "Onboarding, Your Devices section, Mute Alert view, segment 2, list, item 3")
+                    LocalizedString("Tap Mute App Sounds", comment: "Onboarding, Your Devices section, Mute App Sounds view, segment 2, list, item 2"),
+                    LocalizedString("Set mute duration of up to 4 hours", comment: "Onboarding, Your Devices section, Mute App Sounds view, segment 2, list, item 3")
                 )
             }
         }

@@ -80,7 +80,7 @@ fileprivate struct GetLoopingView2: View {
             }
             Paragraph(LocalizedString("You can toggle it on and off now or later in Settings.", comment: "Onboarding, Get Looping section, view 2, paragraph 2"))
             HStack(spacing: 10) {
-                toggle
+                loopSection
             }
             .background(editableBackground)
         }
@@ -91,13 +91,6 @@ fileprivate struct GetLoopingView2: View {
                 onboardingViewModel.dosingEnabled = true
             }
         }
-    }
-
-    private var toggle: some View {
-        Toggle(LocalizedString("Closed Loop", comment: "Onboarding, Get Looping section, view 2, closed loop"), isOn: isClosedLoopOn)
-            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-            .padding(.horizontal)
-            .padding(.vertical, 7)
     }
     
     private var isClosedLoopOn: Binding<Bool> {
@@ -110,6 +103,35 @@ fileprivate struct GetLoopingView2: View {
                 }
             }
         )
+    }
+    
+    private var freshGreen = UIColor(named: "fresh") ?? .green
+    
+    private var loopSection: some View {
+            ConfirmationToggle(
+                isOn: isClosedLoopOn,
+                confirmOn: false,
+                alertTitle: NSLocalizedString("Are you sure you want to turn automation OFF?", comment: "Closed loop alert title"),
+                alertBody: NSLocalizedString("Your pump and CGM will continue operating but the app will not make automatic adjustments. You will receive your scheduled basal rate(s).", comment: "Closed loop alert message"),
+                confirmAction: .init(label: { Text("Yes, turn OFF") })
+            ) {
+                HStack {
+                    LoopStatusCircleView(
+                        closedLoop: isClosedLoopOn,
+                        isClosedLoopAllowed: true,
+                        colorPalette: StateColorPalette(unknown: freshGreen, normal: freshGreen, warning: freshGreen, error: freshGreen)
+                    )
+                    .padding(.trailing)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Closed Loop", comment: "The title text for the looping enabled switch cell")
+                        DescriptiveText(label: NSLocalizedString("Insulin Automation", comment: "Closed loop settings button descriptive text"))
+                    }
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                .padding()
+            }
+            .padding(.trailing)
     }
     
     private var offAlert: Alert {

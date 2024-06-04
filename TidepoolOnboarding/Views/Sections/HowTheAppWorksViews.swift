@@ -551,7 +551,7 @@ fileprivate struct HowTheAppWorksView18: View {
 
 fileprivate struct HowTheAppWorksView19: View {
     var body: some View {
-        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView20()) {
+        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView22()) {
             PageHeader(title: LocalizedString("Carb Entry", comment: "Onboarding, How the App Works section, view 19, title"))
             PresentableImage(decorative: "HowTheAppWorks_19_1")
             Paragraph(LocalizedString("Tapping the Carb Entry button allows you to enter details about what you are eating.", comment: "Onboarding, How the App Works section, view 19, paragraph"))
@@ -673,7 +673,7 @@ fileprivate struct HowTheAppWorksView19: View {
 
 fileprivate struct HowTheAppWorksView20: View {
     var body: some View {
-        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView21()) {
+        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView23()) {
             PageHeader(title: LocalizedString("Bolus Entry", comment: "Onboarding, How the App Works section, view 20, title"))
             PresentableImage(decorative: "HowTheAppWorks_20_1")
             Paragraph(LocalizedString("The Bolus Entry button allows you to deliver bolus insulin to bring down high glucose.", comment: "Onboarding, How the App Works section, view 20, paragraph"))
@@ -724,7 +724,7 @@ fileprivate struct HowTheAppWorksView21: View {
 
 fileprivate struct HowTheAppWorksView22: View {
     var body: some View {
-        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView23()) {
+        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView20()) {
             PageHeader(title: LocalizedString("Pre-Meal Preset", comment: "Onboarding, How the App Works section, view 22, title"))
             PresentableImage(decorative: "HowTheAppWorks_22_1")
             Paragraph(LocalizedString("If you’d like Tidepool Loop to temporarily work a little harder before you begin eating so that your post-meal glucose spike is reduced, you can use Pre-Meal Preset.", comment: "Onboarding, How the App Works section, view 22, paragraph 1"))
@@ -738,7 +738,7 @@ fileprivate struct HowTheAppWorksView22: View {
 
 fileprivate struct HowTheAppWorksView23: View {
     var body: some View {
-        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView24()) {
+        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView26()) {
             PageHeader(title: LocalizedString("Workout Preset", comment: "Onboarding, How the App Works section, view 23, title"))
             PresentableImage(decorative: "HowTheAppWorks_23_1")
             Paragraph(LocalizedString("If you’d like Tidepool Loop to temporarily adjust your settings for activity, such as exercise, you can use Workout Preset.\n\nActivating this button before activity tells Tidepool Loop to adjust both your basal insulin and your glucose Correction Range to help you meet your glucose goals during that activity.", comment: "Onboarding, How the App Works section, view 23, paragraph 1 and 2"))

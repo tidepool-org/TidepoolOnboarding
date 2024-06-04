@@ -105,8 +105,6 @@ fileprivate struct GetLoopingView2: View {
         )
     }
     
-    private var freshGreen = UIColor(named: "fresh") ?? .green
-    
     private var loopSection: some View {
             ConfirmationToggle(
                 isOn: isClosedLoopOn,
@@ -116,10 +114,9 @@ fileprivate struct GetLoopingView2: View {
                 confirmAction: .init(label: { Text("Yes, turn OFF") })
             ) {
                 HStack {
-                    LoopStatusCircleView(
-                        closedLoop: isClosedLoopOn,
-                        isClosedLoopAllowed: true,
-                        colorPalette: StateColorPalette(unknown: freshGreen, normal: freshGreen, warning: freshGreen, error: freshGreen)
+                    LoopCircleView(
+                        closedLoop: isClosedLoopOn.wrappedValue,
+                        freshness: .fresh
                     )
                     .padding(.trailing)
                     

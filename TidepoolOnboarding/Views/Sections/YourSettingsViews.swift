@@ -85,7 +85,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
                     self.skip = true
                     self.isDestinationActive = true
                 }
-            Paragraph(LocalizedString("If you already have a Tidepool acccount you can Sign In.", comment: "Onboarding, Your Settings section, Your Tidepool Account view, paragraph"))
+            Paragraph(LocalizedString("If you already have a Tidepool account you can Sign In.", comment: "Onboarding, Your Settings section, Your Tidepool Account view, paragraph"))
                 .alert(isPresented: $isAlertPresented) { alert }
         }
         .backButtonHidden(true)
@@ -102,7 +102,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
             YourSettingsAppCannotBeUsedView()
         } else if let error = error {
             YourSettingsDeviceCompatibilityCheckView(error: error)
-        } else if !skip {
+        } else if !skip, !onboardingViewModel.hasPrescription {
             YourSettingsPrescriptionAccessCodeEntryView()
         } else {
             YourSettingsReviewYourSettingsView()
@@ -205,7 +205,11 @@ fileprivate struct YourSettingsDeviceCompatibilityCheckView: View {
             //TODO Need a specific warning that app attestation failed
             YourSettingsAppCannotBeUsedView()
         } else {
-            YourSettingsPrescriptionAccessCodeEntryView()
+            if !onboardingViewModel.hasPrescription {
+                YourSettingsPrescriptionAccessCodeEntryView()
+            } else {
+                YourSettingsReviewYourSettingsView()
+            }
         }
     }
 

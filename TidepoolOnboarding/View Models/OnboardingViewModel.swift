@@ -77,8 +77,10 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     private let log = OSLog(category: "OnboardingViewModel")
 
     private lazy var cancellables = Set<AnyCancellable>()
+    
+    let adultChildInsulinModelSelectionEnabled: Bool
 
-    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider) {
+    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, adultChildInsulinModelSelectionEnabled: Bool) {
         self.onboardingProvider = onboardingProvider
 
         self.lastAccessDate = onboarding.lastAccessDate
@@ -103,6 +105,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.isSuspended = false
         self.isCGMManagerOnboarded = onboardingProvider.activeCGMManager?.isOnboarded ?? false
         self.isPumpManagerOnboarded = onboardingProvider.activePumpManager?.isOnboarded ?? false
+        self.adultChildInsulinModelSelectionEnabled = adultChildInsulinModelSelectionEnabled
 
         $lastAccessDate
             .dropFirst()
@@ -383,6 +386,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         let prescription = OnboardingPrescription(datePrescribed: datePrescribed, providerName: providerName)
         return TherapySettingsViewModel(therapySettings: therapySettings,
+                                        adultChildInsulinModelSelectionEnabled: adultChildInsulinModelSelectionEnabled,
                                         prescription: prescription,
                                         delegate: self)
     }

@@ -80,7 +80,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     
     let adultChildInsulinModelSelectionEnabled: Bool
 
-    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, adultChildInsulinModelSelectionEnabled: Bool) {
+    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, adultChildInsulinModelSelectionEnabled: Bool = false) {
         self.onboardingProvider = onboardingProvider
 
         self.lastAccessDate = onboarding.lastAccessDate

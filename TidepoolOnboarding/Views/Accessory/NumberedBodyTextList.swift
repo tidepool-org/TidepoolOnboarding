@@ -6,6 +6,7 @@
 //  Copyright © 2021 Tidepool Project. All rights reserved.
 //
 
+import LoopKitUI
 import SwiftUI
 
 struct NumberedBodyTextList: View {
@@ -43,27 +44,6 @@ struct NumberedBodyTextList: View {
 
     private func accessibilityValue(for index: Int) -> String {
         String(format: LocalizedString("%d, %2$@", comment: "Accessibility value for numbered list item (1: item number)(2: item text)"), startingAt + index, attributedStrings[index].string)
-    }
-}
-
-struct NumberCircle: View {
-    private let number: Int
-
-    @ScaledMetric var size: CGFloat = 21
-
-    init(_ number: Int) {
-        self.number = number
-    }
-
-    var body: some View {
-        ZStack {
-            Circle()
-                .foregroundColor(.accentColor)
-                .frame(width: size, height: size)
-            Text("\(number)")
-                .font(.footnote)
-                .foregroundColor(.white)
-        }
     }
 }
 

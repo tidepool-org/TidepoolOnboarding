@@ -218,7 +218,7 @@ fileprivate struct YourDevicesFocusModesView: View {
     var body: some View {
         OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesMuteAppSounds()) {
             PageHeader(title: LocalizedString("iOS Focus Modes", comment: "Onboarding, Your Devices section, Focus Modes view, title"))
-            Paragraph(LocalizedString("iOS 15 has added features such as “Focus Mode” that enable you to have more control over when apps can send you notifications.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 1"))
+            Paragraph(LocalizedString("iOS has added features such as “Focus Mode” that enable you to have more control over when apps can send you notifications.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 1"))
             Paragraph(Text("If you wish to continue receiving important notifications from Tidepool Loop while in a Focus Mode, ", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2") + Text("you must ensure that notifications are allowed and NOT silenced from Tidepool Loop").bold() + Text(" for each Focus Mode.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2"))
             NumberedBodyTextList(
                 LocalizedString("Go to Settings > Focus.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 1"),

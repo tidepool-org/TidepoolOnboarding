@@ -115,8 +115,8 @@ fileprivate struct GetLoopingView2: View {
         ) {
             HStack(spacing: 12) {
                 LoopCircleView(
-                    closedLoop: isClosedLoopOn,
-                    freshness: .constant(.fresh)
+                    closedLoop: isClosedLoopOn.wrappedValue,
+                    freshness: .fresh
                 )
                 .frame(width: 36, height: 36)
                 .padding(12)

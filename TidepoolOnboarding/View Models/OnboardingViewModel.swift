@@ -831,9 +831,9 @@ fileprivate extension TPrescription {
     var cgmManagerIdentifier: String? {
         switch latestRevision?.attributes?.initialSettings?.cgmId {
         case "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245":    // Hard-coded Tidepool backend device identifier
-            return "DexcomCGM"
+            return "Sonar1CGM"
         case "15137627-e9ba-4bab-a36d-7c2f0a5ef368":    // Hard-coded Tidepool backend device identifier
-            return "DemoDexcomCGMManager"
+            return "Sonar1Demo"
         case "c97bd194-5e5e-44c1-9629-4cb87be1a4c9":
             return "MockCGMManager"
         default:

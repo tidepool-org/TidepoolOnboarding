@@ -59,11 +59,7 @@ struct TDevices {
     }
     
     static var simulatorSpecific: TDevices {
-        #if targetEnvironment(simulator)
-        TDevices(pump: .palmtreeDemo, cgm: .dexcomG6Demo)
-        #else
-        TDevices(pump: .palmtree, cgm: .dexcomG6)
-        #endif
+        TDevices(pump: .simulator, cgm: .dexcomG6Demo)
     }
     
     static func `for`(_ product: TidepoolSupport.Product) -> Self? {

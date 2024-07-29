@@ -844,9 +844,9 @@ fileprivate extension TPrescription {
     var pumpManagerIdentifier: String? {
         switch latestRevision?.attributes?.initialSettings?.pumpId {
         case "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f":    // Hard-coded Tidepool backend device identifier
-            return "AccuChekSolo"
+            return "CoastalPump"
         case "89cc2977-bbc3-4f46-86e5-06bae8176b52":    // Hard-coded Tidepool backend device identifier
-            return "SoloDemo"
+            return "CoastalDemo"
         case "14c97adb-5b1e-48ea-ac79-f684412058b7":
             return "MockPumpManager"
         case "0db8cd70-d5c8-4e3d-9ac6-6eb27fd0f36d":

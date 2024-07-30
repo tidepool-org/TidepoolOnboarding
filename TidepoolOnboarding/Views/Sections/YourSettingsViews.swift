@@ -843,9 +843,18 @@ fileprivate struct YourSettingsDeliveryLimitsEditor: View {
             DeliveryLimitsEditor(mode: .acceptanceFlow,
                                  therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
                                  didSave: { isDestinationActive = true })
-            NavigationLink(destination: YourSettingsInsulinModelInformationView(), isActive: $isDestinationActive) { EmptyView() }
+            NavigationLink(destination: destination, isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)
+    }
+    
+    @ViewBuilder
+    private var destination: some View {
+        if onboardingViewModel.adultChildInsulinModelSelectionEnabled {
+            YourSettingsInsulinModelInformationView()
+        } else {
+            YourSettingsInsulinSensitivityInformationView()
+        }
     }
 }
 

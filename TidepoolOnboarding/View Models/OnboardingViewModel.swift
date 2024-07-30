@@ -77,8 +77,10 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     private let log = OSLog(category: "OnboardingViewModel")
 
     private lazy var cancellables = Set<AnyCancellable>()
+    
+    let adultChildInsulinModelSelectionEnabled: Bool
 
-    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider) {
+    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, adultChildInsulinModelSelectionEnabled: Bool = false) {
         self.onboardingProvider = onboardingProvider
 
         self.lastAccessDate = onboarding.lastAccessDate
@@ -103,6 +105,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.isSuspended = false
         self.isCGMManagerOnboarded = onboardingProvider.activeCGMManager?.isOnboarded ?? false
         self.isPumpManagerOnboarded = onboardingProvider.activePumpManager?.isOnboarded ?? false
+        self.adultChildInsulinModelSelectionEnabled = adultChildInsulinModelSelectionEnabled
 
         $lastAccessDate
             .dropFirst()
@@ -383,6 +386,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         let prescription = OnboardingPrescription(datePrescribed: datePrescribed, providerName: providerName)
         return TherapySettingsViewModel(therapySettings: therapySettings,
+                                        adultChildInsulinModelSelectionEnabled: adultChildInsulinModelSelectionEnabled,
                                         prescription: prescription,
                                         delegate: self)
     }
@@ -827,9 +831,9 @@ fileprivate extension TPrescription {
     var cgmManagerIdentifier: String? {
         switch latestRevision?.attributes?.initialSettings?.cgmId {
         case "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245":    // Hard-coded Tidepool backend device identifier
-            return "DexcomCGM"
+            return "Sonar1CGM"
         case "15137627-e9ba-4bab-a36d-7c2f0a5ef368":    // Hard-coded Tidepool backend device identifier
-            return "DemoDexcomCGMManager"
+            return "Sonar1Demo"
         case "c97bd194-5e5e-44c1-9629-4cb87be1a4c9":
             return "MockCGMManager"
         default:
@@ -840,9 +844,9 @@ fileprivate extension TPrescription {
     var pumpManagerIdentifier: String? {
         switch latestRevision?.attributes?.initialSettings?.pumpId {
         case "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f":    // Hard-coded Tidepool backend device identifier
-            return "AccuChekSolo"
+            return "CoastalPump"
         case "89cc2977-bbc3-4f46-86e5-06bae8176b52":    // Hard-coded Tidepool backend device identifier
-            return "SoloDemo"
+            return "CoastalDemo"
         case "14c97adb-5b1e-48ea-ac79-f684412058b7":
             return "MockPumpManager"
         case "0db8cd70-d5c8-4e3d-9ac6-6eb27fd0f36d":

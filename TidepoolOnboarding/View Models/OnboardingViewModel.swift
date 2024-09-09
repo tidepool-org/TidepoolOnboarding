@@ -395,7 +395,9 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         guard let therapySettings = therapySettings else {
             preconditionFailure("Must have therapy settings to construct therapy settings view model")
         }
-        return TherapySettingsViewModel(therapySettings: therapySettings, delegate: self)
+        return TherapySettingsViewModel(therapySettings: therapySettings, 
+                                        adultChildInsulinModelSelectionEnabled: adultChildInsulinModelSelectionEnabled,
+                                        delegate: self)
     }
 
     private func getPumpSupportedIncrements() -> PumpSupportedIncrements? {

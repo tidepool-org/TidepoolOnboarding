@@ -14,14 +14,20 @@ import LoopAlgorithm
 
 struct TDevices {
     enum Pump: Identifiable {
+        case coastal
+        case coastalDemo
         case palmtree
         case palmtreeDemo
         case simulator
         
         var id: String {
             switch self {
+            case .coastal:
+                return "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f"
+            case .coastalDemo:
+                return "89cc2977-bbc3-4f46-86e5-06bae8176b52"
             case .palmtree:
-                return "0db8cd70-d5c8-4e3d-9ac6-6eb27fd0f36d"
+                return "c524b5b0-632e-4125-8f6a-df9532d8f6fe"
             case .palmtreeDemo:
                 return "7b835f64-0cc7-4eb8-b140-5eb5843131c0"
             case .simulator:

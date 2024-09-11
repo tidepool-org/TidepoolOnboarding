@@ -851,7 +851,7 @@ fileprivate extension TPrescription {
             return "CoastalDemo"
         case "14c97adb-5b1e-48ea-ac79-f684412058b7":
             return "MockPumpManager"
-        case "0db8cd70-d5c8-4e3d-9ac6-6eb27fd0f36d":
+        case "c524b5b0-632e-4125-8f6a-df9532d8f6fe":    // Hard-coded Tidepool backend device identifier
             return "ZodiacPump"
         case "7b835f64-0cc7-4eb8-b140-5eb5843131c0":
             return "ZodiacDemo"

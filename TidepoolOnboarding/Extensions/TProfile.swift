@@ -10,6 +10,6 @@ import TidepoolKit
 
 extension TProfile {
     static var mock: TProfile {
-        return TProfile(fullName: "Mock Name")
+        return TProfile(fullName: "Dr. Sally Seastar")
     }
 }

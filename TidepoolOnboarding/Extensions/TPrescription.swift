@@ -113,9 +113,7 @@ extension TPrescription {
                                                                        bloodGlucoseTargetPhysicalActivity: TPrescription.Attributes.InitialSettings.BloodGlucoseTarget(low: 140, high: 160),
                                                                        bloodGlucoseTargetPreprandial: TPrescription.Attributes.InitialSettings.BloodGlucoseTarget(low: 80, high: 90),
                                                                        bloodGlucoseTargetSchedule: [
-                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(0), low: 100, high: 110),
-                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(8), low: 105, high: 115),
-                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(21), low: 100, high: 110),
+                                                                        TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget(start: .hours(0), low: 115, high: 125),
                                                                        ],
                                                                        carbohydrateRatioSchedule: [
                                                                         TPrescription.Attributes.InitialSettings.CarbohydrateRatioStart(start: .hours(0), amount: 10)

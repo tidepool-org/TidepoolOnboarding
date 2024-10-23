@@ -31,7 +31,7 @@ struct TDevices {
             case .palmtreeDemo:
                 return "7b835f64-0cc7-4eb8-b140-5eb5843131c0"
             case .simulator:
-                return "14c97adb-5b1e-48ea-ac79-f684412058b7"
+                return "aff19260-fca9-4efc-9b81-dcd39f695979"
             }
         }
     }

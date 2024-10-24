@@ -14,7 +14,10 @@ extension OnboardingViewModel {
 }
 
 fileprivate class PreviewOnboardingProvider: OnboardingProvider {
+    var hostIdentifier = "1.0"
     
+    var hostVersion = "org.tidepool.Loop"
+
     var allowDebugFeatures: Bool = true
 
     func getNotificationAuthorization(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }
@@ -46,9 +49,6 @@ fileprivate class PreviewOnboardingProvider: OnboardingProvider {
 
     var activeServices: [Service] = []
     var availableServices: [ServiceDescriptor] = []
-    func onboardService(withIdentifier identifier: String) -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
-        .failure(PreviewError())
-    }
     
     var availableSupports: [SupportUI] = []
     

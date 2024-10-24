@@ -8,6 +8,8 @@
 
 import SwiftUI
 import LoopKitUI
+import TidepoolServiceKit
+import TidepoolServiceKitUI
 
 struct YourSettingsNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
@@ -116,21 +118,14 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
         }
 
         isNextButtonActing = true
-        switch onboardingViewModel.onboardTidepoolService() {
-        case .failure(let error):
-            self.alertMessage = error.localizedDescription
-            self.isAlertPresented = true
-            completion(false)
-            self.isNextButtonActing = false
-        case .success(let success):
-            switch success {
-            case .userInteractionRequired(let viewController):
-                self.serviceViewController = viewController
-                self.isSheetPresented = true
-                self.onSheetDismiss = { onboardTidepoolServiceComplete(completion) }
-            case .createdAndOnboarded:
-                onboardTidepoolServiceComplete(completion)
-            }
+        let result = TidepoolService.setupViewController(pluginHost: onboardingViewModel.onboardingProvider, onboarding: true)
+        switch result {
+        case .userInteractionRequired(let viewController):
+            self.serviceViewController = viewController
+            self.isSheetPresented = true
+            self.onSheetDismiss = { onboardTidepoolServiceComplete(completion) }
+        case .createdAndOnboarded:
+            onboardTidepoolServiceComplete(completion)
         }
     }
 

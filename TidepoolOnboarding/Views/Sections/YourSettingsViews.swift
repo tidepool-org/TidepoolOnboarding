@@ -135,29 +135,37 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
     }
 
     private func onboardTidepoolServiceComplete(_ completion: @escaping (Bool) -> Void) {
-        guard onboardingViewModel.tidepoolService?.isOnboarded == true else {
-            completion(false)
-            self.isNextButtonActing = false
-            return
-        }
-
-        onboardingViewModel.verifyDevice() { error in
-            self.deviceValid = onboardingViewModel.deviceValid
-            guard let error = error else {
-                onboardingViewModel.verifyApp() { error in
-                    self.appValid = onboardingViewModel.appValid
-                    self.error = error
-                    self.isDestinationActive = true
-                    completion(false)
-                    self.isNextButtonActing = false
-                }
+        Task {
+            guard onboardingViewModel.tidepoolService?.isOnboarded == true else {
+                completion(false)
+                self.isNextButtonActing = false
                 return
             }
 
-            self.error = error
-            self.isDestinationActive = true
-            completion(false)
-            self.isNextButtonActing = false
+            do {
+                try await onboardingViewModel.checkAccountForExistingPrescription()
+            } catch {
+                completion(false)
+            }
+
+            onboardingViewModel.verifyDevice() { error in
+                self.deviceValid = onboardingViewModel.deviceValid
+                guard let error = error else {
+                    onboardingViewModel.verifyApp() { error in
+                        self.appValid = onboardingViewModel.appValid
+                        self.error = error
+                        self.isDestinationActive = true
+                        completion(false)
+                        self.isNextButtonActing = false
+                    }
+                    return
+                }
+
+                self.error = error
+                self.isDestinationActive = true
+                completion(false)
+                self.isNextButtonActing = false
+            }
         }
     }
 

@@ -333,6 +333,21 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         }
     }
 
+    func checkAccountForExistingPrescription() async throws {
+        guard prescription == nil else {
+            return
+        }
+
+        guard let tidepoolService = tidepoolService else {
+            throw OnboardingError.unexpectedState
+        }
+
+        let prescriptions = try await tidepoolService.tapi.listPrescriptions()
+        if let prescription = prescriptions.sorted(by: { $0.createdTime ?? .distantPast > $1.createdTime ?? .distantPast }).first {
+            self.prescription = prescription
+        }
+    }
+
     func claimPrescription(accessCode: String, birthday: Date, completion: @escaping (OnboardingError?) -> Void) {
         guard prescription == nil else {
             completion(nil)

@@ -10,7 +10,9 @@ import LoopKit
 import LoopKitUI
 
 class MockOnboardingProvider: OnboardingProvider {
-    
+    var hostIdentifier = "org.tidepool.Loop"
+    var hostVersion = "1.0"
+
     var allowDebugFeatures: Bool = true
 
     func getNotificationAuthorization(_ completion: @escaping (NotificationAuthorization) -> Void) { completion(.notDetermined) }

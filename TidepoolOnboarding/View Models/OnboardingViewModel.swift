@@ -275,10 +275,6 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.sectionProgression = OnboardingSectionProgression()
     }
 
-    func onboardTidepoolService() -> Result<OnboardingResult<ServiceViewController, Service>, Error> {
-        return onboardingProvider.onboardService(withIdentifier: TidepoolService.serviceIdentifier)
-    }
-
     func verifyDevice(completion: @escaping (OnboardingError?) -> Void) {
         guard deviceValid == nil else {
             log.info("%{public}@ Device already validated [deviceValid=%{public}@]", #function, deviceValid == true ? "true" : "false")

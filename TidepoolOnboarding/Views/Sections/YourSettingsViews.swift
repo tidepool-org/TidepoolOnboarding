@@ -118,7 +118,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
         }
 
         isNextButtonActing = true
-        let result = TidepoolService.setupViewController(pluginHost: onboardingViewModel.onboardingProvider, onboarding: true)
+        let result = TidepoolService.setupViewController(pluginHost: onboardingViewModel.onboardingProvider, onboarding: true, allowDebugFeatures: onboardingViewModel.allowDebugFeatures)
         switch result {
         case .userInteractionRequired(let viewController):
             self.serviceViewController = viewController

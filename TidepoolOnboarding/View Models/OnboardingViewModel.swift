@@ -716,6 +716,11 @@ extension OnboardingViewModel: CompletionDelegate {
             if let vc = object as? CGMManagerViewController {
                 // only dismiss the CGMManagerViewController
                 vc.dismiss(animated: true)
+            } else if let vc = object as? PumpManagerViewController,
+                      !sectionProgression.hasCompletedAllSections
+            {
+                // only dismiss the PumpManagerViewController
+                vc.dismiss(animated: true)
             } else {
                 // dismiss out to the root view
                 dismissCurrentModal?()

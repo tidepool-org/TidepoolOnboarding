@@ -64,6 +64,9 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
     @Published var isSuspended: Bool
     @Published var isCGMManagerOnboarded: Bool
     @Published var isPumpManagerOnboarded: Bool
+    var isDemoAccount: Bool {
+        tidepoolService?.isDemoAccount ?? false
+    }
     
     var hasPrescription: Bool {
         prescription != nil

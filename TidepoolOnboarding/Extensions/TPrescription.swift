@@ -29,7 +29,7 @@ struct TDevices {
             case .palmtree:
                 return "c524b5b0-632e-4125-8f6a-df9532d8f6fe"
             case .palmtreeDemo:
-                return "7b835f64-0cc7-4eb8-b140-5eb5843131c0"
+                return "e6d9afc8-2642-4d95-a2b5-58929e44e105"
             case .simulator:
                 return "aff19260-fca9-4efc-9b81-dcd39f695979"
             }
@@ -46,7 +46,7 @@ struct TDevices {
             case .dexcomG6:
                 return "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245"
             case .dexcomG6Demo:
-                return "15137627-e9ba-4bab-a36d-7c2f0a5ef368"
+                return "80eb646f-18c0-4799-a1bf-3a0e1a5390d9"
             case .simulator:
                 return "c97bd194-5e5e-44c1-9629-4cb87be1a4c9"
             }

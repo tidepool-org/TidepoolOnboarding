@@ -850,7 +850,7 @@ fileprivate extension TPrescription {
         switch latestRevision?.attributes?.initialSettings?.cgmId {
         case "d25c3f1b-a2e8-44e2-b3a3-fd07806fc245":    // Hard-coded Tidepool backend device identifier
             return "Sonar1CGM"
-        case "15137627-e9ba-4bab-a36d-7c2f0a5ef368":    // Hard-coded Tidepool backend device identifier
+        case "80eb646f-18c0-4799-a1bf-3a0e1a5390d9":    // Hard-coded Tidepool backend device identifier
             return "Sonar1Demo"
         case "c97bd194-5e5e-44c1-9629-4cb87be1a4c9":    // Hard-coded Tidepool backend device identifier
             return "MockCGMManager"
@@ -869,7 +869,7 @@ fileprivate extension TPrescription {
             return "MockPumpManager"
         case "c524b5b0-632e-4125-8f6a-df9532d8f6fe":    // Hard-coded Tidepool backend device identifier
             return "ZodiacPump"
-        case "7b835f64-0cc7-4eb8-b140-5eb5843131c0":
+        case "e6d9afc8-2642-4d95-a2b5-58929e44e105":    // Hard-coded Tidepool backend device identifier
             return "ZodiacDemo"
         default:
             return nil

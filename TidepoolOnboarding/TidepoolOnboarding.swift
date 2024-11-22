@@ -7,7 +7,6 @@
 //
 
 import Combine
-import HealthKit
 import LoopKit
 import LoopKitUI
 import TidepoolKit

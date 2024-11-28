@@ -36,7 +36,7 @@ struct YourSettingsNavigationButton: View {
         } else if !deviceValid || !appValid {
             //TODO Need a specific warning that app attestation failed
             YourSettingsAppCannotBeUsedView()
-        } else if !prescriptionAccepted {
+        } else if !prescriptionAccepted || onboardingViewModel.isDemoAccount {
             YourSettingsPrescriptionAccessCodeEntryView()
         } else {
             YourSettingsReviewYourSettingsView()
@@ -104,7 +104,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
             YourSettingsAppCannotBeUsedView()
         } else if let error = error {
             YourSettingsDeviceCompatibilityCheckView(error: error)
-        } else if !skip, !onboardingViewModel.hasPrescription {
+        } else if !skip, (!onboardingViewModel.hasPrescription || onboardingViewModel.isDemoAccount) {
             YourSettingsPrescriptionAccessCodeEntryView()
         } else {
             YourSettingsReviewYourSettingsView()
@@ -208,7 +208,7 @@ fileprivate struct YourSettingsDeviceCompatibilityCheckView: View {
             //TODO Need a specific warning that app attestation failed
             YourSettingsAppCannotBeUsedView()
         } else {
-            if !onboardingViewModel.hasPrescription {
+            if !onboardingViewModel.hasPrescription || onboardingViewModel.isDemoAccount {
                 YourSettingsPrescriptionAccessCodeEntryView()
             } else {
                 YourSettingsReviewYourSettingsView()

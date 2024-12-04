@@ -6,7 +6,6 @@
 //  Copyright © 2021 Tidepool Project. All rights reserved.
 //
 
-import HealthKit
 import LoopKit
 import TidepoolKit
 import TidepoolSupport
@@ -174,7 +173,7 @@ extension TPrescription {
 }
 
 fileprivate extension TBloodGlucose.Units {
-    var bloodGlucoseUnits: HKUnit {
+    var bloodGlucoseUnits: LoopUnit {
         switch self {
         case .milligramsPerDeciliter:
             return .milligramsPerDeciliter
@@ -216,7 +215,7 @@ fileprivate extension TPrescription.Attributes.InitialSettings.BloodGlucoseTarge
 }
 
 fileprivate extension Array where Element == TPrescription.Attributes.InitialSettings.BloodGlucoseStartTarget {
-    func glucoseTargetRangeSchedule(in unit: HKUnit) -> GlucoseRangeSchedule? {
+    func glucoseTargetRangeSchedule(in unit: LoopUnit) -> GlucoseRangeSchedule? {
         let dailyItems = compactMap { $0.repeatingScheduleValue }
         guard !dailyItems.isEmpty else {
             return nil
@@ -243,7 +242,7 @@ fileprivate extension Array where Element == TPrescription.Attributes.InitialSet
             return nil
         }
 
-        return CarbRatioSchedule(unit: .gram(), dailyItems: dailyItems)
+        return CarbRatioSchedule(unit: .gram, dailyItems: dailyItems)
     }
 }
 
@@ -271,7 +270,7 @@ fileprivate extension TPrescription.Attributes.InitialSettings.InsulinModelType 
 }
 
 fileprivate extension Array where Element == TPrescription.Attributes.InitialSettings.InsulinSensitivityStart {
-    func insulinSensitivitySchedule(in unit: HKUnit) -> InsulinSensitivitySchedule? {
+    func insulinSensitivitySchedule(in unit: LoopUnit) -> InsulinSensitivitySchedule? {
         let dailyItems = compactMap { $0.repeatingScheduleValue }
         guard !dailyItems.isEmpty else {
             return nil

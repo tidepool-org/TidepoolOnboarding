@@ -7,7 +7,6 @@
 //
 
 import Combine
-import HealthKit
 import SwiftUI
 import LoopKit
 import LoopKitUI

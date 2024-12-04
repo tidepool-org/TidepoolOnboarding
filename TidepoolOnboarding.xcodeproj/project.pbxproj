@@ -68,7 +68,6 @@
 		A99EAA9B25F7FCF700503A6D /* ADayInTheLifeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAA9A25F7FCF700503A6D /* ADayInTheLifeViews.swift */; };
 		A99EAAA325F7FD1F00503A6D /* YourSettingsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAAA225F7FD1F00503A6D /* YourSettingsViews.swift */; };
 		A99EAAAB25F7FD2900503A6D /* GetLoopingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99EAAAA25F7FD2900503A6D /* GetLoopingViews.swift */; };
-		A9A09A12260D238800046528 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BEF07B2588396F00860217 /* HKUnit.swift */; };
 		A9A09A30260D240400046528 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98AD31925830887001AAD6F /* OSLog.swift */; };
 		A9A0E44025C4F5CF00C2D63F /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E43F25C4F5CF00C2D63F /* OnboardingViewModel.swift */; };
 		A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A0E46025C4FC3300C2D63F /* OnboardingRootNavigationController.swift */; };
@@ -210,7 +209,6 @@
 		A9ABAE822607C3AE00E7CD4A /* CheckpointCheckmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckpointCheckmark.swift; sourceTree = "<group>"; };
 		A9B6736725F159A400D27872 /* YourDevicesViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourDevicesViews.swift; sourceTree = "<group>"; };
 		A9BEF02B25882F4E00860217 /* TidepoolOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolOnboarding.swift; sourceTree = "<group>"; };
-		A9BEF07B2588396F00860217 /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9E2829126012D1C00C86C6B /* CalloutText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutText.swift; sourceTree = "<group>"; };
 		A9E2906725A7C8B7004E361D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9E56C31262E1C4600A10627 /* NumberedBodyTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberedBodyTextList.swift; sourceTree = "<group>"; };
@@ -301,7 +299,6 @@
 			isa = PBXGroup;
 			children = (
 				A923334025C3786100D8CF69 /* Environment+Complete.swift */,
-				A9BEF07B2588396F00860217 /* HKUnit.swift */,
 				A95422D225CC9A74003F3080 /* Image.swift */,
 				A95D624B264A006C0018B9EA /* Text+AttributedString.swift */,
 				A923333F25C3786100D8CF69 /* TimeInterval.swift */,
@@ -762,7 +759,6 @@
 				A9EBBD3D25F984560064804A /* OnboardingSectionSheetButton.swift in Sources */,
 				A9502CB625FFEE8E00146AD3 /* OnboardingSectionPageView.swift in Sources */,
 				A99EAA9B25F7FCF700503A6D /* ADayInTheLifeViews.swift in Sources */,
-				A9A09A12260D238800046528 /* HKUnit.swift in Sources */,
 				A923334125C3786100D8CF69 /* TimeInterval.swift in Sources */,
 				A99EAAAB25F7FD2900503A6D /* GetLoopingViews.swift in Sources */,
 				A9502CF8260029A000146AD3 /* CheckmarkedBodyTextList.swift in Sources */,

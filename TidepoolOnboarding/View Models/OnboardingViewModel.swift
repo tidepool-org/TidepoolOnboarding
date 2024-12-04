@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import os.log
 import CryptoKit
-import HealthKit
+import LoopAlgorithm
 import UIKit
 import LoopTestingKit
 import LoopKit
@@ -478,8 +478,8 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
                         let scenario = TestingScenarioInstance.thirteenHourTrace
                         cgmManager.injectGlucoseSamples(scenario.pastGlucoseSamples, futureSamples: scenario.futureGlucoseSamples)
                     default:
-                        let parameters = MockCGMDataSource.Model.SineCurveParameters(baseGlucose: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 120),
-                                                                                     amplitude: HKQuantity(unit:.milligramsPerDeciliter, doubleValue: 40),
+                        let parameters = MockCGMDataSource.Model.SineCurveParameters(baseGlucose: LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 120),
+                                                                                     amplitude: LoopQuantity(unit:.milligramsPerDeciliter, doubleValue: 40),
                                                                                      period: .hours(6),
                                                                                      referenceDate: Date())
                         cgmManager.dataSource = MockCGMDataSource(model: .sineCurve(parameters: parameters))

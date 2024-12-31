@@ -83,9 +83,11 @@ struct OnboardingSectionNavigationButton<Destination: View>: View {
         if onboardingViewModel.sectionProgression.hasCompletedSection(section) {
             Image(systemName: "checkmark.circle.fill")
                 .resizable()
+                .accessibilityIdentifier("checkMarkCircle_\(section.rawValue)")
         } else {
             Circle()
                 .stroke(lineWidth: 2)
+                .accessibilityIdentifier("emptyCircle_\(section.rawValue)")
         }
     }
 

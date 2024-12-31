@@ -64,6 +64,7 @@ struct GettingToKnowTidepoolLoopView: View {
             .font(.largeTitle)
             .bold()
             .accessibilityAddTraits(.isHeader)
+            .accessibilityIdentifier("title_GettingToKnow")
             .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures,
                                      title: "Are you sure you want to skip the rest of onboarding?") {  // Not localized
                 onboardingViewModel.skipAllSections()   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY

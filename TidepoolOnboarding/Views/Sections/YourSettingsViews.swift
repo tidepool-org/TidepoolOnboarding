@@ -78,6 +78,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
     var body: some View {
         OnboardingSectionPageView(section: .yourSettings, destination: destination, isDestinationActive: $isDestinationActive) {
             PageHeader(title: LocalizedString("Your Tidepool Account", comment: "Onboarding, Your Settings section, Your Tidepool Account view, title"))
+                .accessibilityIdentifier("yourSettingsOnboardingTitleText")
                 .alertOnLongPressGesture(enabled: onboardingViewModel.allowDebugFeatures,
                                          title: "Are you sure you want to skip setting up your Tidepool account and claiming a prescription?") {  // Not localized
                     onboardingViewModel.deviceValid = true          // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY

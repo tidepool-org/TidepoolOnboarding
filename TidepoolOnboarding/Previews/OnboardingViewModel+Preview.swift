@@ -10,7 +10,7 @@ import LoopKit
 import LoopKitUI
 
 extension OnboardingViewModel {
-    static var preview: OnboardingViewModel { OnboardingViewModel(onboarding: TidepoolOnboarding(), onboardingProvider: PreviewOnboardingProvider(), adultChildInsulinModelSelectionEnabled: true) }
+    static var preview: OnboardingViewModel { OnboardingViewModel(onboarding: TidepoolOnboarding(), onboardingProvider: PreviewOnboardingProvider()) }
 }
 
 fileprivate class PreviewOnboardingProvider: OnboardingProvider {

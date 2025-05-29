@@ -95,6 +95,7 @@ fileprivate struct IntroductionView3: View {
             Paragraph(LocalizedString("An insulin pump continuously delivers U-100 rapid-acting insulin under the skin to cover your background insulin needs.", comment: "Onboarding, Introduction section, view 3, paragraph 1"))
             Paragraph(LocalizedString("This background insulin is called basal insulin.", comment: "Onboarding, Introduction section, view 3, paragraph 2"))
             Paragraph(LocalizedString("The pump is also used to deliver a bolus of rapid-acting insulin to cover carbs or bring down high glucose into your Correction Range.", comment: "Onboarding, Introduction section, view 3, paragraph 3"))
+            Paragraph(LocalizedString("Tidepool Loop assumes insulin is actively working for 6 hours, with peak activity at 75 minutes.", comment: "Onboarding, Introduction section, view 3, paragraph 4"))
         }
     }
 }

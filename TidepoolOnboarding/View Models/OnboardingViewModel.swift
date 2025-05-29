@@ -81,9 +81,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
     private lazy var cancellables = Set<AnyCancellable>()
     
-    let adultChildInsulinModelSelectionEnabled: Bool
-
-    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, adultChildInsulinModelSelectionEnabled: Bool = false) {
+    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider) {
         self.onboardingProvider = onboardingProvider
 
         self.lastAccessDate = onboarding.lastAccessDate
@@ -108,7 +106,6 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         self.isSuspended = false
         self.isCGMManagerOnboarded = onboardingProvider.activeCGMManager?.isOnboarded ?? false
         self.isPumpManagerOnboarded = onboardingProvider.activePumpManager?.isOnboarded ?? false
-        self.adultChildInsulinModelSelectionEnabled = adultChildInsulinModelSelectionEnabled
 
         $lastAccessDate
             .dropFirst()
@@ -400,7 +397,6 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
 
         let prescription = OnboardingPrescription(datePrescribed: datePrescribed, providerName: providerName)
         return TherapySettingsViewModel(therapySettings: therapySettings,
-                                        adultChildInsulinModelSelectionEnabled: adultChildInsulinModelSelectionEnabled,
                                         prescription: prescription,
                                         delegate: self)
     }
@@ -409,9 +405,7 @@ class OnboardingViewModel: ObservableObject, CGMManagerOnboarding, PumpManagerOn
         guard let therapySettings = therapySettings else {
             preconditionFailure("Must have therapy settings to construct therapy settings view model")
         }
-        return TherapySettingsViewModel(therapySettings: therapySettings, 
-                                        adultChildInsulinModelSelectionEnabled: adultChildInsulinModelSelectionEnabled,
-                                        delegate: self)
+        return TherapySettingsViewModel(therapySettings: therapySettings, delegate: self)
     }
 
     private func getPumpSupportedIncrements() -> PumpSupportedIncrements? {

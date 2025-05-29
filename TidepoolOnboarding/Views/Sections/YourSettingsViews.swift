@@ -854,40 +854,7 @@ fileprivate struct YourSettingsDeliveryLimitsEditor: View {
     
     @ViewBuilder
     private var destination: some View {
-        if onboardingViewModel.adultChildInsulinModelSelectionEnabled {
-            YourSettingsInsulinModelInformationView()
-        } else {
-            YourSettingsInsulinSensitivityInformationView()
-        }
-    }
-}
-
-fileprivate struct YourSettingsInsulinModelInformationView: View {
-    @State private var isDestinationActive = false
-
-    var body: some View {
-        OnboardingSectionWrapperView(section: .yourSettings) {
-            InsulinModelInformationView(onExit: { isDestinationActive = true })
-            NavigationLink(destination: YourSettingsInsulinModelSelection(), isActive: $isDestinationActive) { EmptyView() }
-        }
-    }
-}
-
-fileprivate struct YourSettingsInsulinModelSelection: View {
-    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
-    @Environment(\.chartColorPalette) var chartColorPalette
-
-    @State private var isDestinationActive = false
-
-    var body: some View {
-        OnboardingSectionWrapperView(section: .yourSettings) {
-            InsulinModelSelection(mode: .acceptanceFlow,
-                                  therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
-                                  chartColors: chartColorPalette,
-                                  didSave: { isDestinationActive = true })
-            NavigationLink(destination: YourSettingsInsulinSensitivityInformationView(), isActive: $isDestinationActive) { EmptyView() }
-        }
-        .editMode(true)
+        YourSettingsInsulinSensitivityInformationView()
     }
 }
 

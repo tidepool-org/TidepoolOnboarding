@@ -39,8 +39,8 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
 
     private lazy var cancellables = Set<AnyCancellable>()
 
-    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, displayGlucosePreference: DisplayGlucosePreference, colorPalette: LoopUIColorPalette, adultChildInsulinModelSelectionEnabled: Bool) {
-        self.onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: onboardingProvider, adultChildInsulinModelSelectionEnabled: adultChildInsulinModelSelectionEnabled)
+    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, displayGlucosePreference: DisplayGlucosePreference, colorPalette: LoopUIColorPalette) {
+        self.onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: onboardingProvider)
         self.displayGlucosePreference = displayGlucosePreference
         self.colorPalette = colorPalette
 

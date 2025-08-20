@@ -86,9 +86,8 @@ extension TPrescription {
 
         var correctionRangeOverrides: CorrectionRangeOverrides?
         let preMeal = initialSettings.bloodGlucoseTargetPreprandial?.doubleRange
-        let workout = initialSettings.bloodGlucoseTargetPhysicalActivity?.doubleRange
-        if preMeal != nil || workout != nil {
-            correctionRangeOverrides = CorrectionRangeOverrides(preMeal: preMeal, workout: workout, unit: bloodGlucoseUnits)
+        if preMeal != nil {
+            correctionRangeOverrides = CorrectionRangeOverrides(preMeal: preMeal, unit: bloodGlucoseUnits)
         }
 
         var suspendThreshold: GlucoseThreshold?

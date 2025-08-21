@@ -734,33 +734,6 @@ fileprivate struct YourSettingsPreMealCorrectionRangeOverridesEditor: View {
             CorrectionRangeOverridesEditor(mode: .acceptanceFlow,
                                            therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel, preset: .preMeal,
                                            didSave: { isDestinationActive = true })
-            NavigationLink(destination: YourSettingsWorkoutCorrectionRangeOverrideInformationView(), isActive: $isDestinationActive) { EmptyView() }
-        }
-        .editMode(true)
-    }
-}
-
-fileprivate struct YourSettingsWorkoutCorrectionRangeOverrideInformationView: View {
-    @State private var isDestinationActive = false
-
-    var body: some View {
-        OnboardingSectionWrapperView(section: .yourSettings) {
-            CorrectionRangeOverrideInformationView(preset: .workout, onExit: { isDestinationActive = true })
-            NavigationLink(destination: YourSettingsWorkoutCorrectionRangeOverridesEditor(), isActive: $isDestinationActive) { EmptyView() }
-        }
-    }
-}
-
-fileprivate struct YourSettingsWorkoutCorrectionRangeOverridesEditor: View {
-    @EnvironmentObject var onboardingViewModel: OnboardingViewModel
-
-    @State private var isDestinationActive = false
-
-    var body: some View {
-        OnboardingSectionWrapperView(section: .yourSettings) {
-            CorrectionRangeOverridesEditor(mode: .acceptanceFlow,
-                                           therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel, preset: .workout,
-                                           didSave: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsCarbRatioInformationView(), isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)

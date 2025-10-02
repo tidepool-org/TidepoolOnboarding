@@ -13,22 +13,10 @@ import LoopAlgorithm
 
 struct TDevices {
     enum Pump: Identifiable {
-        case coastal
-        case coastalDemo
-        case palmtree
-        case palmtreeDemo
         case simulator
         
         var id: String {
             switch self {
-            case .coastal:
-                return "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f"
-            case .coastalDemo:
-                return "89cc2977-bbc3-4f46-86e5-06bae8176b52"
-            case .palmtree:
-                return "c524b5b0-632e-4125-8f6a-df9532d8f6fe"
-            case .palmtreeDemo:
-                return "e6d9afc8-2642-4d95-a2b5-58929e44e105"
             case .simulator:
                 return "aff19260-fca9-4efc-9b81-dcd39f695979"
             }
@@ -70,8 +58,6 @@ struct TDevices {
     static func `for`(_ product: TidepoolSupport.Product) -> Self? {
         switch product {
         case .none: return nil
-        case .palmtree1: return TDevices(pump: .palmtree, cgm: .dexcomG6Demo)
-        case .palmtree2: return TDevices(pump: .palmtreeDemo, cgm: .dexcomG6Demo)
         case .marketingDemo: return TDevices(pump: .simulator, cgm: .simulator)
         }
     }

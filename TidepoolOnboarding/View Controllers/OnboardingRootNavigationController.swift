@@ -59,7 +59,9 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
                 if !sectionProgression.hasCompletedSection(.welcome) {
                     self.setState(.welcome, reset: !sectionProgression.isStarted)
                 } else {
-                    self.setState(.gettingToKnowTidepoolLoop)
+                    DispatchQueue.main.async {
+                        self.setState(.gettingToKnowTidepoolLoop)
+                    }
                 }
             }
             .store(in: &cancellables)

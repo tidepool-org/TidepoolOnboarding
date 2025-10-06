@@ -858,16 +858,8 @@ fileprivate extension TPrescription {
 
     var pumpManagerIdentifier: String? {
         switch latestRevision?.attributes?.initialSettings?.pumpId {
-        case "e4a46eda-02f9-4faf-b8f4-ef7b40d02e4f":    // Hard-coded Tidepool backend device identifier
-            return "CoastalPump"
-        case "89cc2977-bbc3-4f46-86e5-06bae8176b52":    // Hard-coded Tidepool backend device identifier
-            return "CoastalDemo"
         case "aff19260-fca9-4efc-9b81-dcd39f695979":    // Hard-coded Tidepool backend device identifier
             return "MockPumpManager"
-        case "c524b5b0-632e-4125-8f6a-df9532d8f6fe":    // Hard-coded Tidepool backend device identifier
-            return "ZodiacPump"
-        case "e6d9afc8-2642-4d95-a2b5-58929e44e105":    // Hard-coded Tidepool backend device identifier
-            return "ZodiacDemo"
         default:
             return nil
         }

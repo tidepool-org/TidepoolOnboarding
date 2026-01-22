@@ -226,18 +226,6 @@ fileprivate struct YourDevicesFocusModesView: View {
                 LocalizedString("Tap “Apps”.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 3"),
                 LocalizedString("Ensure that notifications are allowed and NOT silenced from Tidepool Loop.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 4")
             )
-            PresentableImage("YourDevices_FocusModes_1")
-            Paragraph(
-                Text("Example: Allow Notifications from Tidepool Loop", comment: "Onboarding, Your Devices section, Focus Modes view, image 1 description")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-            ).padding(.top, -16)
-            PresentableImage("YourDevices_FocusModes_2")
-            Paragraph(
-                Text("Example: Silence Notifications from other apps", comment: "Onboarding, Your Devices section, Focus Modes view, image 2 description")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-            ).padding(.top, -16)
             Callout(
                 .caution,
                 title: Text(

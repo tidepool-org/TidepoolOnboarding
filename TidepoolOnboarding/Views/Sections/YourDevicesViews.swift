@@ -537,9 +537,7 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
 
     @ViewBuilder
     private var footer: some View {
-        if onboardingViewModel.isCGMManagerOnboarded {
-            pausingOnboardingButton.padding(.bottom)
-        }
+        pausingOnboardingButton.padding(.bottom)
     }
 
     private var pausingOnboardingButton: some View {

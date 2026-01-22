@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E69CFF72A129BFC00203CBD /* TidepoolSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E69CFF62A129BFC00203CBD /* TidepoolSupport.framework */; };
+		842E40012F21842A000CCCE0 /* PresetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E40002F21842A000CCCE0 /* PresetCard.swift */; };
 		A903C79825F1443200C88786 /* OnboardingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79725F1443200C88786 /* OnboardingSection.swift */; };
 		A903C7A025F1444300C88786 /* OnboardingSectionNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */; };
 		A903C7A825F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */; };
@@ -127,6 +128,7 @@
 
 /* Begin PBXFileReference section */
 		7E69CFF62A129BFC00203CBD /* TidepoolSupport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		842E40002F21842A000CCCE0 /* PresetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCard.swift; sourceTree = "<group>"; };
 		A903C79725F1443200C88786 /* OnboardingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSection.swift; sourceTree = "<group>"; };
 		A903C79F25F1444300C88786 /* OnboardingSectionNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSectionNavigationButton.swift; sourceTree = "<group>"; };
 		A903C7A725F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GettingToKnowTidepoolLoopView.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				A9502CCB25FFEFD500146AD3 /* PresentableImage.swift */,
 				A933F3132608EFF500DB84B9 /* Segment.swift */,
 				A9A5739E2603AA080084592C /* WarningIcon.swift */,
+				842E40002F21842A000CCCE0 /* PresetCard.swift */,
 			);
 			path = Accessory;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				A933F362260975A400DB84B9 /* AccessibleImage.swift in Sources */,
 				A9A0E46125C4FC3300C2D63F /* OnboardingRootNavigationController.swift in Sources */,
 				A99EAA8B25F7FCDA00503A6D /* IntroductionViews.swift in Sources */,
+				842E40012F21842A000CCCE0 /* PresetCard.swift in Sources */,
 				A903C7A825F1444F00C88786 /* GettingToKnowTidepoolLoopView.swift in Sources */,
 				A9BEF02C25882F4E00860217 /* TidepoolOnboarding.swift in Sources */,
 				A91F7C94260524A0008FBAED /* CompleteDismissView.swift in Sources */,

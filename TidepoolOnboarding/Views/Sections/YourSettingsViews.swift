@@ -14,17 +14,23 @@ import TidepoolServiceKitUI
 struct YourSettingsNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
-    @State var tidepoolServiceOnboarded = false
-    @State var skipTidepoolService = false
-    @State var deviceValidated = false
-    @State var appValidated = false
-    @State var deviceValid = false
-    @State var appValid = false
-    @State var prescriptionAccepted = false
+    @State var tidepoolServiceOnboarded = true
+    @State var skipTidepoolService = true
+    @State var deviceValidated = true
+    @State var appValidated = true
+    @State var deviceValid = true
+    @State var appValid = true
+    @State var prescriptionAccepted = true
 
     var body: some View {
         OnboardingSectionNavigationButton(section: .yourSettings, destination: NavigationView { destination }, action: action)
             .accessibilityIdentifier("button_your_settings")
+            .onAppear {
+                onboardingViewModel.deviceValid = true          // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                onboardingViewModel.appValid = true             // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                onboardingViewModel.prescription = .mock()      // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+                onboardingViewModel.prescriberProfile = .mock   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
+            }
     }
 
     @ViewBuilder
@@ -44,13 +50,13 @@ struct YourSettingsNavigationButton: View {
     }
 
     private func action() -> Bool {
-        self.tidepoolServiceOnboarded = onboardingViewModel.tidepoolService?.isOnboarded ?? false
-        self.skipTidepoolService = onboardingViewModel.selectedProduct.skipTidepoolService
-        self.deviceValidated = onboardingViewModel.deviceValid != nil
-        self.appValidated = onboardingViewModel.appValid != nil
-        self.deviceValid = onboardingViewModel.deviceValid ?? false
-        self.appValid = onboardingViewModel.appValid ?? false
-        self.prescriptionAccepted = onboardingViewModel.prescription != nil
+//        self.tidepoolServiceOnboarded = onboardingViewModel.tidepoolService?.isOnboarded ?? false
+//        self.skipTidepoolService = onboardingViewModel.selectedProduct.skipTidepoolService
+//        self.deviceValidated = onboardingViewModel.deviceValid != nil
+//        self.appValidated = onboardingViewModel.appValid != nil
+//        self.deviceValid = onboardingViewModel.deviceValid ?? false
+//        self.appValid = onboardingViewModel.appValid ?? false
+//        self.prescriptionAccepted = onboardingViewModel.prescription != nil
         return true
     }
 }
@@ -705,7 +711,7 @@ fileprivate struct YourSettingsCorrectionRangeScheduleEditor: View {
             CorrectionRangeScheduleEditor(mode: .acceptanceFlow,
                                           therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel,
                                           didSave: { isDestinationActive = true })
-            NavigationLink(destination: YourSettingsPreMealCorrectionRangeOverrideInformationView(), isActive: $isDestinationActive) { EmptyView() }
+            NavigationLink(destination: YourSettingsCarbRatioInformationView(), isActive: $isDestinationActive) { EmptyView() }
         }
         .backButtonHidden(true)
         .closeButtonHidden(true)
@@ -734,7 +740,7 @@ fileprivate struct YourSettingsPreMealCorrectionRangeOverridesEditor: View {
             CorrectionRangeOverridesEditor(mode: .acceptanceFlow,
                                            therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel, preset: .preMeal,
                                            didSave: { isDestinationActive = true })
-            NavigationLink(destination: YourSettingsCarbRatioInformationView(), isActive: $isDestinationActive) { EmptyView() }
+            NavigationLink(destination: YourSettingsCheckpoint(), isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)
     }
@@ -871,7 +877,7 @@ fileprivate struct YourSettingsTherapySettingsReviewView: View {
                                 viewModel: onboardingViewModel.currentTherapySettingsViewModel,
                                 actionButton: TherapySettingsView.ActionButton(localizedString: LocalizedString("Save Settings", comment: "Your Settings therapy settings review next button title"),
                                                                                action: { isDestinationActive = true }))
-            NavigationLink(destination: YourSettingsCheckpoint(), isActive: $isDestinationActive) { EmptyView() }
+            NavigationLink(destination: YourSettingsPreMealCorrectionRangeOverrideInformationView(), isActive: $isDestinationActive) { EmptyView() }
         }
         .editMode(true)
     }

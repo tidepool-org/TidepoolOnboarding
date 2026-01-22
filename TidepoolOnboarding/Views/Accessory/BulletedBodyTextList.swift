@@ -16,7 +16,7 @@ struct BulletedBodyTextList: View {
     
     @Environment(\.font) private var font
     
-    private let bullets: [(BulletType, AttributedString)]
+    private let bullets: [(BulletType, BodyText)]
 
     init(_ attributedStrings: AttributedString...) {
         self.init(attributedStrings.map { (.filledCircle, $0) })
@@ -31,19 +31,35 @@ struct BulletedBodyTextList: View {
     }
     
     init(_ bullets: [(BulletType, AttributedString)]) {
-        self.bullets = bullets
+        self.bullets = bullets.map { ($0.0, BodyText($0.1)) }
     }
 
     init(attributed bullets: (BulletType, String)...) {
-        self.bullets = bullets.map { ($0.0, AttributedString(attributed: $0.1)) }
+        self.bullets = bullets.map { ($0.0, BodyText(AttributedString(attributed: $0.1))) }
     }
 
+    init(_ bullets: [(BulletType, BodyText)]) {
+        self.bullets = bullets
+    }
+    
+    init(_ bullets: BodyText...) {
+        self.bullets = bullets.map({ (.filledCircle, $0) })
+    }
+
+    init(_ bullets: [(BulletType, Text)]) {
+        self.bullets = bullets.map({ ($0.0, BodyText($0.1)) })
+    }
+    
+    init(_ bullets: Text...) {
+        self.bullets = bullets.map({ (.filledCircle, BodyText($0)) })
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(bullets.indices) { index in
                 HStack(spacing: 10) {
                     bullet(bullets[index].0)
-                    BodyText(bullets[index].1)
+                    bullets[index].1
                         .font(font)
                         .fixedSize(horizontal: false, vertical: true)
                 }

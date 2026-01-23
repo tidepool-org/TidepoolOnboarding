@@ -218,14 +218,15 @@ fileprivate struct YourDevicesFocusModesView: View {
     var body: some View {
         OnboardingSectionPageView(section: .yourDevices, destination: YourDevicesMuteAppSounds()) {
             PageHeader(title: LocalizedString("iOS Focus Modes", comment: "Onboarding, Your Devices section, Focus Modes view, title"))
-            Paragraph(LocalizedString("iOS has added features such as “Focus Mode” that enable you to have more control over when apps can send you notifications.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 1"))
-            Paragraph(Text("If you wish to continue receiving important notifications from Tidepool Loop while in a Focus Mode, ", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2") + Text("you must ensure that notifications are allowed and NOT silenced from Tidepool Loop").bold() + Text(" for each Focus Mode.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2"))
+            Paragraph(LocalizedString("iOS has added features such as ‘Focus Mode’ that enable you to have more control over when apps can send you notifications.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 1"))
+            Paragraph(Text("If you wish to continue receiving important notifications from Tidepool Loop while in a Focus Mode, ", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2, part 1") + Text("you must ensure that notifications are allowed and NOT silenced from Tidepool Loop", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2, part 2").bold() + Text(" for each Focus Mode.", comment: "Onboarding, Your Devices section, Focus Modes view, paragraph 2, part 3"))
             NumberedBodyTextList(
                 LocalizedString("Go to Settings > Focus.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 1"),
                 LocalizedString("Tap a provided Focus option — like Do Not Disturb, Personal, or Sleep.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 2"),
-                LocalizedString("Tap “Apps”.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 3"),
+                LocalizedString("Tap “Choose Apps”.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 3"),
                 LocalizedString("Ensure that notifications are allowed and NOT silenced from Tidepool Loop.", comment: "Onboarding, Your Devices section, Focus Modes view, segment 1, list, item 4")
             )
+            PresentableImage("YourDevices_FocusModes")
             Callout(
                 .caution,
                 title: Text(
@@ -327,18 +328,13 @@ fileprivate struct YourDevicesAppleHealthView: View {
                 Spacer()
             }
             Paragraph(LocalizedString("Apple Health can be used to store blood glucose, insulin and carbohydrate data from Tidepool Loop.", comment: "Onboarding, Your Devices section, Apple Health view, paragraph 1"))
-            Paragraph(LocalizedString("If you’d like to allow this data to be stored in Apple Health, Turn All Categories On in the following screen.", comment: "Onboarding, Your Devices section, Apple Health view, paragraph 2"))
+            Paragraph(LocalizedString("If you’d like to allow this data to be stored in Apple Health, Turn On All in the following screen.", comment: "Onboarding, Your Devices section, Apple Health view, paragraph 2"))
             Paragraph(LocalizedString("If you prefer not to store this information in Apple Health, you can leave them toggled off and select Don’t Allow.", comment: "Onboarding, Your Devices section, Apple Health view, paragraph 3"))
                 .padding(.bottom)
             NumberedBodyTextList(
-                LocalizedString("Tap “Turn all Categories On”.", comment: "Onboarding, Your Devices section, Apple Health view, list 1, item 1")
+                LocalizedString("Tap “Turn On All”", comment: "Onboarding, Your Devices section, Apple Health view, list, item 1"),
+                LocalizedString("Tap “Allow” to grant Tidepool Loop permission.", comment: "Onboarding, Your Devices section, Apple Health view, list, item 2")
             )
-            PresentableImage(decorative: "YourDevices_AppleHealth_2")
-            NumberedBodyTextList(
-                LocalizedString("Tap “Allow” to grant Tidepool Loop permission.", comment: "Onboarding, Your Devices section, Apple Health view, list 2, item 1")
-            )
-            .startingAt(2)
-            PresentableImage(decorative: "YourDevices_AppleHealth_3")
         }
         .nextButtonTitle(LocalizedString("Share With Apple Health", comment: "Onboarding, Your Devices section, Apple Health view, next button, title"))
         .nextButtonAction(nextButtonAction)

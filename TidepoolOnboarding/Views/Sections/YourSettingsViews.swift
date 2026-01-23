@@ -15,23 +15,17 @@ import SwiftUI
 struct YourSettingsNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
-    @State var tidepoolServiceOnboarded = true
-    @State var skipTidepoolService = true
-    @State var deviceValidated = true
-    @State var appValidated = true
-    @State var deviceValid = true
-    @State var appValid = true
-    @State var prescriptionAccepted = true
+    @State var tidepoolServiceOnboarded = false
+    @State var skipTidepoolService = false
+    @State var deviceValidated = false
+    @State var appValidated = false
+    @State var deviceValid = false
+    @State var appValid = false
+    @State var prescriptionAccepted = false
 
     var body: some View {
         OnboardingSectionNavigationButton(section: .yourSettings, destination: NavigationView { destination }, action: action)
             .accessibilityIdentifier("button_your_settings")
-            .onAppear {
-                onboardingViewModel.deviceValid = true          // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
-                onboardingViewModel.appValid = true             // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
-                onboardingViewModel.prescription = .mock()      // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
-                onboardingViewModel.prescriberProfile = .mock   // NOTE: DEBUG FEATURES - DEBUG AND TEST ONLY
-            }
     }
 
     @ViewBuilder
@@ -51,13 +45,13 @@ struct YourSettingsNavigationButton: View {
     }
 
     private func action() -> Bool {
-//        self.tidepoolServiceOnboarded = onboardingViewModel.tidepoolService?.isOnboarded ?? false
-//        self.skipTidepoolService = onboardingViewModel.selectedProduct.skipTidepoolService
-//        self.deviceValidated = onboardingViewModel.deviceValid != nil
-//        self.appValidated = onboardingViewModel.appValid != nil
-//        self.deviceValid = onboardingViewModel.deviceValid ?? false
-//        self.appValid = onboardingViewModel.appValid ?? false
-//        self.prescriptionAccepted = onboardingViewModel.prescription != nil
+        self.tidepoolServiceOnboarded = onboardingViewModel.tidepoolService?.isOnboarded ?? false
+        self.skipTidepoolService = onboardingViewModel.selectedProduct.skipTidepoolService
+        self.deviceValidated = onboardingViewModel.deviceValid != nil
+        self.appValidated = onboardingViewModel.appValid != nil
+        self.deviceValid = onboardingViewModel.deviceValid ?? false
+        self.appValid = onboardingViewModel.appValid ?? false
+        self.prescriptionAccepted = onboardingViewModel.prescription != nil
         return true
     }
 }

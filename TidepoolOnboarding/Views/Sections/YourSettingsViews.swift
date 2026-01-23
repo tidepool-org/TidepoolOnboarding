@@ -6,10 +6,11 @@
 //  Copyright © 2021 Tidepool Project. All rights reserved.
 //
 
-import SwiftUI
+import LoopAlgorithm
 import LoopKitUI
 import TidepoolServiceKit
 import TidepoolServiceKitUI
+import SwiftUI
 
 struct YourSettingsNavigationButton: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
@@ -737,8 +738,7 @@ fileprivate struct YourSettingsPreMealCorrectionRangeOverridesEditor: View {
 
     var body: some View {
         OnboardingSectionWrapperView(section: .yourSettings) {
-            CorrectionRangeOverridesEditor(mode: .acceptanceFlow,
-                                           therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel, preset: .preMeal,
+            CorrectionRangeOverridesEditor(therapySettingsViewModel: onboardingViewModel.currentTherapySettingsViewModel, preset: .preMeal,
                                            didSave: { isDestinationActive = true })
             NavigationLink(destination: YourSettingsCheckpoint(), isActive: $isDestinationActive) { EmptyView() }
         }
@@ -894,7 +894,8 @@ fileprivate struct YourSettingsCheckpoint: View {
             Paragraph(LocalizedString("You’ve now:", comment: "Onboarding, Your Settings section, Checkpoint view, paragraph 2"))
             CheckmarkedBodyTextList(
                 LocalizedString("Confirmed your glucose settings", comment: "Onboarding, Your Settings section, Checkpoint view, list, item 1"),
-                LocalizedString("Confirmed your insulin settings", comment: "Onboarding, Your Settings section, Checkpoint view, list, item 2")
+                LocalizedString("Confirmed your insulin settings", comment: "Onboarding, Your Settings section, Checkpoint view, list, item 2"),
+                LocalizedString("Reviewed presets", comment: "Onboarding, Your Settings section, Checkpoint view, list, item 3")
             )
         }
     }

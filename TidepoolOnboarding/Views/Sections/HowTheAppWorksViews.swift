@@ -826,10 +826,11 @@ fileprivate struct HowTheAppWorksView23: View {
         Segment(header: LocalizedString("Presets for Activity", comment: "Onboarding, How the App Works section, view 23, segment 2, header")) {
             Paragraph(LocalizedString("Exercise and other physical activity are common times to use presets. Tidepool Loop includes preset options to support you during different types of activity.", comment: "Onboarding, How the App Works section, view 23, segment 2, paragraph 1"))
             Paragraph(LocalizedString("We designed these presets with researchers at UC Santa Barbara, the University of Pavia, Stanford University, and York University.", comment: "Onboarding, How the App Works section, view 23, segment 2, paragraph 2"))
-            DefaultPresetCard(systemSymbolName: "figure.run", name: Text("Jogging"), duration: .hours(1.5), overallInsulinPercentage: 0.21, correctionRange: LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 150)...LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 170))
-            DefaultPresetCard(systemSymbolName: "figure.walk", name: Text("Walking"), duration: .hours(1.5), overallInsulinPercentage: 0.23, correctionRange: LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 150)...LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 170))
-            DefaultPresetCard(systemSymbolName: "figure.outdoor.cycle", name: Text("Biking"), duration: .hours(1.5), overallInsulinPercentage: 0.23, correctionRange: LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 150)...LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 170))
-            DefaultPresetCard(systemSymbolName: "figure.strengthtraining.traditional", name: Text("Strength Training"), duration: .hours(1.5), overallInsulinPercentage: 0.37, correctionRange: LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 150)...LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 170))
+            PresetCard.default(for: .jogging)
+            PresetCard.default(for: .walking)
+            PresetCard.default(for: .biking)
+            PresetCard.default(for: .strengthTraining)
+            Paragraph(LocalizedString("These presets are a starting point. You may need to work with your healthcare provider to edit them to meet your personal needs.", comment: "Onboarding, How the App Works section, view 23, segment 2, paragraph 3"))
         }
     }
 }

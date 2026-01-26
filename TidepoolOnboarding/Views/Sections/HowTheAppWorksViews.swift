@@ -6,8 +6,10 @@
 //  Copyright © 2021 Tidepool Project. All rights reserved.
 //
 
-import SwiftUI
+import LoopAlgorithm
+import LoopKit
 import LoopKitUI
+import SwiftUI
 
 struct HowTheAppWorksNavigationButton: View {
     var body: some View {
@@ -36,7 +38,7 @@ fileprivate struct HowTheAppWorksView2: View {
             segment1
             segment2
             segment3
-            Paragraph(LocalizedString("Let’s get acquainted with each area.", comment: "Onboarding, How the App Works section, view 2, segment 3, paragraph 2"))
+            Paragraph(LocalizedString("Let's learn more about each of these.", comment: "Onboarding, How the App Works section, view 2, segment 3, paragraph 2"))
         }
     }
     
@@ -83,41 +85,52 @@ fileprivate struct HowTheAppWorksView4: View {
 }
 
 fileprivate struct HowTheAppWorksView5: View {
+    @Environment(\.loopStatusColorPalette) private var loopStatusColors
+    
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView6()) {
-            PageHeader(title: LocalizedString("Tidepool Loop Status", comment: "Onboarding, How the App Works section, view 5, title"))
+            PageHeader(title: LocalizedString("Automation Status", comment: "Onboarding, How the App Works section, view 5, title"))
             Callout(
                 .note,
                 title: Text(
-                    "Automating Basal Insulin",
+                    "Automating Insulin Delivery",
                     comment: "Onboarding, How the App Works section, view 5, callout"
                 )
             ) {
-                Text(LocalizedString("In traditional insulin pump therapy, your basal rate delivers as a scheduled rate per hour, programmed by you and your healthcare provider.", comment: "Onboarding, How the App Works section, view 5, callout, paragraph 1"))
-                Text(LocalizedString("Tidepool Loop starts with this scheduled hourly rate, and then changes your basal rate automatically, often giving you more or less than your scheduled basal rate to help you keep your glucose in your Correction Range.", comment: "Onboarding, How the App Works section, view 5, callout, paragraph 2"))
+                Text(LocalizedString("With a regular insulin pump, insulin is given on a fixed schedule set by you and your healthcare provider.", comment: "Onboarding, How the App Works section, view 5, callout, paragraph 1"))
+                Text(LocalizedString("Tidepool Loop starts with this schedule, but automatically adjusts how much insulin you get. It may give a little more or a little less insulin — either by changing your basal or by giving small automatic boluses — to help keep your glucose in range.", comment: "Onboarding, How the App Works section, view 5, callout, paragraph 2"))
             }
             .padding(.horizontal, -16)
-            PresentableImage(decorative: "HowTheAppWorks_5")
+            PresentableImage(decorative: "HowTheAppWorks_5_1")
             segment1
             segment2
             segment3
             segment4
+            segment5
         }
     }
     
     private var segment1: some View {
         Segment(header: LocalizedString("Tidepool Loop Status", comment: "Onboarding, How the App Works section, view 5, segment 1, header")) {
-            Paragraph(LocalizedString("When automation is on, Tidepool Loop will make a calculation as often as every 5 minutes to adjust your basal insulin in an effort to reach your glucose Correction Range and reduce highs and lows.", comment: "Onboarding, How the App Works section, view 5, segment 1, paragraph 1"))
-            Paragraph(LocalizedString("The Tidepool Loop Status icon allows you to see if automation is on and working. You can tap the icon for more information.", comment: "Onboarding, How the App Works section, view 5, segment 1, paragraph 2"))
+            Paragraph(LocalizedString("When automation is ON and working, Tidepool Loop will make a calculation as often as every 5 minutes to adjust your insulin in an effort to reach your glucose Correction Range and reduce highs and lows.", comment: "Onboarding, How the App Works section, view 5, segment 1, paragraph 1"))
+            Paragraph(LocalizedString("The Tidepool Loop status icon allows you to see if automation is on and working.", comment: "Onboarding, How the App Works section, view 5, segment 1, paragraph 2"))
         }
     }
     
     private var segment2: some View {
         Segment(header: LocalizedString("Closed Loop ON", comment: "Onboarding, How the App Works section, view 5, segment 2, header")) {
             HStack(alignment: .top, spacing: 10) {
-                LoopIcon(automation: .closed, freshness: .fresh)
-                Paragraph(LocalizedString("Loop is closed and green. Automation is ON. Your last loop was successful within the last 5 minutes.", comment: "Onboarding, How the App Works section, view 5, segment 2, list, item, paragraph"))
+                LoopCircleView(closedLoop: true, freshness: .fresh)
+                Paragraph(LocalizedString("Loop is closed and green. You’ve set automation to ON and it’s working as expected.", comment: "Onboarding, How the App Works section, view 5, segment 2, list, item 1, paragraph"))
                     .font(.subheadline)
+            }
+            HStack(alignment: .top, spacing: 10) {
+                LoopCircleView(closedLoop: true, freshness: .stale)
+                VStack(alignment: .leading, spacing: 16) {
+                    Paragraph(LocalizedString("Loop is closed and gray. You turned automation ON, but it isn’t working right now.", comment: "Onboarding, How the App Works section, view 5, segment 2, list, item 2, paragraph 1"))
+                    Paragraph(LocalizedString("During this time, tap to see more details and check for communication issues with your pump and CGM.", comment: "Onboarding, How the App Works section, view 5, segment 2, list, item 2, paragraph 2"))
+                    Paragraph(LocalizedString("You will also see a gray loop during Sensor Warmup.", comment: "Onboarding, How the App Works section, view 5, segment 2, list, item 2, paragraph 3"))
+                }
             }
         }
     }
@@ -125,33 +138,66 @@ fileprivate struct HowTheAppWorksView5: View {
     private var segment3: some View {
         Segment(header: LocalizedString("Closed Loop OFF", comment: "Onboarding, How the App Works section, view 5, segment 3, header")) {
             HStack(alignment: .top, spacing: 10) {
-                LoopIcon(automation: .open, freshness: .fresh)
-                Paragraph(LocalizedString("Loop is open. Automation is OFF. Your pump and CGM will continue operating, but your basal insulin will not adjust automatically.", comment: "Onboarding, How the App Works section, view 5, segment 3, list, item, paragraph"))
+                LoopCircleView(closedLoop: false, freshness: .fresh)
+                Paragraph(LocalizedString("Loop is open and green. Automation is OFF. Your pump and CGM will continue operating. You’ll continue to receive your scheduled basal insulin, but it will not adjust automatically.", comment: "Onboarding, How the App Works section, view 5, segment 3, list, item 1, paragraph"))
                     .font(.subheadline)
+            }
+            HStack(alignment: .top, spacing: 10) {
+                LoopCircleView(closedLoop: true, freshness: .stale)
+                VStack(alignment: .leading, spacing: 16) {
+                    Paragraph(LocalizedString("Loop is open and gray. Automation is OFF and there is an issue with one of your devices.", comment: "Onboarding, How the App Works section, view 5, segment 3, list, item 2, paragraph 1"))
+                    Paragraph(LocalizedString("During this time, tap to see more details and check for communication issues with your pump and CGM.", comment: "Onboarding, How the App Works section, view 5, segment 3, list, item 2, paragraph 2"))
+                }
             }
         }
     }
     
+    private func freshnessColor(for freshness: LoopCompletionFreshness) -> Color {
+        switch freshness {
+        case .fresh: return .primary
+        case .aging: return Color(loopStatusColors.warning)
+        case .stale: return Color(loopStatusColors.error)
+        }
+    }
+    
+    @ViewBuilder
+    private func statusView(freshness: LoopCompletionFreshness, _ text: Text) -> some View {
+        Group {
+            Text("\(Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")) ") + text
+        }
+        .foregroundStyle(freshnessColor(for: freshness))
+        .font(.footnote)
+        .fontWeight(.semibold)
+    }
+    
     private var segment4: some View {
         Segment(header: LocalizedString("Connectivity Status", comment: "Onboarding, How the App Works section, view 5, segment 4, header")) {
-            VStack(alignment: .leading) {
-                HStack(alignment: .top, spacing: 10) {
-                    LoopIcon(automation: .closed, freshness: .aging)
-                    Segment {
-                        Paragraph(LocalizedString("Loop is orange. Automation is ON, but it has been 5-15 minutes since your last loop.", comment: "Onboarding, How the App Works section, view 5, segment 4, list, item 1, paragraph 1"))
-                        Paragraph(LocalizedString("Tap for additional information and watch for potential communication issues with your pump and CGM.", comment: "Onboarding, How the App Works section, view 5, segment 4, list, item 1, paragraph 2"))
-                    }
-                    .font(.subheadline)
+            PresentableImage(decorative: "HowTheAppWorks_5_2")
+            Paragraph(LocalizedString("When Closed Loop is ON, the time since the last completed “loop” is displayed on the home screen, with more details in the modal.", comment: "Onboarding, How the App Works section, view 5, segment 4, paragraph 1"))
+            Paragraph(LocalizedString("If the last sync time is orange or red, be sure to check for possible issues with your devices.", comment: "Onboarding, How the App Works section, view 5, segment 4, paragraph 2"))
+            Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 24) {
+                GridRow(alignment: .top) {
+                    statusView(freshness: .fresh, Text("1 min ago"))
+                    Text("Black").bold().foregroundStyle(freshnessColor(for: .fresh)) + Text(" indicates your last loop was successful within the last 5 minutes.")
                 }
-                HStack(alignment: .top, spacing: 10) {
-                    LoopIcon(automation: .closed, freshness: .stale)
-                    Segment {
-                        Paragraph(LocalizedString("Loop is red. Automation is ON, but it has been more than 15 minutes since your last loop.", comment: "Onboarding, How the App Works section, view 5, segment 4, list, item 2, paragraph 1"))
-                        Paragraph(LocalizedString("Tap for additional information and check for communication issues with your pump and CGM.", comment: "Onboarding, How the App Works section, view 5, segment 4, list, item 2, paragraph 2"))
-                    }
-                    .font(.subheadline)
+                GridRow(alignment: .top) {
+                    statusView(freshness: .aging, Text("6 mins ago"))
+                    Text("Orange").bold().foregroundStyle(freshnessColor(for: .aging)) + Text(" indicates it’s been 6-15 minutes since your last successful loop.")
+                }
+                GridRow(alignment: .top) {
+                    statusView(freshness: .stale, Text("16 mins ago"))
+                    Text("Red").bold().foregroundStyle(freshnessColor(for: .stale)) + Text(" indicates it’s been more than 15 minutes since your last successful loop.")
                 }
             }
+        }
+    }
+    
+    private var segment5: some View {
+        Segment(header: LocalizedString("Additional Information", comment: "Onboarding, How the App Works section, view 5, segment 5, header")) {
+            Paragraph(LocalizedString("Tap the status icon at any time for more information.", comment: "Onboarding, How the App Works section, view 5, segment 5, paragraph 1"))
+            PresentableImage(decorative: "HowTheAppWorks_5_3")
+            Paragraph(LocalizedString("If there is a problem with automation, the gray status icon will pulse.", comment: "Onboarding, How the App Works section, view 5, segment 4, paragraph 1"))
+            PresentableImage(decorative: "HowTheAppWorks_5_4")
         }
     }
 }
@@ -160,9 +206,9 @@ fileprivate struct HowTheAppWorksView6: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView7()) {
             PageHeader(title: LocalizedString("Insulin Delivery Status", comment: "Onboarding, How the App Works section, view 6, title"))
-            PresentableImage(decorative: "HowTheAppWorks_6")
-            Paragraph(LocalizedString("Tidepool Loop’s Insulin Delivery Status icon has three states to show you whether the app is delivering your scheduled basal rate or more or less than your scheduled rate.", comment: "Onboarding, How the App Works section, view 6, paragraph 1"))
-            Paragraph(LocalizedString("You can tap the icon or your insulin charts for more details.", comment: "Onboarding, How the App Works section, view 6, paragraph 2"))
+            Paragraph(LocalizedString("When automation is on, Tidepool Loop manages your insulin dosing by adjusting both your basal and bolus insulin, as often as every 5 minutes.", comment: "Onboarding, How the App Works section, view 6, paragraph 1"))
+            Paragraph(LocalizedString("Tidepool Loop’s insulin delivery status icon has four states to show you whether the app is delivering your scheduled basal rate OR more/less than your scheduled delivery.", comment: "Onboarding, How the App Works section, view 6, paragraph 2"))
+            Paragraph(LocalizedString("This information is displayed in the Pump Status Icon in the top-right corner of your home screen.", comment: "Onboarding, How the App Works section, view 6, paragraph 3"))
             segment1
             segment2
             segment3
@@ -170,35 +216,25 @@ fileprivate struct HowTheAppWorksView6: View {
     }
     
     private var segment1: some View {
-        Segment(header: LocalizedString("Scheduled Basal Insulin", comment: "Onboarding, How the App Works section, view 6, segment 1, header")) {
-            HStack(spacing: 10) {
-                AccessibleImage("HowTheAppWorks_6_ScheduledBasal")
-                Paragraph(LocalizedString("A flat line indicates that your basal is delivering at your scheduled basal rate for this time of day.", comment: "Onboarding, How the App Works section, view 6, segment 1, list, item, paragraph"))
-                    .font(.subheadline)
-            }
-            Paragraph(LocalizedString("A value of 0.0 U indicates that your basal is delivering without any changes to your scheduled rate. It does not mean your basal rate is 0 U per hour.", comment: "Onboarding, How the App Works section, view 6, segment 1, paragraph"))
+        Segment(header: LocalizedString("Scheduled Delivery", comment: "Onboarding, How the App Works section, view 6, segment 1, header")) {
+            PresentableImage("HowTheAppWorks_6_1")
+            Paragraph(BodyText(Text("When Tidepool Loop is delivering your ", comment: "Onboarding, How the App Works section, view 6, segment 1, paragraph, part 1") + Text("scheduled basal rate", comment: "Onboarding, How the App Works section, view 6, segment 1, paragraph, part 2").bold() + Text(" you will see an arrow facing to the right.", comment: "Onboarding, How the App Works section, view 6, segment 1, paragraph, part 3")))
         }
     }
     
     private var segment2: some View {
-        Segment(header: LocalizedString("Reduced Basal Insulin", comment: "Onboarding, How the App Works section, view 6, segment 2, header")) {
-            HStack(spacing: 10) {
-                AccessibleImage("HowTheAppWorks_6_DecreasedBasal")
-                Paragraph(LocalizedString("A dropped icon indicates that your scheduled basal is reduced by the value shown.", comment: "Onboarding, How the App Works section, view 6, segment 2, list, item, paragraph"))
-                    .font(.subheadline)
-            }
-            Paragraph(LocalizedString("A reduced basal rate will always be indicated with a negative value, i.e. -1.0 U basal means your basal is currently 1.0 U per hour less than your scheduled basal rate for this time of day.", comment: "Onboarding, How the App Works section, view 6, segment 2, paragraph"))
+        Segment(header: LocalizedString("Decreasing Delivery", comment: "Onboarding, How the App Works section, view 6, segment 2, header")) {
+            PresentableImage("HowTheAppWorks_6_2")
+            Paragraph(BodyText(Text("When Tidepool Loop is ", comment: "Onboarding, How the App Works section, view 6, segment 2, paragraph 1, part 1") + Text("decreasing", comment: "Onboarding, How the App Works section, view 6, segment 2, paragraph 1, part 2").bold() + Text(" your insulin delivery you will see a down arrow.", comment: "Onboarding, How the App Works section, view 6, segment 2, paragraph 1, part 3")))
+            PresentableImage("HowTheAppWorks_6_3")
+            Paragraph(BodyText(Text("When Tidepool Loop is ", comment: "Onboarding, How the App Works section, view 6, segment 2, paragraph 2, part 1") + Text("suspending", comment: "Onboarding, How the App Works section, view 6, segment 2, paragraph 2, part 2").bold() + Text(" your insulin delivery you will see 0 U/hr displayed below the arrow.", comment: "Onboarding, How the App Works section, view 6, segment 2, paragraph 2, part 3")))
         }
     }
     
     private var segment3: some View {
-        Segment(header: LocalizedString("Increased Basal Insulin", comment: "Onboarding, How the App Works section, view 6, segment 3, header")) {
-            HStack(spacing: 10) {
-                AccessibleImage("HowTheAppWorks_6_IncreasedBasal")
-                Paragraph(LocalizedString("A raised icon indicates that your scheduled basal is increased by the value shown.", comment: "Onboarding, How the App Works section, view 6, segment 3, list, item, paragraph"))
-                    .font(.subheadline)
-            }
-            Paragraph(LocalizedString("An increased basal rate will always be indicated with a positive value. +3.0 U basal means your basal is currently 3.0 U per hour more than your scheduled basal rate for this time of day.", comment: "Onboarding, How the App Works section, view 6, segment 3, paragraph"))
+        Segment(header: LocalizedString("Increasing Delivery", comment: "Onboarding, How the App Works section, view 6, segment 3, header")) {
+            PresentableImage("HowTheAppWorks_6_4")
+            Paragraph(BodyText(Text("When Tidepool Loop is ", comment: "Onboarding, How the App Works section, view 6, segment 3, paragraph, part 1") + Text("increasing", comment: "Onboarding, How the App Works section, view 6, segment 3, paragraph, part 2").bold() + Text(" your insulin delivery you will see an up arrow. This includes basal insulin and automated boluses.", comment: "Onboarding, How the App Works section, view 6, segment 3, paragraph, part 3")))
         }
     }
 }
@@ -207,11 +243,11 @@ fileprivate struct HowTheAppWorksView7: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView8()) {
             PageHeader(title: LocalizedString("Insulin Pump Status", comment: "Onboarding, How the App Works section, view 7, title"))
-            PresentableImage(decorative: "HowTheAppWorks_7_1")
+            PresentableImage("HowTheAppWorks_7_1")
             Paragraph(LocalizedString("The Insulin Pump Status icon allows you to see how much insulin remains in your pump’s reservoir or cartridge.", comment: "Onboarding, How the App Works section, view 7, paragraph 1"))
-            PresentableImage(decorative: "HowTheAppWorks_7_2")
+            PresentableImage("HowTheAppWorks_7_2")
             Paragraph(LocalizedString("A progress bar will appear below these icons to let you know that scheduled maintenance – like a reservoir change or a site change – is coming up.", comment: "Onboarding, How the App Works section, view 7, paragraph 2"))
-            Paragraph(LocalizedString("You can tap the icon or your insulin charts for more details.", comment: "Onboarding, How the App Works section, view 7, paragraph 3"))
+            Paragraph(LocalizedString("You can tap this icon for more details.", comment: "Onboarding, How the App Works section, view 7, paragraph 3"))
         }
     }
 }
@@ -220,20 +256,23 @@ fileprivate struct HowTheAppWorksView8: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView9()) {
             PageHeader(title: LocalizedString("Temporary Status Banners", comment: "Onboarding, How the App Works section, view 8, title"))
-            PresentableImage(decorative: "HowTheAppWorks_8")
-            Paragraph(LocalizedString("Tidepool Loop will drop a banner notification below these Status Icons to alert you to a temporary status.", comment: "Onboarding, How the App Works section, view 8, paragraph 1"))
-            Paragraph(LocalizedString("You’ll see and can interact with this banner during situations like these:", comment: "Onboarding, How the App Works section, view 8, paragraph 2"))
-            HStack(spacing: 10) {
-                AccessibleImage("HowTheAppWorks_8_InProgress", width: 25)
-                Paragraph(LocalizedString("To stop a bolus in progress", comment: "Onboarding, How the App Works section, view 8, paragraph 3"))
-                    .font(.subheadline)
+            PresentableImage("HowTheAppWorks_8_1")
+            Paragraph(LocalizedString("TTidepool Loop will display a banner below the status icons to notify you of a temporary status.", comment: "Onboarding, How the App Works section, view 8, paragraph 1"))
+            Paragraph(LocalizedString("You can see and interact with this banner in situations like these:", comment: "Onboarding, How the App Works section, view 8, paragraph 2"))
+            BulletedListView(bulletAlignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("To track the progress or stop delivery of a bolus in progress", comment: "Onboarding, How the App Works section, view 8, list, item 1")
+                    PresentableImage("HowTheAppWorks_8_2")
+                }
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("To add a fingerstick glucose value when sensor is unavailable", comment: "Onboarding, How the App Works section, view 8, list, item 2")
+                    PresentableImage("HowTheAppWorks_8_3")
+                }
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("When your pump is manually suspended", comment: "Onboarding, How the App Works section, view 8, list, item 3")
+                    PresentableImage("HowTheAppWorks_8_4")
+                }
             }
-            .padding(.horizontal)
-            BulletedBodyTextList(
-                LocalizedString("Tracking the progress of a bolus being delivered", comment: "Onboarding, How the App Works section, view 8, list, item 1"),
-                LocalizedString("To add a fingerstick glucose value when sensor is unavailable", comment: "Onboarding, How the App Works section, view 8, list, item 2"),
-                LocalizedString("When pump is manually suspended", comment: "Onboarding, How the App Works section, view 8, list, item 3")
-            )
         }
     }
 }
@@ -243,7 +282,7 @@ fileprivate struct HowTheAppWorksView9: View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView10()) {
             PageHeader(title: LocalizedString("Charts", comment: "Onboarding, How the App Works section, view 9, title"))
             PresentableImage(decorative: "HowTheAppWorks_9")
-            Paragraph(LocalizedString("The biggest part of the home screen has four tappable charts so you can see how your glucose is moving and how your insulin and the carbs you’ve entered are working to impact your glucose.", comment: "Onboarding, How the App Works section, view 9, paragraph 1"))
+            Paragraph(LocalizedString("The biggest part of the home screen has three tappable charts so you can see how your glucose is changing and how your insulin and the carbs you’ve entered are working to impact your glucose.", comment: "Onboarding, How the App Works section, view 9, paragraph 1"))
             Paragraph(LocalizedString("Let’s walk through each of these charts and their features in more detail.", comment: "Onboarding, How the App Works section, view 9, paragraph 2"))
         }
     }
@@ -287,7 +326,7 @@ fileprivate struct HowTheAppWorksView10: View {
         Segment(header: LocalizedString("Correction Range", comment: "Onboarding, How the App Works section, view 10, segment 3, header")) {
             PresentableImage(decorative: "HowTheAppWorks_10_4")
             Paragraph(LocalizedString("Your Correction Range will be displayed by a purple shaded horizontal bar.", comment: "Onboarding, How the App Works section, view 10, segment 3, paragraph 1"))
-            Paragraph(LocalizedString("Your Correction Range is very important in Tidepool Loop. It can be a single number or a range of values that you (and your healthcare provider) want Tidepool Loop to aim for in adjusting your basal insulin.", comment: "Onboarding, How the App Works section, view 10, segment 3, paragraph 2"))
+            Paragraph(LocalizedString("Your Correction Range is very important in Tidepool Loop. It can be a single number or a range of values that you (and your healthcare provider) want Tidepool Loop to aim for in adjusting your insulin delivery.", comment: "Onboarding, How the App Works section, view 10, segment 3, paragraph 2"))
             Paragraph(LocalizedString("This is typically a narrower range than your target range for high and low glucose notifications on your CGM. This number should be where you want your glucose to be.", comment: "Onboarding, How the App Works section, view 10, segment 3, paragraph 3"))
             Paragraph(LocalizedString("You can also tap or rotate the chart for more details.", comment: "Onboarding, How the App Works section, view 10, segment 3, paragraph 4"))
         }
@@ -328,20 +367,35 @@ fileprivate struct HowTheAppWorksView11: View {
         Segment(header: LocalizedString("Adding Fingerstick Glucose", comment: "Onboarding, How the App Works section, view 11, segment 2, header")) {
             Paragraph(LocalizedString("You can add a fingerstick value directly from the temporary status banner on your home screen when you do not have sensor data available.", comment: "Onboarding, How the App Works section, view 11, segment 2, paragraph 1"))
             PresentableImage(decorative: "HowTheAppWorks_11_3")
-            Paragraph(LocalizedString("Tidepool Loop can use fingerstick values to adjust your bolus recommendations and basal insulin when no sensor value is available.", comment: "Onboarding, How the App Works section, view 11, segment 2, paragraph 2"))
+            Paragraph(LocalizedString("Tidepool Loop can use fingerstick values to adjust your bolus recommendations and insulin delivery when no sensor value is available.", comment: "Onboarding, How the App Works section, view 11, segment 2, paragraph 2"))
+            Paragraph(LocalizedString("After you enter a fingerstick value, Tidepool Loop may or may not recommend a bolus.", comment: "Onboarding, How the App Works section, view 11, segment 2, paragraph 3"))
             PresentableImage(decorative: "HowTheAppWorks_11_4")
-            Paragraph(LocalizedString("After you enter a fingerstick value, Tidepool Loop may or may not recommend a bolus. ", comment: "Onboarding, How the App Works section, view 11, segment 2, paragraph 3"))
             Callout(
                 .note,
                 title: Text(
                     "Sensor vs Fingerstick",
-                    comment: "Onboarding, How the App Works section, view 11, segment 2, callout, title"
+                    comment: "Onboarding, How the App Works section, view 11, segment 2, callout 1, title"
                 ),
                 message: Text(
                     "Tidepool Loop is designed to work best with sensor glucose. Some features of automation may be less effective when sensor values are unavailable.",
-                    comment: "Onboarding, How the App Works section, view 11, segment 2, callout, paragraph"
+                    comment: "Onboarding, How the App Works section, view 11, segment 2, callout 1, paragraph"
                 )
             )
+            .padding(.horizontal, -16)
+            Callout(
+                .note,
+                title: Text(
+                    "No Bolus Recommendation",
+                    comment: "Onboarding, How the App Works section, view 11, segment 2, callout 2, title"
+                )
+            ) {
+                Text("There may be times a bolus will not be recommended. This can happen when:", comment: "Onboarding, How the App Works section, view 11, segment 2, callout 2, paragraph")
+                BulletedListView(bulletColor: .primary, bulletOpacity: 1, bulletSize: 3, bulletAlignment: .firstTextBaseline) {
+                    Text("Your glucose is predicted to be below your correction range", comment: "Onboarding, How the App Works section, view 11, segment 2, callout 2, bullet 1")
+                    Text("If you’re delivering insulin for a meal and you have enough active insulin to cover the carbs you’ve entered", comment: "Onboarding, How the App Works section, view 11, segment 2, callout 2, bullet 2")
+                }
+                .padding(.leading, 8)
+            }
             .padding(.horizontal, -16)
         }
     }
@@ -398,10 +452,6 @@ fileprivate struct HowTheAppWorksView13: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView14()) {
             PageHeader(title: LocalizedString("Active Insulin Chart", comment: "Onboarding, How the App Works section, view 13, title"))
-            PresentableImage(decorative: "HowTheAppWorks_13_1")
-            Paragraph(LocalizedString("The second chart on the home screen is the Active Insulin Chart.", comment: "Onboarding, How the App Works section, view 13, paragraph 1"))
-            Paragraph(LocalizedString("It shows you how much insulin Tidepool Loop thinks is working in your body and predicts how much insulin is working over the next few hours.", comment: "Onboarding, How the App Works section, view 13, paragraph 2"))
-            Paragraph(LocalizedString("You can also tap the chart for more details.", comment: "Onboarding, How the App Works section, view 13, paragraph 3"))
             Callout(
                 .note,
                 title: Text(
@@ -414,6 +464,10 @@ fileprivate struct HowTheAppWorksView13: View {
                 )
             )
             .padding(.horizontal, -16)
+            PresentableImage(decorative: "HowTheAppWorks_13_1")
+            Paragraph(LocalizedString("The second chart on the home screen is the Active Insulin chart.", comment: "Onboarding, How the App Works section, view 13, paragraph 1"))
+            Paragraph(LocalizedString("It shows you how much insulin Tidepool Loop thinks is working in your body and predicts how much insulin is working over the next few hours.", comment: "Onboarding, How the App Works section, view 13, paragraph 2"))
+            Paragraph(LocalizedString("You will notice a peak in the Active Insulin graph when you have delivered a manual bolus or when the system delivered an automatic bolus.", comment: "Onboarding, How the App Works section, view 13, paragraph 3"))
             segment
         }
     }
@@ -433,43 +487,36 @@ fileprivate struct HowTheAppWorksView13: View {
 fileprivate struct HowTheAppWorksView14: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView15()) {
-            PageHeader(title: LocalizedString("Insulin Delivery Chart", comment: "Onboarding, How the App Works section, view 14, title"))
-            PresentableImage(decorative: "HowTheAppWorks_14")
-            Paragraph(LocalizedString("The Insulin Delivery Chart shows you both your basal and bolus insulin delivery history over the last few hours.", comment: "Onboarding, How the App Works section, view 14, paragraph 1"))
-            Paragraph(LocalizedString("Your total insulin use for the day is displayed above the chart.", comment: "Onboarding, How the App Works section, view 14, paragraph 2"))
-            Paragraph(LocalizedString("You can also tap or rotate the chart for more details.", comment: "Onboarding, How the App Works section, view 14, paragraph 3"))
+            PageHeader(title: LocalizedString("Bolus Doses", comment: "Onboarding, How the App Works section, view 14, title"))
+            Paragraph(LocalizedString("Your Active Insulin chart shows recent boluses, along with the time and amount of your last meal or correction bolus.", comment: "Onboarding, How the App Works section, view 14, paragraph 1"))
+            PresentableImage(decorative: "HowTheAppWorks_14_1")
             segment
         }
     }
     
     private var segment: some View {
         Segment(header: LocalizedString("Basal and Bolus Insulin Doses", comment: "Onboarding, How the App Works section, view 14, segment, header")) {
-            VStack(alignment: .leading) {
-                HStack(spacing: 10) {
-                    AccessibleImage("HowTheAppWorks_14_Bolus", width: 20)
-                        .padding(.horizontal, 6 * scalingFactor)
-                    Paragraph(LocalizedString("Boluses of insulin are presented as blue triangles.", comment: "Onboarding, How the App Works section, view 14, segment, list, item 1, paragraph"))
-                        .font(.subheadline)
+            Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 24) {
+                GridRow {
+                    AccessibleImage("HowTheAppWorks_14_2", width: 16)
+                    Text("Meal and correction boluses", comment: "Onboarding, How the App Works section, view 14, segment, bullet 1, part 1").bold() + Text(" are displayed as two downward triangles.", comment: "Onboarding, How the App Works section, view 14, segment, bullet 1, part 2")
                 }
-                HStack(spacing: 10) {
-                    AccessibleImage("HowTheAppWorks_14_Basal", width: 33)
-                    Paragraph(LocalizedString("Basal insulin is presented as a series of blue bars that correspond to each change of the insulin delivery status icon.", comment: "Onboarding, How the App Works section, view 14, segment, list, item 2, paragraph"))
-                        .font(.subheadline)
+                GridRow {
+                    AccessibleImage("HowTheAppWorks_14_3", width: 12)
+                    Text("Automated boluses", comment: "Onboarding, How the App Works section, view 14, segment, bullet 2, part 1").bold() + Text(" are displayed as a dot. You can see the exact amount of each automated bolus by tapping on the chart.", comment: "Onboarding, How the App Works section, view 14, segment, bullet 2, part 2")
                 }
             }
             .padding(.horizontal)
         }
     }
-
-    @ScaledMetric private var scalingFactor: CGFloat = 1
 }
 
 fileprivate struct HowTheAppWorksView15: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView16()) {
             PageHeader(title: LocalizedString("Tapping the Insulin Charts", comment: "Onboarding, How the App Works section, view 15, title"))
+            Paragraph(LocalizedString("Tapping the Active Insulin chart allows you to see details about your current insulin delivery and a log of insulin events from the last 24 hours.", comment: "Onboarding, How the App Works section, view 15, paragraph"))
             PresentableImage(decorative: "HowTheAppWorks_15")
-            Paragraph(LocalizedString("Most of the information you need about your insulin is visible from the home screen itself, but tapping either of the insulin charts allows you to see your recent insulin history log.", comment: "Onboarding, How the App Works section, view 15, paragraph"))
         }
     }
 }
@@ -491,8 +538,8 @@ fileprivate struct HowTheAppWorksView16: View {
             )
             .padding(.horizontal, -16)
             PresentableImage(decorative: "HowTheAppWorks_16")
-            Paragraph(LocalizedString("The Active Carbohydrates Chart shows the carbs that you've entered into the app and how Tidepool Loop expects them to impact your glucose over time.", comment: "Onboarding, How the App Works section, view 16, paragraph 1"))
-            Paragraph(LocalizedString("Tidepool Loop needs to know about all of the carbs that you eat in order to update and make its best predictions about your glucose.", comment: "Onboarding, How the App Works section, view 16, paragraph 2"))
+            Paragraph(LocalizedString("The Active Carbohydrates Chart displays the carbs you've entered. It also shows you how Tidepool Loop thinks they will affect your glucose levels over time.", comment: "Onboarding, How the App Works section, view 16, paragraph 1"))
+            Paragraph(LocalizedString("Tidepool Loop needs to know about all the carbs you eat to make accurate predictions about what it thinks will happen to your glucose levels.", comment: "Onboarding, How the App Works section, view 16, paragraph 2"))
             Paragraph(LocalizedString("You can also tap or rotate the chart for more details.", comment: "Onboarding, How the App Works section, view 16, paragraph 3"))
         }
     }
@@ -543,7 +590,7 @@ fileprivate struct HowTheAppWorksView18: View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView19()) {
             PageHeader(title: LocalizedString("Toolbar", comment: "Onboarding, How the App Works section, view 18, title"))
             PresentableImage(decorative: "HowTheAppWorks_18")
-            Paragraph(LocalizedString("At the bottom of the home screen, you’ll see a toolbar with five buttons for some of the most common actions you’ll take in the app.", comment: "Onboarding, How the App Works section, view 18, paragraph 1"))
+            Paragraph(LocalizedString("At the bottom of the home screen, you’ll see a toolbar with four buttons for some of the most common actions you’ll take in the app.", comment: "Onboarding, How the App Works section, view 18, paragraph 1"))
             Paragraph(LocalizedString("Each of these buttons allows you to tell Tidepool Loop important information for the app to act on. Let’s explore how they work.", comment: "Onboarding, How the App Works section, view 18, paragraph 2"))
         }
     }
@@ -551,7 +598,7 @@ fileprivate struct HowTheAppWorksView18: View {
 
 fileprivate struct HowTheAppWorksView19: View {
     var body: some View {
-        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView22()) {
+        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView20()) {
             PageHeader(title: LocalizedString("Carb Entry", comment: "Onboarding, How the App Works section, view 19, title"))
             PresentableImage(decorative: "HowTheAppWorks_19_1")
             Paragraph(LocalizedString("Tapping the Carb Entry button allows you to enter details about what you are eating.", comment: "Onboarding, How the App Works section, view 19, paragraph"))
@@ -564,10 +611,9 @@ fileprivate struct HowTheAppWorksView19: View {
     
     private var segment1: some View {
         Segment(header: LocalizedString("Absorption Time", comment: "Onboarding, How the App Works section, view 19, segment 1, header")) {
-            Paragraph(LocalizedString("Absorption time may be a new concept for you if you’re coming from traditional pump or injection therapy. Let’s explore.", comment: "Onboarding, How the App Works section, view 19, segment 1, paragraph 1"))
-            Paragraph(LocalizedString("Different food types can affect glucose in different ways. Some foods may raise glucose quickly and others more slowly over time.", comment: "Onboarding, How the App Works section, view 19, segment 1, paragraph 2"))
-            Paragraph(LocalizedString("In Tidepool Loop, this difference in time and effect on glucose is called absorption time.", comment: "Onboarding, How the App Works section, view 19, segment 1, paragraph 3"))
-            Paragraph(LocalizedString("You can estimate how many hours you think a food may continue to impact your glucose by selecting a food type emoji preset to indicate:", comment: "Onboarding, How the App Works section, view 19, segment 1, paragraph 4"))
+            Paragraph(LocalizedString("Different food types can affect glucose in different ways. Some foods may raise glucose quickly and others more slowly over time.", comment: "Onboarding, How the App Works section, view 19, segment 1, paragraph 1"))
+            Paragraph(LocalizedString("In Tidepool Loop, this difference in time and effect on glucose is called absorption time.", comment: "Onboarding, How the App Works section, view 19, segment 1, paragraph 2"))
+            Paragraph(LocalizedString("You can estimate how many hours you think a food may continue to impact your glucose by selecting a food type emoji preset to indicate:", comment: "Onboarding, How the App Works section, view 19, segment 1, paragraph 3"))
             Segment {
                 HStack(spacing: 10) {
                     AccessibleImage("HowTheAppWorks_19_Fast")
@@ -617,13 +663,13 @@ fileprivate struct HowTheAppWorksView19: View {
             PresentableImage(decorative: "HowTheAppWorks_19_4")
             Paragraph(LocalizedString("In order to save the carb entry without bolusing, you can enter 0 U bolus amount.", comment: "Onboarding, How the App Works section, view 19, segment 2, paragraph 4"))
             PresentableImage(decorative: "HowTheAppWorks_19_5")
-            Paragraph(LocalizedString("You’ll be asked to confirm with your device’s authentication method (Face ID or Touch ID).", comment: "Onboarding, How the App Works section, view 19, segment 2, paragraph 5"))
+            Paragraph(LocalizedString("You’ll be asked to confirm with your device’s authentication method.", comment: "Onboarding, How the App Works section, view 19, segment 2, paragraph 5"))
             Callout(.note, title: Text("No Bolus Recommendation", comment: "Onboarding, How the App Works section, view 19, segment 2, callout, title")) {
                 Text(LocalizedString("There may be times a bolus will not be recommended after carb entry. This can happen when:", comment: "Onboarding, How the App Works section, view 19, segment 2, callout, paragraph"))
-                BulletedBodyTextList(
-                    LocalizedString("You have enough active insulin to cover the carbs you’ve entered or", comment: "Onboarding, How the App Works section, view 19, segment 2, callout, list, item 1"),
-                    LocalizedString("If your glucose is predicted to be below your correction range", comment: "Onboarding, How the App Works section, view 19, segment 2, callout, list, item 2")
-                )
+                BulletedListView(bulletColor: .primary, bulletOpacity: 1, bulletSize: 3, bulletAlignment: .firstTextBaseline) {
+                    Text("You have enough active insulin to cover the carbs you’ve entered or", comment: "Onboarding, How the App Works section, view 19, segment 2, callout, list, item 1")
+                    Text("If your glucose is predicted to be below your correction range", comment: "Onboarding, How the App Works section, view 19, segment 2, callout, list, item 2")
+                }
             }
             .padding(.horizontal, -16)
         }
@@ -673,7 +719,7 @@ fileprivate struct HowTheAppWorksView19: View {
 
 fileprivate struct HowTheAppWorksView20: View {
     var body: some View {
-        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView23()) {
+        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView21()) {
             PageHeader(title: LocalizedString("Bolus Entry", comment: "Onboarding, How the App Works section, view 20, title"))
             PresentableImage(decorative: "HowTheAppWorks_20_1")
             Paragraph(LocalizedString("The Bolus Entry button allows you to deliver bolus insulin to bring down high glucose.", comment: "Onboarding, How the App Works section, view 20, paragraph"))
@@ -698,65 +744,161 @@ fileprivate struct HowTheAppWorksView20: View {
 fileprivate struct HowTheAppWorksView21: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView22()) {
-            PageHeader(title: LocalizedString("Temporary Presets", comment: "Onboarding, How the App Works section, view 21, title"))
+            PageHeader(title: LocalizedString("Presets", comment: "Onboarding, How the App Works section, view 21, title"))
             PresentableImage(decorative: "HowTheAppWorks_21_1")
-            Paragraph(LocalizedString("If you would like to let the system know about events that may impact your diabetes management such as exercising, sickness or hormonal changes, you can use temporary presets.", comment: "Onboarding, How the App Works section, view 21, paragraph 1"))
-            Paragraph(LocalizedString("Temporary presets are an optional feature that can enhance and personalize how the Tidepool Loop system works for you while automation is on.", comment: "Onboarding, How the App Works section, view 21, paragraph 2"))
-            Paragraph(Text(LocalizedString("Your provider included two temporary preset recommendations with your therapy settings order: ", comment: "Onboarding, How the App Works section, view 21, paragraph 3"))
-                    + Text("Pre-Meal Preset").bold()
-                    + Text(" and ")
-                    + Text("Workout Preset").bold()
-                    + Text("."))
-            Paragraph(LocalizedString("You can use Pre-Meal Preset and Workout Preset once you complete onboarding. If you’d like to create your own presets, additional instructional content will be available to help guide you through this process in the app.", comment: "Onboarding, How the App Works section, view 21, paragraph 4"))
-            HStack(alignment: .top, spacing: 10) {
-                AccessibleImage("HowTheAppWorks_21_Pre_Meal", width: 33)
-                Paragraph(LocalizedString("To access Pre-Meal Preset, you can tap the Pre-Meal Button on the Tidepool Loop toolbar.", comment: "Onboarding, How the App Works section, view 21, list, item 1, paragraph"))
-                    .font(.subheadline)
+            Paragraph(LocalizedString("By tapping the Presets button, you can temporarily adjust your settings for events like exercise, illness, or hormonal changes that may affect your diabetes management.", comment: "Onboarding, How the App Works section, view 21, paragraph 1"))
+            Paragraph(LocalizedString("Tidepool Loop includes both pre-configured presets and the ability to create custom presets, providing a flexible starting point that you can tailor to your specific needs.", comment: "Onboarding, How the App Works section, view 21, paragraph 2"))
+            Paragraph(LocalizedString("When a preset is on, you’ll notice the following indicators on the home screen:", comment: "Onboarding, How the App Works section, view 21, paragraph 3"))
+            PresentableImage(decorative: "HowTheAppWorks_21_2")
+            BulletedListView {
+                Text("a banner will display at the top of the home screen", comment: "Onboarding, How the App Works section, view 21, bullet 1")
             }
-            HStack(alignment: .top, spacing: 10) {
-                AccessibleImage("HowTheAppWorks_21_Preset", width: 33)
-                Paragraph(LocalizedString("To access temporary presets and temporary presets training, you can tap the Preset Button on the Tidepool Loop toolbar once you complete onboarding.", comment: "Onboarding, How the App Works section, view 21, list, item 2, paragraph"))
-                    .font(.subheadline)
+            PresentableImage(decorative: "HowTheAppWorks_21_3")
+            BulletedListView {
+                Text("(if applicable) the glucose chart will show your adjusted correction range", comment: "Onboarding, How the App Works section, view 21, bullet 2")
             }
+            PresentableImage(decorative: "HowTheAppWorks_21_4")
+            BulletedListView {
+                Text("the Presets button will display with inverted colors on the toolbar", comment: "Onboarding, How the App Works section, view 21, bullet 3")
+            }
+            segment
+        }
+    }
+        
+    private var segment: some View {
+        Segment(header: LocalizedString("Bluetooth Range", comment: "Onboarding, How the App Works section, view 21, segment, header")) {
+            Paragraph(LocalizedString("To use presets, your phone and diabetes devices must be within Bluetooth range (~30 feet).", comment: "Onboarding, How the App Works section, view 21, segment, paragraph 1"))
+            Paragraph(LocalizedString("If you go out of range, the system will use your last automated basal rate for 30 minutes. After that, it will use your scheduled basal rate.", comment: "Onboarding, How the App Works section, view 21, segment, paragraph 2"))
         }
     }
 }
 
 fileprivate struct HowTheAppWorksView22: View {
     var body: some View {
-        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView20()) {
-            PageHeader(title: LocalizedString("Pre-Meal Preset", comment: "Onboarding, How the App Works section, view 22, title"))
-            PresentableImage(decorative: "HowTheAppWorks_22_1")
-            Paragraph(LocalizedString("If you’d like Tidepool Loop to temporarily work a little harder before you begin eating so that your post-meal glucose spike is reduced, you can use Pre-Meal Preset.", comment: "Onboarding, How the App Works section, view 22, paragraph 1"))
-            Paragraph(LocalizedString("Activating this temporary preset before your meal tells Tidepool Loop to adjust your basal insulin and lower your glucose Correction Range to your Pre-Meal Range in advance of your meal.", comment: "Onboarding, How the App Works section, view 22, paragraph 2"))
-            PresentableImage(decorative: "HowTheAppWorks_22_2")
-            Paragraph(LocalizedString("The Pre-Meal Preset will be in effect for up to one hour or until you cancel it or enter your next carb entry.", comment: "Onboarding, How the App Works section, view 22, paragraph 3"))
-            Paragraph(LocalizedString("When activated, the button will display with inverted colors as shown above.", comment: "Onboarding, How the App Works section, view 22, paragraph 4"))
+        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView23()) {
+            PageHeader(title: LocalizedString("Using Presets", comment: "Onboarding, How the App Works section, view 22, title"))
+            PresentableImage(decorative: "HowTheAppWorks_22")
+            Paragraph(LocalizedString("With a preset, you can:", comment: "Onboarding, How the App Works section, view 22, paragraph 1"))
+            BulletedListView {
+                Text("Adjust your overall insulin needs", comment: "Onboarding, How the App Works section, view 22, bullet 1")
+                Text("Pick a temporary correction range", comment: "Onboarding, How the App Works section, view 22, bullet 2")
+                Text("Choose a duration", comment: "Onboarding, How the App Works section, view 22, bullet 3")
+                Text("Schedule a preset ahead of time", comment: "Onboarding, How the App Works section, view 22, bullet 4")
+            }
+            segment1
+            segment2
+        }
+    }
+    
+    private var segment1: some View {
+        Segment(header: LocalizedString("Adjusting Overall Insulin Needs", comment: "Onboarding, How the App Works section, view 22, segment 1, header")) {
+            Paragraph(LocalizedString("Overall insulin should be adjusted when your body needs more or less insulin than normal.", comment: "Onboarding, How the App Works section, view 22, segment 1, paragraph"))
+        }
+    }
+    
+    private var segment2: some View {
+        Segment(header: LocalizedString("Adjusting Correction Range", comment: "Onboarding, How the App Works section, view 22, segment 2, header")) {
+            Paragraph(LocalizedString("The correction range is a safety setting. Adjusting it can help reduce the risk of low glucose if you expect unusual changes.", comment: "Onboarding, How the App Works section, view 22, segment 2, paragraph"))
         }
     }
 }
 
 fileprivate struct HowTheAppWorksView23: View {
     var body: some View {
-        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView26()) {
-            PageHeader(title: LocalizedString("Workout Preset", comment: "Onboarding, How the App Works section, view 23, title"))
-            PresentableImage(decorative: "HowTheAppWorks_23_1")
-            Paragraph(LocalizedString("If you’d like Tidepool Loop to temporarily adjust your settings for activity, such as exercise, you can use Workout Preset.\n\nActivating this button before activity tells Tidepool Loop to adjust both your basal insulin and your glucose Correction Range to help you meet your glucose goals during that activity.", comment: "Onboarding, How the App Works section, view 23, paragraph 1 and 2"))
-            PresentableImage(decorative: "HowTheAppWorks_23_2")
-            Paragraph(LocalizedString("Workout Preset will be in effect for the time you indicate when you activate it or until you cancel it.\n\nWhen activated, the button will display with inverted colors as shown above, and the glucose chart will show the adjustment (your Workout Preset) as shown below.", comment: "Onboarding, How the App Works section, view 23, paragraph 3 and 4"))
-            PresentableImage(decorative: "HowTheAppWorks_23_3")
+        OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView24()) {
+            PageHeader(title: LocalizedString("Pre-configured Presets", comment: "Onboarding, How the App Works section, view 23, title"))
+            Paragraph(LocalizedString("The app includes 5 pre-configured presets.", comment: "Onboarding, How the App Works section, view 23, paragraph 1 and 2"))
+            segment1
+            segment2
+        }
+    }
+    
+    private var segment1: some View {
+        Segment(header: LocalizedString("Pre-Meal Preset", comment: "Onboarding, How the App Works section, view 23, segment 1, header")) {
+            PresentableImage(decorative: "HowTheAppWorks_23")
+            Paragraph(LocalizedString("Use the Pre-Meal preset if you want Tidepool Loop to work a bit harder before you eat, helping reduce your post-meal glucose spike.", comment: "Onboarding, How the App Works section, view 23, segment 1, paragraph 1"))
+            Paragraph(LocalizedString("Activating this preset before your meal tells Tidepool Loop to adjust your insulin delivery and lower your glucose Correction Range in advance of your meal.", comment: "Onboarding, How the App Works section, view 23, segment 1, paragraph 2"))
+            Paragraph(LocalizedString("When you turn on the Pre-Meal preset, it will stay on for up to one hour. Canceling it or entering a carb entry will cause it to end.", comment: "Onboarding, How the App Works section, view 23, segment 1, paragraph 3"))
+        }
+    }
+    
+    private var segment2: some View {
+        Segment(header: LocalizedString("Presets for Activity", comment: "Onboarding, How the App Works section, view 23, segment 2, header")) {
+            Paragraph(LocalizedString("Exercise and other physical activity are common times to use presets. Tidepool Loop includes preset options to support you during different types of activity.", comment: "Onboarding, How the App Works section, view 23, segment 2, paragraph 1"))
+            Paragraph(LocalizedString("We designed these presets with researchers at UC Santa Barbara, the University of Pavia, Stanford University, and York University.", comment: "Onboarding, How the App Works section, view 23, segment 2, paragraph 2"))
+            PresetCard.default(for: .jogging)
+            PresetCard.default(for: .walking)
+            PresetCard.default(for: .biking)
+            PresetCard.default(for: .strengthTraining)
+            Paragraph(LocalizedString("These presets are a starting point. You may need to work with your healthcare provider to edit them to meet your personal needs.", comment: "Onboarding, How the App Works section, view 23, segment 2, paragraph 3"))
         }
     }
 }
 
 fileprivate struct HowTheAppWorksView24: View {
+    
+    @Environment(\.colorPalette) private var colorPalette
+    @EnvironmentObject private var displayGlucosePreference: DisplayGlucosePreference
+    
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView25()) {
-            PageHeader(title: LocalizedString("Manual Temp Basal", comment: "Onboarding, How the App Works section, view 24, title"))
-            Paragraph(LocalizedString("In addition to using temporary presets, you can temporarily adjust your insulin delivery by setting a manual temp basal.", comment: "Onboarding, How the App Works section, view 24, paragraph 1"))
+            PageHeader(title: LocalizedString("Using Presets for Activity", comment: "Onboarding, How the App Works section, view 24, title"))
+            PresentableImage(decorative: "HowTheAppWorks_24")
+            segment1
+            segment2
             Paragraph(LocalizedString("A manual temp basal allows you to specify a basal rate for up to 12 hours. Tidepool Loop will not automate insulin adjustments while a manual temp basal is running. At the end of the set duration or when canceled, Tidepool Loop will restore automated adjustments to your insulin delivery.", comment: "Onboarding, How the App Works section, view 24, paragraph 2"))
             Paragraph(LocalizedString("You can access manual temp basal under Activity in your insulin pump settings.", comment: "Onboarding, How the App Works section, view 24, paragraph 3"))
-            PresentableImage(decorative: "HowTheAppWorks_24_1")
+        }
+    }
+    
+    private var segment1: some View {
+        Segment(header: LocalizedString("Timing Your Presets for Exercise", comment: "Onboarding, How the App Works section, view 24, segment 1, header")) {
+            Text("Tidepool Loop suggests turning on a preset for exercise at least ", comment: "Onboarding, How the App Works section, view 24, segment 1, paragraph 1, part 1") + Text("1 hour before you start.", comment: "Onboarding, How the App Works section, view 24, segment 1, paragraph 1, part 2").bold()
+            Text("Keep the preset on for the hour before and the whole time you are active.", comment: "Onboarding, How the App Works section, view 24, segment 1, paragraph 2")
+            Text("If you forget, that’s okay. Just turn it on when you remember and leave it on until you are done.", comment: "Onboarding, How the App Works section, view 24, segment 1, paragraph 3")
+            InsetContent {
+                Timeline {
+                    TimelineStep(
+                        symbol: Image(systemName: "clock"),
+                        title: Text("1 Hour Before", comment: "Onboarding, How the App Works section, view 24, segment 1, timeline, item 1, title"),
+                        subtitle: Text("Enable your preset", comment: "Onboarding, How the App Works section, view 24, segment 1, timeline, item 1, subtitle")
+                    )
+                    TimelineStep(
+                        symbol: Image(systemName: "figure.run"),
+                        title:  Text("During Activity", comment: "Onboarding, How the App Works section, view 24, segment 1, timeline, item 2, title"),
+                        subtitle:  Text("Keep preset on throughout your exercise", comment: "Onboarding, How the App Works section, view 24, segment 1, timeline, item 2, subtitle")
+                    )
+                    TimelineStep(
+                        symbol: Image(systemName: "checkmark"),
+                        symbolInset: 2,
+                        title:  Text("Activity Ends", comment: "Onboarding, How the App Works section, view 24, segment 1, timeline, item 3, title"),
+                        subtitle:  Text("Turn off preset when you finish exercising", comment: "Onboarding, How the App Works section, view 24, segment 1, timeline, item 3, subtitle")
+                    )
+                }
+            }
+            Text("You can plan ahead and schedule presets to start at a certain date and time. The app will send you a reminder and ask if you'd like to start the preset.", comment: "Onboarding, How the App Works section, view 24, segment 1, paragraph 4")
+        }
+    }
+    
+    private var segment2: some View {
+        Segment(header: LocalizedString("Safe Glucose Ranges for Exercise", comment: "Onboarding, How the App Works section, view 24, segment 2, header")) {
+            Paragraph(LocalizedString("Before starting exercise, make sure to check your glucose.", comment: "Onboarding, How the App Works section, view 24, segment 2, paragraph 1"))
+            Paragraph(LocalizedString("Aim for your glucose to be between 120 and 180 mg/dL before exercising. Based on current research, this can help prevent high and low levels during or after your workout.", comment: "Onboarding, How the App Works section, view 24, segment 2, paragraph 2"))
+            InsetContent {
+                Text("Safe Starting Glucose Range").bold()
+                Group {
+                    Text("\(displayGlucosePreference.format(LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 120), includeUnit: false))-\(displayGlucosePreference.format(LoopQuantity(unit: .milligramsPerDeciliter, doubleValue: 180), includeUnit: false)) ")
+                        .font(.system(size: UIFontMetrics.default.scaledValue(for: 32)).weight(.heavy))
+                    + Text(displayGlucosePreference.unit.localizedShortUnitString)
+                }
+                .foregroundStyle(colorPalette.carbTintColor)
+                Text("\(Image(systemName: "exclamationmark.circle")) Consider a small snack to prevent lows")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+            Callout(.note, message: Text("If your glucose is over 180 mg/dL, starting a preset that lowers insulin may not bring it down as much. You could stay high longer.", comment: "Onboarding, How the App Works section, view 24, segment 2, callout, message"))
+                .padding(.horizontal, -16)
+            Paragraph(LocalizedString("Always check your glucose before, during, and after any activity. This will help keep your glucose within a safe range.", comment: "Onboarding, How the App Works section, view 24, segment 2, paragraph 3"))
         }
     }
 }
@@ -764,57 +906,12 @@ fileprivate struct HowTheAppWorksView24: View {
 fileprivate struct HowTheAppWorksView25: View {
     var body: some View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView26()) {
-            PageHeader(title: LocalizedString("Temporary Settings", comment: "Onboarding, How the App Works section, view 25, title"))
-            Paragraph(LocalizedString("When deciding whether to use a temporary preset or set a manual temp basal, consider these key differences below.", comment: "Onboarding, How the App Works section, view 25, paragraph 1"))
-            segment
-        }
-    }
-    
-    private var segment: some View {
-        Segment(header: LocalizedString("Here are the Key Differences", comment: "Onboarding, How the App Works section, view 25, segment, header")) {
-            VStack(alignment: .leading, spacing: 24) {
-                HStack(alignment: .top, spacing: 10) {
-                    AccessibleImage("HowTheAppWorks_25_Closed_Loop", width: 33)
-                    VStack(alignment: .leading, spacing: 4) {
-                        Paragraph(LocalizedString("Different Modes for Use", comment: "Onboarding, How the App Works section, view 25, list, item 1, title"))
-                            .bold()
-                            .font(.subheadline)
-                        Paragraph(LocalizedString("Temporary presets work when the system is in Closed Loop ON mode and automation is running.", comment: "Onboarding, How the App Works section, view 25, list, item 1, paragraph"))
-                    }
-                }
-                HStack(alignment: .top, spacing: 10) {
-                    AccessibleImage("HowTheAppWorks_25_Open_Loop", width: 33)
-                    Paragraph(LocalizedString("Manual temp basal causes the Tidepool Loop system to turn off automation and enter into Closed Loop OFF mode.", comment: "Onboarding, How the App Works section, view 25, list, item 2, paragraph"))
-                }
-                HStack(alignment: .top, spacing: 10) {
-                    AccessibleImage("HowTheAppWorks_25_Durations", width: 33)
-                    VStack(alignment: .leading, spacing: 10) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Paragraph(LocalizedString("Durations", comment: "Onboarding, How the App Works section, view 25, list, item 3, title"))
-                                .bold()
-                                .font(.subheadline)
-                            Paragraph(LocalizedString("Temporary presets allow you to choose a duration that lasts for multiple hours to indefinitely (until turned off).", comment: "Onboarding, How the App Works section, view 25, list, item 3, paragraph 1"))
-                        }
-                        Paragraph(LocalizedString("A manual temp basal only allows you to select a basal rate for a duration for up to 12 hours.", comment: "Onboarding, How the App Works section, view 25, list, item 3, paragraph 2"))
-                    }
-                }
-                HStack(alignment: .top, spacing: 10) {
-                    AccessibleImage("HowTheAppWorks_25_Bluetooth", width: 33)
-                    VStack(alignment: .leading, spacing: 10) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Paragraph(LocalizedString("Bluetooth Range", comment: "Onboarding, How the App Works section, view 25, list, item 4, title"))
-                                .bold()
-                                .font(.subheadline)
-                            Paragraph(LocalizedString("Temporary presets must be used when your phone and diabetes devices are in Bluetooth range.", comment: "Onboarding, How the App Works section, view 25, list, item 4, paragraph 1"))
-                        }
-                        Paragraph(LocalizedString("If you leave Bluetooth range from your devices, the manual temp basal rate set in the last completed Loop cycle will continue for 30 minutes, then your pump will resume your scheduled basal rate delivery until your devices are within range.", comment: "Onboarding, How the App Works section, view 25, list, item 4, paragraph 2"))
-                        Paragraph(LocalizedString("A manual temp basal does not require your phone to stay within Bluetooth range of your Diabetes devices such as your CGM and insulin pump.", comment: "Onboarding, How the App Works section, view 25, list, item 4, paragraph 3"))
-                    }
-                }
-            }
-            .padding()
-            .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(Color(.systemFill), lineWidth: 1))
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            PageHeader(title: LocalizedString("Preset Performance History", comment: "Onboarding, How the App Works section, view 25, title"))
+            PresentableImage(decorative: "HowTheAppWorks_25")
+            Paragraph(LocalizedString("Performance History shows you how each preset affected your glucose levels.", comment: "Onboarding, How the App Works section, view 25, paragraph 1"))
+            Paragraph(LocalizedString("You can view a summary of your data during the preset and for the six hours after. This helps you understand how the preset worked.", comment: "Onboarding, How the App Works section, view 25, paragraph 2"))
+            Paragraph(LocalizedString("To try it, tap Presets, then Performance History, and pick the preset you want to review.", comment: "Onboarding, How the App Works section, view 25, paragraph 3"))
+            Paragraph(LocalizedString("Performance history is saved for up to seven days.", comment: "Onboarding, How the App Works section, view 25, paragraph 4"))
         }
     }
 }

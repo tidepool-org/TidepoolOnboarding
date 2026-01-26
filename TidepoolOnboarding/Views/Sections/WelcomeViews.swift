@@ -95,7 +95,7 @@ fileprivate let welcomeData = [
                 alignment: .center),
     WelcomeData(image: "Welcome_2",
                 title: LocalizedString("What is Automated Insulin Dosing?", comment: "Onboarding, Welcome section, view 2, title"),
-                description: LocalizedString("An automated insulin dosing system is different than a typical insulin pump. It automatically adjusts your background (or basal) insulin in response to your glucose readings from a CGM sensor.", comment: "Onboarding, Welcome section, view 2, description")),
+                description: LocalizedString("An automated insulin dosing system is different than a typical insulin pump. It automatically adjusts your insulin delivery in response to your glucose readings from a CGM sensor.", comment: "Onboarding, Welcome section, view 2, description")),
     WelcomeData(image: "Welcome_3",
                 title: LocalizedString("What is Tidepool Loop?", comment: "Onboarding, Welcome section, view 3, title"),
                 description: LocalizedString("Tidepool Loop is an app designed to automate your insulin dosing by doing the following:", comment: "Onboarding, Welcome section, view 3, description")),

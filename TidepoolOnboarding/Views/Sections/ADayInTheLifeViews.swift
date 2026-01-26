@@ -41,6 +41,7 @@ fileprivate struct ADayInTheLifeView2: View {
             Paragraph(LocalizedString("Tidepool Loop shows that your glucose is 120 mg/dL.", comment: "Onboarding, A Day In The Life section, view 2, paragraph 2"))
             PresentableImage(decorative: "ADayInTheLife_2_2")
             Paragraph(LocalizedString("Your charts show little insulin or carbs active in your body.", comment: "Onboarding, A Day In The Life section, view 2, paragraph 3"))
+            Paragraph(LocalizedString("How can you use Tidepool Loop to manage your upcoming meal?", comment: "Onboarding, A Day In The Life section, view 2, paragraph 4"))
         }
     }
 }
@@ -64,7 +65,7 @@ fileprivate struct ADayInTheLifeView4: View {
             Paragraph(LocalizedString("You estimate that the sandwich is around 40g and the chips will be around 25g, or 65g total.", comment: "Onboarding, A Day In The Life section, view 4, paragraph 2"))
             PresentableImage(decorative: "ADayInTheLife_4_1")
             Paragraph(LocalizedString("You don’t have to be precise.", comment: "Onboarding, A Day In The Life section, view 4, paragraph 3"))
-            Paragraph(LocalizedString("Tidepool Loop will watch how your glucose responds, recalculate your estimate, and adjust your basal insulin in an effort to reduce highs and lows.", comment: "Onboarding, A Day In The Life section, view 4, paragraph 4"))
+            Paragraph(LocalizedString("Tidepool Loop will watch how your glucose responds, recalculate your estimate, and adjust your insulin delivery in an effort to reduce highs and lows.", comment: "Onboarding, A Day In The Life section, view 4, paragraph 4"))
             segment
         }
     }
@@ -73,7 +74,7 @@ fileprivate struct ADayInTheLifeView4: View {
         Segment(header: LocalizedString("Choosing a Food Type", comment: "Onboarding, A Day In The Life section, view 4, segment, header")) {
             Paragraph(LocalizedString("Since this is a meal that you know typically affects your glucose for a few hours, you select the taco preset for an absorption time of 3 hours, or medium carb effect.", comment: "Onboarding, A Day In The Life section, view 4, segment, paragraph 1"))
             PresentableImage(decorative: "ADayInTheLife_4_2")
-            Paragraph(LocalizedString("Alright. You’ve entered 65g of carb, you’ve set the time for 15 minutes in the future, and you’ve selected a food type.", comment: "Onboarding, A Day In The Life section, view 4, segment, paragraph 2"))
+            Paragraph(LocalizedString("Alright. You’ve entered 65g of carbs, you’ve set the time for 15 minutes in the future, and you’ve selected a food type.", comment: "Onboarding, A Day In The Life section, view 4, segment, paragraph 2"))
             Paragraph(LocalizedString("You'll tap Continue to tell Tidepool Loop you'll be eating those carbs and proceed to the Bolus Screen.", comment: "Onboarding, A Day In The Life section, view 4, segment, paragraph 3"))
         }
     }
@@ -99,7 +100,7 @@ fileprivate struct ADayInTheLifeView6: View {
             PresentableImage(decorative: "ADayInTheLife_6")
             Paragraph(LocalizedString("When your sandwich arrives, you’re all set.", comment: "Onboarding, A Day In The Life section, view 6, paragraph 1"))
             Paragraph(LocalizedString("If you decide not to finish all of your meal, you can go back and edit the carb entry in your Active Carbohydrates list to reflect what you actually ate.", comment: "Onboarding, A Day In The Life section, view 6, paragraph 2"))
-            Paragraph(LocalizedString("Tidepool Loop will continue to adjust your basal insulin over the next three hours with the knowledge that you have these carbs working to impact your glucose.", comment: "Onboarding, A Day In The Life section, view 6, paragraph 3"))
+            Paragraph(LocalizedString("Tidepool Loop will continue to adjust your insulin delivery over the next three hours with the knowledge that you have these carbs working to impact your glucose.", comment: "Onboarding, A Day In The Life section, view 6, paragraph 3"))
             Paragraph(LocalizedString("Thanks, Tidepool Loop.", comment: "Onboarding, A Day In The Life section, view 6, paragraph 4"))
         }
     }
@@ -174,8 +175,8 @@ fileprivate struct ADayInTheLifeView12: View {
 
     private var segment: some View {
         Segment(header: LocalizedString("A New Approach", comment: "Onboarding, A Day In The Life section, view 12, segment 1, header")) {
-            Paragraph(LocalizedString("Before Tidepool Loop, you might have chosen to eat a snack before activities or perhaps reduce your insulin delivery before a run.", comment: "Onboarding, A Day In The Life section, view 12, segment 1, paragraph 1"))
-            Paragraph(LocalizedString("With Tidepool Loop, you can use information from your charts and automation via Workout Preset to manage your exercise.", comment: "Onboarding, A Day In The Life section, view 12, segment 1, paragraph 2"))
+            Paragraph(LocalizedString("Before Tidepool Loop, you may have eaten a snack or reduced your insulin delivery before a run.", comment: "Onboarding, A Day In The Life section, view 12, segment 1, paragraph 1"))
+            Paragraph(LocalizedString("With Tidepool Loop, you can use information from you your charts, or you can enable a Preset to adjust your insulin delivery while you exercise.", comment: "Onboarding, A Day In The Life section, view 12, segment 1, paragraph 2"))
         }
     }
 }
@@ -185,7 +186,7 @@ fileprivate struct ADayInTheLifeView13: View {
         OnboardingSectionPageView(section: .aDayInTheLife, destination: ADayInTheLifeView14()) {
             PageHeader(title: LocalizedString("Check Your Charts", comment: "Onboarding, A Day In The Life section, view 13, title"))
             PresentableImage(decorative: "ADayInTheLife_13")
-            Paragraph(LocalizedString("About thirty minutes to an hour before your run, you check your charts.", comment: "Onboarding, A Day In The Life section, view 13, paragraph 1"))
+            Paragraph(LocalizedString("About an hour before your run, you check your charts.", comment: "Onboarding, A Day In The Life section, view 13, paragraph 1"))
             Paragraph(LocalizedString("Your Glucose Chart shows that your glucose is not predicted to drop in the near future.", comment: "Onboarding, A Day In The Life section, view 13, paragraph 2"))
             Paragraph(LocalizedString("Your Active Insulin Chart shows that you do not have much insulin currently working to lower your glucose.", comment: "Onboarding, A Day In The Life section, view 13, paragraph 3"))
         }
@@ -195,16 +196,20 @@ fileprivate struct ADayInTheLifeView13: View {
 fileprivate struct ADayInTheLifeView14: View {
     var body: some View {
         OnboardingSectionPageView(section: .aDayInTheLife, destination: ADayInTheLifeView15()) {
-            PageHeader(title: LocalizedString("Workout Preset", comment: "Onboarding, A Day In The Life section, view 14, title"))
-            Paragraph(LocalizedString("You’ve told Tidepool Loop in Settings that you like your glucose to stay a little higher during your workouts and have set this goal for 150-160 mg/dL.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 1"))
-            Paragraph(LocalizedString("You go ahead and tap the Workout Preset button from either your iPhone or Apple Watch to tell Tidepool Loop to adjust both your glucose target and your insulin delivery for the next two hours.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 2"))
+            PageHeader(title: LocalizedString("Presets for Activity", comment: "Onboarding, A Day In The Life section, view 14, title"))
+            Paragraph(LocalizedString("You decide to use the Jogging preset for your run.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 1"))
+            Paragraph(LocalizedString("You can start the preset from your iPhone or Apple Watch. This tells Tidepool Loop to change your glucose target and insulin delivery for the next two hours.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 2"))
             PresentableImage(decorative: "ADayInTheLife_14_1")
-            Paragraph(LocalizedString("You decide how long before or after this change should remain in effect, as well as how long you expect your activity to last.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 3"))
-            Paragraph(LocalizedString("Work with your healthcare provider to find the optimal timing and settings for your individual exercise routine. You may find you want to extend your workout settings for longer before or after certain activities.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 4"))
-            Paragraph(LocalizedString("When your Workout Preset is active, you’ll see a darker purple shaded correction range on your Glucose Chart.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 5"))
+            Text("It’s best to turn this on ", comment: "Onboarding, A Day In The Life section, view 14, paragraph 3, part 1") + Text("1 hour before your run", comment: "Onboarding, A Day In The Life section, view 14, paragraph 3, part 2").bold() + Text(" and keep it on until you finish.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 3, part 3")
+            Paragraph(LocalizedString("Work with your healthcare provider to find the timing and settings that work best for you.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 4"))
+            Paragraph(LocalizedString("When the preset is on,  you'll see these indicators on the home screen:", comment: "Onboarding, A Day In The Life section, view 14, paragraph 5"))
+            BulletedListView {
+                Text("a banner at the top of the home screen", comment: "Onboarding, A Day In The Life section, view 14, bullet 1")
+                Text("(if applicable) an adjusted correction range on your glucose chart", comment: "Onboarding, A Day In The Life section, view 14, bullet 2")
+                Text("the Presets button shown in inverted colors on the toolbar", comment: "Onboarding, A Day In The Life section, view 14, bullet 3")
+            }
+            Paragraph(LocalizedString("You can tap the banner for more details about how the preset affects your therapy settings.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 6"))
             PresentableImage(decorative: "ADayInTheLife_14_2")
-            Paragraph(LocalizedString("You can also see that your changes are active by the inverted button colors in the toolbar, as shown below.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 6"))
-            PresentableImage(decorative: "ADayInTheLife_14_3")
         }
     }
 }
@@ -251,7 +256,7 @@ fileprivate struct ADayInTheLifeView18: View {
         OnboardingSectionPageView(section: .aDayInTheLife, destination: ADayInTheLifeView19()) {
             PageHeader(title: LocalizedString("1. How Far Out is Tidepool Loop’s Prediction?", comment: "Onboarding, A Day In The Life section, view 18, title"))
             PresentableImage(decorative: "ADayInTheLife_18")
-            Paragraph(LocalizedString("The further out the prediction is, the less accurate it will be. This is because Tidepool Loop will continue to adjust delivery as often as every 5 minutes in an effort to reach your correction range.", comment: "Onboarding, A Day In The Life section, view 18, paragraph 1"))
+            Paragraph(LocalizedString("The further out the prediction is, the less accurate it will be. This is because Tidepool Loop will continue to adjust insulin delivery as often as every 5 minutes in an effort to reach your correction range.", comment: "Onboarding, A Day In The Life section, view 18, paragraph 1"))
             Paragraph(LocalizedString("If low glucose looks likely in the near future, you may want to go ahead and treat with fast-acting carbs.", comment: "Onboarding, A Day In The Life section, view 18, paragraph 2"))
             Paragraph(LocalizedString("Entering these carbs into Tidepool Loop will adjust your glucose prediction.", comment: "Onboarding, A Day In The Life section, view 18, paragraph 3"))
         }
@@ -265,8 +270,8 @@ fileprivate struct ADayInTheLifeView19: View {
             PresentableImage(decorative: "ADayInTheLife_19_1")
             Paragraph(LocalizedString("If automation is on, Tidepool Loop will continue making adjustments in an effort to bring your glucose into your correct range.", comment: "Onboarding, A Day In The Life section, view 19, paragraph 1"))
             PresentableImage(decorative: "ADayInTheLife_19_2")
-            PresentableImage(decorative: "ADayInTheLife_19_3")
             Paragraph(LocalizedString("If automation is off or seems inconsistent, you will need to respond to high and low glucose according to your healthcare provider’s instructions.", comment: "Onboarding, A Day In The Life section, view 19, paragraph 2"))
+            PresentableImage(decorative: "ADayInTheLife_19_3")
             Paragraph(LocalizedString("You may need to eat additional carbs to prevent or treat a low or take additional insulin to prevent or treat a high.", comment: "Onboarding, A Day In The Life section, view 19, paragraph 3"))
         }
     }
@@ -278,7 +283,7 @@ fileprivate struct ADayInTheLifeView20: View {
             PageHeader(title: LocalizedString("3. How Much Active Insulin is Working to Lower Your Glucose?", comment: "Onboarding, A Day In The Life section, view 20, title"))
             PresentableImage(decorative: "ADayInTheLife_20")
             Paragraph(LocalizedString("Check your Active Insulin Chart. Do you still have insulin working in your body?", comment: "Onboarding, A Day In The Life section, view 20, paragraph 1"))
-            Paragraph(LocalizedString("If Tidepool Loop predicts a low and your chart shows you have insulin active in your bloodstream, you may want to eat fast-acting carbs to prevent low glucose.", comment: "Onboarding, A Day In The Life section, view 20, paragraph 2"))
+            Paragraph(LocalizedString("If Tidepool Loop predicts a low and your chart shows you have insulin on board, you may want to eat fast-acting carbs to prevent low glucose.", comment: "Onboarding, A Day In The Life section, view 20, paragraph 2"))
             Paragraph(LocalizedString("If Tidepool Loop predicts a high, check your chart to see if you have enough insulin working to reduce it without the need for an additional bolus.", comment: "Onboarding, A Day In The Life section, view 20, paragraph 3"))
             Paragraph(LocalizedString("You can tap the Bolus Entry button at any time to see if Tidepool Loop would recommend a bolus right now.", comment: "Onboarding, A Day In The Life section, view 20, paragraph 4"))
         }
@@ -315,7 +320,7 @@ fileprivate struct ADayInTheLifeView23: View {
         OnboardingSectionPageView(section: .aDayInTheLife, destination: ADayInTheLifeView24()) {
             PageHeader(title: LocalizedString("6. Is Your Insulin Pump Functioning Properly?", comment: "Onboarding, A Day In The Life section, view 23, title"))
             PresentableImage(decorative: "ADayInTheLife_23")
-            Paragraph(LocalizedString("If your insulin pump cannula is kinked or occluded, Tidepool Loop may think it has delivered insulin that your body may not be absorbing.", comment: "Onboarding, A Day In The Life section, view 23, paragraph 1"))
+            Paragraph(LocalizedString("Sometimes, there may be issues with your insulin pump where the cannula delivering insulin gets bent or blocked. In these cases, Tidepool Loop may think it has delivered insulin that your body isn’t really getting.", comment: "Onboarding, A Day In The Life section, view 23, paragraph 1"))
             Paragraph(LocalizedString("Charts will show large amounts of active insulin that do not reflect what you have actually received, and your glucose prediction will be inaccurate.", comment: "Onboarding, A Day In The Life section, view 23, paragraph 2"))
             Paragraph(LocalizedString("You can tap Settings or the Insulin Pump Icons to check the status of your insulin pump or to suspend or resume insulin.", comment: "Onboarding, A Day In The Life section, view 23, paragraph 3"))
         }

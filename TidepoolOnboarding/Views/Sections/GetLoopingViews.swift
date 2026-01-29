@@ -19,7 +19,7 @@ struct GetLoopingNavigationButton: View {
 fileprivate struct GetLoopingView1: View {
     var body: some View {
         OnboardingSectionPageView(section: .getLooping, destination: GetLoopingView2()) {
-            PageHeader(title: LocalizedString("Closed Loop Mode", comment: "Onboarding, Get Looping section, view 1, title"))
+            PageHeader(title: LocalizedString("Automation", comment: "Onboarding, Get Looping section, view 1, title"))
             PresentableImage(decorative: "GetLooping_1")
             Paragraph(LocalizedString("There are two modes of operation for Tidepool Loop:", comment: "Onboarding, Get Looping section, view 1, paragraph"))
                 .fixedSize(horizontal: false, vertical: true)
@@ -41,7 +41,7 @@ fileprivate struct GetLoopingView1: View {
     
     private var segment2: some View {
         Segment(header: LocalizedString("Closed Loop OFF", comment: "Onboarding, Get Looping section, view 1, segment 2, header")) {
-            Paragraph(LocalizedString("When the Closed Loop switch is in the OFF position, the app will NOT automatically adjust your basal insulin.", comment: "Onboarding, Get Looping section, view 1, segment 2, paragraph 1"))
+            Paragraph(LocalizedString("When the Closed Loop switch is in the OFF position, the app will NOT automatically adjust your insulin delivery.", comment: "Onboarding, Get Looping section, view 1, segment 2, paragraph 1"))
             Paragraph(LocalizedString("You may use this Closed Loop OFF mode:", comment: "Onboarding, Get Looping section, view 1, segment 2, paragraph 2"))
             BulletedBodyTextList(
                 LocalizedString("When you don’t have an active sensor session", comment: "Onboarding, Get Looping section, view 1, segment 2, list, item 1"),

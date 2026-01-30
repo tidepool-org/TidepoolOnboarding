@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "HowTheAppWorks_19_FastGraph@2x.png",
+      "filename" : "HowTheAppWorks_19_FastGraph.png",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "HowTheAppWorks_19_FastGraph_Dark.png",
       "idiom" : "universal"
     }
   ],

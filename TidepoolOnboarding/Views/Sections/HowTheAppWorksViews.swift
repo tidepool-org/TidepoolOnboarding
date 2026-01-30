@@ -122,7 +122,6 @@ fileprivate struct HowTheAppWorksView5: View {
             HStack(alignment: .top, spacing: 10) {
                 LoopCircleView(closedLoop: true, freshness: .fresh)
                 Paragraph(LocalizedString("Loop is closed and green. You’ve set automation to ON and it’s working as expected.", comment: "Onboarding, How the App Works section, view 5, segment 2, list, item 1, paragraph"))
-                    .font(.subheadline)
             }
             HStack(alignment: .top, spacing: 10) {
                 LoopCircleView(closedLoop: true, freshness: .stale)
@@ -140,7 +139,6 @@ fileprivate struct HowTheAppWorksView5: View {
             HStack(alignment: .top, spacing: 10) {
                 LoopCircleView(closedLoop: false, freshness: .fresh)
                 Paragraph(LocalizedString("Loop is open and green. Automation is OFF. Your pump and CGM will continue operating. You’ll continue to receive your scheduled basal insulin, but it will not adjust automatically.", comment: "Onboarding, How the App Works section, view 5, segment 3, list, item 1, paragraph"))
-                    .font(.subheadline)
             }
             HStack(alignment: .top, spacing: 10) {
                 LoopCircleView(closedLoop: true, freshness: .stale)
@@ -257,7 +255,7 @@ fileprivate struct HowTheAppWorksView8: View {
         OnboardingSectionPageView(section: .howTheAppWorks, destination: HowTheAppWorksView9()) {
             PageHeader(title: LocalizedString("Temporary Status Banners", comment: "Onboarding, How the App Works section, view 8, title"))
             PresentableImage("HowTheAppWorks_8_1")
-            Paragraph(LocalizedString("TTidepool Loop will display a banner below the status icons to notify you of a temporary status.", comment: "Onboarding, How the App Works section, view 8, paragraph 1"))
+            Paragraph(LocalizedString("Tidepool Loop will display a banner below the status icons to notify you of a temporary status.", comment: "Onboarding, How the App Works section, view 8, paragraph 1"))
             Paragraph(LocalizedString("You can see and interact with this banner in situations like these:", comment: "Onboarding, How the App Works section, view 8, paragraph 2"))
             BulletedListView(bulletAlignment: .firstTextBaseline) {
                 VStack(alignment: .leading, spacing: 8) {
@@ -846,8 +844,6 @@ fileprivate struct HowTheAppWorksView24: View {
             PresentableImage(decorative: "HowTheAppWorks_24")
             segment1
             segment2
-            Paragraph(LocalizedString("A manual temp basal allows you to specify a basal rate for up to 12 hours. Tidepool Loop will not automate insulin adjustments while a manual temp basal is running. At the end of the set duration or when canceled, Tidepool Loop will restore automated adjustments to your insulin delivery.", comment: "Onboarding, How the App Works section, view 24, paragraph 2"))
-            Paragraph(LocalizedString("You can access manual temp basal under Activity in your insulin pump settings.", comment: "Onboarding, How the App Works section, view 24, paragraph 3"))
         }
     }
     

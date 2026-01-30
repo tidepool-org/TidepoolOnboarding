@@ -95,7 +95,7 @@ fileprivate struct IntroductionView3: View {
             Paragraph(LocalizedString("An insulin pump delivers U-100 rapid-acting insulin under the skin in two different ways.", comment: "Onboarding, Introduction section, view 3, paragraph 1"))
             BulletedBodyTextList(
                 Text("Basal insulin", comment: "Onboarding, Introduction section, view 3, bullet 1, title").bold() + Text(" is the background insulin your body needs all day and night.", comment: "Onboarding, Introduction section, view 3, bullet 1, body"),
-                Text("Bolus insulin", comment: "Onboarding, Introduction section, view 3, bullet 2, title").bold() + Text(" s a dose for meals or to bring down a high glucose", comment: "Onboarding, Introduction section, view 3, bullet 2, body")
+                Text("Bolus insulin", comment: "Onboarding, Introduction section, view 3, bullet 2, title").bold() + Text(" is a dose for meals or to bring down a high glucose.", comment: "Onboarding, Introduction section, view 3, bullet 2, body")
             )
             Paragraph(LocalizedString("Tidepool Loop assumes each dose of insulin works for about 6 hours, with the biggest effect at around 75 minutes. You cannot change this insulin model in the app.", comment: "Onboarding, Introduction section, view 3, paragraph 2"))
         }

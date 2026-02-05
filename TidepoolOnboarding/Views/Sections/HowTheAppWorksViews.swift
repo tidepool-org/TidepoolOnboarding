@@ -161,7 +161,8 @@ fileprivate struct HowTheAppWorksView5: View {
     @ViewBuilder
     private func statusView(freshness: LoopCompletionFreshness, _ text: Text) -> some View {
         Group {
-            Text("\(Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")) ") + text
+            // ⚠️ arrow.triangle.2.circlepath is deprecated -- replace with "arrow.trianglehead.2.clockwise.rotate.90" once iOS 17 is dropped as supported platforms.
+            Text("\(Image(systemName: "arrow.triangle.2.circlepath")) ") + text
         }
         .foregroundStyle(freshnessColor(for: freshness))
         .font(.footnote)

@@ -250,7 +250,7 @@ fileprivate struct YourDevicesMuteAppSounds: View {
             PageHeader(title: LocalizedString("Mute All App Sounds", comment: "Onboarding, Your Devices section, Mute All App Sounds view, title"))
             Paragraph(LocalizedString("Tidepool Loop has its own silencing feature called ‘Mute All App Sounds’ that allows you to temporarily silence all sounds from the app.", comment: "Onboarding, Your Devices section, Mute All App Sounds view, paragraph 1"))
             Callout(
-                .caution,
+                .warning,
                 title: Text(
                     "Critical alerts will be muted",
                     comment: "Onboarding, Your Devices section, Mute  App Sounds Modes view, segment 1, callout 1, title"
@@ -281,7 +281,7 @@ fileprivate struct YourDevicesMuteAppSounds: View {
                         Image(systemName: "speaker.slash.fill")
                             .foregroundColor(.white)
                             .padding(5)
-                            .background(guidanceColors.warning)
+                            .background(guidanceColors.critical)
                             .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
 
                         Paragraph(LocalizedString("Tidepool Loop App Sounds", comment: "Onboarding, Your Devices section, Mute Alerts view, segment 1, sub-header 1"))

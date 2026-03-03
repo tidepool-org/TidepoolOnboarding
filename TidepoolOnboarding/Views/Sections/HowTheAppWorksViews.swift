@@ -141,7 +141,7 @@ fileprivate struct HowTheAppWorksView5: View {
                 Paragraph(LocalizedString("Loop is open and green. Automation is OFF. Your pump and CGM will continue operating. You’ll continue to receive your scheduled basal insulin, but it will not adjust automatically.", comment: "Onboarding, How the App Works section, view 5, segment 3, list, item 1, paragraph"))
             }
             HStack(alignment: .top, spacing: 10) {
-                LoopCircleView(closedLoop: true, freshness: .stale)
+                LoopCircleView(closedLoop: false, freshness: .stale)
                 VStack(alignment: .leading, spacing: 16) {
                     Paragraph(LocalizedString("Loop is open and gray. Automation is OFF and there is an issue with one of your devices.", comment: "Onboarding, How the App Works section, view 5, segment 3, list, item 2, paragraph 1"))
                     Paragraph(LocalizedString("During this time, tap to see more details and check for communication issues with your pump and CGM.", comment: "Onboarding, How the App Works section, view 5, segment 3, list, item 2, paragraph 2"))
@@ -750,15 +750,15 @@ fileprivate struct HowTheAppWorksView21: View {
             Paragraph(LocalizedString("When a preset is on, you’ll notice the following indicators on the home screen:", comment: "Onboarding, How the App Works section, view 21, paragraph 3"))
             PresentableImage(decorative: "HowTheAppWorks_21_2")
             BulletedListView {
-                Text("a banner will display at the top of the home screen", comment: "Onboarding, How the App Works section, view 21, bullet 1")
+                Text("A banner will display at the top of the home screen", comment: "Onboarding, How the App Works section, view 21, bullet 1")
             }
             PresentableImage(decorative: "HowTheAppWorks_21_3")
             BulletedListView {
-                Text("(if applicable) the glucose chart will show your adjusted correction range", comment: "Onboarding, How the App Works section, view 21, bullet 2")
+                Text("(If applicable) the glucose chart will show your adjusted correction range", comment: "Onboarding, How the App Works section, view 21, bullet 2")
             }
             PresentableImage(decorative: "HowTheAppWorks_21_4")
             BulletedListView {
-                Text("the Presets button will display with inverted colors on the toolbar", comment: "Onboarding, How the App Works section, view 21, bullet 3")
+                Text("The Presets button will display with inverted colors on the toolbar", comment: "Onboarding, How the App Works section, view 21, bullet 3")
             }
             segment
         }

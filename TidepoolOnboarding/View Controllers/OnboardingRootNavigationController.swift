@@ -34,15 +34,17 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
     private let onboardingViewModel: OnboardingViewModel
     private let displayGlucosePreference: DisplayGlucosePreference
     private let colorPalette: LoopUIColorPalette
+    private let dosingStrategySelectionEnabled: Bool
 
     private var state: State?
 
     private lazy var cancellables = Set<AnyCancellable>()
 
-    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, displayGlucosePreference: DisplayGlucosePreference, colorPalette: LoopUIColorPalette) {
+    init(onboarding: TidepoolOnboarding, onboardingProvider: OnboardingProvider, displayGlucosePreference: DisplayGlucosePreference, colorPalette: LoopUIColorPalette, dosingStrategySelectionEnabled: Bool) {
         self.onboardingViewModel = OnboardingViewModel(onboarding: onboarding, onboardingProvider: onboardingProvider)
         self.displayGlucosePreference = displayGlucosePreference
         self.colorPalette = colorPalette
+        self.dosingStrategySelectionEnabled = dosingStrategySelectionEnabled
 
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
 
@@ -131,6 +133,7 @@ class OnboardingRootNavigationController: UINavigationController, CGMManagerOnbo
             .environment(\.loopStatusColorPalette, colorPalette.loopStatusColorPalette)
             .environment(\.chartColorPalette, colorPalette.chartColorPalette)
             .environment(\.appName, Bundle.main.bundleDisplayName)
+            .environment(\.dosingStrategySelectionEnabled, dosingStrategySelectionEnabled)
             .navigationBarHidden(true)
         setViewControllers([UIHostingController(rootView: rootView)], animated: animated)
     }

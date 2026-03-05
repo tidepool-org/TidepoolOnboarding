@@ -111,6 +111,7 @@ fileprivate struct IntroductionView4: View {
             segment1
             segment2
             segment3
+            segment4
         }
     }
     
@@ -124,32 +125,37 @@ fileprivate struct IntroductionView4: View {
         Segment(header: LocalizedString("Tidepool Loop’s Connection", comment: "Onboarding, Introduction section, view 4, segment 2, header")) {
             PresentableImage(decorative: "Introduction_4_2")
             Paragraph(LocalizedString("The app connects directly to your devices via a Bluetooth connection and automates insulin dosing with or without an internet connection.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 1"))
-            Callout(
-                .caution,
-                title: Text(
-                    "Device and components must be within Bluetooth range",
-                    comment: "Onboarding, Introduction section, view 4, segment 2, callout title"
-                ),
-                message: Text(
-                    "Your iPhone or iPod touch must be on and within Bluetooth Range of your pump in order for the app to send commands to the pump.",
-                    comment: "Onboarding, Introduction section, view 4, segment 2, callout body"
-                )
-            )
-            .padding(.horizontal, -16)
-            Paragraph(attributed: LocalizedString("Bluetooth devices can communicate at ranges of up to 30 feet. However, communication range will vary depending on obstacles (person, metal, wall, etc.) or your environment.", comment: "Onboarding, Introduction section, view 4, segment 2, paragraph 3"))
         }
     }
     
     private var segment3: some View {
-        Segment(header: LocalizedString("Interacting with the App", comment: "Onboarding, Introduction section, view 4, segment 3, header")) {
-            Paragraph(LocalizedString("You will interact with the Tidepool Loop app to:", comment: "Onboarding, Introduction section, view 4, segment 3, paragraph"))
+        Segment(header: LocalizedString("Bluetooth Communication", comment: "Onboarding, Introduction section, view 4, segment 3, header")) {
+            Callout(
+                .caution,
+                title: Text(
+                    "Device and components must be within Bluetooth range",
+                    comment: "Onboarding, Introduction section, view 4, segment 3, callout title"
+                ),
+                message: Text(
+                    "Your iPhone or iPod touch must be on and within Bluetooth Range of your pump in order for the app to send commands to the pump.",
+                    comment: "Onboarding, Introduction section, view 4, segment 3, callout body"
+                )
+            )
+            .padding(.horizontal, -16)
+            Paragraph(attributed: LocalizedString("Bluetooth devices can communicate at ranges of up to 30 feet. However, communication range will vary depending on obstacles (person, metal, wall, etc.) or your environment.", comment: "Onboarding, Introduction section, view 4, segment 3, paragraph 3"))
+        }
+    }
+    
+    private var segment4: some View {
+        Segment(header: LocalizedString("Interacting with the App", comment: "Onboarding, Introduction section, view 4, segment 4, header")) {
+            Paragraph(LocalizedString("You will interact with the Tidepool Loop app to:", comment: "Onboarding, Introduction section, view 4, segment 4, paragraph"))
             BulletedBodyTextList(attributed:
-                 (.filledCircle, LocalizedString("Enter your personal diabetes settings", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 1, part 1")),
-                 (.filledCircle, LocalizedString("Deliver bolus insulin for food and to bring down high glucose", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 2")),
-                 (.filledCircle, LocalizedString("Make temporary glucose range adjustments", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 3")),
-                 (.filledCircle, LocalizedString("View glucose history and insulin delivery history", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 4")),
-                 (.filledCircle, LocalizedString("Maintain your devices", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 5")),
-                 (.filledCircle, LocalizedString("Troubleshoot and get support from Tidepool", comment: "Onboarding, Introduction section, view 4, segment 3, list, item 6"))
+                 (.filledCircle, LocalizedString("Enter your personal diabetes settings", comment: "Onboarding, Introduction section, view 4, segment 4, list, item 1, part 1")),
+                 (.filledCircle, LocalizedString("Deliver bolus insulin for food and to bring down high glucose", comment: "Onboarding, Introduction section, view 4, segment 4, list, item 2")),
+                 (.filledCircle, LocalizedString("Make temporary glucose range adjustments", comment: "Onboarding, Introduction section, view 4, segment 4, list, item 3")),
+                 (.filledCircle, LocalizedString("View glucose history and insulin delivery history", comment: "Onboarding, Introduction section, view 4, segment 4, list, item 4")),
+                 (.filledCircle, LocalizedString("Maintain your devices", comment: "Onboarding, Introduction section, view 4, segment 4, list, item 5")),
+                 (.filledCircle, LocalizedString("Troubleshoot and get support from Tidepool", comment: "Onboarding, Introduction section, view 4, segment 4, list, item 6"))
             )
             Callout(
                 .caution,

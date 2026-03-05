@@ -176,7 +176,7 @@ fileprivate struct ADayInTheLifeView12: View {
     private var segment: some View {
         Segment(header: LocalizedString("A New Approach", comment: "Onboarding, A Day In The Life section, view 12, segment 1, header")) {
             Paragraph(LocalizedString("Before Tidepool Loop, you may have eaten a snack or reduced your insulin delivery before a run.", comment: "Onboarding, A Day In The Life section, view 12, segment 1, paragraph 1"))
-            Paragraph(LocalizedString("With Tidepool Loop, you can use information from you your charts, or you can enable a Preset to adjust your insulin delivery while you exercise.", comment: "Onboarding, A Day In The Life section, view 12, segment 1, paragraph 2"))
+            Paragraph(LocalizedString("With Tidepool Loop, you can use information from your charts, or you can enable a Preset to adjust your insulin delivery while you exercise.", comment: "Onboarding, A Day In The Life section, view 12, segment 1, paragraph 2"))
         }
     }
 }
@@ -202,11 +202,11 @@ fileprivate struct ADayInTheLifeView14: View {
             PresentableImage(decorative: "ADayInTheLife_14_1")
             Text("It’s best to turn this on ", comment: "Onboarding, A Day In The Life section, view 14, paragraph 3, part 1") + Text("1 hour before your run", comment: "Onboarding, A Day In The Life section, view 14, paragraph 3, part 2").bold() + Text(" and keep it on until you finish.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 3, part 3")
             Paragraph(LocalizedString("Work with your healthcare provider to find the timing and settings that work best for you.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 4"))
-            Paragraph(LocalizedString("When the preset is on,  you'll see these indicators on the home screen:", comment: "Onboarding, A Day In The Life section, view 14, paragraph 5"))
+            Paragraph(LocalizedString("When the preset is on, you'll see these indicators on the home screen:", comment: "Onboarding, A Day In The Life section, view 14, paragraph 5"))
             BulletedListView {
-                Text("a banner at the top of the home screen", comment: "Onboarding, A Day In The Life section, view 14, bullet 1")
-                Text("(if applicable) an adjusted correction range on your glucose chart", comment: "Onboarding, A Day In The Life section, view 14, bullet 2")
-                Text("the Presets button shown in inverted colors on the toolbar", comment: "Onboarding, A Day In The Life section, view 14, bullet 3")
+                Text("A banner at the top of the home screen", comment: "Onboarding, A Day In The Life section, view 14, bullet 1")
+                Text("(If applicable) An adjusted correction range on your glucose chart", comment: "Onboarding, A Day In The Life section, view 14, bullet 2")
+                Text("The Presets button shown in inverted colors on the toolbar", comment: "Onboarding, A Day In The Life section, view 14, bullet 3")
             }
             Paragraph(LocalizedString("You can tap the banner for more details about how the preset affects your therapy settings.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 6"))
             PresentableImage(decorative: "ADayInTheLife_14_2")
@@ -270,8 +270,8 @@ fileprivate struct ADayInTheLifeView19: View {
             PresentableImage(decorative: "ADayInTheLife_19_1")
             Paragraph(LocalizedString("If automation is on, Tidepool Loop will continue making adjustments in an effort to bring your glucose into your correct range.", comment: "Onboarding, A Day In The Life section, view 19, paragraph 1"))
             PresentableImage(decorative: "ADayInTheLife_19_2")
-            Paragraph(LocalizedString("If automation is off or seems inconsistent, you will need to respond to high and low glucose according to your healthcare provider’s instructions.", comment: "Onboarding, A Day In The Life section, view 19, paragraph 2"))
             PresentableImage(decorative: "ADayInTheLife_19_3")
+            Paragraph(LocalizedString("If automation is off or seems inconsistent, you will need to respond to high and low glucose according to your healthcare provider’s instructions.", comment: "Onboarding, A Day In The Life section, view 19, paragraph 2"))
             Paragraph(LocalizedString("You may need to eat additional carbs to prevent or treat a low or take additional insulin to prevent or treat a high.", comment: "Onboarding, A Day In The Life section, view 19, paragraph 3"))
         }
     }

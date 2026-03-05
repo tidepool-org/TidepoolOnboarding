@@ -205,7 +205,7 @@ fileprivate struct ADayInTheLifeView14: View {
             Paragraph(LocalizedString("When the preset is on, you'll see these indicators on the home screen:", comment: "Onboarding, A Day In The Life section, view 14, paragraph 5"))
             BulletedListView {
                 Text("A banner at the top of the home screen", comment: "Onboarding, A Day In The Life section, view 14, bullet 1")
-                Text("(If applicable) an adjusted correction range on your glucose chart", comment: "Onboarding, A Day In The Life section, view 14, bullet 2")
+                Text("(If applicable) An adjusted correction range on your glucose chart", comment: "Onboarding, A Day In The Life section, view 14, bullet 2")
                 Text("The Presets button shown in inverted colors on the toolbar", comment: "Onboarding, A Day In The Life section, view 14, bullet 3")
             }
             Paragraph(LocalizedString("You can tap the banner for more details about how the preset affects your therapy settings.", comment: "Onboarding, A Day In The Life section, view 14, paragraph 6"))

@@ -754,7 +754,7 @@ fileprivate struct HowTheAppWorksView21: View {
             }
             PresentableImage(decorative: "HowTheAppWorks_21_3")
             BulletedListView {
-                Text("(If applicable) the glucose chart will show your adjusted correction range", comment: "Onboarding, How the App Works section, view 21, bullet 2")
+                Text("(If applicable) The glucose chart will show your adjusted correction range", comment: "Onboarding, How the App Works section, view 21, bullet 2")
             }
             PresentableImage(decorative: "HowTheAppWorks_21_4")
             BulletedListView {

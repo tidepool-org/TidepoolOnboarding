@@ -14,6 +14,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View, Footer: View>
 
     @State private var isDestinationActiveFromNextButton = false
     @State private var isCloseAlertPresented = false
+    @State private var scrollViewHeight: CGFloat = 0
 
     private let section: OnboardingSection
     private let editMode: Bool
@@ -90,24 +91,32 @@ struct OnboardingSectionPageView<Destination: View, Content: View, Footer: View>
 
     var body: some View {
         OnboardingSectionWrapperView(section: section) {
-            GeometryReader { geometry in
-                ScrollView {
-                    VStack(spacing: 10) {
-                        Segment {
-                            content
-                        }
-                        Spacer()
-                        if let footer = footer {
-                            footer
-                        }
-                        if !nextButtonHidden {
-                            nextButton
-                        }
+            ScrollView {
+                VStack(spacing: 10) {
+                    Segment {
+                        content
                     }
-                    .padding()
-                    .frame(minHeight: geometry.size.height)
+                    Spacer()
+                    if let footer = footer {
+                        footer
+                    }
+                    if !nextButtonHidden {
+                        nextButton
+                    }
                 }
+                .padding()
+                .frame(minHeight: scrollViewHeight)
             }
+            .background(
+                GeometryReader { geometry in
+                    let visibleHeight = geometry.size.height - (geometry.frame(in: .global).maxY > UIScreen.main.bounds.height - geometry.safeAreaInsets.bottom + 0.5 ? geometry.safeAreaInsets.bottom : 0)
+                    Color.clear
+                        .onAppear { scrollViewHeight = visibleHeight }
+                        .onChange(of: visibleHeight) { _, height in
+                            scrollViewHeight = height
+                        }
+                }
+            )
         }
         .editMode(editMode)
         .backButtonHidden(backButtonHidden)

@@ -11,6 +11,7 @@ import SwiftUI
 extension View {
     func presentation(isModal: Bool, onDismissalAttempt: (() -> Void)? = nil) -> some View {
         ModalPresentationView(view: self, isModal: isModal, onDismissalAttempt: onDismissalAttempt)
+            .ignoresSafeArea()
     }
 }
 

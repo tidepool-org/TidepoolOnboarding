@@ -64,7 +64,7 @@ struct OnboardingSectionSheetButton<Destination: View, Content: View>: View {
                 .onAppear {
                     onboardingViewModel.sectionProgression.startSection(section)
                 }
-                .presentation(isModal: true)
+                .interactiveDismissDisabled(true)
         }
     }
 }

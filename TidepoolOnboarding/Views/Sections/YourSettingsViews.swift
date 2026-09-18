@@ -172,7 +172,7 @@ fileprivate struct YourSettingsTidepoolServiceOnboardingView: View {
 
     private var sheet: some View {
         ServiceView(serviceViewController!)
-            .presentation(isModal: true)
+            .interactiveDismissDisabled(true)
             .environment(\.dismissAction, { isSheetPresented = false })
     }
 }
@@ -279,6 +279,7 @@ fileprivate struct YourSettingsPrescriptionAccessCodeEntryView: View {
     @State private var hasBirthdayPickerShown = false
     @State private var isBirthdayPickerVisible = false
     @State private var isNextButtonActing = false
+    @FocusState private var isAccessCodeFocused: Bool
 
     var body: some View {
         OnboardingSectionPageView(section: .yourSettings, destination: YourSettingsReviewYourSettingsView()) {
@@ -296,7 +297,9 @@ fileprivate struct YourSettingsPrescriptionAccessCodeEntryView: View {
         .nextButtonTitle(LocalizedString("Submit", comment: "Onboarding, Your Settings section, Your Settings view, next button, title"))
         .nextButtonAction(nextButtonAction)
         .nextButtonDisabled(accessCode.count != accessCodeLength || !hasBirthdayPickerShown || isNextButtonActing)
+        .keyboardToolbar(isFocused: isAccessCodeFocused, dismiss: dismissAccessCodeKeyboard)
         .onTapGesture(perform: dismissAccessories)
+        .onDisappear(perform: dismissAccessCodeKeyboard)
     }
 
     private var segment1: some View {
@@ -337,11 +340,11 @@ fileprivate struct YourSettingsPrescriptionAccessCodeEntryView: View {
 
     private var accessCodeField: some View {
         TextField(LocalizedString("Activation code", comment: "Onboarding, Your Settings section, Your Settings view, segment 2, code, placeholder"), text: $accessCode, onCommit: showBirthdayPicker)
+            .focused($isAccessCodeFocused)
             .autocapitalization(.allCharacters)
             .disableAutocorrection(true)
             .keyboardType(.asciiCapable)
             .submitLabel(.done)
-            .keyboardDismissAccessory()
             .disabled(isNextButtonActing)
             .opacity(isNextButtonActing ? 0.5 : 1.0)
             .padding(.horizontal, 10)
@@ -356,7 +359,7 @@ fileprivate struct YourSettingsPrescriptionAccessCodeEntryView: View {
     }
 
     private func dismissAccessCodeKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        isAccessCodeFocused = false
     }
 
     private var birthdayField: some View {

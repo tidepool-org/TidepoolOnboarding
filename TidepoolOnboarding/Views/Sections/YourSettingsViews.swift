@@ -340,6 +340,7 @@ fileprivate struct YourSettingsPrescriptionAccessCodeEntryView: View {
             .autocapitalization(.allCharacters)
             .disableAutocorrection(true)
             .keyboardType(.asciiCapable)
+            .submitLabel(.done)
             .disabled(isNextButtonActing)
             .opacity(isNextButtonActing ? 0.5 : 1.0)
             .padding(.horizontal, 10)

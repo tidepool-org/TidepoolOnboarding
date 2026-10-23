@@ -12,30 +12,39 @@ struct WelcomeTabView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     @State private var selectedIndex = 0
+    @State private var pageHeight: CGFloat = 0
 
     var body: some View {
         ZStack {
             Color(.systemBackground)
                 .edgesIgnoringSafeArea(.all)
-            GeometryReader { geometry in
-                TabView(selection: $selectedIndex) {
-                    ForEach(welcomeData.indices, id: \.self) { viewIndex in
-                        ScrollView {
-                            VStack {
-                                welcome(for: viewIndex)
-                                Spacer()
-                                pager(for: viewIndex)
-                                    .padding(.vertical)
-                                button(for: viewIndex)
-                            }
-                            .padding()
-                            .frame(minHeight: geometry.size.height)
+            TabView(selection: $selectedIndex) {
+                ForEach(welcomeData.indices, id: \.self) { viewIndex in
+                    ScrollView {
+                        VStack {
+                            welcome(for: viewIndex)
+                            Spacer()
+                            pager(for: viewIndex)
+                                .padding(.vertical)
+                            button(for: viewIndex)
                         }
-                        .tag(viewIndex)
+                        .padding()
+                        .frame(minHeight: pageHeight)
                     }
+                    .tag(viewIndex)
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .background(
+                GeometryReader { geometry in
+                    let visibleHeight = geometry.size.height - (geometry.frame(in: .global).maxY > UIScreen.main.bounds.height - geometry.safeAreaInsets.bottom + 0.5 ? geometry.safeAreaInsets.bottom : 0)
+                    Color.clear
+                        .onAppear { pageHeight = visibleHeight }
+                        .onChange(of: visibleHeight) { _, height in
+                            pageHeight = height
+                        }
+                }
+            )
         }
         .onAppear { onboardingViewModel.sectionProgression.startSection(.welcome) }
     }

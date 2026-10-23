@@ -54,14 +54,8 @@ struct OnboardingSectionWrapperView<Content: View>: View {
 
     private var backButton: some View {
         Button(action: { presentationMode.wrappedValue.dismiss() }) {
-            HStack {
-                Image(systemName: "chevron.left")
-                    .resizable()
-                    .frame(width: 12, height: 20)
-                Text(backButtonTitle)
-                    .fontWeight(.regular)
-            }
-            .offset(x: -6, y: 0)
+            Image(systemName: "chevron.left")
+                .fontWeight(.semibold)
         }
         .accessibilityElement()
         .accessibilityAddTraits(.isButton)

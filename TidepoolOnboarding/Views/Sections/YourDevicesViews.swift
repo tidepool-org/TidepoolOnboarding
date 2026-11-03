@@ -477,9 +477,9 @@ fileprivate struct YourDevicesPairingYourDevicesView: View {
 
     private var nextButtonTitle: String? {
         if !onboardingViewModel.isCGMManagerOnboarded {
-            return LocalizedString("Pair CGM", comment: "Onboarding, Your Devices section, Pairing Your Devices view, pair CGM button, title")
+            return LocalizedString("Connect My CGM", comment: "Onboarding, Your Devices section, Pairing Your Devices view, pair CGM button, title")
         } else {
-            return LocalizedString("Pair Pump", comment: "Onboarding, Your Devices section, Pairing Your Devices view, pair pump button, title")
+            return LocalizedString("Connect My Pump", comment: "Onboarding, Your Devices section, Pairing Your Devices view, pair pump button, title")
         }
     }
 

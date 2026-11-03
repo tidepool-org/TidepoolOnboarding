@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import LoopKitUI
 
 struct WelcomeTabView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
@@ -35,16 +36,7 @@ struct WelcomeTabView: View {
                 }
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .background(
-                GeometryReader { geometry in
-                    let visibleHeight = geometry.size.height - (geometry.frame(in: .global).maxY > UIScreen.main.bounds.height - geometry.safeAreaInsets.bottom + 0.5 ? geometry.safeAreaInsets.bottom : 0)
-                    Color.clear
-                        .onAppear { pageHeight = visibleHeight }
-                        .onChange(of: visibleHeight) { _, height in
-                            pageHeight = height
-                        }
-                }
-            )
+            .readVisibleHeight(to: $pageHeight)
         }
         .onAppear { onboardingViewModel.sectionProgression.startSection(.welcome) }
     }

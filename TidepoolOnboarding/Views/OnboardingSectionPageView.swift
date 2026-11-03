@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import LoopKitUI
 
 struct OnboardingSectionPageView<Destination: View, Content: View, Footer: View>: View {
     @Environment(\.presentationMode) var presentationMode
@@ -107,16 +108,7 @@ struct OnboardingSectionPageView<Destination: View, Content: View, Footer: View>
                 .padding()
                 .frame(minHeight: scrollViewHeight)
             }
-            .background(
-                GeometryReader { geometry in
-                    let visibleHeight = geometry.size.height - (geometry.frame(in: .global).maxY > UIScreen.main.bounds.height - geometry.safeAreaInsets.bottom + 0.5 ? geometry.safeAreaInsets.bottom : 0)
-                    Color.clear
-                        .onAppear { scrollViewHeight = visibleHeight }
-                        .onChange(of: visibleHeight) { _, height in
-                            scrollViewHeight = height
-                        }
-                }
-            )
+            .readVisibleHeight(to: $scrollViewHeight)
         }
         .editMode(editMode)
         .backButtonHidden(backButtonHidden)

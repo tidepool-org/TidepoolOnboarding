@@ -7,35 +7,36 @@
 //
 
 import SwiftUI
+import LoopKitUI
 
 struct WelcomeTabView: View {
     @EnvironmentObject var onboardingViewModel: OnboardingViewModel
 
     @State private var selectedIndex = 0
+    @State private var pageHeight: CGFloat = 0
 
     var body: some View {
         ZStack {
             Color(.systemBackground)
                 .edgesIgnoringSafeArea(.all)
-            GeometryReader { geometry in
-                TabView(selection: $selectedIndex) {
-                    ForEach(welcomeData.indices, id: \.self) { viewIndex in
-                        ScrollView {
-                            VStack {
-                                welcome(for: viewIndex)
-                                Spacer()
-                                pager(for: viewIndex)
-                                    .padding(.vertical)
-                                button(for: viewIndex)
-                            }
-                            .padding()
-                            .frame(minHeight: geometry.size.height)
+            TabView(selection: $selectedIndex) {
+                ForEach(welcomeData.indices, id: \.self) { viewIndex in
+                    ScrollView {
+                        VStack {
+                            welcome(for: viewIndex)
+                            Spacer()
+                            pager(for: viewIndex)
+                                .padding(.vertical)
+                            button(for: viewIndex)
                         }
-                        .tag(viewIndex)
+                        .padding()
+                        .frame(minHeight: pageHeight)
                     }
+                    .tag(viewIndex)
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .readVisibleHeight(to: $pageHeight)
         }
         .onAppear { onboardingViewModel.sectionProgression.startSection(.welcome) }
     }

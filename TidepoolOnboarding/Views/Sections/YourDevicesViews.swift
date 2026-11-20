@@ -252,7 +252,7 @@ fileprivate struct YourDevicesMuteAppSounds: View {
             Callout(
                 .warning,
                 title: Text(
-                    "Critical alerts will be muted",
+                    "Critical alerts, including Urgent Low, will be muted",
                     comment: "Onboarding, Your Devices section, Mute  App Sounds Modes view, segment 1, callout 1, title"
                 ),
                 message: Text(
